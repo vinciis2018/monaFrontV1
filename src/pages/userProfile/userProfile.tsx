@@ -20,7 +20,7 @@ import {
 import {
   // AiOutlineFundProjectionScreen,
   AiOutlineArrowLeft,
-  AiOutlineEdit,
+  // AiOutlineEdit,
   // AiOutlineNotification,
   // s,
   // AiOutlineRightCircle,
@@ -171,7 +171,7 @@ export function UserProfile1(props: any) {
                 {errorDetails || errorMyMedia || errorUpdate}
               </MessageBox>
             ) : (
-              <Stack p="2">
+              <Stack p="2" backgroundColor="#EAEAEA">
                 {profileModal ? (
                   <Box m="" p="2" rounded="lg" shadow="card">
                     <Text align="center" fontWeight="600" p="2" fontSize="md">
@@ -274,75 +274,88 @@ export function UserProfile1(props: any) {
                     </SimpleGrid>
                   </Box>
                 ) : (
-                  <Box m="" p="2" rounded="lg" shadow="card">
-                    <Box px="2" width="50%">
-                      {/* <Flex px="2" align="center" justify="center"> */}
-                      <Box
-                        align="center"
+                  <Box
+                    backgroundColor="#F1F1F1"
+                    m=""
+                    p="0"
+                    rounded="lg"
+                    shadow="card"
+                  >
+                    <Box
+                      align="center"
+                      display="inline-block"
+                      backgroundImage={background}
+                      backgroundRepeat="no-repeat"
+                      backgroundAttachment="fixed"
+                      backgroundSize="auto 100%"
+                      position="relative"
+                      borderRadius="5"
+                      width="100%"
+                      height="100px"
+                    >
+                      <Image
+                        p="0"
                         display="inline-block"
-                        backgroundImage={background}
-                        backgroundRepeat="no-repeat"
-                        backgroundAttachment="fixed"
-                        backgroundSize="100%"
-                        position="relative"
-                        width="200%"
-                        height="20%"
+                        marginBottom="-130px"
+                        border="1px"
+                        borderColor="gray.100"
+                        rounded="full"
+                        height="100px"
+                        src={user?.user?.avatar}
+                      />
+                    </Box>
+                    <Flex
+                      px="2"
+                      align="flex-start"
+                      direction="column"
+                      marginTop="10%"
+                    >
+                      <Text px="2" fontSize="160x" fontWeight="600">
+                        {user?.user?.name}
+                      </Text>
+                      <Text
+                        px="2"
+                        fontWeight="40px"
+                        fontSize="12px"
+                        color="#593FFC"
                       >
-                        <Image
-                          p="0"
-                          display="inline-block"
-                          marginTop="30px"
-                          border="1px"
-                          borderColor="gray.100"
-                          rounded="full"
-                          height="100px"
-                          src={user?.user?.avatar}
-                          // onLoad={() =>
-                          //   triggerPort(user?.user?.avatar.split("/").slice(-1)[0])
-                          // }
-                        />
-                      </Box>
-                      {/* </Flex> */}
-                    </Box>
-                    <Box m="" p="2" shadow="card" rounded="md">
-                      <Flex px="2" align="flex-start" direction="column">
-                        <Flex px="2" align="flex-end" justify="space-between">
-                          <Text fontSize="lg" fontWeight="600">
-                            {user?.user?.name}
-                          </Text>
-                          <IconButton
-                            onClick={userProfileEditOpen}
-                            bg="none"
-                            icon={<AiOutlineEdit size="20px" color="black" />}
-                            aria-label="Edit user details"
-                          ></IconButton>
-                        </Flex>
-
-                        <Text px="2" fontWeight="" fontSize="xs">
-                          +91-{user?.user?.phone}{" "}
-                        </Text>
-                        <Text
-                          px="2"
-                          fontWeight="40px"
-                          fontSize="xs"
-                          color="#593FFC"
-                        >
-                          {user?.user?.email}
-                        </Text>
-                        <Text p="2" fontSize="sm">
-                          {user?.user?.address}, {user?.user?.districtCity},{" "}
-                          {user?.user?.stateUt}, {user?.user?.country}, Pincode-
-                          {user?.user?.pincode}{" "}
-                        </Text>
-                      </Flex>
-                    </Box>
-
-                    <Flex py="2" align="center" justify="space-between"></Flex>
+                        {user?.user?.email}
+                      </Text>
+                      <Text px="2" fontWeight="" fontSize="12px">
+                        +91-{user?.user?.phone}{" "}
+                      </Text>
+                      <Text
+                        p="2"
+                        fontSize="13px"
+                        color="#747474"
+                        fontWeight="light"
+                      >
+                        {user?.user?.address}, {user?.user?.districtCity},{" "}
+                        {user?.user?.stateUt}, {user?.user?.country}, Pincode-
+                        {user?.user?.pincode}
+                        {""}
+                      </Text>
+                      <Button
+                        p="4"
+                        width="100%"
+                        variant="outline"
+                        backgroundColor="#E8E8E8"
+                        fontWeight="11px"
+                        marginEnd="30px"
+                        onClick={() => navigate("/upload")}
+                      >
+                        Edit Profile
+                      </Button>
+                    </Flex>
                   </Box>
                 )}
                 <Button
-                  p="5"
-                  variant="outline"
+                  p="10"
+                  color="#313131"
+                  marginTop="30px"
+                  backgroundColor="#F1F1F1"
+                  fontWeight="bold"
+                  fontSize="16px"
                   onClick={() => navigate("/upload")}
                 >
                   Upload NFT{" "}

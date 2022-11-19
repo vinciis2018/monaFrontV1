@@ -61,7 +61,7 @@ export function PinSuccess() {
           .then(() => wipeTempSavedPin())
           .then(() => generateAndSave(pin));
         const defWallet = getArweavePublicAddress();
-        console.log(defWallet);
+        console.log("defWallet : ", defWallet);
         if (userInfo?.defaultWallet === undefined || null || "") {
           dispatch(createWallet(defWallet));
         }

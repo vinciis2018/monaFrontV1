@@ -44,6 +44,7 @@ const Ctx = React.createContext<Context | undefined>(undefined);
 
 export const ContextProvider = ({ children }: WithChildren) => {
   const wallet = useMemo<Web>(() => new Web(), []);
+  console.log("wallet : ", wallet);
   const [$jwk, set$jwk] = useState<Promise<JWKInterface> | undefined>(
     undefined
   );
@@ -148,6 +149,7 @@ export const ContextProvider = ({ children }: WithChildren) => {
   };
 
   const getArweavePublicAddress = (): string => {
+    console.log("---------getArweavePublicAddress : ", wallet.address);
     return wallet.address!;
   };
 
