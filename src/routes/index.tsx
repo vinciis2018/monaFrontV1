@@ -51,6 +51,7 @@ import {
   NFT,
   CustomCreate,
   UserProfile1,
+  CreateResetPassword,
 } from "pages";
 import { Nav, Footer } from "components/common";
 
@@ -73,6 +74,11 @@ export const PublicRoutes = () => {
         <Route path="/logout" element={<Logout />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+        <Route
+          path="/create-reset-password/:email"
+          element={<CreateResetPassword />}
+        />
+
         {/* upload */}
         <Route path="/upload" element={<Active />} />
         <Route path="/upload-active" element={<Active />} />

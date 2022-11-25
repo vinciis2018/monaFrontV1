@@ -22,6 +22,13 @@ import {
   IconButton,
   Tooltip,
   Image,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  // ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 // import { isPWA } from "utils/util";
 import { editWallet } from "../../../Actions/walletActions";
@@ -47,6 +54,7 @@ import {
 import Logo from "assets/logo.png";
 import Name from "assets/name.png";
 import { arweave_icon, koii_icon, mona_icon } from "assets/svgs";
+import { Signup } from "pages";
 
 export const Nav = () => {
   const { width } = useWindowSize();
@@ -68,9 +76,11 @@ export const Nav = () => {
     koii: 0,
     ratData: 0,
   });
-
+  const btnRef = React.useRef(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [isOpenSignin, setisOPenSignin] = React.useState<any>(false);
+  const [onOpenSignin, setonOpenSignin] = React.useState<any>(false);
+  const [onCloseSignin, setonCloseSignin] = React.useState<any>();
   const [modalOpen, setModalOpen] = React.useState<Boolean>(false);
 
   const { isUnlocked, lock, getArweavePublicAddress, isLoading } = useWallet();
@@ -78,7 +88,6 @@ export const Nav = () => {
   const { logout: logoutUser, lock: lockUser } = useLogin();
 
   const dispatch = useDispatch<any>();
-  // const { isOpen, onOpen, onClose } = useDisclosure();
   const userSignin = useSelector((state: any) => state.userSignin);
   const {
     loading: loadingUserInfo,
@@ -131,6 +140,25 @@ export const Nav = () => {
 
   return (
     <Box __css={style} bg="white" px="4" color="white" shadow="card">
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        finalFocusRef={btnRef}
+        scrollBehavior="inside"
+        size="full"
+        isCentered
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody>
+            <Box p="50" align="center" justifyContent="center">
+              <Signup />
+            </Box>
+          </ModalBody>
+          <ModalFooter></ModalFooter>
+        </ModalContent>
+      </Modal>
       {loadingUserInfo ? (
         <HLoading loading={loadingUserInfo} />
       ) : errorUserInfo ? (
@@ -149,10 +177,12 @@ export const Nav = () => {
                 <>
                   <Button
                     bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
-                    as={RouterLink}
-                    to={`/signin`}
+                    // as={RouterLink}
+                    // to={`/signin`}
                     size="sm"
                     fontSize="xs"
+                    onClick={onOpen}
+                    ref={btnRef}
                   >
                     Please Signin
                   </Button>
@@ -322,10 +352,12 @@ export const Nav = () => {
               {!userInfo ? (
                 <Button
                   bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
-                  as={RouterLink}
-                  to={`/signin`}
+                  // as={RouterLink}
+                  // to={`/signin`}
                   size="sm"
                   fontSize="xs"
+                  onClick={onOpen}
+                  ref={btnRef}
                 >
                   Please Signin
                 </Button>

@@ -18,6 +18,10 @@ export { Login } from "./auth/Login";
 export { Logout } from "./auth/Logout";
 export { Signup } from "./auth/Signup";
 export { Signin } from "./auth/Signin";
+export { EmailVerification } from "./auth/EmailVerification";
+export { AccountSetUp } from "./auth/AccountSetUp";
+export { CreateResetPassword } from "./auth/CreateResetPassword";
+
 // setting
 export { Setting } from "./setting/Setting";
 export { Recovery } from "./setting/Recovery";
