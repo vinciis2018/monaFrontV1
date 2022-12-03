@@ -6,6 +6,15 @@ export { KeyConfirm } from "./onboarding/KeyConfirm";
 export { KeyRecovery } from "./onboarding/KeyRecovery";
 export { PinCreate } from "./onboarding/PinCreate";
 export { PinSuccess } from "./onboarding/PinSuccess";
+
+export { WelcomeModal } from "./onboardingmodal/WelcomeModal";
+export { LoginModal } from "./onboardingmodal/LoginModal";
+export { PinCreateModal } from "./onboardingmodal/PinCreateModal";
+export { DisplaySecrateKeyModal } from "./onboardingmodal/DisplaySecrateKeyModal";
+export { StartWalletModal } from "./onboardingmodal/StartWalletModal";
+export { VerifySecrateKeyModal } from "./onboardingmodal/VerifySecrateKeyModal";
+export { ViewSecrateKeyModal } from "./onboardingmodal/ViewSecrateKeyModal";
+
 // uploading
 export { CameraHome } from "./uploading/CameraHome";
 export { Active } from "./uploading/Active";
@@ -21,6 +30,10 @@ export { Signin } from "./auth/Signin";
 export { EmailVerification } from "./auth/EmailVerification";
 export { AccountSetUp } from "./auth/AccountSetUp";
 export { CreateResetPassword } from "./auth/CreateResetPassword";
+
+export { EmailVerificationModal } from "./authPopup/EmailVerificationModal";
+export { ReSendEmailModal } from "./authPopup/ResendEmailModal";
+export { SignInModal } from "./authPopup/SignInModal";
 
 // setting
 export { Setting } from "./setting/Setting";

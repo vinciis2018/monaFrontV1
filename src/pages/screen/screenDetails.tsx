@@ -168,7 +168,7 @@ export function ScreenDetails(props: any) {
   const dispatch = useDispatch<any>();
   React.useEffect(() => {
     if (!userInfo) {
-      navigate(redirect);
+      //navigate(redirect);
     }
 
     if (successReviewCreate) {

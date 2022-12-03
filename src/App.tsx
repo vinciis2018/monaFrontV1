@@ -14,12 +14,20 @@ import {
   IpfsProvider,
   GalleryProvider,
 } from "components/contexts";
-import { ChakraProvider } from "@chakra-ui/react";
 
-// TODO: to be deleted
+import "bootstrap/dist/css/bootstrap.min.css";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { StepsStyleConfig as Steps } from "chakra-ui-steps";
 import BasicStyle from "theme/basicStyle";
 import GlobalStyle from "theme/globalStyle";
-import { theme } from "theme/Theme.base";
+
+const theme = extendTheme({
+  components: {
+    Steps,
+  },
+});
+// TODO: to be deleted
+// import { theme } from "theme/Theme.base";
 
 const queryClient = new QueryClient();
 

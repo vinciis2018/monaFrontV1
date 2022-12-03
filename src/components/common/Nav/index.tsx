@@ -114,14 +114,14 @@ export const Nav = () => {
     logoutUser();
     lock();
     dispatch(signout());
-    navigate("/signin");
+    // navigate("/signin");
   };
 
   const lockWallet = () => {
     lockUser();
     logoutUser();
     lock();
-    navigate("/login");
+    // navigate("/login");
   };
 
   const onWalletClick = () => {

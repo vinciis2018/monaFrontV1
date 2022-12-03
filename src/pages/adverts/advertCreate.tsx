@@ -101,7 +101,7 @@ export function AdvertCreate(props: any) {
     }
 
     if (!userInfo) {
-      navigate("/signin");
+      // navigate("/signin");
     }
     dispatch(getMyMedia());
   }, [

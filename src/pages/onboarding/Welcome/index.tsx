@@ -30,10 +30,10 @@ export function Welcome() {
     hasEncryptedData().then((hasData) => {
       console.log(hasData);
       if (hasData) {
-        // navigate("/login");
+        navigate("/login");
       }
       if (!userInfo) {
-        navigate("/signin");
+        //navigate("/signin");
       }
     });
   }, [hasEncryptedData, navigate, userInfo]);

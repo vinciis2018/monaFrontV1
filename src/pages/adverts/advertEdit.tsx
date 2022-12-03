@@ -251,7 +251,7 @@ export function AdvertEdit(props: any) {
     }
 
     if (!userInfo) {
-      navigate(redirect);
+      //navigate(redirect);
     }
 
     dispatch(getVideoDetails(videoId));

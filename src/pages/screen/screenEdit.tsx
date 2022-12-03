@@ -216,7 +216,7 @@ export function ScreenEdit(props: any) {
     }
 
     if (!userInfo) {
-      navigate(redirect);
+      //navigate(redirect);
     }
 
     // dispatch(getWalletDetails(userInfo.defaultWallet))

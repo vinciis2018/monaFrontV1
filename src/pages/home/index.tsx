@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -32,6 +32,16 @@ import {
 import { Advert, Screen } from "components/common";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
+import {
+  SignInModal,
+  WelcomeModal,
+  LoginModal,
+  PinCreateModal,
+  StartWalletModal,
+  VerifySecrateKeyModal,
+  ViewSecrateKeyModal,
+  DisplaySecrateKeyModal,
+} from "pages";
 
 export function Home(props: any) {
   const navigate = useNavigate();
@@ -47,6 +57,56 @@ export function Home(props: any) {
   const { loading: loadingScreens, error: errorScreens, screens } = screenList;
 
   const videoListAll = useSelector((state: any) => state.videoListAll);
+
+  const [signinModalShow, setSigninModalShow] = useState<any>(false);
+  const [welcomeModalShow, setWelcomeModalShow] = useState<any>(false);
+  const [loginModalShow, setLoginModalShow] = useState<any>(false);
+  const [pinCreateModal, setPinCreateModalShow] = useState<any>(false);
+  const [startWalletShow, setStartWalletShow] = useState<any>(false);
+  const [viewSecrateKeyShow, setviewSecrateKeyShow] = useState<any>(false);
+  const [displaySecrateKeyShow, setDisplaySecrateKeyShow] =
+    useState<any>(false);
+  const [verifySecrateKeyShow, setVerifySecrateKeyShow] = useState<any>(false);
+  const [walletWelcomModalShow, setWalletWelcomModalShow] =
+    useState<any>(false);
+
+  const openPinCreateModal = (e: any) => {
+    console.log("openPinCreateModal  called !");
+    setWalletWelcomModalShow(false);
+    setPinCreateModalShow(true);
+  };
+  const handlePinCreateModal = () => {
+    console.log("handlePinCreateModal");
+    setPinCreateModalShow(false);
+    setLoginModalShow(true);
+  };
+  const handleLoginModal = () => {
+    console.log("handlePinCreateModal");
+    setLoginModalShow(false);
+    setStartWalletShow(true);
+  };
+  const handleStartwalletShow = () => {
+    console.log("handlePinCreateModal");
+    setStartWalletShow(false);
+    setviewSecrateKeyShow(true);
+  };
+  const handleViewSecratekey = () => {
+    console.log("handlePinCreateModal");
+    setviewSecrateKeyShow(false);
+    setDisplaySecrateKeyShow(true);
+  };
+  const handleViewSecratekeyContinue = () => {
+    console.log("handlePinCreateModal");
+    setDisplaySecrateKeyShow(false);
+    setviewSecrateKeyShow(false);
+    setVerifySecrateKeyShow(true);
+  };
+  const handleDisplayContinue = () => {
+    console.log("handlePinCreateModal");
+    setDisplaySecrateKeyShow(false);
+    setVerifySecrateKeyShow(true);
+  };
+
   const {
     loading: loadingVideos,
     error: errorVideos,
@@ -56,7 +116,11 @@ export function Home(props: any) {
   const dispatch = useDispatch<any>();
   React.useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
-      navigate("/welcome");
+      // navigate("/welcome");
+      setWelcomeModalShow(true);
+    }
+    if (!userInfo) {
+      setSigninModalShow(true);
     }
 
     dispatch(listScreens({}));
@@ -84,6 +148,47 @@ export function Home(props: any) {
   return (
     <Box px="2" pt="20" color="black.500">
       {/* Container */}
+
+      <SignInModal
+        show={signinModalShow}
+        onHide={() => setSigninModalShow(false)}
+      />
+      <WelcomeModal
+        show={welcomeModalShow}
+        onHide={() => setWelcomeModalShow(false)}
+        onClick={openPinCreateModal}
+      />
+      <PinCreateModal
+        show={pinCreateModal}
+        onHide={() => setPinCreateModalShow(false)}
+        onClick={handlePinCreateModal}
+      />
+      <LoginModal
+        show={loginModalShow}
+        onHide={() => setLoginModalShow(false)}
+        onClick={handleLoginModal}
+      />
+      <StartWalletModal
+        show={startWalletShow}
+        onHide={() => setStartWalletShow(false)}
+        onClick={handleStartwalletShow}
+      />
+      <ViewSecrateKeyModal
+        show={viewSecrateKeyShow}
+        onHide={() => setviewSecrateKeyShow(false)}
+        onClick={handleViewSecratekey}
+        onContinue={handleViewSecratekeyContinue}
+      />
+      <DisplaySecrateKeyModal
+        show={displaySecrateKeyShow}
+        onHide={() => setDisplaySecrateKeyShow(false)}
+        onContinue={handleDisplayContinue}
+      />
+      <VerifySecrateKeyModal
+        show={verifySecrateKeyShow}
+        onHide={() => setVerifySecrateKeyShow(false)}
+      />
+
       <Box maxW="container.lg" mx="auto" pb="8">
         <Stack p="1" color="">
           {loadingScreens || loadingVideos ? (

@@ -61,7 +61,7 @@ export function PleaBucket(props: any) {
     }
 
     if (!userInfo) {
-      navigate(redirect);
+      //navigate(redirect);
     }
 
     dispatch(listAllPleas());

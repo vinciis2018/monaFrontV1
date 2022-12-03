@@ -1,0 +1,9 @@
+.modal-content {
+    /* background-color: rgb(225,225,225, 0.1); */
+    /* background: linear-gradient(#870aec, #6e0b81) */
+    background: rgba(255, 255, 255, 0);
+    transform: translateY(50px);
+	  transition: 0.5s;
+    padding: 20;
+
+  }

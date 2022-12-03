@@ -74,7 +74,7 @@ export function Screens(props: any) {
     }
 
     if (!userInfo) {
-      navigate(redirect);
+      //navigate(redirect);
     }
 
     dispatch(listScreens({}));

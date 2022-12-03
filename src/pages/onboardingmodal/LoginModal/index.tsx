@@ -1,4 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Modal } from "react-bootstrap";
+import { Box, Text, Flex, Button, Stack, IconButton } from "@chakra-ui/react";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import { VerticalLabels } from "../VerticalLabels";
 import { useSelector } from "react-redux";
 // hooks
 import { useWallet, useLogin } from "components/contexts";
@@ -7,17 +11,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { ERROR_IDS } from "utils/constants";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
-import {
-  Box,
-  Tooltip,
-  Image,
-  Center,
-  Stack,
-  Text,
-  Button,
-} from "@chakra-ui/react";
 
-export function Login() {
+export function LoginModal(props: any) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { login } = useLogin();
@@ -39,6 +34,8 @@ export function Login() {
 
   const onClick = () => {
     checkPin(pin);
+    console.log("Pin is correct");
+    props.onClick();
   };
 
   const checkPin = (pincode: string) => {
@@ -93,77 +90,61 @@ export function Login() {
   };
 
   return (
-    <Box px="2" pt="20" color="black.500">
-      <Center maxW="container.lg" minH="600" mx="auto" pt="10" pb="8">
-        {loading ? (
-          <HLoading loading={loading} />
-        ) : error ? (
-          <MessageBox variant="danger">{error}</MessageBox>
-        ) : (
-          <Stack align="center" p="8" rounded="lg" shadow="card">
-            {/* {userInfo?.defaultWallet === undefined ||
-              (null && <Text color="black.500">{userInfo.defaultWallet}</Text>)} */}
-            {err && <MessageBox variant="danger">{err}</MessageBox>}
-            <Stack>
-              <Text
-                p="2"
-                fontSize="lg"
-                color="black.500"
-                textAlign="center"
-                fontWeight="600"
-              >
-                Please login to continue
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      backdrop="static"
+      keyboard={false}
+    >
+      <Modal.Body>
+        <Stack align="end" justifyContent="flex-end">
+          <IconButton
+            bg="none"
+            icon={
+              <AiOutlineCloseCircle
+                size="40px"
+                fontWeight="10"
+                color="black"
+                onClick={props.onHide}
+              />
+            }
+            aria-label="Close"
+          />
+        </Stack>
+        <VerticalLabels activeStep={props.activeStep} />
+        <Stack align="center" justifyContent="center">
+          {loading ? (
+            <HLoading loading={loading} />
+          ) : error ? (
+            <MessageBox variant="danger">{error}</MessageBox>
+          ) : null}
+          <Box alignItems="center" mt="30">
+            <Box alignItems="center" mt="10">
+              <Text textAlign="left" fontSize="xs" fontWeight="600">
+                Enter PIN
               </Text>
-              <hr />
-              {/* <Text>{userInfo.defaultWallet}</Text> */}
-
-              <Tooltip
-                rounded="lg"
-                shadow="card"
-                bgColor="violet.500"
-                p="4"
-                label="paisa hi paisa hoga"
-                aria-label="A tooltip"
-              >
-                <Image
-                  alt="paisa hi paisa hoga"
-                  p="4"
-                  src={`https://cdna.iconscout.com/img/get-started.23be618.png?w=500&h=0&f=png`}
-                />
-              </Tooltip>
-              <Box align="center">
-                <hr />
-                <Text
-                  textAlign="center"
-                  px="4"
-                  pt="4"
-                  fontSize="xs"
-                  color="black.500"
-                  fontWeight="600"
-                >
-                  Enter your 6 digit secret pin
-                </Text>
-                <HPasswordInput
-                  label="Enter Access PIN"
-                  onChange={setPin}
-                  onComplete={completedPin}
-                  labelAlign="center"
-                />
-              </Box>
-            </Stack>
-            {activeBtn && (
-              <Button
-                variant="outline"
-                width="50%"
-                color="violet.500"
-                onClick={onClick}
-              >
-                Log In
+              <HPasswordInput
+                label="Enter Access PIN"
+                onChange={setPin}
+                onComplete={completedPin}
+                labelAlign="center"
+              />
+            </Box>
+            <Flex
+              direction="column"
+              alignItems="center"
+              mt="10"
+              mb="40"
+              justifyContent="center"
+            >
+              <Button bgColor="#403F49" color="#EEEEEE" width="40" mt="3">
+                Continue
               </Button>
-            )}
-          </Stack>
-        )}
-      </Center>
-    </Box>
+            </Flex>
+          </Box>
+        </Stack>
+      </Modal.Body>
+    </Modal>
   );
 }

@@ -115,7 +115,7 @@ export function AdvertDetails(props: any) {
     }
 
     if (!userInfo) {
-      navigate(redirect);
+      //navigate(redirect);
     }
 
     dispatch(getVideoDetails(videoId));

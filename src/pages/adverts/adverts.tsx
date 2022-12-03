@@ -58,7 +58,7 @@ export function Adverts(props: any) {
     if (userInfo) {
       dispatch(userVideosList(userInfo));
     } else {
-      navigate(redirect);
+      //navigate(redirect);
     }
     dispatch(listAllVideos());
   }, [dispatch, navigate, redirect, userInfo]);
