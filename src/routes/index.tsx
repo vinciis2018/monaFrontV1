@@ -55,7 +55,7 @@ import {
   // NFT,
   // CustomCreate,
   CreateResetPassword,
-  Home,
+  // Home,
   Page404,
   UserProfile1,
   WalletPage,
