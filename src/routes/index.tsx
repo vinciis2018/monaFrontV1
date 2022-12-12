@@ -72,7 +72,7 @@ export const PublicRoutes = () => {
       <Nav />
       <Routes>
         {/* onboarding */}
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/key-management" element={<KeyManagement />} />
         <Route path="/key-phrase-save" element={<KeyPhraseSave />} />
