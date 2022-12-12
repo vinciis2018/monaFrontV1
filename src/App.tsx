@@ -16,18 +16,12 @@ import {
 } from "components/contexts";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { StepsStyleConfig as Steps } from "chakra-ui-steps";
+import { ChakraProvider } from "@chakra-ui/react";
 import BasicStyle from "theme/basicStyle";
 import GlobalStyle from "theme/globalStyle";
 
-const theme = extendTheme({
-  components: {
-    Steps,
-  },
-});
 // TODO: to be deleted
-// import { theme } from "theme/Theme.base";
+import { theme } from "theme/Theme.base";
 
 const queryClient = new QueryClient();
 

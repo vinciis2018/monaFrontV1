@@ -3,8 +3,69 @@ import { Modal } from "react-bootstrap";
 import { Box, Text, Flex, Button, Stack, IconButton } from "@chakra-ui/react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { VerticalLabels } from "../VerticalLabels";
+// import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+// hooks
+import { useLogin, useWallet } from "components/contexts";
+import { useNavigate } from "react-router-dom";
+
+// import { isPWA } from "utils/util";
+import { createWallet, editWallet } from "../../../Actions/walletActions";
+// import { signout } from "Actions/userActions";
+// import MessageBox from "components/atoms/MessageBox";
+// import HLoading from "components/atoms/HLoading";
 
 export function StartWalletModal(props: any) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<any>();
+
+  const { register } = useLogin();
+
+  const {
+    setupPin,
+    generateAndSave,
+    getTempSavedPin,
+    wipeTempSavedPin,
+    getArweavePublicAddress,
+  } = useWallet();
+
+  const userSignin = useSelector((state: any) => state.userSignin);
+  const { userInfo } = userSignin;
+  // let deferredPrompt: Event;
+
+  const registerUser = () => {
+    const expired = Math.floor(Date.now() / 1000) + 10 * 60; // 10 mins
+    register(expired);
+
+    getTempSavedPin().then((pin: string | null) => {
+      if (pin) {
+        setupPin(pin)
+          .then(() => wipeTempSavedPin())
+          .then(() => generateAndSave(pin));
+        const defWallet = getArweavePublicAddress();
+        console.log("defWallet : ", defWallet);
+        if (userInfo?.defaultWallet === undefined || null || "") {
+          console.log("userInfo?.defaultWallet === undefined");
+          dispatch(createWallet(defWallet));
+        }
+        if (userInfo?.defaultWallet !== defWallet) {
+          console.log("userInfo?.defaultWallet !== defWallet");
+          dispatch(
+            editWallet({
+              defWallet,
+            })
+          );
+        }
+        navigate("/view-secrate-key");
+      } else {
+        navigate("/pin-create");
+      }
+    });
+  };
+
+  const onClick = async () => {
+    registerUser();
+  };
   return (
     <Modal
       {...props}
@@ -75,7 +136,7 @@ export function StartWalletModal(props: any) {
                 width="254px"
                 fontSize="24px"
                 borderRadius="4px"
-                onClick={props.onClick}
+                onClick={onClick}
               >
                 Start
               </Button>

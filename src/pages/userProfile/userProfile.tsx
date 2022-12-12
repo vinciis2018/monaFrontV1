@@ -108,7 +108,7 @@ export function UserProfile1(props: any) {
     }
 
     if (!userInfo) {
-      //navigate(redirect);
+      navigate(redirect);
     } else {
       dispatch(getMyMedia());
     }

@@ -34,8 +34,6 @@ export function LoginModal(props: any) {
 
   const onClick = () => {
     checkPin(pin);
-    console.log("Pin is correct");
-    props.onClick();
   };
 
   const checkPin = (pincode: string) => {
@@ -53,7 +51,7 @@ export function LoginModal(props: any) {
               if (target) {
                 navigate("/" + target);
               } else {
-                navigate("/setting");
+                navigate("/walletpage");
               }
             })
             .catch((error: Error) => {
@@ -76,7 +74,7 @@ export function LoginModal(props: any) {
 
   useEffect(() => {
     if (!userInfo) {
-      //navigate("/signin");
+      navigate("/signin");
     }
   }, [navigate, userInfo]);
 
@@ -138,7 +136,13 @@ export function LoginModal(props: any) {
               mb="40"
               justifyContent="center"
             >
-              <Button bgColor="#403F49" color="#EEEEEE" width="40" mt="3">
+              <Button
+                bgColor="#403F49"
+                color="#EEEEEE"
+                width="40"
+                mt="3"
+                onClick={() => onClick()}
+              >
                 Continue
               </Button>
             </Flex>

@@ -59,7 +59,7 @@ export function EmailVerification(props: any) {
   };
   const handleAllReadyAccount = () => {
     console.log("handleAllReadyAccount");
-    //navigate(`/signin?redirect=${redirect}`);
+    navigate(`/signin?redirect=${redirect}`);
   };
 
   useEffect(() => {

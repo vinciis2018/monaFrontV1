@@ -16,6 +16,7 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
+import { LoginModal } from "pages/onboardingmodal/LoginModal";
 
 export function Login() {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ export function Login() {
 
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo, loading, error } = userSignin;
+  const [loginModalShow, setLoginModalShow] = useState<any>(true);
 
   const {
     unlock,
@@ -79,7 +81,7 @@ export function Login() {
 
   useEffect(() => {
     if (!userInfo) {
-      //navigate("/signin");
+      navigate("/signin");
     }
   }, [navigate, userInfo]);
 
@@ -94,6 +96,10 @@ export function Login() {
 
   return (
     <Box px="2" pt="20" color="black.500">
+      <LoginModal
+        show={loginModalShow}
+        onHide={() => setLoginModalShow(false)}
+      />
       <Center maxW="container.lg" minH="600" mx="auto" pt="10" pb="8">
         {loading ? (
           <HLoading loading={loading} />

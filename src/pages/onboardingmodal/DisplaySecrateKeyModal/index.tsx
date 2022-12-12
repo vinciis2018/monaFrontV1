@@ -1,28 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Modal } from "react-bootstrap";
 import { Box, Text, Flex, Button, Stack, IconButton } from "@chakra-ui/react";
 
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { VerticalLabels } from "../VerticalLabels";
+
+import { splitArrayIntoHalf } from "utils/util";
+import { KeyPhraseItem } from "pages/onboarding/KeyConfirm/components/KeyPhraseItem";
+import MessageBox from "components/atoms/MessageBox";
+
+import { useNavigate } from "react-router-dom";
 import { useWallet } from "components/contexts";
+import HLoading from "components/atoms/HLoading";
 
 export function DisplaySecrateKeyModal(props: any) {
+  const navigate = useNavigate();
   const { mnemonics, isLoading } = useWallet();
-  console.log(mnemonics);
 
-  const [key, setKey] = useState<any>([]);
+  const [mnemonicsArray, setMnemonicsArray] = useState<string[]>([]);
+  const [error, setErr] = useState("");
 
   useEffect(() => {
     const mnemonic =
       "blossom race card chaos box always eye cluster hazard throw there involve";
+
     if (mnemonics) {
-      setKey(mnemonics.split(" "));
-      console.log("mnemonics", mnemonics);
-    } else {
-      setKey(mnemonic.split(" "));
-      console.log("mnemonic display secrate key", mnemonic);
+      setMnemonicsArray(mnemonics.split(" "));
     }
-  }, []);
+    // else {
+    //   setMnemonicsArray(mnemonic.split(" "));
+    // }
+  }, [mnemonics]);
+
+  const onConfirm = async () => {};
+
+  const { firstHalf: leftRowMnemonics, secondHalf: rightRowMnemonics } =
+    useMemo(() => splitArrayIntoHalf(mnemonicsArray), [mnemonicsArray]);
+
+  const renderKeyPhrase = (keyword: string, index: number) => {
+    const isInput = false;
+    const inputValue = "";
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+      console.log(e.target.value);
+    return (
+      <KeyPhraseItem
+        key={keyword}
+        keyword={keyword}
+        isInput={isInput}
+        label={`${index + 1}`}
+        inputValue={inputValue}
+        onInputChange={handleInputChange}
+      />
+    );
+  };
+
   return (
     <Modal
       {...props}
@@ -48,12 +79,7 @@ export function DisplaySecrateKeyModal(props: any) {
         </Stack>
         <VerticalLabels />
         <Stack align="center" justifyContent="center" px="">
-          <Box
-            alignItems="center"
-            justifyContent="center"
-            marginBottom=""
-            p="15"
-          >
+          <Box align="center" justifyContent="center" marginBottom="" p="15">
             <Text
               color="#000000"
               fontSize="18px"
@@ -67,59 +93,32 @@ export function DisplaySecrateKeyModal(props: any) {
               keep it in secure place. You’ll be asked to re enter this Phrase
               on the next step.
             </Text>
+            {isLoading && <HLoading loading={isLoading} />}
+            {error !== "" && <MessageBox variant="danger">{error}</MessageBox>}
+
             <Box
               bgColor="#3C3C3C"
               alignItems="center"
               color="#EFEFEF"
               justifyContent="center"
               mt="10"
+              width="80%"
+              borderRadius="8px"
+              fontSize="14px"
             >
               <Flex direction="row" justifyContent="space-between" p="10">
-                <Flex
-                  align="flex-start"
-                  direction="column"
-                  justifyContent="space-between"
-                >
-                  {key.map((eachKey: string, index: number) => {
-                    if (index <= 3) {
-                      return (
-                        <Text key={index + 1}>
-                          {index + 1}. {eachKey}
-                        </Text>
-                      );
-                    }
+                <Box flex={1}>
+                  {leftRowMnemonics.map((keyword, index) => {
+                    return renderKeyPhrase(keyword, index);
                   })}
-                </Flex>
-                <Flex
-                  align="flex-start"
-                  direction="column"
-                  justifyContent="space-between"
-                >
-                  {key.map((eachKey: string, index: number) => {
-                    if (index > 3 && index <= 7) {
-                      return (
-                        <Text key={index + 1}>
-                          {index + 1}. {eachKey}
-                        </Text>
-                      );
-                    }
+                </Box>
+                <Box flex={1}>
+                  {rightRowMnemonics.map((keyword, index) => {
+                    // moving 6 positions, as this is second half of the array
+                    index = index + 6;
+                    return renderKeyPhrase(keyword, index);
                   })}
-                </Flex>
-                <Flex
-                  align="flex-start"
-                  direction="column"
-                  justifyContent="space-between"
-                >
-                  {key.map((eachKey: string, index: number) => {
-                    if (index > 7 && index < 12) {
-                      return (
-                        <Text key={index + 1}>
-                          {index + 1}. {eachKey}
-                        </Text>
-                      );
-                    }
-                  })}
-                </Flex>
+                </Box>
               </Flex>
             </Box>
             <Flex align="center" justifyContent="center">
@@ -129,7 +128,7 @@ export function DisplaySecrateKeyModal(props: any) {
                 width="40"
                 mt="5"
                 mb=""
-                onClick={props.onContinue}
+                onClick={() => navigate("/key-confirm")}
               >
                 Continue
               </Button>

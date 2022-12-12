@@ -36,9 +36,19 @@ export const Item = ({
   title: string | number;
 }) => {
   return (
-    <Box display="flex" align="center" marginBottom="5px">
-      <Text sx={{ color: "black", minWidth: "30px" }}>{label}.</Text>
-      <Text sx={{ color: "black" }}>{title}</Text>
+    <Box
+      display="flex"
+      alignItems="center"
+      marginBottom="10px"
+      bgColor="#F3F3F3"
+      color="#000000"
+      width="80%"
+      p="2"
+      borderRadius="4px"
+      height="38px"
+    >
+      <Text>{label}.</Text>
+      <Text ml="2">{title}</Text>
     </Box>
   );
 };

@@ -87,7 +87,12 @@ export function retrieveAndDecryptContent(
       localforage.getItem<ArrayBuffer | null>(IV_KEY),
     ]).then(([retrievedContent, retrievedIv]) => {
       if (retrievedContent && retrievedIv) {
-        console.log(retrievedContent, retrievedIv, key);
+        console.log(
+          "retrievedContent, retrievedIv, key",
+          retrievedContent,
+          retrievedIv,
+          key
+        );
         return decrypt(retrievedContent, retrievedIv, key)
           .then((decryptedContent) =>
             decode<EncryptedDataModel>(decryptedContent)

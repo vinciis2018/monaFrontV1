@@ -22,13 +22,6 @@ import {
   IconButton,
   Tooltip,
   Image,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  // ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
 } from "@chakra-ui/react";
 // import { isPWA } from "utils/util";
 import { editWallet } from "../../../Actions/walletActions";
@@ -54,7 +47,6 @@ import {
 import Logo from "assets/logo.png";
 import Name from "assets/name.png";
 import { arweave_icon, koii_icon, mona_icon } from "assets/svgs";
-import { Signup } from "pages";
 
 export const Nav = () => {
   const { width } = useWindowSize();
@@ -110,23 +102,24 @@ export const Nav = () => {
   }, [dispatch, userInfo, isLoading, getArweavePublicAddress, walletBalance]);
 
   const signoutHandler = () => {
+    console.log("signoutHandler called!");
     lockUser();
     logoutUser();
     lock();
     dispatch(signout());
-    // navigate("/signin");
+    navigate("/signin");
   };
 
   const lockWallet = () => {
     lockUser();
     logoutUser();
     lock();
-    // navigate("/login");
+    navigate("/login");
   };
 
   const onWalletClick = () => {
     if (!userInfo) {
-      // navigate("/signin");
+      navigate("/signin");
     }
   };
 
@@ -140,25 +133,6 @@ export const Nav = () => {
 
   return (
     <Box __css={style} bg="white" px="4" color="white" shadow="card">
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        finalFocusRef={btnRef}
-        scrollBehavior="inside"
-        size="full"
-        isCentered
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalCloseButton />
-          <ModalBody>
-            <Box p="50" align="center" justifyContent="center">
-              <Signup />
-            </Box>
-          </ModalBody>
-          <ModalFooter></ModalFooter>
-        </ModalContent>
-      </Modal>
       {loadingUserInfo ? (
         <HLoading loading={loadingUserInfo} />
       ) : errorUserInfo ? (
@@ -177,8 +151,8 @@ export const Nav = () => {
                 <>
                   <Button
                     bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
-                    // as={RouterLink}
-                    // to={`/signin`}
+                    as={RouterLink}
+                    to={`/signin`}
                     size="sm"
                     fontSize="xs"
                     onClick={onOpen}
@@ -352,8 +326,8 @@ export const Nav = () => {
               {!userInfo ? (
                 <Button
                   bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
-                  // as={RouterLink}
-                  // to={`/signin`}
+                  as={RouterLink}
+                  to={`/signin`}
                   size="sm"
                   fontSize="xs"
                   onClick={onOpen}

@@ -18,7 +18,6 @@ import {
   Checkbox,
   InputGroup,
   InputRightElement,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { Modal } from "react-bootstrap";
 
@@ -46,23 +45,29 @@ export function SignInModal(props: any) {
   const clientId =
     "829203424949-dkctdksnijr38djuoa2mm3i7m1b979ih.apps.googleusercontent.com";
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [email, setEmail] = useState<any>("");
   const [password, setPassword] = useState<any>("");
   const [showPassword, setShowPassword] = useState<any>(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
-  const emailError = email === "";
-  const passwordError = password === "";
+  const [emailErrorStatus, setEmailErrorStatus] = useState<any>(false);
+  const [emailError, setEmailError] = useState<any>("");
+  const [passwordErrorStatus, setPasswordErrorStatus] = useState<any>(false);
+  const [passwordError, setPasswordError] = useState<any>("");
 
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo, loading, error } = userSignin;
 
   const dispatch = useDispatch<any>();
 
-  const redirect = props?.location?.search.split("=")[1]
+  const redirect = props?.location?.search
     ? props?.location?.search.split("=")[1]
-    : "/welcome";
-
+    : "/";
+  function validateEmail(email: string) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    return false;
+  }
   useEffect(() => {
     const initClient = () => {
       gapi.client.init({
@@ -74,12 +79,12 @@ export function SignInModal(props: any) {
 
     if (userInfo) {
       if (userInfo.defaultWallet) {
-        navigate("/");
+        navigate(redirect);
       } else {
-        navigate("/");
+        navigate("/welcome");
       }
     }
-  }, [props?.history, redirect, userInfo, navigate]);
+  }, [props?.history, redirect, userInfo, navigate, error]);
 
   const onSuccess = async (res: any) => {
     setEmail(res.profileObj.email);
@@ -91,12 +96,17 @@ export function SignInModal(props: any) {
   const submitHandler = (e: any) => {
     e.preventDefault();
     console.log("signin called");
-    dispatch(signin(email, password));
-    props.onHide();
+    if (validateEmail(email)) {
+      dispatch(signin(email, password));
+      props.onHide();
+    } else {
+      setEmailErrorStatus(true);
+      setEmailError("Please enter valid email");
+    }
   };
   const handleSignInModal = () => {
     props.onHide();
-    setEmailVerificationShow(true);
+    navigate("/signup");
   };
 
   return (
@@ -184,7 +194,7 @@ export function SignInModal(props: any) {
                   </Text>
                   {loading && <HLoading loading={loading} />}
                   {error && <MessageBox variant="danger">{error}</MessageBox>}
-                  <FormControl id="email" mt="3" isInvalid={emailError}>
+                  <FormControl id="email" mt="3" isInvalid={emailErrorStatus}>
                     <FormLabel fontSize="xs">Enter email</FormLabel>
                     <Stack direction="column" align="left">
                       <Input
@@ -198,13 +208,15 @@ export function SignInModal(props: any) {
                       {!emailError ? (
                         <FormHelperText></FormHelperText>
                       ) : (
-                        <FormErrorMessage>
-                          Please include ‘@’ in your email.
-                        </FormErrorMessage>
+                        <FormErrorMessage>{emailError}</FormErrorMessage>
                       )}
                     </Stack>
                   </FormControl>
-                  <FormControl id="password" mt="3" isInvalid={passwordError}>
+                  <FormControl
+                    id="password"
+                    mt="3"
+                    isInvalid={passwordErrorStatus}
+                  >
                     <FormLabel fontSize="xs">Password</FormLabel>
                     <Stack direction="column">
                       <Stack direction="row" align="center">
@@ -243,12 +255,10 @@ export function SignInModal(props: any) {
                           </InputRightElement>
                         </InputGroup>
                       </Stack>
-                      {!passwordError ? (
+                      {!error ? (
                         <FormHelperText></FormHelperText>
                       ) : (
-                        <FormErrorMessage>
-                          Please enter a valid password
-                        </FormErrorMessage>
+                        <FormErrorMessage>{error}</FormErrorMessage>
                       )}
                     </Stack>
                   </FormControl>

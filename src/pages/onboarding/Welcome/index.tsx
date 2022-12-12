@@ -1,29 +1,59 @@
 /* eslint-disable no-console */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+//hooks
 import { useWallet } from "components/contexts";
-import {
-  Button,
-  Flex,
-  Image,
-  Text,
-  Stack,
-  Center,
-  Box,
-  Tooltip,
-} from "@chakra-ui/react";
-import koii_large from "assets/koii.png";
-import mona_large from "assets/logo.png";
-import MessageBox from "components/atoms/MessageBox";
-import HLoading from "components/atoms/HLoading";
+
+import { Box } from "@chakra-ui/react";
+//onbordeing popup
+import { WelcomeModal } from "pages/onboardingmodal/WelcomeModal";
+import { LoginModal } from "pages/onboardingmodal/LoginModal";
+import { StartWalletModal } from "pages/onboardingmodal/StartWalletModal";
+import { ViewSecrateKeyModal } from "pages/onboardingmodal/ViewSecrateKeyModal";
+import { DisplaySecrateKeyModal } from "pages/onboardingmodal/DisplaySecrateKeyModal";
+import { VerifySecrateKeyModal } from "pages/onboardingmodal/VerifySecrateKeyModal";
 
 export function Welcome() {
   const navigate = useNavigate();
 
   const { hasEncryptedData } = useWallet();
+  const [welcomeModalShow, setWelcomeModalShow] = useState<any>(false);
+  const [loginModalShow, setLoginModalShow] = useState<any>(false);
+  const [startWalletShow, setStartWalletShow] = useState<any>(false);
+  const [viewSecrateKeyShow, setviewSecrateKeyShow] = useState<any>(false);
+  const [displaySecrateKeyShow, setDisplaySecrateKeyShow] =
+    useState<any>(false);
+  const [verifySecrateKeyShow, setVerifySecrateKeyShow] = useState<any>(false);
 
   const userSignin = useSelector((state: any) => state.userSignin);
+
+  const handleLoginModal = () => {
+    console.log("handlePinCreateModal");
+    setLoginModalShow(false);
+    setStartWalletShow(true);
+  };
+  const handleStartwalletShow = () => {
+    console.log("handlePinCreateModal");
+    setStartWalletShow(false);
+    setviewSecrateKeyShow(true);
+  };
+  const handleViewSecratekey = () => {
+    console.log("handlePinCreateModal");
+    setviewSecrateKeyShow(false);
+    setDisplaySecrateKeyShow(true);
+  };
+  const handleViewSecratekeyContinue = () => {
+    console.log("handlePinCreateModal");
+    setDisplaySecrateKeyShow(false);
+    setviewSecrateKeyShow(false);
+    setVerifySecrateKeyShow(true);
+  };
+  const handleDisplayContinue = () => {
+    console.log("handlePinCreateModal");
+    setDisplaySecrateKeyShow(false);
+    setVerifySecrateKeyShow(true);
+  };
   const { userInfo, loading, error } = userSignin;
 
   useEffect(() => {
@@ -33,7 +63,10 @@ export function Welcome() {
         navigate("/login");
       }
       if (!userInfo) {
-        //navigate("/signin");
+        navigate("/signin");
+      }
+      if (userInfo && !hasData) {
+        setWelcomeModalShow(true);
       }
     });
   }, [hasEncryptedData, navigate, userInfo]);
@@ -43,59 +76,36 @@ export function Welcome() {
   };
   return (
     <Box px="2" pt="20" color="black.500">
-      <Center maxW="container.lg" minH="600" mx="auto" pt="10" pb="8">
-        <Stack p="8" rounded="lg" shadow="card">
-          <Box align="center">
-            <Image width="15%" src={mona_large} />
-            <Flex px="2" justify="center" align="center">
-              <Text p="2" fontSize="xs">
-                Powered by
-              </Text>
-              <Image width="3%" src={koii_large} />
-            </Flex>
-          </Box>
-          <hr />
+      <WelcomeModal
+        show={welcomeModalShow}
+        onHide={() => setWelcomeModalShow(false)}
+      />
 
-          <Text px="4" textAlign="center" fontSize="lg" fontWeight="600">
-            Welcome to Monad
-          </Text>
-          {loading && <HLoading loading={loading} />}
-          {error && <MessageBox>{error}</MessageBox>}
-          {userInfo && (
-            <Box align="center">
-              <Text px="4" fontSize="sm">
-                Hey {userInfo.name}, thank you for your registration.
-                <br />
-                Please follow the instruction process for creating your finnie
-                wallet on Monad.
-              </Text>
-            </Box>
-          )}
-          <Tooltip
-            rounded="lg"
-            shadow="card"
-            bgColor="violet.500"
-            p="4"
-            label="ads becho, ads dekho"
-            aria-label="A tooltip"
-          >
-            <Image
-              onClick={onClick}
-              alt="ads dekho, ads becho"
-              p="4"
-              src="https://cdn3d.iconscout.com/3d/premium/thumb/marketing-campaign-3025712-2526910.png"
-            />
-          </Tooltip>
-          <Button
-            width="100%"
-            variant="outline"
-            color="violet.500"
-            onClick={onClick}
-          >
-            Get Started
-          </Button>
-        </Stack>
-      </Center>
+      <LoginModal
+        show={loginModalShow}
+        onHide={() => setLoginModalShow(false)}
+        onClick={handleLoginModal}
+      />
+      <StartWalletModal
+        show={startWalletShow}
+        onHide={() => setStartWalletShow(false)}
+        onClick={handleStartwalletShow}
+      />
+      <ViewSecrateKeyModal
+        show={viewSecrateKeyShow}
+        onHide={() => setviewSecrateKeyShow(false)}
+        onClick={handleViewSecratekey}
+        onContinue={handleViewSecratekeyContinue}
+      />
+      <DisplaySecrateKeyModal
+        show={displaySecrateKeyShow}
+        onHide={() => setDisplaySecrateKeyShow(false)}
+        onContinue={handleDisplayContinue}
+      />
+      <VerifySecrateKeyModal
+        show={verifySecrateKeyShow}
+        onHide={() => setVerifySecrateKeyShow(false)}
+      />
     </Box>
   );
 }

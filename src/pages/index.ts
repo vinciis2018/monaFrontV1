@@ -6,6 +6,7 @@ export { KeyConfirm } from "./onboarding/KeyConfirm";
 export { KeyRecovery } from "./onboarding/KeyRecovery";
 export { PinCreate } from "./onboarding/PinCreate";
 export { PinSuccess } from "./onboarding/PinSuccess";
+export { ViewSecrateKey } from "./onboarding/ViewSecrateKey";
 
 export { WelcomeModal } from "./onboardingmodal/WelcomeModal";
 export { LoginModal } from "./onboardingmodal/LoginModal";
@@ -16,11 +17,11 @@ export { VerifySecrateKeyModal } from "./onboardingmodal/VerifySecrateKeyModal";
 export { ViewSecrateKeyModal } from "./onboardingmodal/ViewSecrateKeyModal";
 
 // uploading
-export { CameraHome } from "./uploading/CameraHome";
-export { Active } from "./uploading/Active";
-export { PhotoView } from "./uploading/PhotoView";
-export { Success } from "./uploading/Success";
-export { UploadConfirm } from "./uploading/UploadConfirm";
+// export { CameraHome } from "./uploading/CameraHome";
+// export { Active } from "./uploading/Active";
+// export { PhotoView } from "./uploading/PhotoView";
+// export { Success } from "./uploading/Success";
+// export { UploadConfirm } from "./uploading/UploadConfirm";
 
 // auth
 export { Login } from "./auth/Login";
@@ -31,39 +32,42 @@ export { EmailVerification } from "./auth/EmailVerification";
 export { AccountSetUp } from "./auth/AccountSetUp";
 export { CreateResetPassword } from "./auth/CreateResetPassword";
 
+// auth popup
 export { EmailVerificationModal } from "./authPopup/EmailVerificationModal";
 export { ReSendEmailModal } from "./authPopup/ResendEmailModal";
 export { SignInModal } from "./authPopup/SignInModal";
 
 // setting
-export { Setting } from "./setting/Setting";
-export { Recovery } from "./setting/Recovery";
-export { RecoveryView } from "./setting/RecoveryView";
-export { WifiTesting } from "./setting/WifiTesting";
-export { SelfDestructPin } from "./setting/SelfDestructPin";
-export { SelfDestruct } from "./setting/SelfDestruct";
-export { Advanced } from "./setting/Advanced";
-export { UpdatePin } from "./setting/UpdatePin";
-export { UpdatePinSuccess } from "./setting/UpdatePinSuccess";
-export { SelfDestructPinSuccess } from "./setting/SelfDestructPinSuccess";
+// export { Setting } from "./setting/Setting";
+// export { Recovery } from "./setting/Recovery";
+// export { RecoveryView } from "./setting/RecoveryView";
+// export { WifiTesting } from "./setting/WifiTesting";
+// export { SelfDestructPin } from "./setting/SelfDestructPin";
+// export { SelfDestruct } from "./setting/SelfDestruct";
+// export { Advanced } from "./setting/Advanced";
+// export { UpdatePin } from "./setting/UpdatePin";
+// export { UpdatePinSuccess } from "./setting/UpdatePinSuccess";
+// export { SelfDestructPinSuccess } from "./setting/SelfDestructPinSuccess";
 // other
 export { Page404 } from "./404";
 
 export { Home } from "./home";
-export { MapBox } from "./map";
-export { NFT } from "./nft";
+export { HomePage } from "./home/HomePage";
+// export { MapBox } from "./map";
+// export { NFT } from "./nft";
 
-export { Screens, ScreenDetails, ScreenEdit, ScreenPlayer } from "./screen";
+// export { Screens, ScreenDetails, ScreenEdit, ScreenPlayer } from "./screen";
 
-export { Adverts, AdvertDetails, AdvertCreate, AdvertEdit } from "./adverts";
+// export { Adverts, AdvertDetails, AdvertCreate, AdvertEdit } from "./adverts";
 
-export { UserProfile } from "./profile";
+// export { UserProfile } from "./profile";
 export { UserProfile1 } from "./userProfile";
+export { WalletPage, PaymentReceipt, TopupWallet } from "./WalletPage";
 
-export { PleaBucket } from "./pleas";
+// export { PleaBucket } from "./pleas";
 
-export { UserDashboard, ScreenDashboard, CampaignDashboard } from "./dashboard";
+// export { UserDashboard, ScreenDashboard, CampaignDashboard } from "./dashboard";
 
-export { CustomImages } from "./custom";
+// export { CustomImages } from "./custom";
 
-export { CustomCreate } from "./Admin";
+// export { CustomCreate } from "./Admin";

@@ -10,6 +10,7 @@ import { AiOutlineArrowLeft, AiOutlineCloseCircle } from "react-icons/ai";
 import { KeyPhraseItem } from "./components/KeyPhraseItem";
 import { Box, Center, Flex, Stack, Text, Button } from "@chakra-ui/react";
 import MessageBox from "components/atoms/MessageBox";
+import { VerifySecrateKeyModal } from "pages/onboardingmodal/VerifySecrateKeyModal";
 
 const hiddenKeyPhrasesKeys = getUniqueRandomNumbersArray(3, 11);
 
@@ -19,6 +20,7 @@ export function KeyConfirm() {
   const { setSeedPhraseSaved } = useLogin();
   const [mnemonicsArray, setMnemonicsArray] = useState<string[]>([]);
   const [error, setErr] = useState("");
+  const [verifySecrateKeyShow, setVerifySecrateKeyShow] = useState<any>(true);
 
   const [hiddenPhrasesValues, setHiddenPhrasesValues] = useState(
     hiddenKeyPhrasesKeys.reduce<Record<string, string>>(
@@ -81,6 +83,10 @@ export function KeyConfirm() {
 
   return (
     <Box px="2" pt="20" color="black.500">
+      <VerifySecrateKeyModal
+        show={verifySecrateKeyShow}
+        onHide={() => setVerifySecrateKeyShow(false)}
+      />
       <Center maxW="container.lg" minH="600" mx="auto" pb="8">
         <Stack p="8" rounded="lg" shadow="card">
           <Flex p="4" justify="space-between" align="center">

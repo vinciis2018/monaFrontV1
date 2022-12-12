@@ -15,13 +15,17 @@ import {
   setPinSet,
   isPinSet,
 } from "services";
+import { useSteps } from "chakra-ui-steps";
+
 import { ERROR_IDS } from "utils/constants";
 import { WithChildren } from "types/utils";
 
 interface Context {
   mnemonics: any;
   isLoading: boolean;
+  activeStep: number;
 
+  nextStep: () => void;
   hasEncryptedData(): Promise<boolean>;
   generateAndSave(pin: string): Promise<void>;
   importAndSave(pin: string, mnemonics: string): Promise<void>;
@@ -43,6 +47,9 @@ interface Context {
 const Ctx = React.createContext<Context | undefined>(undefined);
 
 export const ContextProvider = ({ children }: WithChildren) => {
+  const { nextStep, prevStep, reset, activeStep } = useSteps({
+    initialStep: 0,
+  });
   const wallet = useMemo<Web>(() => new Web(), []);
   console.log("wallet : ", wallet);
   const [$jwk, set$jwk] = useState<Promise<JWKInterface> | undefined>(
@@ -54,22 +61,33 @@ export const ContextProvider = ({ children }: WithChildren) => {
   /**
    * Func Helpers
    */
-
+  console.log("mnemonics : ---------------57", mnemonics);
   const hasEncryptedData = (): Promise<boolean> => {
     return _hasEncryptedData();
   };
 
   const generateAndSave = (pin: string): Promise<void> => {
+    var startTime = performance.now();
+    console.log("generateAndSave called!");
     setIsLoading(true);
+    console.log(" generateAndSave wallet : ", wallet);
     const $walletGenerate = WalletHelper.generateAndSave(pin, wallet);
     const $newJwk = $walletGenerate.then(({ jwk }) => jwk);
     set$jwk($newJwk);
 
-    $walletGenerate.then(({ mnemonics }) => setMnemonics(mnemonics));
+    $walletGenerate.then(({ mnemonics }) => {
+      console.log("generateAndSave mnemonics : ", mnemonics);
+      setMnemonics(mnemonics);
+    });
+
     return $newJwk
       .then(() => {})
       .finally(() => {
         setIsLoading(false);
+        var endTime = performance.now();
+        console.log(
+          `Call to doSomething took ${endTime - startTime} milliseconds`
+        );
       });
   };
 
@@ -118,24 +136,30 @@ export const ContextProvider = ({ children }: WithChildren) => {
   const unlock = (pin: string): Promise<void> => {
     setIsLoading(true);
 
-    const $walletLoad = retrieveAndDecryptContent(pin).then((dataModel) =>
-      WalletHelper.importWallet(dataModel.jwk, wallet).then(() => dataModel)
-    );
-    set$jwk($walletLoad.then(({ jwk }) => jwk));
-    setMnemonics($walletLoad.then(({ mnemonics }) => mnemonics));
-    // $walletLoad.then(({ mnemonics }) => {
-    //   setMnemonics(mnemonics);
-    // });
-    return $walletLoad
-      .then((res) => {
-        // console.log(res);
-        // console.log(res.mnemonics);
-        setMnemonics(res.mnemonics);
-        // console.log(mnemonics);
+    const $walletLoad = retrieveAndDecryptContent(pin)
+      .then((dataModel) => {
+        console.log("data model : ", dataModel);
+        console.log("wallet : ", wallet);
+        return WalletHelper.importWallet(dataModel.jwk, wallet).then(
+          () => dataModel
+        );
       })
+      .catch((e) => {
+        console.log("Error : ", e);
+        return e;
+      });
+
+    set$jwk($walletLoad.then(({ jwk }) => jwk));
+    console.log("set$jwk ", $jwk);
+
+    $walletLoad.then(({ mnemonics }) => {
+      console.log("mn : ", mnemonics);
+      return setMnemonics(mnemonics);
+    });
+    return $walletLoad
+      .then(() => {})
       .finally(() => {
         setIsLoading(false);
-        // console.log(mnemonics);
       });
   };
 
@@ -183,6 +207,8 @@ export const ContextProvider = ({ children }: WithChildren) => {
       value={{
         mnemonics,
         isLoading,
+        nextStep,
+        activeStep,
         hasEncryptedData,
         generateAndSave,
         importAndSave,

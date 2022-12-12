@@ -16,12 +16,14 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { AiOutlineWarning } from "react-icons/ai";
+import { DisplaySecrateKeyModal } from "pages/onboardingmodal/DisplaySecrateKeyModal";
 
 export function KeyPhraseSave() {
   const navigate = useNavigate();
   const { setShowBackup } = useBackup();
   const [showKeys, setShowKeys] = useState<boolean>(false);
   const { mnemonics, isLoading } = useWallet();
+  const [displaySecrateKeyShow, setDisplaySecrateKeyShow] = useState<any>(true);
   // console.log(mnemonics);
 
   const onClick = async () => {
@@ -30,6 +32,11 @@ export function KeyPhraseSave() {
 
   return (
     <Box px="2" pt="20" color="black.500">
+      <DisplaySecrateKeyModal
+        show={displaySecrateKeyShow}
+        onHide={() => setDisplaySecrateKeyShow(false)}
+        // onContinue={handleDisplayContinue}
+      />
       <Center maxW="container.lg" minH="600" mx="auto" pb="8">
         <Stack p="8" rounded="lg" shadow="card">
           <Box align="center">
@@ -83,10 +90,6 @@ export function KeyPhraseSave() {
                       >
                         When you have a pen & paper ready. tap to reveal phrase.
                       </Text>
-                      {/* <CryptoBoard
-                        mnemonics={mnemonics}
-                        sx={{ filter: "blur(4px)", background: "none !important" }}
-                      /> */}
                     </>
                   )}
                   <Text

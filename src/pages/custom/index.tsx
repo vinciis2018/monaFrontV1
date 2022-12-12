@@ -1,1 +1,0 @@
-export { CustomImages } from "./customImages";

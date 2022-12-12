@@ -14,6 +14,8 @@ import {
   IconButton,
   Flex,
   SimpleGrid,
+  FormHelperText,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
@@ -22,20 +24,22 @@ import { gapi } from "gapi-script";
 import mylogo from "../../../assets/mylogo.png";
 import logo from "../../../assets/logo.png";
 import name from "../../../assets/name.png";
-import { signout, signup } from "../../../Actions/userActions";
+import { signup } from "../../../Actions/userActions";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
-// import { ReSendEmailModal } from "../ResendEmailModal";
+import { ReSendEmailModal } from "../ResendEmailModal";
 
 export function EmailVerificationModal(props: any) {
   const navigate = useNavigate();
   const dispatch = useDispatch<any>();
   const userSignup = useSelector((state: any) => state.userSignup);
+  const [resendEmailModalShow, setResendEmailModalShow] = useState<any>(false);
   const { userInfo, loading, error } = userSignup;
-  // const [resendEmailModalShoe, setResendEmailModalShoe] = useState<any>(false);
+  const [email, setEmail] = useState<any>("");
+  const [userName, setName] = useState<any>("abc");
+  const [emailErrorStatus, setEmailErrorStatus] = useState<any>(false);
+  const [emailError, setEmailError] = useState<any>("");
 
-  const [email, setEmail] = useState("");
-  const [userName, setName] = useState("abc");
   const clientId =
     "829203424949-dkctdksnijr38djuoa2mm3i7m1b979ih.apps.googleusercontent.com";
 
@@ -43,12 +47,23 @@ export function EmailVerificationModal(props: any) {
     ? props?.location?.search.split("=")[1]
     : "/welcome";
 
+  function ValidateEmail(email: string) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    return false;
+  }
+
   const submitHandler = async (e: any) => {
     e.preventDefault();
-    dispatch(signup(userName, email, ""));
-    // setResendEmailModalShoe(true);
-
-    // navigate("/welcome");
+    if (ValidateEmail(email)) {
+      dispatch(signup(userName, email, "11111111"));
+      props.onHide();
+      setResendEmailModalShow(true);
+    } else {
+      setEmailErrorStatus(true);
+      setEmailError("Please enter valid email");
+    }
   };
 
   const onSuccess = async (res: any) => {
@@ -58,9 +73,6 @@ export function EmailVerificationModal(props: any) {
   const onFailure = (err: any) => {
     console.log("failed:", err);
     alert(err);
-  };
-  const handleAllReadyAccount = () => {
-    console.log("handleAllReadyAccount");
   };
 
   useEffect(() => {
@@ -75,11 +87,17 @@ export function EmailVerificationModal(props: any) {
     };
     gapi.load("client:auth2", initClient);
 
-    dispatch(signout());
+    //dispatch(signout());
   }, [dispatch, props?.history, redirect, userInfo]);
 
   return (
-    <Box>   
+    <Box>
+      <ReSendEmailModal
+        show={resendEmailModalShow}
+        onHide={() => setResendEmailModalShow(false)}
+        email={email}
+        name={userName}
+      />
       <Modal
         {...props}
         size="lg"
@@ -150,27 +168,31 @@ export function EmailVerificationModal(props: any) {
                 </Text>
                 {loading && <HLoading loading={loading} />}
                 {error && <MessageBox variant="danger">{error}</MessageBox>}
-                <FormControl id="email" mt="10">
+                <FormControl id="email" mt="10" isInvalid={emailErrorStatus}>
                   <FormLabel fontSize="s" mt="2">
                     Enter Email
                   </FormLabel>
 
-                  <Stack direction="row" align="center">
+                  <Stack direction="column" align="left">
                     <Input
                       id="email"
                       onChange={(e) => setEmail(e?.target?.value)}
-                      placeholder="rrrrrrrrr@gmail.com"
+                      placeholder="rrrrrrrr@gmail.com"
                       value={email}
                       required
                       type="email"
                     />
+                    {!emailError ? (
+                      <FormHelperText></FormHelperText>
+                    ) : (
+                      <FormErrorMessage>{emailError}</FormErrorMessage>
+                    )}
                   </Stack>
                 </FormControl>
 
                 <Stack align="center" mt="2">
                   <Button
                     width="100%"
-                    //   bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
                     bgColor="#D7380E"
                     color="#FFFFFF"
                     size="md"
@@ -223,7 +245,7 @@ export function EmailVerificationModal(props: any) {
                     fontSize="14"
                     fontWeight="1"
                     type="submit"
-                    onClick={handleAllReadyAccount}
+                    onClick={() => navigate("/signin")}
                   >
                     Already have an account ? Sign in
                   </Button>

@@ -25,7 +25,7 @@ export function WelcomeModal(props: any) {
         navigate("/login");
       }
       if (!userInfo) {
-        //navigate("/signin");
+        navigate("/signin");
       }
     });
   }, [hasEncryptedData, navigate, userInfo]);
@@ -88,6 +88,7 @@ export function WelcomeModal(props: any) {
                 fontStyle="semiBold"
                 align="center"
                 justifyContent="center"
+                type="Button"
               >
                 Import using secret recovery phrase
               </Text>
@@ -97,7 +98,7 @@ export function WelcomeModal(props: any) {
                 marginTop="3"
                 width="100%"
                 marginBottom="176"
-                onClick={(e) => props.onClick(e)}
+                onClick={() => navigate("/pin-create")}
               >
                 Create a new wallet
               </Button>

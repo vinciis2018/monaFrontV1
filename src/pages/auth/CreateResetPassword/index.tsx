@@ -22,7 +22,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import mylogo from "../../../assets/mylogo.png";
 import logo from "../../../assets/logo.png";
 import name from "../../../assets/name.png";
-import { signout, signup } from "../../../Actions/userActions";
+import { signup } from "../../../Actions/userActions";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
 
@@ -40,9 +40,11 @@ export function CreateResetPassword(props: any) {
   const redirect = props?.location?.search.split("=")[1]
     ? props?.location?.search.split("=")[1]
     : "/welcome";
+  console.log("redirect ", redirect);
 
   const userSignup = useSelector((state: any) => state.userSignup);
   const { userInfo, loading, error } = userSignup;
+  console.log("userInfo ", userInfo);
 
   const dispatch = useDispatch<any>();
   const submitHandler = async (e: any) => {
@@ -60,11 +62,11 @@ export function CreateResetPassword(props: any) {
     if (userInfo) {
       props?.history?.push(redirect);
     }
+    console.log("Insise useEffect create password");
     const url = window.location.pathname;
     const email = url.split("/");
     console.log("email : ", email[2]);
     setEmail(email[2]);
-    dispatch(signout());
   }, [dispatch, props?.history, redirect, userInfo]);
 
   return (

@@ -1,4 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
+import { StepsStyleConfig as Steps } from "chakra-ui-steps";
 
 export const theme = extendTheme({
   // Global Styles
@@ -121,6 +122,7 @@ export const theme = extendTheme({
         },
       },
     },
+    Steps,
     // Menu
     Menu: {
       baseStyle: {

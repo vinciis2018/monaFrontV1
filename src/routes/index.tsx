@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 // pages
 import {
   // onboarding
+
   Welcome,
   KeyManagement,
   KeyPhraseSave,
@@ -9,49 +10,59 @@ import {
   KeyRecovery,
   PinCreate,
   PinSuccess,
+
   // CameraHome,
-  Active,
-  PhotoView,
-  UploadConfirm,
-  Success,
+
+  // Active,
+  // PhotoView,
+  // UploadConfirm,
+  // Success,
+
   // auth
   Login,
   Logout,
   // setting
-  Setting,
-  Recovery,
-  RecoveryView,
-  WifiTesting,
-  SelfDestructPin,
-  SelfDestruct,
-  SelfDestructPinSuccess,
-  Advanced,
-  UpdatePin,
-  UpdatePinSuccess,
+
+  // Setting,
+  // Recovery,
+  // RecoveryView,
+  // WifiTesting,
+  // SelfDestructPin,
+  // SelfDestruct,
+  // SelfDestructPinSuccess,
+  // Advanced,
+  // UpdatePin,
+  // UpdatePinSuccess,
+
   // other
-  Page404,
   Signin,
   Signup,
-  Home,
-  MapBox,
-  Screens,
-  ScreenDetails,
-  ScreenPlayer,
-  Adverts,
-  AdvertDetails,
-  UserProfile,
-  ScreenEdit,
-  AdvertCreate,
-  AdvertEdit,
-  ScreenDashboard,
-  UserDashboard,
-  CampaignDashboard,
-  PleaBucket,
-  CustomImages,
-  NFT,
-  CustomCreate,
-  UserProfile1,
+  // MapBox,
+  // Screens,
+  // ScreenDetails,
+  // ScreenPlayer,
+  // Adverts,
+  // AdvertDetails,
+  // UserProfile,
+  // ScreenEdit,
+  // AdvertCreate,
+  // AdvertEdit,
+  // ScreenDashboard,
+  // UserDashboard,
+  // CampaignDashboard,
+  // PleaBucket,
+  // CustomImages,
+  // NFT,
+  // CustomCreate,
   CreateResetPassword,
+  Home,
+  Page404,
+  UserProfile1,
+  WalletPage,
+  PaymentReceipt,
+  TopupWallet,
+  ViewSecrateKey,
+  HomePage,
 } from "pages";
 import { Nav, Footer } from "components/common";
 
@@ -69,6 +80,8 @@ export const PublicRoutes = () => {
         <Route path="/key-recovery" element={<KeyRecovery />} />
         <Route path="/pin-create" element={<PinCreate />} />
         <Route path="/pin-success" element={<PinSuccess />} />
+        <Route path="/view-secrate-key" element={<ViewSecrateKey />} />
+
         {/* auth */}
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
@@ -78,74 +91,13 @@ export const PublicRoutes = () => {
           path="/create-reset-password/:email"
           element={<CreateResetPassword />}
         />
-
-        {/* upload */}
-        <Route path="/upload" element={<Active />} />
-        <Route path="/upload-active" element={<Active />} />
-        <Route path="/upload-photos" element={<PhotoView />} />
-        <Route path="/upload-confirm" element={<UploadConfirm />} />
-        <Route path="/upload-success/:cid" element={<Success />} />
-        <Route path="/customImages" element={<CustomImages />} />
-        {/* setting */}
-        <Route path="/setting/wifi-test" element={<WifiTesting />} />
-        <Route path="/setting/recovery" element={<Recovery />} />
-        <Route path="/setting/phrase-view" element={<RecoveryView />} />
-        <Route
-          path="/setting/update-pin-success"
-          element={<UpdatePinSuccess />}
-        />
-        <Route path="/setting/update-pin" element={<UpdatePin />} />
-        <Route
-          path="/setting/self-destruct-pin"
-          element={<SelfDestructPin />}
-        />
-        <Route
-          path="/setting/self-destruct-pin-success"
-          element={<SelfDestructPinSuccess />}
-        />
-        <Route path="/setting/self-destruct" element={<SelfDestruct />} />
-        <Route path="/setting/advanced" element={<Advanced />} />
-        <Route path="/setting" element={<Setting />} />
-
-        <Route path="/home" element={<Navigate to="/" />} />
-        <Route path="/mapbox" element={<MapBox />} />
-        <Route path="/mapbox/:screen" element={<MapBox />} />
-
-        <Route path="/screens" element={<Screens />} />
-        <Route path="/screen/:id" element={<ScreenDetails />} />
-        <Route path="/screen/:id/:txId" element={<ScreenDetails />} />
-        <Route path="/screen/:id/:txId/:gameId" element={<ScreenDetails />} />
-        <Route path="/myscreen/play/:id" element={<ScreenPlayer />} />
-        <Route path="/edit/screen/:id" element={<ScreenEdit />} />
-
-        <Route path="/adverts" element={<Adverts />} />
-        <Route path="/advert/:id" element={<AdvertDetails />} />
-        <Route path="/advert/:id/:txId" element={<AdvertDetails />} />
-        <Route path="/advert/:id/:txId/:screenId" element={<AdvertDetails />} />
-        <Route
-          path="/createCampaign/:screenId/:userId"
-          element={<AdvertCreate />}
-        />
-        <Route
-          path="/editAdvert/:id/:txId/:screenId"
-          element={<AdvertEdit />}
-        />
-
-        <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/userProfile1" element={<UserProfile1 />} />
+        <Route path="/home" element={<Navigate to="/" />} />
+        <Route path="/homepage" element={<HomePage />} />
 
-        <Route path="/dashboard/screen/:id" element={<ScreenDashboard />} />
-        <Route path="/dashboard/user/:id" element={<UserDashboard />} />
-        <Route
-          path="/dashboard/campaign/:id/:txId"
-          element={<CampaignDashboard />}
-        />
-
-        <Route path="/pleaBucket" element={<PleaBucket />} />
-
-        {/* <Route path="/wallet/:id/:wallet" element={<Wallet />} /> */}
-        <Route path="/customCreation/admin" element={<CustomCreate />} />
-        <Route path="/nft/:id" element={<NFT />} />
+        <Route path="/walletpage" element={<WalletPage />} />
+        <Route path="/paymentreceipt" element={<PaymentReceipt />} />
+        <Route path="/topup" element={<TopupWallet />} />
 
         <Route path="*" element={<Page404 />} />
       </Routes>

@@ -1,11 +1,17 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { Box, Text, Flex, Button, Stack, IconButton } from "@chakra-ui/react";
 
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { VerticalLabels } from "../VerticalLabels";
+import { useWallet } from "components/contexts";
+import HLoading from "components/atoms/HLoading";
 
 export function ViewSecrateKeyModal(props: any) {
+  const navigate = useNavigate();
+  const { isLoading } = useWallet();
+
   return (
     <div>
       <Modal
@@ -59,6 +65,7 @@ export function ViewSecrateKeyModal(props: any) {
                 justifyContent="center"
                 mt="10"
               >
+                {isLoading && <HLoading loading={isLoading} />}
                 <Flex align="center" direction="column">
                   <Text mt="5" fontSize="18px">
                     Tap to reveal your Secret Recovery Phrase
@@ -72,7 +79,7 @@ export function ViewSecrateKeyModal(props: any) {
                     width=""
                     mt="5"
                     mb="10"
-                    onClick={props.onClick}
+                    onClick={() => navigate("/key-phrase-save")}
                   >
                     View
                   </Button>
@@ -85,7 +92,7 @@ export function ViewSecrateKeyModal(props: any) {
                   width="40"
                   mt="5"
                   mb=""
-                  onClick={props.onContinue}
+                  onClick={() => navigate("/key-confirm")}
                 >
                   Continue
                 </Button>
