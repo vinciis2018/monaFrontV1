@@ -271,9 +271,10 @@ export function HomePage() {
                 bgColor="#F6F5F5"
                 borderRadius="12px"
                 boxShadow="2xl"
+                key={index}
               >
                 <Image src={eachCategory.image} alt=""></Image>
-                <Text color="#3E3D48" p="5" fontSixe="24px" fontWeight="600">
+                <Text color="#3E3D48" p="5" fontSize="24px" fontWeight="600">
                   {eachCategory.category}
                 </Text>
               </Box>
@@ -298,6 +299,7 @@ export function HomePage() {
                 height="446px"
                 borderRadius="16px"
                 boxShadow="2xl"
+                key={index}
               >
                 {/* image */}
                 <Box p="5">
@@ -434,12 +436,13 @@ export function HomePage() {
                 bgColor="#F6F5F5"
                 borderRadius="12px"
                 boxShadow="2xl"
+                key={index}
               >
                 <Image src={screen.image} alt="" p="5"></Image>
                 <Text
                   color="#403F49"
                   pl="5"
-                  fontSixe="24px"
+                  fontSize="24px"
                   fontWeight="bold"
                   align="left"
                 >
@@ -448,7 +451,7 @@ export function HomePage() {
                 <Text
                   color="#666666"
                   pl="5"
-                  fontSixe="16px"
+                  fontSize="16px"
                   fontWeight="semibold"
                   align="left"
                   mt="2"
