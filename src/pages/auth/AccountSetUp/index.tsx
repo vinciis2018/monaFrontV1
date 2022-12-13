@@ -62,6 +62,8 @@ export function AccountSetUp(props: any) {
     if (userInfo) {
       props?.history?.push(redirect);
     }
+    console.log("calling signout from account setuppage");
+
     dispatch(signout());
   }, [dispatch, props?.history, redirect, userInfo]);
 

@@ -58,7 +58,6 @@ export function Welcome() {
 
   useEffect(() => {
     hasEncryptedData().then((hasData) => {
-      console.log(hasData);
       if (hasData) {
         navigate("/login");
       }

@@ -46,7 +46,6 @@ export function Login() {
   const checkPin = (pincode: string) => {
     if (pincode !== "") {
       checkAndTriggerSelfDestruct(pincode).then((cleared) => {
-        // console.log(cleared);
         if (cleared) {
           // TODO: On Self Destruct App should be populated with safe content
           navigate("/");

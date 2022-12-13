@@ -51,7 +51,6 @@ export const ContextProvider = ({ children }: WithChildren) => {
     initialStep: 0,
   });
   const wallet = useMemo<Web>(() => new Web(), []);
-  console.log("wallet : ", wallet);
   const [$jwk, set$jwk] = useState<Promise<JWKInterface> | undefined>(
     undefined
   );
@@ -61,22 +60,18 @@ export const ContextProvider = ({ children }: WithChildren) => {
   /**
    * Func Helpers
    */
-  console.log("mnemonics : ---------------57", mnemonics);
   const hasEncryptedData = (): Promise<boolean> => {
     return _hasEncryptedData();
   };
 
   const generateAndSave = (pin: string): Promise<void> => {
     var startTime = performance.now();
-    console.log("generateAndSave called!");
     setIsLoading(true);
-    console.log(" generateAndSave wallet : ", wallet);
     const $walletGenerate = WalletHelper.generateAndSave(pin, wallet);
     const $newJwk = $walletGenerate.then(({ jwk }) => jwk);
     set$jwk($newJwk);
 
     $walletGenerate.then(({ mnemonics }) => {
-      console.log("generateAndSave mnemonics : ", mnemonics);
       setMnemonics(mnemonics);
     });
 
@@ -138,8 +133,6 @@ export const ContextProvider = ({ children }: WithChildren) => {
 
     const $walletLoad = retrieveAndDecryptContent(pin)
       .then((dataModel) => {
-        console.log("data model : ", dataModel);
-        console.log("wallet : ", wallet);
         return WalletHelper.importWallet(dataModel.jwk, wallet).then(
           () => dataModel
         );
@@ -150,10 +143,8 @@ export const ContextProvider = ({ children }: WithChildren) => {
       });
 
     set$jwk($walletLoad.then(({ jwk }) => jwk));
-    console.log("set$jwk ", $jwk);
 
     $walletLoad.then(({ mnemonics }) => {
-      console.log("mn : ", mnemonics);
       return setMnemonics(mnemonics);
     });
     return $walletLoad
@@ -173,7 +164,6 @@ export const ContextProvider = ({ children }: WithChildren) => {
   };
 
   const getArweavePublicAddress = (): string => {
-    console.log("---------getArweavePublicAddress : ", wallet.address);
     return wallet.address!;
   };
 

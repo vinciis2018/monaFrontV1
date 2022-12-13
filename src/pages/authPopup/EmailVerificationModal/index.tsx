@@ -24,7 +24,7 @@ import { gapi } from "gapi-script";
 import mylogo from "../../../assets/mylogo.png";
 import logo from "../../../assets/logo.png";
 import name from "../../../assets/name.png";
-import { signup } from "../../../Actions/userActions";
+import { signup, signout } from "../../../Actions/userActions";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
 import { ReSendEmailModal } from "../ResendEmailModal";
@@ -39,6 +39,7 @@ export function EmailVerificationModal(props: any) {
   const [userName, setName] = useState<any>("abc");
   const [emailErrorStatus, setEmailErrorStatus] = useState<any>(false);
   const [emailError, setEmailError] = useState<any>("");
+  //http://localhost:3000/create-reset-password/vishalkumar70522@gmail.com
 
   const clientId =
     "829203424949-dkctdksnijr38djuoa2mm3i7m1b979ih.apps.googleusercontent.com";
@@ -57,7 +58,7 @@ export function EmailVerificationModal(props: any) {
   const submitHandler = async (e: any) => {
     e.preventDefault();
     if (ValidateEmail(email)) {
-      dispatch(signup(userName, email, "11111111"));
+      dispatch(signup(userName, email, ""));
       props.onHide();
       setResendEmailModalShow(true);
     } else {
@@ -70,10 +71,7 @@ export function EmailVerificationModal(props: any) {
     setEmail(res.profileObj.email);
     setName(res.profileObj.name);
   };
-  const onFailure = (err: any) => {
-    console.log("failed:", err);
-    alert(err);
-  };
+  const onFailure = (err: any) => {};
 
   useEffect(() => {
     if (userInfo) {
@@ -86,8 +84,9 @@ export function EmailVerificationModal(props: any) {
       });
     };
     gapi.load("client:auth2", initClient);
+    console.log("calling signout from email verification page");
 
-    //dispatch(signout());
+    dispatch(signout());
   }, [dispatch, props?.history, redirect, userInfo]);
 
   return (

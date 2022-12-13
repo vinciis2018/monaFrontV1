@@ -14,10 +14,8 @@ import {
   BsArrowDownLeftCircle,
   BsArrowUp,
   BsArrowDown,
-  BsChevronDown,
   // BsCircle,
 } from "react-icons/bs";
-import { TbUser, TbBell, TbWallet } from "react-icons/tb";
 import { BiWalletAlt } from "react-icons/bi";
 export function WalletPage(props: any) {
   const navigate = useNavigate();
@@ -55,77 +53,10 @@ export function WalletPage(props: any) {
     },
   ];
   return (
-    <Box px="2" pt="20" color="black.500">
+    <Box px="2" pt="0" color="black.500">
       {/* Container */}
-      <Stack
-        align="center"
-        justifyContent="flex-end"
-        justifyItems=""
-        direction="row"
-        width="80%"
-        mt="1px"
-      >
-        <Text color="#3E3D48" fontSize="20px">
-          Screan Owners
-        </Text>
-        <Text color="#3E3D48" fontSize="20px" p="5">
-          My Screan
-        </Text>
 
-        <Box
-          borderRadius="100%"
-          border="1px"
-          height="40px"
-          width="40px"
-          align="center"
-        >
-          <IconButton
-            bg="none"
-            mt="1"
-            icon={<TbWallet size="20px" fontWeight="1" color="black" />}
-            aria-label="Send Money"
-          />
-        </Box>
-        <Box p="5">
-          <Box borderRadius="100%" border="1px" height="40px" width="40px">
-            <IconButton
-              bg="none"
-              mt="1"
-              icon={<TbBell size="20px" fontWeight="1" color="black" />}
-              aria-label="Send Money"
-            />
-          </Box>
-        </Box>
-
-        <Box borderRadius="100%" border="1px" height="40px" width="40px">
-          <IconButton
-            bg="none"
-            mt="1"
-            icon={
-              <TbUser
-                size="20px"
-                fontWeight="10"
-                color="black"
-                onClick={props.onHide}
-              />
-            }
-            aria-label="profile"
-          />
-        </Box>
-        <IconButton
-          bg="none"
-          icon={
-            <BsChevronDown
-              size="20px"
-              fontWeight="10"
-              color="black"
-              onClick={props.onHide}
-            />
-          }
-          aria-label="see profile"
-        />
-      </Stack>
-      <Box maxW="container.lg" mx="auto" pb="8" mt="10">
+      <Box maxW="container.lg" mx="auto" pb="8">
         <Center maxW="container.lg" mx="auto" pb="8">
           <Stack p="2">
             <Box

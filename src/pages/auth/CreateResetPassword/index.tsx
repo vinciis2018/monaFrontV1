@@ -40,11 +40,9 @@ export function CreateResetPassword(props: any) {
   const redirect = props?.location?.search.split("=")[1]
     ? props?.location?.search.split("=")[1]
     : "/welcome";
-  console.log("redirect ", redirect);
 
   const userSignup = useSelector((state: any) => state.userSignup);
   const { userInfo, loading, error } = userSignup;
-  console.log("userInfo ", userInfo);
 
   const dispatch = useDispatch<any>();
   const submitHandler = async (e: any) => {
@@ -65,7 +63,6 @@ export function CreateResetPassword(props: any) {
     console.log("Insise useEffect create password");
     const url = window.location.pathname;
     const email = url.split("/");
-    console.log("email : ", email[2]);
     setEmail(email[2]);
   }, [dispatch, props?.history, redirect, userInfo]);
 

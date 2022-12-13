@@ -64,12 +64,12 @@ import {
   ViewSecrateKey,
   HomePage,
 } from "pages";
-import { Nav, Footer } from "components/common";
+import { Footer, NavBar } from "components/common";
 
 export const PublicRoutes = () => {
   return (
     <>
-      <Nav />
+      <NavBar />
       <Routes>
         {/* onboarding */}
         <Route path="/" element={<HomePage />} />

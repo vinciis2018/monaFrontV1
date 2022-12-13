@@ -57,9 +57,10 @@ export function KeyRecovery() {
               const defWallet = getArweavePublicAddress();
               if (userInfo?.defaultWallet === undefined || null || "") {
                 dispatch(createWallet(defWallet));
+                console.log("calling signout from key recovery page");
                 dispatch(signout());
               }
-              navigate("/upload");
+              navigate("/");
             })
             .finally(() => {
               setLoading(false);

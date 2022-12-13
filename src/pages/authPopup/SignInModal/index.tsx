@@ -89,16 +89,13 @@ export function SignInModal(props: any) {
   const onSuccess = async (res: any) => {
     setEmail(res.profileObj.email);
   };
-  const onFailure = (err: any) => {
-    console.log("failed:", err);
-    alert(`onFailure:  ${err}`);
-  };
+  const onFailure = (err: any) => {};
   const submitHandler = (e: any) => {
     e.preventDefault();
-    console.log("signin called");
     if (validateEmail(email)) {
       dispatch(signin(email, password));
       props.onHide();
+      navigate("/");
     } else {
       setEmailErrorStatus(true);
       setEmailError("Please enter valid email");
@@ -156,7 +153,7 @@ export function SignInModal(props: any) {
                   <Image
                     src={mylogo}
                     width="100%"
-                    bgColor="rgba(244, 86, 0, 0.3)"
+                    // bgColor="rgba(244, 86, 0, 0.3)"
                     mt="20"
                   />
                 </Stack>

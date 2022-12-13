@@ -102,10 +102,10 @@ export const Nav = () => {
   }, [dispatch, userInfo, isLoading, getArweavePublicAddress, walletBalance]);
 
   const signoutHandler = () => {
-    console.log("signoutHandler called!");
     lockUser();
     logoutUser();
     lock();
+    console.log("calling signout from nav bar index page");
     dispatch(signout());
     navigate("/signin");
   };

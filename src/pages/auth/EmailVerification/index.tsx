@@ -53,10 +53,7 @@ export function EmailVerification(props: any) {
     setEmail(res.profileObj.email);
     setName(res.profileObj.name);
   };
-  const onFailure = (err: any) => {
-    console.log("failed:", err);
-    alert(err);
-  };
+  const onFailure = (err: any) => {};
   const handleAllReadyAccount = () => {
     console.log("handleAllReadyAccount");
     navigate(`/signin?redirect=${redirect}`);
@@ -73,6 +70,7 @@ export function EmailVerification(props: any) {
       });
     };
     gapi.load("client:auth2", initClient);
+    console.log("calling signout from email verification page");
 
     dispatch(signout());
   }, [dispatch, props?.history, redirect, userInfo]);

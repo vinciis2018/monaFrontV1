@@ -42,6 +42,7 @@ export function ReSendEmailModal(props: any) {
     if (userInfo) {
       props?.history?.push(redirect);
     }
+    console.log("calling signout from resendEmail page");
 
     dispatch(signout());
   }, [dispatch, props?.history, redirect, userInfo]);

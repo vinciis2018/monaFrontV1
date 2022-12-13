@@ -24,7 +24,6 @@ export function KeyPhraseSave() {
   const [showKeys, setShowKeys] = useState<boolean>(false);
   const { mnemonics, isLoading } = useWallet();
   const [displaySecrateKeyShow, setDisplaySecrateKeyShow] = useState<any>(true);
-  // console.log(mnemonics);
 
   const onClick = async () => {
     navigate("/key-confirm");

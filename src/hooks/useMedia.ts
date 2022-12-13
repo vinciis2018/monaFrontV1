@@ -6,12 +6,9 @@ interface Props {
 }
 
 const fetchMedia = async (id: string) => {
-  // console.log(id);
   try {
     if (!id) return undefined;
-    // console.log("data");
     const data = await axios.get(`https://ipfs.io/ipfs/${id}`);
-    // console.log(data);
     return data;
   } catch (error) {
     return undefined;
