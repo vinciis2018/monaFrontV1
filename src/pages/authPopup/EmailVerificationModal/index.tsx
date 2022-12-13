@@ -216,11 +216,15 @@ export function EmailVerificationModal(props: any) {
                     clientId={clientId}
                     buttonText="Log In with Google"
                     render={(renderProps) => (
-                      <Button
+                      <Stack
                         width="100%"
-                        variant="outline"
                         fontSize="14"
-                        fontWeight="1"
+                        align="center"
+                        direction="row"
+                        justifyContent="center"
+                        type="Button"
+                        border="1px"
+                        borderRadius="5px"
                         onClick={renderProps.onClick}
                       >
                         <IconButton
@@ -228,8 +232,8 @@ export function EmailVerificationModal(props: any) {
                           icon={<FcGoogle size="20px" color="black" />}
                           aria-label="Close"
                         />
-                        Log In with Google
-                      </Button>
+                        <Text>Log In with Google</Text>
+                      </Stack>
                     )}
                     onSuccess={onSuccess}
                     onFailure={onFailure}
