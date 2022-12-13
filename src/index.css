@@ -37,3 +37,14 @@ code {
   padding: 1rem;
   /* outline: none; */
 }
+
+.modal-90w{
+  /* min-width: 70%; */
+  margin: 0;
+  padding: 0;
+}
+
+.popup{
+  margin: -20px;
+  padding: 0;
+}

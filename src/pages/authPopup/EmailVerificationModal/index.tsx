@@ -104,155 +104,153 @@ export function EmailVerificationModal(props: any) {
         aria-labelledby="contained-modal-title-vcenter"
         backdrop="static"
         keyboard={false}
+        centered
       >
-        <Modal.Body>
-          <Box bg="#ffffff">
+        <Modal.Body className="popup">
+          <Box bgGradient="linear(to-t, #fffad9, #ffffff)">
             <SimpleGrid columns={[1, 2]} gap="0">
-              <Stack width="80%" bgColor="rgba(244, 86, 0, 0.3)">
+              <Stack width="90%" bgColor="rgba(244, 86, 0, 0.3)">
                 {/* backgroundImage={rectangle} backgroundPosition="center" backgroundRepeat="no-repeat" */}
 
-                <Flex direction="row" margin="5">
-                  <Image src={logo} height="46px" width="46px" />
+                <Flex align="center" m="5">
+                  <Image src={logo} height="" width="15%" />
                   <Image
                     src={name}
-                    height="27px"
-                    width="100px"
+                    height=""
+                    width="40%"
                     marginLeft="5"
                     marginTop="4"
                   />
                 </Flex>
                 <Text
-                  p="3"
-                  marginLeft="20"
+                  p="5"
                   align="left"
                   fontWeight="600"
-                  fontSize="16.33px"
-                  height="90px"
-                  width="250px"
+                  fontSize="md"
+                  width="80%"
                   color="#141414"
                 >
                   We are exited to offer free ads for first 100 brands
                 </Text>
-                <Stack rounded="lg" bg="#ffffff" mt="10">
+                <Stack rounded="lg" justifyContent="flex-end">
                   <Image
                     src={mylogo}
-                    width="350px"
-                    bgColor="rgba(244, 86, 0, 0.3)"
+                    width="100%"
+                    // bgColor="rgba(244, 86, 0, 0.3)"
+                    mt="20"
                   />
                 </Stack>
               </Stack>
-              <Stack width="100%" bg="#ffffff" pr="10">
-                <Stack align="end" justifyContent="flex-end" mt="3">
+              <Stack width="100%" bgGradient="linear(to-t, #fffad9, #ffffff)">
+                <Stack p="2" align="end" justifyContent="flex-end" mt="0">
                   <IconButton
                     bg="none"
                     icon={
                       <AiOutlineCloseCircle
-                        size="40px"
-                        fontWeight="10"
-                        color="black"
+                        size="lg"
+                        color="gray"
                         onClick={props.onHide}
                       />
                     }
                     aria-label="Close"
                   />
                 </Stack>
-                <Text
-                  mt="0"
-                  fontSize="20"
-                  textAlign="left"
-                  fontWeight="600"
-                  color="#333333"
-                >
-                  Create your account and start building your brand!
-                </Text>
-                {loading && <HLoading loading={loading} />}
-                {error && <MessageBox variant="danger">{error}</MessageBox>}
-                <FormControl id="email" mt="10" isInvalid={emailErrorStatus}>
-                  <FormLabel fontSize="s" mt="2">
-                    Enter Email
-                  </FormLabel>
-
-                  <Stack direction="column" align="left">
-                    <Input
-                      id="email"
-                      onChange={(e) => setEmail(e?.target?.value)}
-                      placeholder="rrrrrrrr@gmail.com"
-                      value={email}
-                      required
-                      type="email"
-                    />
-                    {!emailError ? (
-                      <FormHelperText></FormHelperText>
-                    ) : (
-                      <FormErrorMessage>{emailError}</FormErrorMessage>
-                    )}
-                  </Stack>
-                </FormControl>
-
-                <Stack align="center" mt="2">
-                  <Button
-                    width="100%"
-                    bgColor="#D7380E"
-                    color="#FFFFFF"
-                    size="md"
-                    type="submit"
-                    onClick={submitHandler}
+                <Stack pr="10">
+                  <Text
+                    fontSize="lg"
+                    textAlign="left"
+                    fontWeight="600"
+                    color="#333333"
                   >
-                    Verify email
-                  </Button>
-                </Stack>
-                <Stack p="2" textAlign="center" width="100%" mt="2">
-                  <Text width="100%">
+                    Create your account and start building your brand!
+                  </Text>
+                  {loading && <HLoading loading={loading} />}
+                  {error && <MessageBox variant="danger">{error}</MessageBox>}
+                  <FormControl id="email" mt="10" isInvalid={emailErrorStatus}>
+                    <FormLabel fontSize="xs" mt="2">
+                      Enter Email
+                    </FormLabel>
+
+                    <Stack direction="column" align="left">
+                      <Input
+                        id="email"
+                        onChange={(e) => setEmail(e?.target?.value)}
+                        placeholder="rrrrrrrr@gmail.com"
+                        value={email}
+                        required
+                        type="email"
+                      />
+                      {!emailError ? (
+                        <FormHelperText></FormHelperText>
+                      ) : (
+                        <FormErrorMessage>{emailError}</FormErrorMessage>
+                      )}
+                    </Stack>
+                  </FormControl>
+
+                  <Stack align="center" mt="2">
+                    <Button
+                      width="100%"
+                      bgColor="#D7380E"
+                      color="#FFFFFF"
+                      size="md"
+                      type="submit"
+                      onClick={submitHandler}
+                    >
+                      Verify email
+                    </Button>
+                  </Stack>
+                  <Text p="2" textAlign="center" fontSize="sm" width="100%">
                     --------------- or continue with -------------
                   </Text>
-                </Stack>
-                <Stack
-                  direction="row"
-                  align="center"
-                  justifyContent="center"
-                  mt="2"
-                >
-                  <GoogleLogin
-                    clientId={clientId}
-                    buttonText="Log In with Google"
-                    render={(renderProps) => (
-                      <Button
-                        width="100%"
-                        variant="outline"
-                        fontSize="14"
-                        fontWeight="1"
-                        onClick={renderProps.onClick}
-                      >
-                        <IconButton
-                          bg="none"
-                          icon={<FcGoogle size="20px" color="black" />}
-                          aria-label="Close"
-                        />
-                        Log In with Google
-                      </Button>
-                    )}
-                    onSuccess={onSuccess}
-                    onFailure={onFailure}
-                    cookiePolicy={"single_host_origin"}
-                    isSignedIn={true}
-                  />
-                </Stack>
-                <Stack mt="5">
-                  <Button
-                    width="100%"
-                    variant="outline"
-                    fontSize="14"
-                    fontWeight="1"
-                    type="submit"
-                    onClick={() => navigate("/signin")}
+                  <Stack
+                    direction="row"
+                    align="center"
+                    justifyContent="center"
+                    mt="2"
                   >
-                    Already have an account ? Sign in
-                  </Button>
+                    <GoogleLogin
+                      clientId={clientId}
+                      buttonText="Log In with Google"
+                      render={(renderProps) => (
+                        <Box
+                          width="100%"
+                          border="1px solid #000050"
+                          borderRadius="md"
+                          onClick={renderProps.onClick}
+                          align="center"
+                        >
+                          <IconButton
+                            bg="none"
+                            icon={<FcGoogle size="20px" color="black" />}
+                            aria-label="Close"
+                          />
+                          Log In with Google
+                        </Box>
+                      )}
+                      onSuccess={onSuccess}
+                      onFailure={onFailure}
+                      cookiePolicy={"single_host_origin"}
+                      isSignedIn={true}
+                    />
+                  </Stack>
+                  <Stack mt="5">
+                    <Button
+                      width="100%"
+                      variant="outline"
+                      fontSize="md"
+                      fontWeight="1"
+                      type="submit"
+                      onClick={() => navigate("/signin")}
+                    >
+                      Already have an account ? Sign in
+                    </Button>
+                  </Stack>
+                  <Text fontSize="xs" textAlign="left" mt="30">
+                    By signing in, I agree to Monad’s Terms of Use and Privacy
+                    Policy.
+                  </Text>
                 </Stack>
-                <Text fontSize="10" textAlign="left" mt="30">
-                  By signing in, I agree to Monad’s Terms of Use and Privacy
-                  Policy.
-                </Text>
               </Stack>
             </SimpleGrid>
           </Box>

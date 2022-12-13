@@ -7,6 +7,7 @@ import {
   Image,
   useDisclosure,
   Text,
+  Icon,
   IconButton,
   Menu,
   MenuButton,
@@ -199,7 +200,7 @@ export const NavBar = () => {
                     flexBasis="50px"
                     flexShrink="0"
                   >
-                    <IconButton
+                    <Icon
                       bg="none"
                       icon={
                         <BsChevronDown

@@ -108,10 +108,12 @@ export function SignInModal(props: any) {
 
   return (
     <Box>
-      <EmailVerificationModal
-        show={emailVerificationShow}
-        onHide={() => setEmailVerificationShow(false)}
-      />
+      {emailVerificationShow && (
+        <EmailVerificationModal
+          show={emailVerificationShow}
+          onHide={() => setEmailVerificationShow(false)}
+        />
+      )}
       <Modal
         {...props}
         size="lg"
@@ -119,32 +121,30 @@ export function SignInModal(props: any) {
         aria-labelledby="contained-modal-title-vcenter"
         backdrop="static"
         keyboard={false}
+        centered
       >
-        <Modal.Body>
-          <Box bg="#ffffff">
+        <Modal.Body className="popup">
+          <Box bgGradient="linear(to-t, #fffad9, #ffffff)">
             <SimpleGrid columns={[1, 2]} gap="0">
-              <Stack width="80%" bgColor="rgba(244, 86, 0, 0.3)">
+              <Stack width="90%" bgColor="rgba(244, 86, 0, 0.3)">
                 {/* backgroundImage={rectangle} backgroundPosition="center" backgroundRepeat="no-repeat" */}
 
-                <Flex direction="row" margin="5">
-                  <Image src={logo} height="46px" width="46px" />
+                <Flex align="center" m="5">
+                  <Image src={logo} height="" width="15%" />
                   <Image
                     src={name}
-                    height="27px"
-                    width="100px"
+                    height=""
+                    width="40%"
                     marginLeft="5"
                     marginTop="4"
                   />
                 </Flex>
                 <Text
-                  pl="3"
-                  pt="7"
-                  ml="20"
+                  p="5"
                   align="left"
                   fontWeight="600"
-                  fontSize="16.33px"
-                  height="90px"
-                  width="250px"
+                  fontSize="lg"
+                  width="80%"
                   color="#141414"
                 >
                   We are exited to offer free ads for first 100 brands
@@ -158,14 +158,14 @@ export function SignInModal(props: any) {
                   />
                 </Stack>
               </Stack>
-              <Stack width="100%" bg="#ffffff">
-                <Stack align="end" justifyContent="flex-end" mt="0">
+              <Stack width="100%" bgGradient="linear(to-t, #fffad9, #ffffff)">
+                <Stack p="2" align="end" justifyContent="flex-end" mt="0">
                   <IconButton
                     bg="none"
                     icon={
                       <AiOutlineCloseCircle
-                        size="40px"
-                        color="black"
+                        size="lg"
+                        color="gray"
                         onClick={props.onHide}
                       />
                     }
@@ -174,7 +174,7 @@ export function SignInModal(props: any) {
                 </Stack>
                 <Stack pr="10">
                   <Text
-                    fontSize="20"
+                    fontSize="lg"
                     textAlign="left"
                     fontWeight="600"
                     color="#333333"
@@ -182,7 +182,7 @@ export function SignInModal(props: any) {
                     Sign in to see our top picks for you!
                   </Text>
                   <Text
-                    fontSize="13"
+                    fontSize="xs"
                     textAlign="left"
                     fontWeight="10"
                     color="#4A4A4A"
@@ -282,16 +282,15 @@ export function SignInModal(props: any) {
                       type="button"
                       onClick={handleSignInModal}
                       ref={btnRef}
+                      fontSize="xs"
                     >
                       Create account
                     </Text>
-                    <Text>Forget password ?</Text>
+                    <Text fontSize="xs">Forget password ?</Text>
                   </Stack>
-                  <Stack textAlign="center" width="100%" mt="3">
-                    <Text width="100%">
-                      ---------------- or sign in with --------------
-                    </Text>
-                  </Stack>
+                  <Text p="2" textAlign="center" fontSize="sm" width="100%">
+                    ---------------- or sign in with --------------
+                  </Text>
                   <Stack
                     direction="row"
                     align="center"
@@ -302,12 +301,12 @@ export function SignInModal(props: any) {
                       clientId={clientId}
                       buttonText="Login with Google"
                       render={(renderProps) => (
-                        <Button
+                        <Box
                           width="100%"
-                          variant="outline"
-                          fontSize="14"
-                          fontWeight="1"
+                          border="1px solid #000050"
+                          borderRadius="md"
                           onClick={renderProps.onClick}
+                          align="center"
                         >
                           <IconButton
                             bg="none"
@@ -315,7 +314,7 @@ export function SignInModal(props: any) {
                             aria-label="Close"
                           />
                           Log In with Google
-                        </Button>
+                        </Box>
                       )}
                       onSuccess={onSuccess}
                       onFailure={onFailure}
@@ -323,7 +322,7 @@ export function SignInModal(props: any) {
                       isSignedIn={true}
                     />
                   </Stack>
-                  <Text fontSize="10" textAlign="left" mt="4" pb="10">
+                  <Text fontSize="xs" textAlign="left" mt="4" pb="10">
                     By signing in, I agree to Monad’s Terms of Use and Privacy
                     Policy.
                   </Text>
