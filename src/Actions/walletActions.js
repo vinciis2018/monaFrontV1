@@ -139,7 +139,7 @@ export const getTranjectionDataAction = () => async (dispatch, getState) => {
   } = getState();
 
   try {
-    const { data } = await Axios.post(
+    const { data } = await Axios.get(
       `${process.env.REACT_APP_BLINDS_SERVER}/api/credit/logs`,
       {
         headers: {
