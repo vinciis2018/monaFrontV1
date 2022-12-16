@@ -1,5 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getTranjectionDataAction,
+  getWalletDataAction,
+} from "../../Actions/walletActions";
 import {
   Box,
   Text,
@@ -8,17 +13,80 @@ import {
   Flex,
   IconButton,
   Divider,
+  FormControl,
+  FormLabel,
+  Button,
+  Input,
 } from "@chakra-ui/react";
 import {
   BsArrowUpRightCircle,
   BsArrowDownLeftCircle,
   BsArrowUp,
   BsArrowDown,
-  // BsCircle,
 } from "react-icons/bs";
+import { Modal } from "react-bootstrap";
 import { BiWalletAlt } from "react-icons/bi";
+import post from "utils/payment";
+import Axios from "axios";
 export function WalletPage(props: any) {
   const navigate = useNavigate();
+  const [walletID, setWalletID] = useState("");
+  const [walletAddress, setWalletAddress] = useState("");
+  const [paymentModalShow, setPaymentModalShow] = useState(false);
+  const [amount, setAmount] = useState(0);
+  const [balance, setBalance] = useState(1111);
+
+  const userSignin = useSelector((state: any) => state.userSignin);
+  const { userInfo } = userSignin;
+  const getWalletData = useSelector((state: any) => state.getWalletData);
+  const { walletData } = getWalletData;
+
+  const dispatch = useDispatch<any>();
+
+  const handlePaymentModal = () => {
+    setPaymentModalShow(false);
+  };
+
+  const setAmountValue = (value: any) => {
+    setAmount(parseFloat(value));
+  };
+  const saveAmount = () => {
+    console.log("saveAmount called!");
+    async function paymentHandler() {
+      try {
+        const { data } = await Axios.post(
+          `${process.env.REACT_APP_BLINDS_SERVER}/api/credit/add`,
+          { amount: amount },
+          {
+            headers: {
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+        //it will give you a pop or patym topup page
+        var information = {
+          action: "https://securegw-stage.paytm.in/order/process",
+          params: data,
+        };
+        post(information);
+      } catch (err) {
+        alert(err);
+      }
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getWalletDataAction());
+    dispatch(getTranjectionDataAction());
+
+    if (walletData) {
+      console.log("----------------", walletData);
+      setWalletAddress(Object.keys(walletData.balances)[0]);
+      setWalletID(walletData.walletId);
+      setBalance(walletData.balances[Object.keys(walletData.balances)[0]]);
+    }
+  }, [dispatch, navigate, userInfo]);
+
   const tranjections = [
     {
       status: "Cradit balance top up",
@@ -55,6 +123,42 @@ export function WalletPage(props: any) {
   return (
     <Box px="2" pt="0" color="black.500">
       {/* Container */}
+      <Modal
+        show={paymentModalShow}
+        onHide={handlePaymentModal}
+        size="sm"
+        dialogClassName="modal-90w"
+        aria-labelledby="contained-modal-title-vcenter"
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Body className="popup">
+          <Box bgGradient="linear(to-t, #fffad9, #ffffff)" p="5">
+            <FormControl id="amount" p="5">
+              <FormLabel fontSize="xs">Enter Amount</FormLabel>
+              <Stack direction="column" align="left">
+                <Input
+                  id="amount"
+                  onChange={(e) => setAmountValue(e?.target?.value)}
+                  placeholder="2000"
+                  value={amount}
+                  required
+                  type="number"
+                />
+              </Stack>
+            </FormControl>
+            <Stack
+              direction="row"
+              align="center"
+              justifyContent="space-between"
+              p="5"
+            >
+              <Button onClick={handlePaymentModal}>Cancle</Button>
+              <Button onClick={saveAmount}>Ok</Button>
+            </Stack>
+          </Box>
+        </Modal.Body>
+      </Modal>
 
       <Box maxW="container.lg" mx="auto" pb="8">
         <Center maxW="container.lg" mx="auto" pb="8">
@@ -85,7 +189,7 @@ export function WalletPage(props: any) {
                   color="#403F49"
                 >
                   <Text fontSize="SemiBold">Total Balance </Text>
-                  <Text>$ 11111</Text>
+                  <Text>$ {balance}</Text>
                 </Stack>
                 <Stack
                   fontSize="20px"
@@ -94,8 +198,8 @@ export function WalletPage(props: any) {
                   align="flex-start"
                   mt="10"
                 >
-                  <Text>Wallet ID: 122665TYH</Text>
-                  <Text>Wallet address : 122665256547624652734</Text>
+                  <Text>Wallet ID: {walletID}</Text>
+                  <Text>Wallet address : {walletAddress}</Text>
                 </Stack>
                 <Flex mt="10" color="#313131" fontSize="14px">
                   <Stack>
@@ -135,6 +239,7 @@ export function WalletPage(props: any) {
                       height="40px"
                       width="40px"
                       borderColor="#575757"
+                      onClick={() => setPaymentModalShow(true)}
                     >
                       <IconButton
                         bg="none"
@@ -143,7 +248,6 @@ export function WalletPage(props: any) {
                             size="20px"
                             fontWeight=""
                             color="#575757"
-                            onClick={props.onHide}
                           />
                         }
                         aria-label="Send Money"
@@ -178,7 +282,7 @@ export function WalletPage(props: any) {
                 {/* tranjections content */}
                 <Box>
                   {tranjections.map((eachTranjection, index) => (
-                    <Stack direction="column">
+                    <Stack direction="column" key="index">
                       <Stack
                         direction="row"
                         justifyContent="space-between"

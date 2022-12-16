@@ -15,6 +15,8 @@ import {
 import {
   walletCreateReducer,
   walletEditReducer,
+  getWalletDataReducer,
+  getTranjectionDatatReducer,
 } from "Reducers/walletReducers";
 import {
   allMediaReducer,
@@ -101,6 +103,8 @@ const reducer = combineReducers({
 
   walletCreate: walletCreateReducer,
   walletEdit: walletEditReducer,
+  getWalletData: getWalletDataReducer,
+  getTranjectionData: getTranjectionDatatReducer,
 
   mediaUpload: mediaUploadReducer,
   mediaGet: mediaGetReducer,

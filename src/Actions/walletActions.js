@@ -6,6 +6,12 @@ import {
   WALLET_EDIT_FAIL,
   WALLET_EDIT_REQUEST,
   WALLET_EDIT_SUCCESS,
+  GET_WALLET_DATA_ERROR,
+  GET_WALLET_DATA_SUCCESS,
+  GET_WALLET_DATA_REQUEST,
+  GET_TRANJECTION_DATA_REQUEST,
+  GET_TRANJECTION_DATA_SUCCESS,
+  GET_TRANJECTION_DATA_ERROR,
 } from "Constants/walletConstants";
 
 // wallet create
@@ -81,6 +87,78 @@ export const editWallet = (wallet) => async (dispatch, getState) => {
 
     dispatch({
       type: WALLET_EDIT_FAIL,
+      payload: message,
+    });
+  }
+};
+export const getWalletDataAction = () => async (dispatch, getState) => {
+  dispatch({
+    type: GET_WALLET_DATA_REQUEST,
+    payload: null,
+  });
+
+  const {
+    userSignin: { userInfo },
+  } = getState();
+
+  try {
+    const { data } = await Axios.get(
+      `${process.env.REACT_APP_BLINDS_SERVER}/api/credit/details`,
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: GET_WALLET_DATA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: GET_WALLET_DATA_ERROR,
+      payload: message,
+    });
+  }
+};
+
+export const getTranjectionDataAction = () => async (dispatch, getState) => {
+  dispatch({
+    type: GET_TRANJECTION_DATA_REQUEST,
+    payload: null,
+  });
+
+  const {
+    userSignin: { userInfo },
+  } = getState();
+
+  try {
+    const { data } = await Axios.post(
+      `${process.env.REACT_APP_BLINDS_SERVER}/api/credit/logs`,
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+    dispatch({
+      type: GET_TRANJECTION_DATA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: GET_TRANJECTION_DATA_ERROR,
       payload: message,
     });
   }

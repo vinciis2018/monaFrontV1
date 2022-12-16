@@ -198,7 +198,7 @@ export function HomePage() {
       align="center"
       bgGradient={["linear-gradient(to right, #FFFDE9, #FFFFFF)"]}
     >
-      <Center>
+      <Center mb="10">
         {loadingScreens || loadingVideos ? (
           <HLoading loading={loadingScreens || loadingVideos} />
         ) : errorScreens || errorVideos ? (
@@ -218,7 +218,7 @@ export function HomePage() {
               fontFamily="Sans"
             >
               <Box align="center" p="20">
-                <Text fontSize="64px" color="#FFFFFF" width="760px">
+                <Text fontSize="64px" color="#FFFFFF" width="70%">
                   Enter the new age of advertising
                 </Text>
                 <InputGroup size="lg" width="70%" mt="20">
@@ -244,7 +244,8 @@ export function HomePage() {
             </Box>
             <Text
               color="#403F49"
-              mt="10"
+              pt="5"
+              pb="5"
               fontSize="48px"
               fontWeight="700"
               align="left"
@@ -259,7 +260,7 @@ export function HomePage() {
             >
               {categorys.map((eachCategory, index) => (
                 <Box
-                  width="307px"
+                  width="23%"
                   height="200px"
                   bgColor="#F6F5F5"
                   borderRadius="12px"
@@ -275,7 +276,8 @@ export function HomePage() {
             </Flex>
             <Text
               color="#403F49"
-              mt="10"
+              pt="10"
+              pb="10"
               fontSize="48px"
               fontWeight="700"
               align="left"
@@ -408,6 +410,7 @@ export function HomePage() {
                 fontSize="24px"
                 fontWeight="semibold"
                 mt="20"
+                mb="20"
               >
                 See All
               </Button>
@@ -480,7 +483,6 @@ export function HomePage() {
             >
               <Flex>
                 <Box
-                  width="702px"
                   height="204px"
                   color="#EBEBEB"
                   align="left"
@@ -530,7 +532,7 @@ export function HomePage() {
                 ></Image>
               </Flex>
             </Box>
-            <Divider mt="20" />
+            <Divider pt="10" />
             <Flex align="center" justifyContent="space-between">
               <Text
                 color="#403F49"
@@ -547,7 +549,7 @@ export function HomePage() {
                 aria-label="Star"
               ></IconButton>
             </Flex>
-            <Divider mt="2" />
+            <Divider pb="" />
           </Stack>
         )}
       </Center>
