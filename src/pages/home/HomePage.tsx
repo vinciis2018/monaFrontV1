@@ -16,9 +16,6 @@ import {
 } from "@chakra-ui/react";
 
 import { IoSearchCircleSharp } from "react-icons/io5";
-import { AiOutlinePlus, AiFillStar } from "react-icons/ai";
-import { BsDot } from "react-icons/bs";
-import { BiRupee } from "react-icons/bi";
 import { GrDown } from "react-icons/gr";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -42,12 +39,10 @@ import railway from "../../assets/image/raily.png";
 import indor from "../../assets/image/indor.png";
 import outdor from "../../assets/image/outdore.png";
 import appartment from "../../assets/image/appartment.png";
-import screen1 from "../../assets/image/screen1.png";
-import tesla from "../../assets/image/tesla.png";
-import addidas from "../../assets/image/addidas.png";
-import macdonal from "../../assets/image/macdonal.png";
 import rectangle from "../../assets/image/Rectangle86.png";
 import girl2 from "../../assets/image/girl2.png";
+import { Screen } from "components/common";
+import { AtvertiseBox } from "components/common/AtvertiseBox";
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -69,6 +64,12 @@ export function HomePage() {
     error: errorVideos,
     allVideos,
   } = videoListAll;
+  console.log("allVideos : ", allVideos);
+  let topThreeVideos = [];
+  if (allVideos) {
+    topThreeVideos = allVideos.slice(allVideos.length - 3, allVideos.length);
+    console.log("topThreeVideo : ", topThreeVideos);
+  }
 
   const dispatch = useDispatch<any>();
   React.useEffect(() => {
@@ -115,26 +116,13 @@ export function HomePage() {
     },
   ];
 
-  const topScreen = [
-    {
-      image: addidas,
-      location: "Lanka, Varanasi, India",
-    },
-    {
-      image: tesla,
-      location: "Lanka, Varanasi, India",
-    },
-    {
-      image: macdonal,
-      location: "Lanka, Varanasi, India",
-    },
-  ];
-
   return (
     <Box
       color="black.500"
       align="center"
       bgGradient={["linear-gradient(to right, #FFFDE9, #FFFFFF)"]}
+      pl="20"
+      pr="20"
     >
       <Center mb="10">
         {loadingScreens || loadingVideos ? (
@@ -222,127 +210,9 @@ export function HomePage() {
             >
               Popular screens
             </Text>
-            <SimpleGrid columns={[2, null, 3]} spacing="20">
+            <SimpleGrid columns={[2, null, 3]} spacing="10">
               {screens.map((eachScreen: any) => (
-                <Box
-                  bgColor="#F7F7F7"
-                  borderColor="#DFDFDF"
-                  border="1.5px"
-                  width="418px"
-                  height="446px"
-                  borderRadius="16px"
-                  boxShadow="2xl"
-                  key={eachScreen._id}
-                >
-                  {/* image */}
-                  <Box p="5" height="60%">
-                    <Image
-                      height="100%"
-                      width="100%"
-                      src={eachScreen.image || screen1}
-                      alt="screen image"
-                      borderRadius="15px"
-                    />{" "}
-                  </Box>
-                  {/* details of screem */}
-                  <Box p="5">
-                    <Flex align="center" height="25%">
-                      <Text
-                        color="#403F49"
-                        fontSize="xl"
-                        fontWeight="bold"
-                        align="left"
-                        width="85%"
-                      >
-                        {eachScreen.name}
-                      </Text>
-                      <IconButton
-                        bg="none"
-                        mr="2"
-                        icon={<AiOutlinePlus size="59px" color="#403F49" />}
-                        aria-label="Edit user details"
-                      ></IconButton>
-                    </Flex>
-                    <Flex align="center" ml="-3" mt="2">
-                      <IconButton
-                        bg="none"
-                        icon={<AiFillStar size="16px" color="#403F49" />}
-                        aria-label="Star"
-                      ></IconButton>
-
-                      <Text
-                        pl="1"
-                        color="#403F49"
-                        fontSize="sm"
-                        fontWeight="semibold"
-                        align="left"
-                      >
-                        {eachScreen.ratting || 4.5}
-                      </Text>
-                      <IconButton
-                        bg="none"
-                        icon={<BsDot size="16px" color="#403F49" />}
-                        aria-label="Star"
-                      ></IconButton>
-                      <Text
-                        color="#666666"
-                        fontSize="sm"
-                        fontWeight="semibold"
-                        align="left"
-                      >
-                        {`${eachScreen.screenAddress} ${eachScreen.districtCity} ${eachScreen.country}`}
-                      </Text>
-                    </Flex>
-                    <Text
-                      ml="0"
-                      color="#403F49"
-                      fontSize="sm"
-                      fontWeight="semibold"
-                      align="left"
-                    >
-                      2120 slots available
-                    </Text>
-                    <Flex align="center" ml="-3">
-                      <IconButton
-                        bg="none"
-                        icon={<BiRupee size="16px" color="#403F49" />}
-                        aria-label="Star"
-                      ></IconButton>
-                      <Text
-                        pl="-5"
-                        color="#403F49"
-                        fontSize="sm"
-                        fontWeight="semibold"
-                        align="left"
-                      >
-                        {`${eachScreen.rentPerSlot} per slot`}
-                      </Text>
-                      <IconButton
-                        bg="none"
-                        icon={<BiRupee size="16px" color="#403F49" />}
-                        aria-label="Star"
-                      ></IconButton>
-                      <Text
-                        as="s"
-                        color="#787878"
-                        fontSize="sm"
-                        fontWeight="semibold"
-                        align="left"
-                      >
-                        250 per slot
-                      </Text>
-                      <Text
-                        pl="1"
-                        color="#F86E6E"
-                        fontSize="lg"
-                        fontWeight="semibold"
-                        align="left"
-                      >
-                        ( 50% OFF)
-                      </Text>
-                    </Flex>
-                  </Box>
-                </Box>
+                <Screen eachScreen={eachScreen} />
               ))}
             </SimpleGrid>
             <Flex align="center" justifyContent="center">
@@ -369,39 +239,12 @@ export function HomePage() {
             >
               Screens playing
             </Text>
-            <Flex justifyContent="space-between" mt="10">
-              {topScreen.map((screen, index) => (
-                <Box
-                  width="417px"
-                  height="334px"
-                  bgColor="#F6F5F5"
-                  borderRadius="12px"
-                  boxShadow="2xl"
-                  key={index}
-                >
-                  <Image src={screen.image} alt="" p="5"></Image>
-                  <Text
-                    color="#403F49"
-                    pl="5"
-                    fontSize="xl"
-                    fontWeight="bold"
-                    align="left"
-                  >
-                    Brand name
-                  </Text>
-                  <Text
-                    color="#666666"
-                    pl="5"
-                    fontSize="sm"
-                    fontWeight="semibold"
-                    align="left"
-                    mt="2"
-                  >
-                    Location : {screen.location}
-                  </Text>
-                </Box>
-              ))}
-            </Flex>
+            <SimpleGrid columns={[1, null, 3]} spacing="10">
+              {topThreeVideos &&
+                topThreeVideos.map((eachVideo: any) => (
+                  <AtvertiseBox video={eachVideo} />
+                ))}
+            </SimpleGrid>
             <Flex align="center" justifyContent="center">
               <Button
                 width="250px"
