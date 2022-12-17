@@ -50,13 +50,13 @@ export function LoginModal(props: any) {
               if (target) {
                 navigate("/" + target);
               } else {
-                navigate("/walletpage");
+                navigate("/setting");
               }
             })
             .catch((error: Error) => {
               if (error.message.includes(ERROR_IDS.NO_CONTENT)) {
                 wipeTempSavedPin().then(() => generateAndSave(pin));
-                navigate("/");
+                navigate("/walletPage");
               }
 
               if (error.message.includes(ERROR_IDS.INCORRECT_PIN)) {

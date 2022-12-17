@@ -58,7 +58,8 @@ export function CreateAndResetPassword(props: any) {
       console.log("email : ", props.email);
       console.log("password : ", password);
       dispatch(signup("abcd", props.email, password));
-      //navigate("/signin");
+      setShowConformPassword(false); // conform password modal close
+      navigate("/signin");
     }
   };
 

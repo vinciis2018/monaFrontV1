@@ -114,68 +114,6 @@ export function HomePage() {
       category: "OUTDOORS",
     },
   ];
-  const popularScreen = [
-    {
-      name: "New Demo Screen Admin Platform 6",
-      image: screen1,
-      rating: "4.5",
-      screenAddress: "Lanka, Varanasi, India",
-      availableSlots: "2120",
-      rentPerSlot: "200",
-      scWorth: "250",
-      discountInPer: "50",
-    },
-    {
-      name: "New Demo Screen Admin Platform 6",
-      image: screen1,
-      rating: "4.5",
-      screenAddress: "Lanka, Varanasi, India",
-      availableSlots: "2120",
-      rentPerSlot: "200",
-      scWorth: "250",
-      discountInPer: "50",
-    },
-    {
-      name: "New Demo Screen Admin Platform 6",
-      image: screen1,
-      rating: "4.5",
-      screenAddress: "Lanka, Varanasi, India",
-      availableSlots: "2120",
-      rentPerSlot: "200",
-      scWorth: "250",
-      discountInPer: "50",
-    },
-    {
-      name: "New Demo Screen Admin Platform 6",
-      image: screen1,
-      rating: "4.5",
-      screenAddress: "Lanka, Varanasi, India",
-      availableSlots: "2120",
-      rentPerSlot: "200",
-      scWorth: "250",
-      discountInPer: "50",
-    },
-    {
-      name: "New Demo Screen Admin Platform 6",
-      image: screen1,
-      rating: "4.5",
-      screenAddress: "Lanka, Varanasi, India",
-      availableSlots: "2120",
-      rentPerSlot: "200",
-      scWorth: "250",
-      discountInPer: "50",
-    },
-    {
-      name: "New Demo Screen Admin Platform 6",
-      image: screen1,
-      rating: "4.5",
-      screenAddress: "Lanka, Varanasi, India",
-      availableSlots: "2120",
-      rentPerSlot: "200",
-      scWorth: "250",
-      discountInPer: "50",
-    },
-  ];
 
   const topScreen = [
     {
@@ -218,7 +156,7 @@ export function HomePage() {
               fontFamily="Sans"
             >
               <Box align="center" p="20">
-                <Text fontSize="64px" color="#FFFFFF" width="70%">
+                <Text fontSize="5xl" color="#FFFFFF" width="70%">
                   Enter the new age of advertising
                 </Text>
                 <InputGroup size="lg" width="70%" mt="20">
@@ -229,13 +167,13 @@ export function HomePage() {
                     heigth=""
                     bgColor="#FCFCFC"
                     borderRadius="70px"
-                    fontSize="20px"
+                    fontSize="lg"
                     placeholder="Search by place, by location, by screen names"
                   />
                   <InputRightElement width="4.5rem" pt="5">
                     <IconButton
                       bg="none"
-                      icon={<IoSearchCircleSharp size="59px" color="#D7380E" />}
+                      icon={<IoSearchCircleSharp size="20px" color="#D7380E" />}
                       aria-label="Edit user details"
                     ></IconButton>
                   </InputRightElement>
@@ -246,7 +184,7 @@ export function HomePage() {
               color="#403F49"
               pt="5"
               pb="5"
-              fontSize="48px"
+              fontSize="4xl"
               fontWeight="700"
               align="left"
             >
@@ -268,7 +206,7 @@ export function HomePage() {
                   key={index}
                 >
                   <Image src={eachCategory.image} alt=""></Image>
-                  <Text color="#3E3D48" p="5" fontSize="24px" fontWeight="600">
+                  <Text color="#3E3D48" p="5" fontSize="xl" fontWeight="600">
                     {eachCategory.category}
                   </Text>
                 </Box>
@@ -278,14 +216,14 @@ export function HomePage() {
               color="#403F49"
               pt="10"
               pb="10"
-              fontSize="48px"
+              fontSize="4xl"
               fontWeight="700"
               align="left"
             >
               Popular screens
             </Text>
             <SimpleGrid columns={[2, null, 3]} spacing="20">
-              {popularScreen.map((eachScreen, index) => (
+              {screens.map((eachScreen: any) => (
                 <Box
                   bgColor="#F7F7F7"
                   borderColor="#DFDFDF"
@@ -294,45 +232,52 @@ export function HomePage() {
                   height="446px"
                   borderRadius="16px"
                   boxShadow="2xl"
-                  key={index}
+                  key={eachScreen._id}
                 >
                   {/* image */}
-                  <Box p="5">
-                    <Image src={screen1} alt=""></Image>
+                  <Box p="5" height="60%">
+                    <Image
+                      height="100%"
+                      width="100%"
+                      src={eachScreen.image || screen1}
+                      alt="screen image"
+                      borderRadius="15px"
+                    />{" "}
                   </Box>
                   {/* details of screem */}
-                  <Box p="0">
-                    <Flex ml="4">
+                  <Box p="5">
+                    <Flex align="center" height="25%">
                       <Text
                         color="#403F49"
-                        fontSize="24px"
+                        fontSize="xl"
                         fontWeight="bold"
                         align="left"
+                        width="85%"
                       >
-                        New Demo Screen Admin Platform 6
+                        {eachScreen.name}
                       </Text>
                       <IconButton
                         bg="none"
-                        mt="5"
-                        mr="5"
+                        mr="2"
                         icon={<AiOutlinePlus size="59px" color="#403F49" />}
                         aria-label="Edit user details"
                       ></IconButton>
                     </Flex>
-                    <Flex align="center" ml="2">
+                    <Flex align="center" ml="-3" mt="2">
                       <IconButton
                         bg="none"
                         icon={<AiFillStar size="16px" color="#403F49" />}
                         aria-label="Star"
                       ></IconButton>
+
                       <Text
-                        pl="2"
+                        pl="1"
                         color="#403F49"
-                        fontSize="16px"
+                        fontSize="sm"
                         fontWeight="semibold"
                         align="left"
                       >
-                        4.5
+                        {eachScreen.ratting || 4.5}
                       </Text>
                       <IconButton
                         bg="none"
@@ -341,23 +286,23 @@ export function HomePage() {
                       ></IconButton>
                       <Text
                         color="#666666"
-                        fontSize="16px"
+                        fontSize="sm"
                         fontWeight="semibold"
                         align="left"
                       >
-                        Lanka, Varanasi, India
+                        {`${eachScreen.screenAddress} ${eachScreen.districtCity} ${eachScreen.country}`}
                       </Text>
                     </Flex>
                     <Text
-                      ml="4"
+                      ml="0"
                       color="#403F49"
-                      fontSize="16px"
+                      fontSize="sm"
                       fontWeight="semibold"
                       align="left"
                     >
                       2120 slots available
                     </Text>
-                    <Flex align="center" ml="2">
+                    <Flex align="center" ml="-3">
                       <IconButton
                         bg="none"
                         icon={<BiRupee size="16px" color="#403F49" />}
@@ -366,11 +311,11 @@ export function HomePage() {
                       <Text
                         pl="-5"
                         color="#403F49"
-                        fontSize="20px"
+                        fontSize="sm"
                         fontWeight="semibold"
                         align="left"
                       >
-                        200 per slot
+                        {`${eachScreen.rentPerSlot} per slot`}
                       </Text>
                       <IconButton
                         bg="none"
@@ -380,7 +325,7 @@ export function HomePage() {
                       <Text
                         as="s"
                         color="#787878"
-                        fontSize="16px"
+                        fontSize="sm"
                         fontWeight="semibold"
                         align="left"
                       >
@@ -389,7 +334,7 @@ export function HomePage() {
                       <Text
                         pl="1"
                         color="#F86E6E"
-                        fontSize="20px"
+                        fontSize="lg"
                         fontWeight="semibold"
                         align="left"
                       >
@@ -407,7 +352,7 @@ export function HomePage() {
                 variant="outline"
                 borderColor="black"
                 color="#D7380E"
-                fontSize="24px"
+                fontSize="xl"
                 fontWeight="semibold"
                 mt="20"
                 mb="20"
@@ -418,7 +363,7 @@ export function HomePage() {
             <Text
               color="#403F49"
               mt="10"
-              fontSize="48px"
+              fontSize="4xl"
               fontWeight="bold"
               align="left"
             >
@@ -438,7 +383,7 @@ export function HomePage() {
                   <Text
                     color="#403F49"
                     pl="5"
-                    fontSize="24px"
+                    fontSize="xl"
                     fontWeight="bold"
                     align="left"
                   >
@@ -447,7 +392,7 @@ export function HomePage() {
                   <Text
                     color="#666666"
                     pl="5"
-                    fontSize="16px"
+                    fontSize="sm"
                     fontWeight="semibold"
                     align="left"
                     mt="2"
@@ -464,7 +409,7 @@ export function HomePage() {
                 variant="outline"
                 borderColor="black"
                 color="#D7380E"
-                fontSize="24px"
+                fontSize="xl"
                 fontWeight="semibold"
                 mt="20"
                 mb="20"
@@ -490,7 +435,7 @@ export function HomePage() {
                   left="180px"
                 >
                   <Text
-                    fontSize="40px"
+                    fontSize="4xl"
                     fontWeight="bold"
                     align="left"
                     mt="2"
@@ -499,7 +444,7 @@ export function HomePage() {
                     Need help or want to know how it works?
                   </Text>
                   <Text
-                    fontSize="40px"
+                    fontSize="4xl"
                     fontWeight="bold"
                     align="left"
                     mt="2"
@@ -513,7 +458,7 @@ export function HomePage() {
                     height="54px"
                     bgColor="#D7380E"
                     color="#FFFFFF"
-                    fontSize="24px"
+                    fontSize="xl"
                     fontWeight="semibold"
                     p="5"
                   >
@@ -534,12 +479,7 @@ export function HomePage() {
             </Box>
             <Divider pt="10" />
             <Flex align="center" justifyContent="space-between">
-              <Text
-                color="#403F49"
-                fontSize="48px"
-                fontWeight="700"
-                align="left"
-              >
+              <Text color="#403F49" fontSize="xl" fontWeight="700" align="left">
                 All destinations
               </Text>
               <IconButton
