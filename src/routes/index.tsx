@@ -96,7 +96,7 @@ export const PublicRoutes = () => {
         <Route path="/homepage" element={<HomePage />} />
 
         <Route path="/walletpage" element={<WalletPage />} />
-        <Route path="/paymentreceipt" element={<PaymentReceipt />} />
+        <Route path="/paymentreceipt/:id" element={<PaymentReceipt />} />
         <Route path="/topup" element={<TopupWallet />} />
 
         <Route path="*" element={<Page404 />} />

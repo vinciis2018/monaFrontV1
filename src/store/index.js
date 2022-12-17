@@ -80,6 +80,8 @@ import {
   screenGameRemoveReducer,
 } from "Reducers/gameReducers";
 
+import { getSingleLogDetailsReducer } from "Reducers/paymentReducers";
+
 const initialState = {
   userSignin: {
     userInfo: localStorage.getItem("userInfo")
@@ -160,6 +162,8 @@ const reducer = combineReducers({
   jsonPins: jsonPinsReducer,
   pinDetails: pinDetailsReducer,
   pinUpdate: pinUpdateReducer,
+
+  getSingleLogDetails: getSingleLogDetailsReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
