@@ -7,8 +7,6 @@ import {
   Image,
   useDisclosure,
   Text,
-  Icon,
-  IconButton,
   Menu,
   MenuButton,
   MenuList,
@@ -28,6 +26,7 @@ import {
   AiOutlinePoweroff,
   AiOutlineLogout,
 } from "react-icons/ai";
+import { HiOutlineShoppingCart } from "react-icons/hi";
 import { TbUser, TbBell, TbWallet } from "react-icons/tb";
 import Logo from "assets/logo.png";
 import Name from "assets/name.png";
@@ -139,43 +138,72 @@ export const NavBar = () => {
           <Stack
             align="center"
             justifyContent="flex-end"
-            justifyItems=""
             direction="row"
             width="80%"
             mt="1px"
+            p="3"
           >
-            <Text color="#3E3D48" fontSize="20px">
+            <Text color="#3E3D48" fontSize="lg" fontWeight="semibold">
               Screan Owners
             </Text>
-            <Text color="#3E3D48" fontSize="20px" p="5">
+            <Text
+              color="#3E3D48"
+              fontSize="lg"
+              pl="5"
+              pr="5"
+              fontWeight="semibold"
+            >
               My Screan
             </Text>
 
-            <Box borderRadius="100%" border="2px" height="40px" width="40px">
-              <IconButton
-                bg="none"
-                mt="1"
-                icon={<TbWallet size="20px" fontWeight="1" color="black" />}
-                aria-label="Send Money"
-              />
+            <Box
+              borderRadius="100%"
+              border="2px"
+              height="40px"
+              width="40px"
+              borderColor="#403F49"
+            >
+              <Stack mt="2" ml="2">
+                <TbWallet size="20px" fontWeight="1" color="#403F49" />
+              </Stack>
             </Box>
-
-            <Box borderRadius="100%" border="2px" height="40px" width="40px">
-              <IconButton
-                bg="none"
-                mt="1"
-                icon={<TbBell size="20px" fontWeight="1" color="black" />}
-                aria-label="Send Money"
-              />
+            <Box
+              borderRadius="100%"
+              border="2px"
+              height="40px"
+              width="40px"
+              borderColor="#403F49"
+              align="center"
+            >
+              <Stack mt="2" ml="2">
+                <TbBell size="20px" fontWeight="1" color="#403F49" />
+              </Stack>
             </Box>
-
-            <Box borderRadius="100%" border="1px" height="40px" width="40px">
-              <IconButton
-                bg="none"
-                mt="1"
-                icon={<TbUser size="20px" fontWeight="10" color="black" />}
-                aria-label="profile"
-              />
+            <Box
+              borderRadius="100%"
+              border="2px"
+              height="40px"
+              width="40px"
+              borderColor="#403F49"
+            >
+              <Stack mt="2" ml="2">
+                <HiOutlineShoppingCart
+                  size="20px"
+                  fontWeight="1"
+                  color="#403F49"
+                />
+              </Stack>
+            </Box>
+            <Box
+              borderRadius="100%"
+              border="2px"
+              height="40px"
+              width="40px"
+              borderColor="#403F49"
+            >
+              <Stack mt="2" ml="2">
+                <TbUser size="20px" fontWeight="1" color="#403F49" />
+              </Stack>
             </Box>
 
             <Menu>
@@ -200,17 +228,7 @@ export const NavBar = () => {
                     flexBasis="50px"
                     flexShrink="0"
                   >
-                    <Icon
-                      bg="none"
-                      icon={
-                        <BsChevronDown
-                          size="20px"
-                          fontWeight="10"
-                          color="black"
-                        />
-                      }
-                      aria-label="see profile"
-                    />
+                    <BsChevronDown size="20px" fontWeight="1" color="#403F49" />
                   </Center>
                 </Tooltip>
               </MenuButton>

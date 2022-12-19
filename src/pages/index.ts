@@ -64,6 +64,8 @@ export { HomePage } from "./home/HomePage";
 export { UserProfile1 } from "./userProfile";
 export { WalletPage, PaymentReceipt, TopupWallet } from "./WalletPage";
 
+export { SendMoney } from "./Payment";
+
 // export { PleaBucket } from "./pleas";
 
 // export { UserDashboard, ScreenDashboard, CampaignDashboard } from "./dashboard";
