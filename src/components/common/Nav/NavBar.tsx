@@ -164,7 +164,12 @@ export const NavBar = () => {
               borderColor="#403F49"
             >
               <Stack mt="2" ml="2">
-                <TbWallet size="20px" fontWeight="1" color="#403F49" />
+                <TbWallet
+                  size="20px"
+                  fontWeight="1"
+                  color="#403F49"
+                  onClick={() => navigate("/walletPage")}
+                />
               </Stack>
             </Box>
             <Box
@@ -202,7 +207,12 @@ export const NavBar = () => {
               borderColor="#403F49"
             >
               <Stack mt="2" ml="2">
-                <TbUser size="20px" fontWeight="1" color="#403F49" />
+                <TbUser
+                  size="20px"
+                  fontWeight="1"
+                  color="#403F49"
+                  onClick={() => navigate("/userProfile1")}
+                />
               </Stack>
             </Box>
 

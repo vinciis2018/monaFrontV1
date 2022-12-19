@@ -60,13 +60,12 @@ import {
   UserProfile1,
   WalletPage,
   PaymentReceipt,
-  TopupWallet,
   ViewSecrateKey,
   HomePage,
   SendMoney,
+  RequestMoney,
 } from "pages";
 import { FooterPage, NavBar } from "components/common";
-import { RequestMoney } from "pages/Payment";
 
 export const PublicRoutes = () => {
   return (
@@ -99,7 +98,6 @@ export const PublicRoutes = () => {
 
         <Route path="/walletpage" element={<WalletPage />} />
         <Route path="/paymentreceipt/:id" element={<PaymentReceipt />} />
-        <Route path="/topup" element={<TopupWallet />} />
 
         <Route path="/send-money" element={<SendMoney />} />
         <Route path="/request-money" element={<RequestMoney />} />

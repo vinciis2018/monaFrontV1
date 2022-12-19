@@ -62,9 +62,9 @@ export { HomePage } from "./home/HomePage";
 
 // export { UserProfile } from "./profile";
 export { UserProfile1 } from "./userProfile";
-export { WalletPage, PaymentReceipt, TopupWallet } from "./WalletPage";
+export { WalletPage, PaymentReceipt } from "./WalletPage";
 
-export { SendMoney } from "./Payment";
+export { SendMoney, RequestMoney } from "./Payment";
 
 // export { PleaBucket } from "./pleas";
 

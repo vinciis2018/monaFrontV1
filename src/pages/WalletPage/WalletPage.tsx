@@ -195,6 +195,7 @@ export function WalletPage(props: any) {
                           />
                         }
                         aria-label="Send Money"
+                        onClick={() => navigate("/send-money")}
                       />
                       <Text>Send</Text>
                     </Stack>
@@ -210,6 +211,7 @@ export function WalletPage(props: any) {
                           />
                         }
                         aria-label="Send Money"
+                        onClick={() => navigate("/request-money")}
                       />
                       <Text>Receive</Text>
                     </Stack>

@@ -53,7 +53,7 @@ export function PaymentReceipt(props: any) {
               >
                 <Stack align="left" mt="3">
                   <BsArrowLeft
-                    onClick={() => navigate(`/customCreation/admin`)}
+                    onClick={() => navigate("/walletPage")}
                     size="30px"
                   />
                 </Stack>

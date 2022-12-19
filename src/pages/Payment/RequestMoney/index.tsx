@@ -66,7 +66,11 @@ export function RequestMoney(props: any) {
               mt="10"
             >
               <Stack ml="-10">
-                <AiOutlineArrowLeft size="25px" color="#403F49" />
+                <AiOutlineArrowLeft
+                  size="25px"
+                  color="#403F49"
+                  onClick={() => navigate("/walletPage")}
+                />
               </Stack>
               <Text
                 pl="10"
