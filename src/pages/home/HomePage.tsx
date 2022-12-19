@@ -66,7 +66,7 @@ export function HomePage() {
   } = videoListAll;
   console.log("allVideos : ", allVideos);
   let topThreeVideos = [];
-  if (allVideos) {
+  if (allVideos != undefined) {
     topThreeVideos = allVideos.slice(allVideos.length - 3, allVideos.length);
     console.log("topThreeVideo : ", topThreeVideos);
   }

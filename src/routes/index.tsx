@@ -63,8 +63,10 @@ import {
   TopupWallet,
   ViewSecrateKey,
   HomePage,
+  SendMoney,
 } from "pages";
-import { Footer, NavBar } from "components/common";
+import { FooterPage, NavBar } from "components/common";
+import { RequestMoney } from "pages/Payment";
 
 export const PublicRoutes = () => {
   return (
@@ -99,9 +101,12 @@ export const PublicRoutes = () => {
         <Route path="/paymentreceipt/:id" element={<PaymentReceipt />} />
         <Route path="/topup" element={<TopupWallet />} />
 
+        <Route path="/send-money" element={<SendMoney />} />
+        <Route path="/request-money" element={<RequestMoney />} />
+
         <Route path="*" element={<Page404 />} />
       </Routes>
-      <Footer />
+      <FooterPage />
     </>
   );
 };

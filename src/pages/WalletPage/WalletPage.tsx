@@ -139,6 +139,7 @@ export function WalletPage(props: any) {
             <Stack p="2">
               <Box
                 border="1px"
+                boxShadow="lg"
                 borderRadius="20"
                 height=""
                 width="858px"
