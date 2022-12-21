@@ -100,7 +100,6 @@ export const PublicRoutes = () => {
         <Route path="/paymentreceipt/:id" element={<PaymentReceipt />} />
         <Route path="/send-money" element={<SendMoney />} />
         <Route path="/request-money" element={<RequestMoney />} />
-
         <Route path="*" element={<Page404 />} />
       </Routes>
       <FooterPage />
