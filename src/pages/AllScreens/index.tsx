@@ -1,21 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Flex,
   Center,
   Stack,
   Text,
-  Input,
-  InputGroup,
   Button,
-  InputRightElement,
   IconButton,
   Image,
   SimpleGrid,
   Divider,
+  Select,
+  InputLeftElement,
+  InputGroup,
+  Input,
+  Tag,
+  TagLeftIcon,
+  TagLabel,
 } from "@chakra-ui/react";
 
-import { IoSearchCircleSharp } from "react-icons/io5";
 import { GrDown } from "react-icons/gr";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -34,7 +37,6 @@ import { listAllVideos } from "../../Actions/advertActions";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
 //image
-import homeScreen from "../../assets/image/homescreen.png";
 import railway from "../../assets/image/raily.png";
 import indor from "../../assets/image/indor.png";
 import outdor from "../../assets/image/outdore.png";
@@ -42,11 +44,14 @@ import appartment from "../../assets/image/appartment.png";
 import rectangle from "../../assets/image/Rectangle86.png";
 import girl2 from "../../assets/image/girl2.png";
 import { Screen } from "components/common";
-import { AtvertiseBox } from "components/common/AtvertiseBox";
+import { IoSearchOutline } from "react-icons/io5";
+import { FiMap } from "react-icons/fi";
 
-export function HomePage() {
+export function AllScreens() {
   const navigate = useNavigate();
   const MotionFlex = motion(Flex);
+  const [allScreens, setAllScreens] = useState<any>([]);
+  const [visible, setVisible] = useState<any>(3);
 
   const [screensModal, setScreensModal] = React.useState(false);
   const [nftsModal, setNftModal] = React.useState(false);
@@ -57,23 +62,11 @@ export function HomePage() {
   const screenList = useSelector((state: any) => state.screenList);
   const { loading: loadingScreens, error: errorScreens, screens } = screenList;
 
-  console.log("All screens : ", screens);
-
-  const videoListAll = useSelector((state: any) => state.videoListAll);
-
-  const {
-    loading: loadingVideos,
-    error: errorVideos,
-    allVideos,
-  } = videoListAll;
-  console.log("allVideos : ", allVideos);
-  let topThreeVideos = [];
-  if (allVideos != undefined) {
-    topThreeVideos = allVideos.slice(allVideos.length - 3, allVideos.length);
-    console.log("topThreeVideo : ", topThreeVideos);
-  }
-
   const dispatch = useDispatch<any>();
+
+  const loadMore = () => {
+    setVisible(visible + 3);
+  };
   React.useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
       console.log("go to welcome page");
@@ -120,103 +113,112 @@ export function HomePage() {
 
   return (
     <Box
-      color="black.500"
       align="center"
-      bgGradient={["linear-gradient(to right, #FFFDE9, #FFFFFF)"]}
-      pl="20"
-      pr="20"
+      // bgGradient={["linear-gradient(to right, #FFFDE9, #FFFFFF)"]}
     >
-      <Center mb="10">
-        {loadingScreens || loadingVideos ? (
-          <HLoading loading={loadingScreens || loadingVideos} />
-        ) : errorScreens || errorVideos ? (
-          <MessageBox variant="danger">
-            {errorScreens || errorVideos}
-          </MessageBox>
-        ) : (
+      <Flex
+        p="5"
+        bgColor="#FBFBFB"
+        direction="row"
+        align="center"
+        justifyContent="center"
+        boxShadow="2xl"
+      >
+        <Select
+          placeholder="Date"
+          size="md"
+          borderRadius="25px"
+          borderColor="#3F3E49"
+          fontSixe="lg"
+          width="10%"
+          color="#3E3D48"
+        />
+        <InputGroup size="lg" width="70%" align="center" ml="10">
+          <InputLeftElement>
+            <IoSearchOutline color="#3E3D48" />
+          </InputLeftElement>
+          <Input
+            placeholder="Loaction"
+            size="md"
+            borderRadius="25px"
+            borderColor="#3F3E49"
+            fontSixe="lg"
+            width="25%"
+          ></Input>
+        </InputGroup>
+      </Flex>
+
+      {loadingScreens ? (
+        <HLoading loading={loadingScreens} />
+      ) : errorScreens ? (
+        <MessageBox variant="danger">{errorScreens}</MessageBox>
+      ) : (
+        <Center>
           <Stack>
-            <Box
-              backgroundImage={homeScreen}
-              display="inline-block"
-              backgroundRepeat="no-repeat"
-              // backgroundAttachment="fixed"
-              backgroundSize="100%"
-              borderRadius="24px"
-              height="700px"
-              fontFamily="Sans"
-            >
-              <Box align="center" p="20">
-                <Text fontSize="5xl" color="#FFFFFF" width="70%">
-                  Enter the new age of advertising
-                </Text>
-                <InputGroup size="lg" width="70%" mt="20">
-                  <Input
-                    pr="4.5rem"
-                    type="text"
-                    p="9"
-                    heigth=""
-                    bgColor="#FCFCFC"
-                    borderRadius="70px"
-                    fontSize="lg"
-                    placeholder="Search by place, by location, by screen names"
-                  />
-                  <InputRightElement width="4.5rem" pt="5">
-                    <IconButton
-                      bg="none"
-                      icon={<IoSearchCircleSharp size="50px" color="#D7380E" />}
-                      aria-label="Edit user details"
-                    ></IconButton>
-                  </InputRightElement>
-                </InputGroup>
-              </Box>
-            </Box>
-            <Text
-              color="#403F49"
-              pt="5"
-              pb="5"
-              fontSize="4xl"
-              fontWeight="700"
-              align="left"
-            >
-              Categories
-            </Text>
-            <Flex
-              align="center"
-              direction="row"
-              justifyContent="space-between"
-              mt="10"
-            >
-              {categorys.map((eachCategory, index) => (
-                <Box
-                  width="23%"
-                  height="200px"
-                  bgColor="#F6F5F5"
-                  borderRadius="12px"
-                  boxShadow="2xl"
-                  key={index}
+            <Stack fontSize="3xl" fontWeight="bold" direction="row" pt="10">
+              <Text color="#403F49">Popular screens in </Text>
+              <Text color="#2BB3E0"> Delhi</Text>
+            </Stack>
+
+            <Stack pt="5" direction="row" justifyContent="space-between">
+              <Stack direction="row" justifyContent="space-between">
+                <Tag
+                  p="3"
+                  size="lg"
+                  fontSize="xl"
+                  variant="outline"
+                  color="#3E3D48"
+                  borderRadius="full"
                 >
-                  <Image src={eachCategory.image} alt=""></Image>
-                  <Text color="#3E3D48" p="5" fontSize="xl" fontWeight="600">
-                    {eachCategory.category}
-                  </Text>
-                </Box>
-              ))}
-            </Flex>
-            <Text
-              color="#403F49"
-              pt="10"
-              pb="10"
-              fontSize="4xl"
-              fontWeight="700"
-              align="left"
-            >
-              Popular screens
-            </Text>
-            <SimpleGrid columns={[2, null, 3]} spacing="10">
-              {screens.map((eachScreen: any) => (
+                  <TagLabel>Indoor</TagLabel>
+                </Tag>
+                <Tag
+                  size="lg"
+                  fontSize="xl"
+                  variant="outline"
+                  color="#3E3D48"
+                  borderRadius="full"
+                >
+                  <TagLabel>Railway Station</TagLabel>
+                </Tag>
+                <Tag
+                  size="lg"
+                  fontSize="xl"
+                  variant="outline"
+                  color="#3E3D48"
+                  borderRadius="full"
+                >
+                  <TagLabel>Highway</TagLabel>
+                </Tag>
+                <Tag
+                  size="lg"
+                  fontSize="xl"
+                  variant="outline"
+                  color="#3E3D48"
+                  borderRadius="full"
+                >
+                  <TagLeftIcon as={FiMap} />
+                  <TagLabel>Filter</TagLabel>
+                </Tag>
+              </Stack>
+              <Tag
+                size="lg"
+                fontSize="xl"
+                variant="outline"
+                color="#3E3D48"
+                borderRadius="full"
+              >
+                <TagLeftIcon as={FiMap} />
+                <TagLabel>Map View</TagLabel>
+              </Tag>
+            </Stack>
+
+            <SimpleGrid columns={[2, null, 3]} spacing="10" pt="5">
+              {screens.slice(0, visible).map((eachScreen: any) => (
                 <Screen eachScreen={eachScreen} />
               ))}
             </SimpleGrid>
+
             <Flex align="center" justifyContent="center">
               <Button
                 width="250px"
@@ -228,36 +230,7 @@ export function HomePage() {
                 fontWeight="semibold"
                 mt="20"
                 mb="20"
-              >
-                See All
-              </Button>
-            </Flex>
-            <Text
-              color="#403F49"
-              mt="10"
-              fontSize="4xl"
-              fontWeight="bold"
-              align="left"
-            >
-              Screens playing
-            </Text>
-            <SimpleGrid columns={[1, null, 3]} spacing="10">
-              {topThreeVideos &&
-                topThreeVideos.map((eachVideo: any) => (
-                  <AtvertiseBox video={eachVideo} />
-                ))}
-            </SimpleGrid>
-            <Flex align="center" justifyContent="center">
-              <Button
-                width="250px"
-                p="7"
-                variant="outline"
-                borderColor="black"
-                color="#D7380E"
-                fontSize="xl"
-                fontWeight="semibold"
-                mt="20"
-                mb="20"
+                onClick={loadMore}
               >
                 See All
               </Button>
@@ -336,8 +309,8 @@ export function HomePage() {
             </Flex>
             <Divider pb="" />
           </Stack>
-        )}
-      </Center>
+        </Center>
+      )}
     </Box>
   );
 }

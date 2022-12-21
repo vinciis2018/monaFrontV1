@@ -64,6 +64,7 @@ import {
   HomePage,
   SendMoney,
   RequestMoney,
+  AllScreens,
 } from "pages";
 import { FooterPage, NavBar } from "components/common";
 
@@ -82,7 +83,6 @@ export const PublicRoutes = () => {
         <Route path="/pin-create" element={<PinCreate />} />
         <Route path="/pin-success" element={<PinSuccess />} />
         <Route path="/view-secrate-key" element={<ViewSecrateKey />} />
-
         {/* auth */}
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
@@ -95,10 +95,9 @@ export const PublicRoutes = () => {
         <Route path="/userProfile1" element={<UserProfile1 />} />
         <Route path="/home" element={<Navigate to="/" />} />
         <Route path="/homepage" element={<HomePage />} />
-
+        <Route path="/allScreens" element={<AllScreens />} />s
         <Route path="/walletpage" element={<WalletPage />} />
         <Route path="/paymentreceipt/:id" element={<PaymentReceipt />} />
-
         <Route path="/send-money" element={<SendMoney />} />
         <Route path="/request-money" element={<RequestMoney />} />
 
