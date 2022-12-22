@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
@@ -23,19 +23,18 @@ import { GrDown } from "react-icons/gr";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import { listScreens } from "../../Actions/screenActions";
-import { listAllVideos } from "../../Actions/advertActions";
-// import { triggerPort } from "services/utils";
-
-// import { TopNftsContent } from "components/widgets";
-// import { TimeFilter } from "components/filters";
 
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
+import { Screen } from "components/common";
+import { IoSearchOutline } from "react-icons/io5";
+import { FiMap } from "react-icons/fi";
+import { MyMap } from "pages/MyMap";
+import { getPinJson } from "Actions/pinActions";
 //image
 import railway from "../../assets/image/raily.png";
 import indor from "../../assets/image/indor.png";
@@ -43,18 +42,10 @@ import outdor from "../../assets/image/outdore.png";
 import appartment from "../../assets/image/appartment.png";
 import rectangle from "../../assets/image/Rectangle86.png";
 import girl2 from "../../assets/image/girl2.png";
-import { Screen } from "components/common";
-import { IoSearchOutline } from "react-icons/io5";
-import { FiMap } from "react-icons/fi";
 
 export function AllScreens() {
   const navigate = useNavigate();
-  const MotionFlex = motion(Flex);
-  const [allScreens, setAllScreens] = useState<any>([]);
-  const [visible, setVisible] = useState<any>(3);
-
-  const [screensModal, setScreensModal] = React.useState(false);
-  const [nftsModal, setNftModal] = React.useState(false);
+  const [pageNumber, setPageNumber] = useState<any>("1");
 
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
@@ -62,36 +53,26 @@ export function AllScreens() {
   const screenList = useSelector((state: any) => state.screenList);
   const { loading: loadingScreens, error: errorScreens, screens } = screenList;
 
+  const jsonPins = useSelector((state: any) => state.jsonPins);
+  const { loading: loadingAllPins, error: errorAllPins, jsonData } = jsonPins;
+
   const dispatch = useDispatch<any>();
 
   const loadMore = () => {
-    setVisible(visible + 3);
+    setPageNumber(Number(pageNumber) + 1);
+    dispatch(listScreens({ pageNumber }));
   };
-  React.useEffect(() => {
+  useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
       console.log("go to welcome page");
       navigate("/welcome");
     } else if (!userInfo) {
       navigate("/signin");
     }
-    dispatch(listScreens({}));
-    dispatch(listAllVideos());
+    dispatch(listScreens({ pageNumber }));
+    dispatch(getPinJson());
   }, [dispatch, navigate, userInfo]);
 
-  const modalHandler = () => {
-    setNftModal(false);
-    setScreensModal(false);
-  };
-
-  const screensModalHandler = () => {
-    setScreensModal(true);
-    setNftModal(false);
-  };
-
-  const nftsModalHandler = () => {
-    setScreensModal(false);
-    setNftModal(true);
-  };
   const categorys = [
     {
       image: appartment,
@@ -112,11 +93,8 @@ export function AllScreens() {
   ];
 
   return (
-    <Box
-      align="center"
-      // bgGradient={["linear-gradient(to right, #FFFDE9, #FFFFFF)"]}
-    >
-      <Flex
+    <Box>
+      <Stack
         p="5"
         bgColor="#FBFBFB"
         direction="row"
@@ -146,7 +124,7 @@ export function AllScreens() {
             width="25%"
           ></Input>
         </InputGroup>
-      </Flex>
+      </Stack>
 
       {loadingScreens ? (
         <HLoading loading={loadingScreens} />
@@ -214,7 +192,7 @@ export function AllScreens() {
             </Stack>
 
             <SimpleGrid columns={[2, null, 3]} spacing="10" pt="5">
-              {screens.slice(0, visible).map((eachScreen: any) => (
+              {screens.map((eachScreen: any) => (
                 <Screen eachScreen={eachScreen} />
               ))}
             </SimpleGrid>
@@ -235,6 +213,16 @@ export function AllScreens() {
                 See All
               </Button>
             </Flex>
+            <Box width="100%" height="550px" color="black.500" pb="10">
+              {loadingAllPins ? (
+                <HLoading loading={loadingAllPins} />
+              ) : errorAllPins ? (
+                <MessageBox variant="danger">{errorAllPins}</MessageBox>
+              ) : (
+                <MyMap data={jsonData} />
+              )}
+            </Box>
+
             <Box
               backgroundImage={rectangle}
               // display="inline-block"
