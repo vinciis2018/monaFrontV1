@@ -18,9 +18,7 @@ export function Screen(props: any) {
       boxShadow="2xl"
       key={eachScreen._id}
       as={RouterLink}
-      to={`/screen/${eachScreen._id}/${
-        eachScreen.image.split("/").slice(-1)[0]
-      }/${eachScreen.activeGameContract}`}
+      to={`/screen/${eachScreen._id}`}
     >
       {/* image */}
       <Box p="5" height="60%">

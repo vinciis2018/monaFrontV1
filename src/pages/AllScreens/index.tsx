@@ -107,7 +107,7 @@ export function AllScreens() {
           size="md"
           borderRadius="25px"
           borderColor="#3F3E49"
-          fontSixe="lg"
+          fontSize="lg"
           width="10%"
           color="#3E3D48"
         />
@@ -120,7 +120,7 @@ export function AllScreens() {
             size="md"
             borderRadius="25px"
             borderColor="#3F3E49"
-            fontSixe="lg"
+            fontSize="lg"
             width="25%"
           ></Input>
         </InputGroup>
@@ -193,7 +193,7 @@ export function AllScreens() {
 
             <SimpleGrid columns={[2, null, 3]} spacing="10" pt="5">
               {screens.map((eachScreen: any) => (
-                <Screen eachScreen={eachScreen} />
+                <Screen eachScreen={eachScreen} key={eachScreen._id} />
               ))}
             </SimpleGrid>
 

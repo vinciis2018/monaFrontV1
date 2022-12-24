@@ -239,7 +239,7 @@ export function HomePage() {
               fontWeight="bold"
               align="left"
             >
-              Screens playing
+              Ads playing
             </Text>
             <SimpleGrid columns={[1, null, 3]} spacing="10">
               {topThreeVideos &&

@@ -7,7 +7,7 @@ export function AtvertiseBox(props: any) {
 
   return (
     <Box
-      width="100%"
+      width="417px"
       height="334px"
       bgColor="#F6F5F5"
       borderRadius="12px"
@@ -20,10 +20,11 @@ export function AtvertiseBox(props: any) {
     >
       <Image
         height="70%"
-        width="100%"
+        width="385px"
         src={video.thumbnail}
         alt=""
-        p="5"
+        p="2"
+        pt="2"
       ></Image>
       <Text color="#403F49" pl="5" fontSize="xl" fontWeight="bold" align="left">
         {video.brandName}
