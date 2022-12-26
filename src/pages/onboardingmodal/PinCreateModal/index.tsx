@@ -37,7 +37,7 @@ export function PinCreateModal(props: any) {
       setErr("Access PINs don't match, please try again.");
     } else {
       await tempSavePin(createPincode);
-      const piiiin = await getTempSavedPin();
+      await getTempSavedPin();
       nextStep();
       navigate("/pin-success");
     }

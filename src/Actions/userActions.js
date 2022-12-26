@@ -77,7 +77,6 @@ export const signin = (email, password) => async (dispatch) => {
         password,
       }
     );
-    console.log("singin : ", data);
     dispatch({
       type: USER_SIGNIN_SUCCESS,
       payload: data,
@@ -97,7 +96,6 @@ export const signin = (email, password) => async (dispatch) => {
 // SIGNOUT
 
 export const signout = () => (dispatch) => {
-  console.log("Signout called");
   localStorage.removeItem("userInfo");
   dispatch({
     type: USER_SIGNOUT,

@@ -31,9 +31,6 @@ export function VerifySecrateKeyModal(props: any) {
   );
 
   useEffect(() => {
-    const mnemonic =
-      "blossom race card chaos box always eye cluster hazard throw there involve";
-
     if (mnemonics) {
       setMnemonicsArray(mnemonics.split(" "));
     }

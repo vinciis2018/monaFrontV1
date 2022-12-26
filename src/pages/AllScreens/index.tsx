@@ -35,11 +35,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { FiMap } from "react-icons/fi";
 import { MyMap } from "pages/MyMap";
 import { getPinJson } from "Actions/pinActions";
-//image
-import railway from "../../assets/image/raily.png";
-import indor from "../../assets/image/indor.png";
-import outdor from "../../assets/image/outdore.png";
-import appartment from "../../assets/image/appartment.png";
+
 import rectangle from "../../assets/image/Rectangle86.png";
 import girl2 from "../../assets/image/girl2.png";
 
@@ -64,7 +60,6 @@ export function AllScreens() {
   };
   useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
-      console.log("go to welcome page");
       navigate("/welcome");
     } else if (!userInfo) {
       navigate("/signin");
@@ -72,25 +67,6 @@ export function AllScreens() {
     dispatch(listScreens({ pageNumber }));
     dispatch(getPinJson());
   }, [dispatch, navigate, userInfo]);
-
-  const categorys = [
-    {
-      image: appartment,
-      category: "APPARTMENTS",
-    },
-    {
-      image: railway,
-      category: "RAILWAY PLATFORMS",
-    },
-    {
-      image: indor,
-      category: "INDOOR",
-    },
-    {
-      image: outdor,
-      category: "OUTDOORS",
-    },
-  ];
 
   return (
     <Box>

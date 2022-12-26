@@ -13,7 +13,7 @@ export function Signin(props: any) {
   const [signinModalShow, setSigninModalShow] = useState<any>(false);
 
   const userSignin = useSelector((state: any) => state.userSignin);
-  const { userInfo, loading, error } = userSignin;
+  const { userInfo } = userSignin;
 
   useEffect(() => {
     if (userInfo) {

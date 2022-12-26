@@ -29,32 +29,27 @@ export function Welcome() {
   const userSignin = useSelector((state: any) => state.userSignin);
 
   const handleLoginModal = () => {
-    console.log("handlePinCreateModal");
     setLoginModalShow(false);
     setStartWalletShow(true);
   };
   const handleStartwalletShow = () => {
-    console.log("handlePinCreateModal");
     setStartWalletShow(false);
     setviewSecrateKeyShow(true);
   };
   const handleViewSecratekey = () => {
-    console.log("handlePinCreateModal");
     setviewSecrateKeyShow(false);
     setDisplaySecrateKeyShow(true);
   };
   const handleViewSecratekeyContinue = () => {
-    console.log("handlePinCreateModal");
     setDisplaySecrateKeyShow(false);
     setviewSecrateKeyShow(false);
     setVerifySecrateKeyShow(true);
   };
   const handleDisplayContinue = () => {
-    console.log("handlePinCreateModal");
     setDisplaySecrateKeyShow(false);
     setVerifySecrateKeyShow(true);
   };
-  const { userInfo, loading, error } = userSignin;
+  const { userInfo } = userSignin;
 
   useEffect(() => {
     hasEncryptedData().then((hasData) => {
@@ -70,9 +65,6 @@ export function Welcome() {
     });
   }, [hasEncryptedData, navigate, userInfo]);
 
-  const onClick = () => {
-    navigate("/pin-create");
-  };
   return (
     <Box px="2" pt="20" color="black.500">
       <WelcomeModal

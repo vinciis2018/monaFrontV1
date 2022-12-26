@@ -20,7 +20,6 @@ import { GrDown } from "react-icons/gr";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
@@ -46,18 +45,12 @@ import { AtvertiseBox } from "components/common/AtvertiseBox";
 
 export function HomePage() {
   const navigate = useNavigate();
-  const MotionFlex = motion(Flex);
-
-  const [screensModal, setScreensModal] = React.useState(false);
-  const [nftsModal, setNftModal] = React.useState(false);
 
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
 
   const screenList = useSelector((state: any) => state.screenList);
   const { loading: loadingScreens, error: errorScreens, screens } = screenList;
-
-  console.log("All screens : ", screens);
 
   const videoListAll = useSelector((state: any) => state.videoListAll);
 
@@ -66,17 +59,14 @@ export function HomePage() {
     error: errorVideos,
     allVideos,
   } = videoListAll;
-  console.log("allVideos : ", allVideos);
   let topThreeVideos = [];
-  if (allVideos != undefined) {
+  if (allVideos !== undefined) {
     topThreeVideos = allVideos.slice(allVideos.length - 3, allVideos.length);
-    console.log("topThreeVideo : ", topThreeVideos);
   }
 
   const dispatch = useDispatch<any>();
   React.useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
-      console.log("go to welcome page");
       navigate("/welcome");
     } else if (!userInfo) {
       navigate("/signin");
@@ -85,20 +75,6 @@ export function HomePage() {
     dispatch(listAllVideos());
   }, [dispatch, navigate, userInfo]);
 
-  const modalHandler = () => {
-    setNftModal(false);
-    setScreensModal(false);
-  };
-
-  const screensModalHandler = () => {
-    setScreensModal(true);
-    setNftModal(false);
-  };
-
-  const nftsModalHandler = () => {
-    setScreensModal(false);
-    setNftModal(true);
-  };
   const categorys = [
     {
       image: appartment,
@@ -193,7 +169,7 @@ export function HomePage() {
                   bgColor="#F6F5F5"
                   borderRadius="12px"
                   boxShadow="2xl"
-                  key={index}
+                  key={index + 1}
                 >
                   <Image src={eachCategory.image} alt=""></Image>
                   <Text color="#3E3D48" p="5" fontSize="xl" fontWeight="600">
@@ -214,7 +190,7 @@ export function HomePage() {
             </Text>
             <SimpleGrid columns={[2, null, 3]} spacing="10">
               {screens.map((eachScreen: any) => (
-                <Screen eachScreen={eachScreen} />
+                <Screen eachScreen={eachScreen} key={eachScreen._id} />
               ))}
             </SimpleGrid>
             <Flex align="center" justifyContent="center">
@@ -228,6 +204,7 @@ export function HomePage() {
                 fontWeight="semibold"
                 mt="20"
                 mb="20"
+                onClick={() => navigate("/all-screens")}
               >
                 See All
               </Button>
@@ -244,7 +221,7 @@ export function HomePage() {
             <SimpleGrid columns={[1, null, 3]} spacing="10">
               {topThreeVideos &&
                 topThreeVideos.map((eachVideo: any) => (
-                  <AtvertiseBox video={eachVideo} />
+                  <AtvertiseBox video={eachVideo} key={eachVideo._id} />
                 ))}
             </SimpleGrid>
             <Flex align="center" justifyContent="center">

@@ -21,18 +21,10 @@ export function DisplaySecrateKeyModal(props: any) {
   const [error, setErr] = useState("");
 
   useEffect(() => {
-    const mnemonic =
-      "blossom race card chaos box always eye cluster hazard throw there involve";
-
     if (mnemonics) {
       setMnemonicsArray(mnemonics.split(" "));
     }
-    // else {
-    //   setMnemonicsArray(mnemonic.split(" "));
-    // }
   }, [mnemonics]);
-
-  const onConfirm = async () => {};
 
   const { firstHalf: leftRowMnemonics, secondHalf: rightRowMnemonics } =
     useMemo(() => splitArrayIntoHalf(mnemonicsArray), [mnemonicsArray]);
@@ -40,9 +32,7 @@ export function DisplaySecrateKeyModal(props: any) {
   const renderKeyPhrase = (keyword: string, index: number) => {
     const isInput = false;
     const inputValue = "";
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-      console.log(e.target.value);
-    return (
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => (
       <KeyPhraseItem
         key={keyword}
         keyword={keyword}

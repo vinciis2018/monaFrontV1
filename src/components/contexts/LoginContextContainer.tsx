@@ -50,7 +50,6 @@ const ContextProvider = ({ children }: WithChildren) => {
       })
       .then(async (status) =>
         isSeedPhraseSaved().then((isSaved) => {
-          console.log("status", status);
           if (status.state === "granted" && !isSaved) {
             registerSeedPhraseSaveReminder(MNENONIC_SAVE_REMINDER_INTERVAL);
           }

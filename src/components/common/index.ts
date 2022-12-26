@@ -1,4 +1,3 @@
-export { Nav } from "./Nav";
 export { NavBar } from "./Nav/NavBar";
 export { Footer } from "./Footer";
 export { FooterPage } from "./Footer/FooterPage";

@@ -96,7 +96,7 @@ export const PublicRoutes = () => {
         <Route path="/userProfile1" element={<UserProfile1 />} />
         <Route path="/home" element={<Navigate to="/" />} />
         <Route path="/homepage" element={<HomePage />} />
-        <Route path="/allScreens" element={<AllScreens />} />
+        <Route path="/all-screens" element={<AllScreens />} />
         <Route path="/screen/:id" element={<ScreenDetail />} />
 
         <Route path="/walletpage" element={<WalletPage />} />

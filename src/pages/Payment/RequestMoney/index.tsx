@@ -6,9 +6,6 @@ import {
   Text,
   Stack,
   Center,
-  // FormControl,
-  // FormLabel,
-  // Button,
   Input,
   Divider,
   Button,
@@ -16,10 +13,8 @@ import {
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { getWalletDataAction } from "Actions/walletActions";
-// import { Modal } from "react-bootstrap";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
-// import Axios from "axios";
 
 export function RequestMoney(props: any) {
   const navigate = useNavigate();
@@ -33,11 +28,14 @@ export function RequestMoney(props: any) {
     error: walletdataError,
   } = getWalletData;
 
-  console.log("walletData : ", walletData);
-
   useEffect(() => {
+    if (userInfo && !userInfo.defaultWallet) {
+      navigate("/welcome");
+    } else if (!userInfo) {
+      navigate("/signin");
+    }
     dispatch(getWalletDataAction());
-  }, []);
+  }, [dispatch, navigate, userInfo]);
 
   return (
     <Box>

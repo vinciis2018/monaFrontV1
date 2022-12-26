@@ -6,9 +6,6 @@ import { FiMapPin } from "react-icons/fi";
 import Map, { Marker, Popup } from "react-map-gl";
 
 export function MyMap(props: any) {
-  // const [data, setData] = useState(props.data);
-  console.log("MyMap : ", props.data);
-  console.log("gepmetry : ", props.geometry);
   const [viewState, setViewState] = useState({
     longitude: props.geometry.coordinates[2] || 84,
     latitude: props.geometry.coordinates[1] || 25,
@@ -25,7 +22,7 @@ export function MyMap(props: any) {
       setScreenData(data);
       setViewSingleScreen(pinData);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 

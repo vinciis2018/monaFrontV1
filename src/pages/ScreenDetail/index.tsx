@@ -31,7 +31,6 @@ import { Review } from "components/common";
 
 export function ScreenDetail(props: any) {
   const navigate = useNavigate();
-  const screenID = "639477332665b32d11313e4a";
   const [screen, setScreen] = useState<any>(null);
   const [screenLoading, setScreenLoading] = useState<any>(true);
   const [screenError, setScreenError] = useState<any>(null);
@@ -41,20 +40,14 @@ export function ScreenDetail(props: any) {
   const [videosList, setVideosList] = useState<any>([]);
   const [videosListError, setVideosListError] = useState<any>([]);
   const [videoLoading, setVideoLoading] = useState<any>(true);
-  const [countEachRating, setCountEachRating] = useState<any>({
+  const countEachRating = {
     5: 0,
     4: 0,
     3: 0,
     2: 0,
     1: 0,
-  });
+  };
   const userSignin = useSelector((state: any) => state.userSignin);
-  console.log("screen : ", JSON.stringify(screen));
-  console.log("pin : ", jsonData);
-  console.log("video : ", videosList);
-  console.log("getPinDetails : ", pinError);
-  console.log("getVideoList : ", videosListError);
-  console.log("getScreentDetail : ", screenError);
 
   const { userInfo } = userSignin;
   if (!screenLoading && screen) {
@@ -78,8 +71,6 @@ export function ScreenDetail(props: any) {
       const { data } = await Axios.get(
         `${process.env.REACT_APP_BLINDS_SERVER}/api/pins/${pinID}`
       );
-      console.log(" jsonData : ", data);
-
       setJsonData(data);
       setPinLoading(false);
     } catch (error: any) {
@@ -95,7 +86,6 @@ export function ScreenDetail(props: any) {
       const { data } = await Axios.get(
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}/screenVideos`
       );
-      console.log("getVideoList  : ", data);
       setVideosList(data);
       setVideoLoading(false);
     } catch (error: any) {
@@ -131,7 +121,7 @@ export function ScreenDetail(props: any) {
     } else if (!userInfo) {
       navigate("/signin");
     }
-    // const screenID = window.location.pathname.split("/")[2];
+    const screenID = window.location.pathname.split("/")[2];
     getScreentDetail(screenID);
   }, [navigate, userInfo]);
 

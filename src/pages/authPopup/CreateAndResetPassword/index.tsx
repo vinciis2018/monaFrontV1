@@ -55,8 +55,6 @@ export function CreateAndResetPassword(props: any) {
     if (password !== confirmPassword) {
       alert("Password and confirm password donot match");
     } else {
-      console.log("email : ", props.email);
-      console.log("password : ", password);
       dispatch(signup("abcd", props.email, password));
       setShowConformPassword(false); // conform password modal close
       navigate("/signin");

@@ -138,7 +138,6 @@ export const ContextProvider = ({ children }: WithChildren) => {
         );
       })
       .catch((e) => {
-        console.log("Error : ", e);
         return e;
       });
 

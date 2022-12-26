@@ -14,10 +14,6 @@ export const getSingleLogDetails =
       type: USER_DETAILS_REQUEST,
       payload: userId,
     });
-    const {
-      userSignin: { userInfo },
-    } = getState();
-
     try {
       dispatch({
         type: GET_SINGLE_CREDIT_LOG_REQUEST,
