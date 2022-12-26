@@ -1,8 +1,8 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Box, Image, Flex, Stack, Text } from "@chakra-ui/react";
+import { Box, Image, Stack, Text } from "@chakra-ui/react";
 import { triggerPort } from "services/utils";
-import { Rating } from "../Rating";
+// import { Rating } from "../Rating";
 
 export function Advert(props: any) {
   const { video } = props;
@@ -19,10 +19,10 @@ export function Advert(props: any) {
       key={video._id}
       color="black.500"
     >
-      <Box p="" height={{ height: 50, lg: "200px" }}>
+      <Box p="2" height={{ height: 50, lg: "200px" }}>
         <Image
           width="100%"
-          height="150px"
+          height="240px"
           borderRadius="10px"
           src={video?.thumbnail}
           onLoad={() => triggerPort(video?.thumbnail?.split("/").slice(-1)[0])}
@@ -36,15 +36,6 @@ export function Advert(props: any) {
         <Text fontSize="xs" color="gray.500">
           {video?.category}
         </Text>
-        <Flex justify="space-between" align="center">
-          <Box>
-            <Text fontSize="xs" color="">
-              Available Slots
-            </Text>
-            <Text></Text>
-          </Box>
-          <Rating rating={video.rating} numReviews={video.numReviews} />
-        </Flex>
         {/* <Button onClick={() => props.history.push(`/advert/${video._id}/${video?.video?.split("/").slice(-1)[0]}/${video.screen}`)} p="1" width="100%" color="violet.500" variant="outline">View</Button> */}
       </Stack>
     </Box>

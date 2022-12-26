@@ -48,3 +48,9 @@ code {
   margin: -20px;
   padding: 0;
 }
+
+.map{
+  border-radius: 15px;
+  /* color: linear-gradient(156.06deg, rgba(255, 255, 255, 0.4) -1.7%, rgba(255, 255, 255, 0.6) 102.25%); */
+  background-color: "black";
+}

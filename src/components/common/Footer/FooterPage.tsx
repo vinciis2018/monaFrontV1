@@ -141,7 +141,8 @@ export function FooterPage() {
       </Flex>
       <Divider mt="10" ml="10" mr="20" />
       <Text color="#5C5C5C" fontSize="sm" align="left" mt="10" pl="20">
-        Copyright @ VINCI CREATIONS PRIVATE LIMITED, 2022. All rights reserved.
+        Copyright @ VINCIIS CREATIONS PRIVATE LIMITED, 2022. All rights
+        reserved.
       </Text>
     </Box>
   );

@@ -1,6 +1,14 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Box, Image, Flex, Text, IconButton } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Flex,
+  Text,
+  IconButton,
+  Stack,
+  Tooltip,
+} from "@chakra-ui/react";
 import { BiRupee } from "react-icons/bi";
 import { AiFillStar, AiOutlinePlus } from "react-icons/ai";
 import { BsDot } from "react-icons/bs";
@@ -13,8 +21,8 @@ export function Screen(props: any) {
       borderColor="#DFDFDF"
       border="1.5px"
       width="100%"
-      height="446px"
-      borderRadius="16px"
+      height="100%"
+      borderRadius="lg"
       boxShadow="2xl"
       key={eachScreen._id}
       as={RouterLink}
@@ -23,21 +31,22 @@ export function Screen(props: any) {
       }/${eachScreen.activeGameContract}`}
     >
       {/* image */}
-      <Box p="5" height="60%">
+      <Box p="2" height={{ height: 50, lg: "200px" }}>
         <Image
-          height="100%"
           width="100%"
-          src={eachScreen.image}
-          alt="screen image"
-          borderRadius="15px"
-        />{" "}
+          height="240px"
+          borderRadius="10px"
+          src={eachScreen?.image}
+          // onLoad={() => triggerPort(eachScreen?.image?.split("/").slice(-1)[0])}
+        />
       </Box>
       {/* details of screem */}
-      <Box p="5">
-        <Flex align="center" height="25%">
+      <Stack p="2" pb="4">
+        {/* Name */}
+        <Flex>
           <Text
             color="#403F49"
-            fontSize="xl"
+            fontSize="lg"
             fontWeight="bold"
             align="left"
             width="85%"
@@ -46,90 +55,112 @@ export function Screen(props: any) {
           </Text>
           <IconButton
             bg="none"
-            mr="2"
-            icon={<AiOutlinePlus size="59px" color="#403F49" />}
+            icon={<AiOutlinePlus size="25px" color="#403F49" />}
             aria-label="Edit user details"
-          ></IconButton>
+          />
         </Flex>
-        <Flex align="center" ml="-3" mt="2">
-          <IconButton
-            bg="none"
-            icon={<AiFillStar size="16px" color="#403F49" />}
-            aria-label="Star"
-          ></IconButton>
-
-          <Text
-            pl="1"
-            color="#403F49"
-            fontSize="sm"
-            fontWeight="semibold"
-            align="left"
-          >
-            {eachScreen.ratting || 4.5}
-          </Text>
-          <IconButton
-            bg="none"
-            icon={<BsDot size="16px" color="#403F49" />}
-            aria-label="Star"
-          ></IconButton>
-          <Text
-            color="#666666"
-            fontSize="sm"
-            fontWeight="semibold"
-            align="left"
-          >
-            {`${eachScreen.screenAddress} ${eachScreen.districtCity} ${eachScreen.country}`}
-          </Text>
+        {/* Ratings */}
+        <Flex align="center" justifyContent="space-between" p="">
+          <Flex>
+            <IconButton
+              bg="none"
+              icon={<AiFillStar size="16px" color="#403F49" />}
+              aria-label="Star"
+            ></IconButton>
+            <Text
+              pl="1"
+              color="#403F49"
+              fontSize="sm"
+              fontWeight="semibold"
+              align="left"
+            >
+              {eachScreen.ratting || 4.5}
+            </Text>
+          </Flex>
+          <Flex>
+            <IconButton
+              bg="none"
+              icon={<BsDot size="16px" color="#403F49" />}
+              aria-label="Star"
+            ></IconButton>
+            <Text
+              color="#403F49"
+              fontSize="xs"
+              fontWeight="semibold"
+              align="left"
+            >
+              2120 slots available
+            </Text>
+          </Flex>
         </Flex>
-        <Text
-          ml="0"
-          color="#403F49"
-          fontSize="sm"
-          fontWeight="semibold"
-          align="left"
-        >
-          2120 slots available
-        </Text>
-        <Flex align="center" ml="-3">
-          <IconButton
-            bg="none"
-            icon={<BiRupee size="16px" color="#403F49" />}
-            aria-label="Star"
-          ></IconButton>
-          <Text
-            pl="-5"
-            color="#403F49"
-            fontSize="sm"
-            fontWeight="semibold"
-            align="left"
-          >
-            {`${eachScreen.rentPerSlot} per slot`}
-          </Text>
-          <IconButton
-            bg="none"
-            icon={<BiRupee size="16px" color="#403F49" />}
-            aria-label="Star"
-          ></IconButton>
-          <Text
-            as="s"
-            color="#787878"
-            fontSize="sm"
-            fontWeight="semibold"
-            align="left"
-          >
-            250 per slot
-          </Text>
+        {/* Cost */}
+        <Flex align="center" justify="space-between">
+          <Flex align="center">
+            <IconButton
+              bg="none"
+              icon={<BiRupee size="16px" color="#403F49" />}
+              aria-label="Star"
+            ></IconButton>
+            <Text
+              color="#403F49"
+              fontSize="xs"
+              fontWeight="semibold"
+              align="left"
+            >
+              {`${eachScreen.rentPerSlot}/slot`}
+            </Text>
+          </Flex>
+          <Flex align="center">
+            <IconButton
+              bg="none"
+              icon={<BiRupee size="16px" color="#403F49" />}
+              aria-label="Star"
+            ></IconButton>
+            <Text
+              color="#787878"
+              fontSize="xs"
+              fontWeight="semibold"
+              align="left"
+            >
+              250/slot
+            </Text>
+          </Flex>
           <Text
             pl="1"
             color="#F86E6E"
-            fontSize="lg"
+            fontSize="xs"
             fontWeight="semibold"
             align="left"
           >
             ( 50% OFF)
           </Text>
         </Flex>
-      </Box>
+        {/* Address */}
+        <Tooltip
+          label={`${eachScreen.screenAddress}, ${eachScreen.districtCity}, ${eachScreen.country}`}
+          aria-label="A tooltip"
+        >
+          <Stack align="left">
+            <Text
+              color="#666666"
+              fontSize="xs"
+              fontWeight="semibold"
+              align="left"
+              isTruncated
+            >
+              {`${eachScreen.screenAddress}`}
+            </Text>
+            <Text
+              color="#666666"
+              fontSize="xs"
+              fontWeight="semibold"
+              align="left"
+            >
+              {`${eachScreen.districtCity}, ${eachScreen.country}`}
+            </Text>
+          </Stack>
+        </Tooltip>
+      </Stack>
     </Box>
   );
 }

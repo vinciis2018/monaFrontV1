@@ -10,7 +10,7 @@ export function MyMap(props: any) {
   const [viewState, setViewState] = useState({
     longitude: 84,
     latitude: 25,
-    zoom: 5,
+    zoom: 10,
   });
   const [screenData, setScreenData] = useState<any>(null);
   const [viewSingleScreen, setViewSingleScreen] = useState<any>(false);
@@ -34,6 +34,7 @@ export function MyMap(props: any) {
       align="center"
       justifyContent="center"
       color="black.500"
+      zIndex="1"
     >
       <ReactMapGL
         initialViewState={viewState}
@@ -67,19 +68,27 @@ export function MyMap(props: any) {
         ))}
         {viewSingleScreen && screenData ? (
           <Popup
+            className="map"
             latitude={viewSingleScreen.geometry.coordinates[1]}
             longitude={viewSingleScreen.geometry.coordinates[0]}
             onClose={() => setViewSingleScreen(null)}
+            anchor="left"
+            closeButton={false}
+            focusAfterOpen={true}
           >
             <Box
-              bgColor="#F7F7F7"
-              borderColor="#2BB3E0"
-              border="1px"
+              border="1px solid #2BB3E0"
               width="307px"
               height="390px"
-              borderRadius="16px"
-              bgGradient={["linear-gradient(to right, #FFFDE9, #FFFFFF)"]}
-              p="1"
+              borderRadius="15px"
+              // bgGradient={[
+              //   "linear-gradient(156.06deg, rgba(255, 255, 255, 0.4) -1.7%, rgba(255, 255, 255, 0.6) 102.25%)",
+              // ]}
+              bgGradient={[
+                "linear-gradient(156.06deg, rgba(255, 255, 255) -1.7%, rgba(255, 255, 255) 102.25%)",
+              ]}
+              p="2"
+              m="-4"
             >
               <Box>
                 <Image
@@ -90,8 +99,7 @@ export function MyMap(props: any) {
                   borderRadius="15px"
                 />
               </Box>
-              {/* details of screem */}
-              <Box align="left" pt="">
+              <Box align="left" pt="2">
                 <Text
                   p="1"
                   pl="2"
@@ -105,7 +113,7 @@ export function MyMap(props: any) {
                 >
                   2120 slots available
                 </Text>
-                <Flex align="center" pt="2">
+                <Flex align="center" p="1">
                   <Text
                     color="#403F49"
                     fontSize="lg"
@@ -115,9 +123,8 @@ export function MyMap(props: any) {
                   >
                     New Demo Screen Admin Platform 6
                   </Text>
-                  <Flex>
+                  <Flex align="center" p="">
                     <AiFillStar size="16px" color="#403F49" />
-
                     <Text
                       pl="1"
                       color="#403F49"
@@ -129,7 +136,7 @@ export function MyMap(props: any) {
                     </Text>
                   </Flex>
                 </Flex>
-                <Flex align="center" pt="2">
+                <Flex align="center" p="1">
                   <Text
                     color="#666666"
                     fontSize="sm"
@@ -139,7 +146,7 @@ export function MyMap(props: any) {
                     Lanka, Varanasi, India
                   </Text>
                 </Flex>
-                <Flex align="center" pt="2">
+                <Flex align="center" p="1" justify="space-between">
                   <Text
                     color="#403F49"
                     fontSize="sm"
@@ -167,12 +174,13 @@ export function MyMap(props: any) {
                     ( 50% OFF)
                   </Text>
                 </Flex>
-                <Stack p="3">
+                <Stack p="2">
                   <Button
                     mt="3"
-                    color="#D7380E"
+                    p="2"
+                    colorScheme="red"
                     variant="outline"
-                    borderRadius="8px"
+                    borderRadius="15px"
                     width="100%"
                   >
                     see screen details

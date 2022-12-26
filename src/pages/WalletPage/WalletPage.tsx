@@ -24,7 +24,7 @@ import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
 import post from "utils/payment";
 import Axios from "axios";
-import { TranjectionDetail } from "components/common/TranjectionDetail";
+import { TransactionDetail } from "components/common/TransactionDetail";
 export function WalletPage(props: any) {
   const navigate = useNavigate();
 
@@ -266,7 +266,7 @@ export function WalletPage(props: any) {
                   <Box>
                     {topUpData &&
                       topUpData.map((eachTranjection: any) => (
-                        <TranjectionDetail tranjection={eachTranjection} />
+                        <TransactionDetail tranjection={eachTranjection} />
                       ))}
                   </Box>
                 </Box>

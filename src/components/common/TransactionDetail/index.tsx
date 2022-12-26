@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Box, Text, IconButton, Stack, Divider } from "@chakra-ui/react";
 import { BsArrowDown, BsArrowUp } from "react-icons/bs";
 
-export function TranjectionDetail(props: any) {
+export function TransactionDetail(props: any) {
   const { tranjection } = props;
   return (
     <Box
