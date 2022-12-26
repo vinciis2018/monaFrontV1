@@ -54,6 +54,7 @@ export { Page404 } from "./404";
 export { Home } from "./home";
 export { HomePage } from "./home/HomePage";
 export { AllScreens } from "./AllScreens";
+export { ScreenDetail } from "./ScreenDetail";
 // export { MapBox } from "./map";
 // export { NFT } from "./nft";
 

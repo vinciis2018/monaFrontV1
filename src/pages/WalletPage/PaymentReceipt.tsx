@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Text, Stack, Center, IconButton } from "@chakra-ui/react";
 import { BsArrowLeft, BsFillCheckCircleFill } from "react-icons/bs";
-// import { inWords } from "utils/inWords";
 
 import { getSingleLogDetails } from "Actions/paymentAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,16 +16,20 @@ export function PaymentReceipt(props: any) {
     calender,
     error: tranjectionError,
   } = useSelector((state: any) => state.getSingleLogDetails);
-  console.log("single tranjection data : ", calender);
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo, loading: userLoading, error: userError } = userSignin;
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
+    if (userInfo && !userInfo.defaultWallet) {
+      navigate("/welcome");
+    } else if (!userInfo) {
+      navigate("/signin");
+    }
     const url = window.location.pathname;
     const tranjectionID = url.split("/")[2];
     dispatch(getSingleLogDetails({ userId: userInfo?._id, tranjectionID }));
-  }, []);
+  }, [dispatch, navigate, userInfo]);
 
   return (
     <Box px="2" pt="20" color="black.500">

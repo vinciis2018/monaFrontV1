@@ -20,7 +20,6 @@ export function WelcomeModal(props: any) {
 
   useEffect(() => {
     hasEncryptedData().then((hasData) => {
-      console.log(hasData);
       if (hasData) {
         navigate("/login");
       }
@@ -30,9 +29,6 @@ export function WelcomeModal(props: any) {
     });
   }, [hasEncryptedData, navigate, userInfo]);
 
-  const onClick = () => {
-    navigate("/pin-create");
-  };
   return (
     <div>
       <Modal

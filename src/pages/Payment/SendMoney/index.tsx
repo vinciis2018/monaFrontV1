@@ -29,11 +29,14 @@ export function SendMoney(props: any) {
     error: walletdataError,
   } = getWalletData;
 
-  console.log("walletData : ", walletData);
-
   useEffect(() => {
+    if (userInfo && !userInfo.defaultWallet) {
+      navigate("/welcome");
+    } else if (!userInfo) {
+      navigate("/signin");
+    }
     dispatch(getWalletDataAction());
-  }, []);
+  }, [dispatch, navigate, userInfo]);
 
   return (
     <Box pb="20">

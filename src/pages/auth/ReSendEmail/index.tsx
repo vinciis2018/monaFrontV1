@@ -47,8 +47,6 @@ export function ReSendEmail(props: any) {
     if (userInfo) {
       props?.history?.push(redirect);
     }
-    console.log("calling signout from re send email varification page");
-
     dispatch(signout());
   }, [dispatch, props?.history, redirect, userInfo]);
 

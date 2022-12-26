@@ -65,6 +65,7 @@ import {
   SendMoney,
   RequestMoney,
   AllScreens,
+  ScreenDetail,
 } from "pages";
 import { FooterPage, NavBar } from "components/common";
 
@@ -95,7 +96,9 @@ export const PublicRoutes = () => {
         <Route path="/userProfile1" element={<UserProfile1 />} />
         <Route path="/home" element={<Navigate to="/" />} />
         <Route path="/homepage" element={<HomePage />} />
-        <Route path="/allScreens" element={<AllScreens />} />s
+        <Route path="/all-screens" element={<AllScreens />} />
+        <Route path="/screen/:id" element={<ScreenDetail />} />
+
         <Route path="/walletpage" element={<WalletPage />} />
         <Route path="/paymentreceipt/:id" element={<PaymentReceipt />} />
         <Route path="/send-money" element={<SendMoney />} />

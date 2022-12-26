@@ -5,7 +5,6 @@ import {
   Box,
   Stack,
   Image,
-  useDisclosure,
   Text,
   Menu,
   MenuButton,
@@ -33,18 +32,19 @@ import Name from "assets/name.png";
 // import { isPWA } from "utils/util";
 import { editWallet } from "../../../Actions/walletActions";
 import { useLogin, useWallet } from "components/contexts";
-import { useWindowSize } from "utils";
 import { BsChevronDown } from "react-icons/bs";
 
 import { signout } from "../../../Actions/userActions";
 
 export const NavBar = () => {
-  const { width } = useWindowSize();
   const navigate = useNavigate();
   const style = {
-    bgColor: "#FFFDE9",
+    bgColor: "gray.100",
+    borderTop: "1px solid #E7E7E7",
     textAlign: "center",
     position: "fixed",
+    left: "0",
+    top: "0",
     width: "100%",
     zIndex: "10",
   };
@@ -55,10 +55,6 @@ export const NavBar = () => {
   });
   const btnRef = React.useRef(null);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isOpenSignin, setisOPenSignin] = React.useState<any>(false);
-  const [onOpenSignin, setonOpenSignin] = React.useState<any>(false);
-  const [onCloseSignin, setonCloseSignin] = React.useState<any>();
   const [modalOpen, setModalOpen] = React.useState<Boolean>(false);
 
   const { isUnlocked, lock, getArweavePublicAddress, isLoading } = useWallet();
@@ -91,8 +87,6 @@ export const NavBar = () => {
     lockUser();
     logoutUser();
     lock();
-    console.log("calling signout from nav bar page");
-
     dispatch(signout());
     navigate("/signin");
   };

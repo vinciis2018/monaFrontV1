@@ -43,13 +43,10 @@ export function StartWalletModal(props: any) {
           .then(() => wipeTempSavedPin())
           .then(() => generateAndSave(pin));
         const defWallet = getArweavePublicAddress();
-        console.log("defWallet : ", defWallet);
         if (userInfo?.defaultWallet === undefined || null || "") {
-          console.log("userInfo?.defaultWallet === undefined");
           dispatch(createWallet(defWallet));
         }
         if (userInfo?.defaultWallet !== defWallet) {
-          console.log("userInfo?.defaultWallet !== defWallet");
           dispatch(
             editWallet({
               defWallet,

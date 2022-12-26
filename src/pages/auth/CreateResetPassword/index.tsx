@@ -12,16 +12,20 @@ export function CreateResetPassword(props: any) {
     useState(true);
 
   const userSignup = useSelector((state: any) => state.userSignup);
-  const { userInfo, loading, error } = userSignup;
+  const { userInfo } = userSignup;
 
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    console.log("Insise useEffect create password");
+    if (userInfo && !userInfo.defaultWallet) {
+      navigate("/welcome");
+    } else if (!userInfo) {
+      navigate("/signin");
+    }
     const url = window.location.pathname;
     const email = url.split("/");
     setEmail(email[2]);
-  }, [dispatch, props?.history, userInfo]);
+  }, [dispatch, navigate, userInfo]);
 
   return (
     <Box p="10%" pl="25%" width="100%">

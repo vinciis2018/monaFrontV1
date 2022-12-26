@@ -84,8 +84,6 @@ export function EmailVerificationModal(props: any) {
       });
     };
     gapi.load("client:auth2", initClient);
-    console.log("calling signout from email verification page");
-
     dispatch(signout());
   }, [dispatch, props?.history, redirect, userInfo]);
 

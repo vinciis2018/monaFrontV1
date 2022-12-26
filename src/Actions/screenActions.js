@@ -200,7 +200,6 @@ export const deleteScreen = (screenId) => async (dispatch, getState) => {
       }
     );
     dispatch({ type: SCREEN_DELETE_SUCCESS, payload: data });
-    // console.log({ data });
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -223,7 +222,6 @@ export const screenVideosList = (screenId) => async (dispatch) => {
     );
     dispatch({ type: SCREEN_VIDEOS_SUCCESS, payload: data });
   } catch (error) {
-    // console.log(error);
     dispatch({
       type: SCREEN_VIDEOS_FAIL,
       payload:
@@ -393,7 +391,6 @@ export const likeScreen =
         //   payload: data
         //  })
       } catch (error) {
-        // console.log(error);
         dispatch({
           type: SCREEN_LIKE_FAIL,
           payload:
@@ -427,7 +424,6 @@ export const unlikeScreen = (screenId) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    // console.log(error);
     dispatch({
       type: SCREEN_UNLIKE_FAIL,
       payload:
@@ -448,7 +444,6 @@ export const subscribeScreen =
     const {
       userSignin: { userInfo },
     } = getState();
-    // console.log("screen Id found");
     try {
       const { data } = await Axios.post(
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId.screenId}/subscribeScreen/${screenId.interaction}`,
@@ -462,7 +457,6 @@ export const subscribeScreen =
         payload: data,
       });
     } catch (error) {
-      // console.log(error);
       dispatch({
         type: SCREEN_SUBSCRIBE_FAIL,
         payload:
@@ -482,7 +476,6 @@ export const unsubscribeScreen = (screenId) => async (dispatch, getState) => {
   const {
     userSignin: { userInfo },
   } = getState();
-  // console.log("screen Id found");
   try {
     const { data } = await Axios.delete(
       `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId.screenId}/unsubscribeScreen`,
@@ -496,7 +489,6 @@ export const unsubscribeScreen = (screenId) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    // console.log(error);
     dispatch({
       type: SCREEN_UNSUBSCRIBE_FAIL,
       payload:
@@ -517,7 +509,6 @@ export const flagScreen =
     const {
       userSignin: { userInfo },
     } = getState();
-    // console.log("screen Id found");
     try {
       const { data } = await Axios.post(
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId.screenId}/flagScreen/${screenId.interaction}`,
@@ -531,7 +522,6 @@ export const flagScreen =
         payload: data,
       });
     } catch (error) {
-      // console.log(error);
       dispatch({
         type: SCREEN_FLAG_FAIL,
         payload:
@@ -618,7 +608,6 @@ export const grantScreenAllyPlea = (pleaId) => async (dispatch, getState) => {
     type: SCREEN_ALLY_GRANT_REQUEST,
     payload: pleaId,
   });
-  // console.log(pleaId);
   const {
     userSignin: { userInfo },
   } = getState();
@@ -653,8 +642,6 @@ export const checkPlaylist =
       type: "CHECK_PLAYLIST_REQUEST",
       payload: currentVid,
     });
-
-    console.log(currentVid);
     try {
       const { data } = await Axios.get(
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenName}/screenName/${timeNow}/${currentVid}`,

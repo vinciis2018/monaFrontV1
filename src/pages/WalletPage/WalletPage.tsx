@@ -39,7 +39,6 @@ export function WalletPage(props: any) {
     loading: walletLoading,
     error: walletdataError,
   } = getWalletData;
-  console.log("wallet data : ", walletData);
 
   const getTranjectionData = useSelector(
     (state: any) => state.getTranjectionData
@@ -49,8 +48,6 @@ export function WalletPage(props: any) {
     topUpData,
     error: tranjectionError,
   } = getTranjectionData;
-
-  console.log("getTranjectionData  : ", getTranjectionData);
 
   const dispatch = useDispatch<any>();
 
@@ -84,9 +81,14 @@ export function WalletPage(props: any) {
   };
 
   useEffect(() => {
+    if (userInfo && !userInfo.defaultWallet) {
+      navigate("/welcome");
+    } else if (!userInfo) {
+      navigate("/signin");
+    }
     dispatch(getWalletDataAction());
     dispatch(getTranjectionDataAction());
-  }, [navigate, userInfo]);
+  }, [dispatch, navigate, userInfo]);
 
   return (
     <Box px="2" pt="0" color="black.500">
