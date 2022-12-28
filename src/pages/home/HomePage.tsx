@@ -103,8 +103,9 @@ export function HomePage() {
       align="center"
       bgGradient={["linear-gradient(to right, #FFFDE9, #FFFFFF)"]}
       py="20"
+      // border="1px solid black"
     >
-      <Center px="20" mb="10">
+      <Center px="10">
         {loadingScreens || loadingVideos ? (
           <HLoading loading={loadingScreens || loadingVideos} />
         ) : errorScreens || errorVideos ? (
@@ -113,7 +114,7 @@ export function HomePage() {
           </MessageBox>
         ) : (
           <Stack>
-            <Box pb="300">
+            <Box width="100%">
               <Box
                 as="video"
                 src="https://bafybeid57yuz6xuqdniw744q62r2nmh4r3doz7i736ujh3xonjvulqkra4.ipfs.w3s.link/pexels-henry-5538832.mp4"
@@ -122,30 +123,37 @@ export function HomePage() {
                 muted
                 display="inline-block"
                 borderRadius="24px"
-              />
-              <Box align="center" mt="-500">
-                <Text pt="" fontSize="5xl" fontWeight="1000" color="#FFFFFF">
+                height={{ base: "100%", lg: "50%" }}
+              ></Box>
+              <Stack zIndex="1" align="center">
+                <Text
+                  mt={{ base: "-300", lg: "-500" }}
+                  pb={{ base: "10", lg: "20" }}
+                  fontSize={{ base: "4xl", lg: "80px" }}
+                  fontWeight="1000"
+                  color="#FFFFFF"
+                >
                   Enter the new age of advertising
                 </Text>
                 <InputGroup size="lg" width="70%" mt="20">
                   <Input
                     type="text"
-                    p="9"
+                    p="5"
                     heigth=""
                     bgColor="#FCFCFC"
                     borderRadius="80px"
                     fontSize="lg"
                     placeholder="Search by place, by location, by screen names"
                   />
-                  <InputRightElement width="4.5rem" pr="1" pt="6">
+                  <InputRightElement width="4.5rem" pr="1" pt="2.5">
                     <IconButton
                       bg="none"
                       icon={<IoSearchCircleSharp size="50px" color="#D7380E" />}
                       aria-label="Edit user details"
-                    ></IconButton>
+                    />
                   </InputRightElement>
                 </InputGroup>
-              </Box>
+              </Stack>
             </Box>
             <Text
               color="#403F49"

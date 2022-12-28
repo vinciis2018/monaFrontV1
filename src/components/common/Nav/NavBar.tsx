@@ -39,14 +39,14 @@ import { signout } from "../../../Actions/userActions";
 export const NavBar = () => {
   const navigate = useNavigate();
   const style = {
-    bgColor: "gray.100",
+    bgColor: "#FFFDE9",
     borderTop: "1px solid #E7E7E7",
     textAlign: "center",
     position: "fixed",
     left: "0",
     top: "0",
     width: "100%",
-    zIndex: "10",
+    zIndex: "2",
   };
   const [walletBalance, setWalletBalance] = React.useState({
     ar: 0,
