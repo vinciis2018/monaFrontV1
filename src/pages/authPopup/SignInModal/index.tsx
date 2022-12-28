@@ -129,7 +129,7 @@ export function SignInModal(props: any) {
               <Stack width="90%" bgColor="rgba(244, 86, 0, 0.3)">
                 {/* backgroundImage={rectangle} backgroundPosition="center" backgroundRepeat="no-repeat" */}
 
-                <Flex align="center" m="5">
+                <Flex align="center" p="5">
                   <Image src={logo} height="" width="15%" />
                   <Image
                     src={name}
@@ -149,12 +149,12 @@ export function SignInModal(props: any) {
                 >
                   We are exited to offer free ads for first 100 brands
                 </Text>
-                <Stack rounded="lg" justifyContent="flex-end">
+                <Stack>
                   <Image
                     src={mylogo}
                     width="100%"
                     // bgColor="rgba(244, 86, 0, 0.3)"
-                    mt="20"
+                    pt={{ base: "60", lg: "20" }}
                   />
                 </Stack>
               </Stack>
@@ -164,7 +164,7 @@ export function SignInModal(props: any) {
                     bg="none"
                     icon={
                       <AiOutlineCloseCircle
-                        size="lg"
+                        size="30px"
                         color="gray"
                         onClick={props.onHide}
                       />
@@ -191,7 +191,7 @@ export function SignInModal(props: any) {
                   </Text>
                   {loading && <HLoading loading={loading} />}
                   {error && <MessageBox variant="danger">{error}</MessageBox>}
-                  <FormControl id="email" mt="3" isInvalid={emailErrorStatus}>
+                  <FormControl id="email" pt="3" isInvalid={emailErrorStatus}>
                     <FormLabel fontSize="xs">Enter email</FormLabel>
                     <Stack direction="column" align="left">
                       <Input
@@ -201,6 +201,8 @@ export function SignInModal(props: any) {
                         value={email}
                         required
                         type="email"
+                        py="3"
+                        rounded="md"
                       />
                       {!emailError ? (
                         <FormHelperText></FormHelperText>
@@ -225,14 +227,15 @@ export function SignInModal(props: any) {
                             placeholder="Password"
                             value={password}
                             required
+                            py="3"
                           />
-                          <InputRightElement width="4.5rem">
+                          <InputRightElement width="4.5rem" p="3">
                             {showPassword ? (
                               <IconButton
                                 bg="none"
                                 onClick={handleShowPassword}
                                 icon={
-                                  <AiOutlineEye size="20px" color="black" />
+                                  <AiOutlineEye size="25px" color="black" />
                                 }
                                 aria-label="Close"
                               />
@@ -264,8 +267,9 @@ export function SignInModal(props: any) {
                       Remember me
                     </Checkbox>
                   </Stack>
-                  <Stack align="center" mt="2">
+                  <Stack align="center">
                     <Button
+                      py="3"
                       width="100%"
                       //   bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
                       bgColor="#D7380E"
@@ -307,6 +311,7 @@ export function SignInModal(props: any) {
                           borderRadius="md"
                           onClick={renderProps.onClick}
                           align="center"
+                          py="3"
                         >
                           <IconButton
                             bg="none"

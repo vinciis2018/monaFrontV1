@@ -110,7 +110,7 @@ export function EmailVerificationModal(props: any) {
               <Stack width="90%" bgColor="rgba(244, 86, 0, 0.3)">
                 {/* backgroundImage={rectangle} backgroundPosition="center" backgroundRepeat="no-repeat" */}
 
-                <Flex align="center" m="5">
+                <Flex align="center" p="5">
                   <Image src={logo} height="" width="15%" />
                   <Image
                     src={name}
@@ -135,7 +135,7 @@ export function EmailVerificationModal(props: any) {
                     src={mylogo}
                     width="100%"
                     // bgColor="rgba(244, 86, 0, 0.3)"
-                    mt="20"
+                    pt={{ base: "60", lg: "20" }}
                   />
                 </Stack>
               </Stack>
@@ -145,7 +145,7 @@ export function EmailVerificationModal(props: any) {
                     bg="none"
                     icon={
                       <AiOutlineCloseCircle
-                        size="lg"
+                        size="30px"
                         color="gray"
                         onClick={props.onHide}
                       />
@@ -177,6 +177,8 @@ export function EmailVerificationModal(props: any) {
                         value={email}
                         required
                         type="email"
+                        py="3"
+                        rounded="md"
                       />
                       {!emailError ? (
                         <FormHelperText></FormHelperText>
@@ -188,6 +190,7 @@ export function EmailVerificationModal(props: any) {
 
                   <Stack align="center" mt="2">
                     <Button
+                      py="3"
                       width="100%"
                       bgColor="#D7380E"
                       color="#FFFFFF"
@@ -217,6 +220,7 @@ export function EmailVerificationModal(props: any) {
                           borderRadius="md"
                           onClick={renderProps.onClick}
                           align="center"
+                          py="3"
                         >
                           <IconButton
                             bg="none"
@@ -232,11 +236,12 @@ export function EmailVerificationModal(props: any) {
                       isSignedIn={true}
                     />
                   </Stack>
-                  <Stack mt="5">
+                  <Stack pt="2">
                     <Button
+                      py="3"
                       width="100%"
                       variant="outline"
-                      fontSize="md"
+                      fontSize={{ base: "xs", lg: "md" }}
                       fontWeight="1"
                       type="submit"
                       onClick={() => navigate("/signin")}

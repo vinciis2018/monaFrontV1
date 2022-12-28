@@ -4,15 +4,22 @@ import { Step, Steps } from "chakra-ui-steps";
 //useSteps
 const steps = [
   { label: "Step 1", description: "Create PIN" },
-  { label: "Step 2", description: "Secure your wallet" },
-  { label: "Step 3", description: "Confirm secret recovery Phrase" },
+  { label: "Step 2", description: "Secure PIN" },
+  { label: "Step 3", description: "Confirm Phrase" },
 ];
 
 const text = (value: string) => <Text fontSize="12">{value}</Text>;
 
 export const VerticalLabels = (props: any) => {
   return (
-    <Flex flexDir="column" width="100%" align="center" justifyContent="center">
+    <Flex
+      p="4"
+      px="10"
+      flexDir="column"
+      width="100%"
+      align="center"
+      justifyContent="center"
+    >
       <Steps labelOrientation="vertical" activeStep={props.activeStep}>
         {steps.map(({ label, description }, index) => (
           <Step label={text(description)} key={label}></Step>

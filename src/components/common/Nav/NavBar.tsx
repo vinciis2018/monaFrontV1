@@ -122,6 +122,7 @@ export const NavBar = () => {
                 fontSize="xs"
                 onClick={() => navigate("/signin")}
                 ref={btnRef}
+                p="2"
               >
                 Please Signin
               </Button>
