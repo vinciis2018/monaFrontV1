@@ -66,6 +66,7 @@ import {
   RequestMoney,
   AllScreens,
   ScreenDetail,
+  ScreenOwner,
 } from "pages";
 import { FooterPage, NavBar } from "components/common";
 
@@ -98,6 +99,7 @@ export const PublicRoutes = () => {
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/all-screens" element={<AllScreens />} />
         <Route path="/screen/:id" element={<ScreenDetail />} />
+        <Route path="/screen-owner" element={<ScreenOwner />} />
 
         <Route path="/walletpage" element={<WalletPage />} />
         <Route path="/paymentreceipt/:id" element={<PaymentReceipt />} />
