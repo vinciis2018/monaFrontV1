@@ -139,7 +139,9 @@ export function FooterPage() {
           </Stack>
         </Box>
       </Flex>
-      <Divider mt="10" ml="10" mr="20" />
+      <Box pt="10" px="20">
+        <Divider borderColor="black.500" />
+      </Box>
       <Text color="#5C5C5C" fontSize="sm" align="left" mt="10" pl="20">
         Copyright @ VINCIIS CREATIONS PRIVATE LIMITED, 2022. All rights
         reserved.

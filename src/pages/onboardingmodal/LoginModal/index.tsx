@@ -100,25 +100,27 @@ export function LoginModal(props: any) {
             bg="none"
             icon={
               <AiOutlineCloseCircle
-                size="40px"
+                size="30px"
                 fontWeight="10"
-                color="black"
+                color="#00000090"
                 onClick={props.onHide}
               />
             }
             aria-label="Close"
           />
         </Stack>
-        <VerticalLabels activeStep={props.activeStep} />
+        <Stack align="center">
+          <VerticalLabels activeStep={props.activeStep} />
+        </Stack>
         <Stack align="center" justifyContent="center">
           {loading ? (
             <HLoading loading={loading} />
           ) : error ? (
             <MessageBox variant="danger">{error}</MessageBox>
           ) : null}
-          <Box alignItems="center" mt="30">
-            <Box alignItems="center" mt="10">
-              <Text textAlign="left" fontSize="xs" fontWeight="600">
+          <Box alignItems="center" pt="30">
+            <Box alignItems="center" pt="10">
+              <Text p="2" textAlign="left" fontSize="xs" fontWeight="600">
                 Enter PIN
               </Text>
               <HPasswordInput
@@ -138,8 +140,8 @@ export function LoginModal(props: any) {
               <Button
                 bgColor="#403F49"
                 color="#EEEEEE"
-                width="40"
-                mt="3"
+                width="80%"
+                p="3"
                 onClick={() => onClick()}
               >
                 Continue

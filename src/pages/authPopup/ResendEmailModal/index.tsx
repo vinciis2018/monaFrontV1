@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 // IoIosCloseCircleOutline
 // import {IoIosCloseCircleOutline }from "react-icons/io"
-import emailImage from "../../../assets/emailImg.jpg";
+import emailImage from "../../../assets/email.png";
 
 import { Modal } from "react-bootstrap";
 import { AiOutlineCloseCircle } from "react-icons/ai";
@@ -81,7 +81,11 @@ export function ReSendEmailModal(props: any) {
                 We are exited to offer free ads for first 100 brands
               </Text>
               <Stack rounded="lg" justifyContent="flex-end">
-                <Image src={mylogo} width="100%" mt="20" />
+                <Image
+                  src={mylogo}
+                  pt={{ base: "60", lg: "20" }}
+                  width="100%"
+                />
               </Stack>
             </Stack>
             <Stack width="100%" bgGradient="linear(to-t, #fffad9, #ffffff)">
@@ -90,7 +94,7 @@ export function ReSendEmailModal(props: any) {
                   bg="none"
                   icon={
                     <AiOutlineCloseCircle
-                      size="lg"
+                      size="30px"
                       color="gray"
                       onClick={props.onHide}
                     />
@@ -119,7 +123,12 @@ export function ReSendEmailModal(props: any) {
                 {loading && <HLoading loading={loading} />}
                 {error && <MessageBox variant="danger">{error}</MessageBox>}
                 <Box align="center" justifyContent="center" p="2">
-                  <Image src={emailImage} height="60%" width="60%" />
+                  <Image
+                    src={emailImage}
+                    height="100%"
+                    width="100%"
+                    pt={{ base: "10", lg: "5" }}
+                  />
                 </Box>
                 <Text
                   p="2"
@@ -131,9 +140,10 @@ export function ReSendEmailModal(props: any) {
                   To confirm your email address, tap the verify button in the
                   email we sent to abc@xyz.com
                 </Text>
-                <Stack p="1" pt="2" align="center" mt="2">
+                <Stack p="1" pt="2" align="center">
                   <Button
-                    width="50%"
+                    py="3"
+                    width="100%"
                     //   bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
                     bgColor="#D7380E"
                     size="md"

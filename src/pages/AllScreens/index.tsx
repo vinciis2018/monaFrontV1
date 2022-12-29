@@ -105,7 +105,7 @@ export function AllScreens() {
         <MessageBox variant="danger">{errorScreens}</MessageBox>
       ) : (
         <Stack>
-          <Center px="20" mb="10">
+          <Center px="10" mb="10">
             <Stack>
               <Stack py="5" align="center">
                 <InputGroup size="lg" width="40%">
