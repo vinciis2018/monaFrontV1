@@ -136,7 +136,13 @@ export const NavBar = () => {
               mt="1px"
               p="3"
             >
-              <Text color="#3E3D48" fontSize="md" fontWeight="semibold">
+              <Text
+                color="#3E3D48"
+                fontSize="md"
+                fontWeight="semibold"
+                type="Button"
+                onClick={() => navigate("/screen-owner")}
+              >
                 Screan Owners
               </Text>
               <Text

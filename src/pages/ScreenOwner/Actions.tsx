@@ -32,7 +32,6 @@ export function Actions(props: any) {
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}/screenVideos`
       );
       setVideosList(data);
-      console.log("video  : ", JSON.stringify(data));
       setVideoLoading(false);
     } catch (error: any) {
       setVideosListError(
@@ -69,6 +68,7 @@ export function Actions(props: any) {
                   <Th>
                     <Flex>
                       <Checkbox
+                        borderColor="#202020"
                         isChecked={allChecked}
                         isIndeterminate={isIndeterminate}
                         onChange={(e) =>
@@ -116,7 +116,7 @@ export function Actions(props: any) {
                     </Td>
                     <Td>
                       <Select
-                        size="lg"
+                        height="36px"
                         variant="outline"
                         borderColor="#0EBCF5"
                         bgColor="#FFFFFF"

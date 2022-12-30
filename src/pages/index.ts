@@ -56,6 +56,7 @@ export { HomePage } from "./home/HomePage";
 export { AllScreens } from "./AllScreens";
 export { ScreenDetail } from "./ScreenDetail";
 export { ScreenOwner } from "./ScreenOwner";
+export { CreateScreen } from "./CreateScreen";
 
 // export { MapBox } from "./map";
 // export { NFT } from "./nft";

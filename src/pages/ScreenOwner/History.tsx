@@ -24,7 +24,6 @@ export function History(props: any) {
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}/screenVideos`
       );
       setVideosList(data);
-      console.log("video  : ", JSON.stringify(data));
       setVideoLoading(false);
     } catch (error: any) {
       setVideosListError(

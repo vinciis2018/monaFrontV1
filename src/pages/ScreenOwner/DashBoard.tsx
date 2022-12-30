@@ -14,7 +14,6 @@ export function DashBoard(props: any) {
   const [screen, setScreen] = useState<any>(null);
   const [screenLoading, setScreenLoading] = useState<any>(true);
   const [screenError, setScreenError] = useState<any>(null);
-  console.log("videoLoading : ", videoLoading);
 
   const getVideoList = async (screenId: any) => {
     try {
@@ -22,7 +21,6 @@ export function DashBoard(props: any) {
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}/screenVideos`
       );
       setVideosList(data);
-      console.log("video  : ", JSON.stringify(data));
       setVideoLoading(false);
     } catch (error: any) {
       setVideosListError(
@@ -38,7 +36,6 @@ export function DashBoard(props: any) {
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}`
       );
       setScreen(data);
-      console.log("Screen datta : ", JSON.stringify(data));
       setScreenLoading(false);
       getVideoList(screenID);
     } catch (error: any) {
@@ -50,7 +47,6 @@ export function DashBoard(props: any) {
     }
   };
   useEffect(() => {
-    console.log("useEffect called ", screenID);
     if (screenID) {
       getScreentDetail(screenID);
     }
@@ -128,7 +124,7 @@ export function DashBoard(props: any) {
           >
             History
           </Text>
-          <Stack pt="5" boxShadow="2xl">
+          <Stack pt="10" boxShadow="2xl">
             {videosList && <AdsInTable videos={videosList} />}
           </Stack>
         </Box>

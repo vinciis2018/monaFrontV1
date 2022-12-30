@@ -4,8 +4,10 @@ import { FiSettings } from "react-icons/fi";
 import { DashBoard } from "./DashBoard";
 import { History } from "./History";
 import { Actions } from "./Actions";
+import { useNavigate } from "react-router-dom";
 
 export function ScreenOwner() {
+  const navigate = useNavigate();
   const listOfScreen = [
     { name: "Screen1", id: "6396f6922665b32d1193eeb9" },
     { name: "Screen2", id: "6396e3322665b32d119364ee" },
@@ -16,6 +18,7 @@ export function ScreenOwner() {
   const [dashboard, setDashboard] = useState<any>(true);
   const [histoty, setHistory] = useState<any>(false);
   const [actions, setActions] = useState<any>(false);
+
   const handleDashboardClick = (e: any) => {
     setDashboard(true);
     setHistory(false);
@@ -56,6 +59,7 @@ export function ScreenOwner() {
             align="center"
             variant="outline"
             p="3"
+            onClick={() => navigate("/create-screen")}
           >
             + New Screen
           </Button>
@@ -87,50 +91,49 @@ export function ScreenOwner() {
               borderRadius="48px"
               boxShadow="2xl"
               align="center"
-              bgColor="rgba(0, 0, 0, 0.07)"
             >
-              <Text
+              <Button
+                variant="outline"
                 fontSize="sm"
-                fontWeight="semibold"
-                color="#000000"
-                borderColor="#0EBCF5"
-                border="1px"
+                fontWeight={dashboard ? "semibold" : "normal"}
+                color={dashboard ? "#000000" : "#333333"}
+                borderColor={dashboard ? "#0EBCF5" : ""}
+                border={dashboard ? "1px" : ""}
                 borderRadius="48px"
                 bgColor="#FBFBFB"
                 p="3"
-                type="Button"
                 onClick={handleDashboardClick}
               >
                 DashBoard
-              </Text>
-              <Text
+              </Button>
+              <Button
+                variant="outline"
                 fontSize="sm"
-                fontWeight="semibold"
-                color="#000000"
-                borderColor="#0EBCF5"
-                border="1px"
+                fontWeight={histoty ? "semibold" : "normal"}
+                color={histoty ? "#000000" : "#333333"}
+                borderColor={histoty ? "#0EBCF5" : ""}
+                border={histoty ? "1px" : ""}
                 borderRadius="48px"
                 bgColor="#FBFBFB"
                 p="3"
-                type="Button"
                 onClick={handleHistoryClick}
               >
                 History
-              </Text>
-              <Text
+              </Button>
+              <Button
+                variant="outline"
                 fontSize="sm"
-                fontWeight="semibold"
-                color="#000000"
-                borderColor="#0EBCF5"
-                border="1px"
+                fontWeight={actions ? "semibold" : "normal"}
+                color={actions ? "#000000" : "#333333"}
+                borderColor={actions ? "#0EBCF5" : ""}
+                border={actions ? "1px" : ""}
                 borderRadius="48px"
                 bgColor="#FBFBFB"
                 p="3"
-                type="Button"
                 onClick={handleActionClick}
               >
                 Actions
-              </Text>
+              </Button>
             </Stack>
             <Stack direction="row" justifyContent="flex-end" align="center">
               <FiSettings size="20px" color="#333333" />

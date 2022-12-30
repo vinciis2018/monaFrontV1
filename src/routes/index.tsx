@@ -67,6 +67,7 @@ import {
   AllScreens,
   ScreenDetail,
   ScreenOwner,
+  CreateScreen,
 } from "pages";
 import { FooterPage, NavBar } from "components/common";
 
@@ -100,6 +101,7 @@ export const PublicRoutes = () => {
         <Route path="/all-screens" element={<AllScreens />} />
         <Route path="/screen/:id" element={<ScreenDetail />} />
         <Route path="/screen-owner" element={<ScreenOwner />} />
+        <Route path="/create-screen" element={<CreateScreen />} />
 
         <Route path="/walletpage" element={<WalletPage />} />
         <Route path="/paymentreceipt/:id" element={<PaymentReceipt />} />

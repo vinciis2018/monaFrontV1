@@ -22,7 +22,7 @@ export function AdsInTable(props: any) {
 
   return (
     <TableContainer borderRadius="5px" bgColor="#FFFFFF">
-      <Table variant="simple">
+      <Table variant="simple" size="lg">
         <Thead>
           <Tr>
             <Th>
