@@ -3,6 +3,7 @@ module.exports = {
     commonjs: false,
     es6: true,
     node: true,
+    "jest/globals": true,
   },
   plugins: ["unused-imports"],
   extends: [
