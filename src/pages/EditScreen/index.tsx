@@ -34,7 +34,7 @@ const steps = [
   { label: "Schedule" },
 ];
 
-export const CreateScreen = () => {
+export const EditScreen = () => {
   const { nextStep, prevStep, reset, activeStep } = useSteps({
     initialStep: 0,
   });
@@ -66,10 +66,28 @@ export const CreateScreen = () => {
   return (
     <Box pl="20" pr="20" pt="20">
       <Stack p="10" boxShadow="2xl" borderRadius="lg">
-        <Text fontSize="lg" fontWeight="semibold" color="#383838" align="left">
-          Create new screen
+        <Flex align="center">
+          <AiOutlineArrowLeft size="20px" color="#333333" onClick={prevStep} />
+          <Text
+            fontSize="lg"
+            fontWeight="semibold"
+            color="#333333"
+            align="left"
+            pl="5"
+          >
+            Edit
+          </Text>
+        </Flex>
+        <Text
+          fontSize="lg"
+          fontWeight="semibold"
+          color="#383838"
+          align="left"
+          pt="5"
+        >
+          Screen 1
         </Text>
-        <Flex flexDir="column" width="50%" pt="10">
+        <Flex flexDir="column" width="50%" pt="5">
           <Steps activeStep={activeStep}>
             {steps.map(({ label }, index) => (
               <Step label={text(label)} key={label}></Step>
@@ -267,6 +285,15 @@ export const CreateScreen = () => {
             </InputGroup>
           </HStack>
           <HStack justifyContent="flex-end" pr="30" pb="30">
+            <Text
+              type="Button"
+              color="#313131"
+              fontSize="sm"
+              pr="10"
+              onClick={nextStep}
+            >
+              Skip
+            </Text>
             <Button
               variant="outline"
               color="#515151"
@@ -343,6 +370,15 @@ export const CreateScreen = () => {
                 />
               </InputGroup>
               <HStack justifyContent="flex-end" pr="30" pb="30" pt="30">
+                <Text
+                  type="Button"
+                  color="#313131"
+                  fontSize="sm"
+                  pr="10"
+                  onClick={nextStep}
+                >
+                  Skip
+                </Text>
                 <Button
                   variant="outline"
                   color="#515151"
