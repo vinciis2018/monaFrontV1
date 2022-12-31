@@ -84,7 +84,7 @@ export function ScreenOwner() {
             ))}
           </Stack>
         </Stack>
-        <Stack width="80%" p="5">
+        <Stack p="5" width="100%">
           <Stack direction="row" justifyContent="space-around" pt="20">
             <Stack
               direction="row"

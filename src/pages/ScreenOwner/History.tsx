@@ -1,23 +1,25 @@
-import { Box, HStack, Stack, Text, Select } from "@chakra-ui/react";
+import { Box, Flex, Stack, Text, Select, FormControl } from "@chakra-ui/react";
 import { AdsInTable } from "components/common";
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import HLoading from "components/atoms/HLoading";
-// import DateFnsUtils from "@date-io/date-fns"; // choose your lib
-// import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-// import {
-//   IconButton as MiuiIconButton,
-//   InputAdornment,
-// } from "@material-ui/core";
-// import { AiOutlineCalendar } from "react-icons/ai";
+import DateFnsUtils from "@date-io/date-fns"; // choose your lib
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import {
+  IconButton as MiuiIconButton,
+  InputAdornment,
+} from "@material-ui/core";
+import { AiOutlineDown } from "react-icons/ai";
 
 export function History(props: any) {
   const { screenID } = props;
   const [videosList, setVideosList] = useState<any>([]);
   const [videosListError, setVideosListError] = useState<any>([]);
   const [videoLoading, setVideoLoading] = useState<any>(true);
-  // const [startDateHere, setStartDateHere] = React.useState<any>(new Date());
-  // const [endDateHere, setEndDateHere] = React.useState<any>(new Date());
+  const [startDateHere, setStartDateHere] = useState<any>(new Date());
+  const [endDateHere, setEndDateHere] = useState<any>(new Date());
+  const [status, setStatus] = useState<any>("All");
+  console.log("status : ", status);
   const getVideoList = async (screenId: any) => {
     try {
       const { data } = await Axios.get(
@@ -62,63 +64,85 @@ export function History(props: any) {
           >
             Filter
           </Text>
-          <HStack p="5" boxShadow="xl" mt="5">
-            {/* <FormControl py="4" width="100%" align="center" id="startDateHere">
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <DateTimePicker
-                  inputVariant="outlined"
-                  disablePast={true}
-                  format="dd/MM/yyyy hh:mm"
-                  // variant="dialog"
-                  label="Select Slot Start Date"
-                  value={startDateHere}
-                  onChange={setStartDateHere}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <MiuiIconButton>
-                          <AiOutlineCalendar />
-                        </MiuiIconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </MuiPickersUtilsProvider>
-            </FormControl> */}
-            <Select
-              placeholder="From"
-              size="lg"
-              variant="outline"
-              bgColor="#EAEAEA"
-              color="#403F49"
-              fontSize="sm"
-              width="40%"
-            ></Select>
-            <Select
-              placeholder="To"
-              size="lg"
-              variant="outline"
-              bgColor="#EAEAEA"
-              color="#403F49"
-              fontSize="sm"
-              width="40%"
-            ></Select>
-            <Select
-              placeholder="Status"
-              size="lg"
-              variant="outline"
-              bgColor="#EAEAEA"
-              color="#403F49"
-              fontSize="sm"
-              width="40%"
-            >
-              <option value="option1">All</option>
-              <option value="option2">Pending</option>
-              <option value="option3">Active</option>
-              <option value="option3">Completed</option>
-            </Select>
-          </HStack>
-          <Stack pt="5" boxShadow="xl">
+          <Flex
+            p="5"
+            boxShadow="2xl"
+            mt="5"
+            align="center"
+            justifyContent="flex-start"
+            bgColor="#FFFFFF"
+            borderRadius="8px"
+          >
+            <Stack>
+              <FormControl align="center" id="startDateHere" height="39px">
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <DateTimePicker
+                    inputVariant="outlined"
+                    disablePast={true}
+                    format="dd/MM/yyyy hh:mm"
+                    variant="dialog"
+                    value={startDateHere}
+                    onChange={setStartDateHere}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="start">
+                          <MiuiIconButton>
+                            <AiOutlineDown />
+                          </MiuiIconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </MuiPickersUtilsProvider>
+              </FormControl>
+            </Stack>
+            <Stack pl="10">
+              <FormControl
+                width="100%"
+                align="center"
+                id="endDateHere"
+                height="39px"
+              >
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <DateTimePicker
+                    inputVariant="outlined"
+                    disablePast={true}
+                    format="dd/MM/yyyy hh:mm"
+                    variant="dialog"
+                    value={endDateHere}
+                    onChange={setEndDateHere}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="start">
+                          <MiuiIconButton>
+                            <AiOutlineDown />
+                          </MiuiIconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </MuiPickersUtilsProvider>
+              </FormControl>
+            </Stack>
+
+            <Stack pl="10">
+              <Select
+                size="lg"
+                variant="outline"
+                value={status}
+                color="#403F49"
+                fontSize="sm"
+                height="60px"
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="All">All</option>
+                <option value="Pending">Pending</option>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+              </Select>
+            </Stack>
+          </Flex>
+          <Stack pt="5" boxShadow="xl" borderRadius="8px">
             <AdsInTable videos={videosList} />
           </Stack>
         </Box>
