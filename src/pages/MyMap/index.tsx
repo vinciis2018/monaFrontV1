@@ -6,11 +6,11 @@ import { FiMapPin } from "react-icons/fi";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 
 export function MyMap(props: any) {
-  const [data, setData] = useState(props.data);
+  const listOfScreens = props?.data;
   const [viewState, setViewState] = useState({
-    longitude: 84,
-    latitude: 25,
-    zoom: 10,
+    longitude: 84 || props?.geometry?.coordinates[0],
+    latitude: 25 || props?.geometry?.coordinates[1],
+    zoom: 7 || props?.geometry?.zoom,
   });
   const [screenData, setScreenData] = useState<any>(null);
   const [viewSingleScreen, setViewSingleScreen] = useState<any>(false);
@@ -34,19 +34,19 @@ export function MyMap(props: any) {
       align="center"
       justifyContent="center"
       color="black.500"
-      zIndex="1"
     >
       <ReactMapGL
         initialViewState={viewState}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={process.env.REACT_APP_MAPBOX}
         onMove={(e) => setViewState(e.viewState)}
+        onDblClick={(e) => props?.setLocation(e)}
       >
-        {data.features.map((singleData: any) => (
+        {listOfScreens?.features.map((singleData: any) => (
           <Marker
             key={singleData.properties.pin}
-            latitude={singleData.geometry.coordinates[1]}
-            longitude={singleData.geometry.coordinates[0]}
+            latitude={singleData.geometry.coordinates[0]}
+            longitude={singleData.geometry.coordinates[1]}
           >
             <Button
               borderRadius="100px"
@@ -69,8 +69,8 @@ export function MyMap(props: any) {
         {viewSingleScreen && screenData ? (
           <Popup
             className="map"
-            latitude={viewSingleScreen.geometry.coordinates[1]}
-            longitude={viewSingleScreen.geometry.coordinates[0]}
+            latitude={viewSingleScreen.geometry.coordinates[0]}
+            longitude={viewSingleScreen.geometry.coordinates[1]}
             onClose={() => setViewSingleScreen(null)}
             anchor="left"
             closeButton={false}
@@ -94,7 +94,7 @@ export function MyMap(props: any) {
                 <Image
                   height="168px"
                   width="291px"
-                  src={screenData.image}
+                  src={screenData?.image}
                   alt="screen image"
                   borderRadius="15px"
                 />
@@ -121,7 +121,7 @@ export function MyMap(props: any) {
                     align="left"
                     width="85%"
                   >
-                    New Demo Screen Admin Platform 6
+                    {screenData?.name}
                   </Text>
                   <Flex align="center" p="">
                     <AiFillStar size="16px" color="#403F49" />
@@ -132,7 +132,7 @@ export function MyMap(props: any) {
                       fontWeight="semibold"
                       align="left"
                     >
-                      4.5
+                      4.5 || {screenData?.ratting}
                     </Text>
                   </Flex>
                 </Flex>
@@ -143,7 +143,7 @@ export function MyMap(props: any) {
                     fontWeight="semibold"
                     align="left"
                   >
-                    Lanka, Varanasi, India
+                    {screenData?.screenAddress}
                   </Text>
                 </Flex>
                 <Flex align="center" p="1" justify="space-between">
@@ -153,7 +153,7 @@ export function MyMap(props: any) {
                     fontWeight="semibold"
                     align="left"
                   >
-                    ₹200 per slot
+                    {`₹${screenData?.rentPerSlot} per slot`}
                   </Text>
                   <Text
                     as="s"
@@ -183,7 +183,7 @@ export function MyMap(props: any) {
                     borderRadius="15px"
                     width="100%"
                   >
-                    see screen details
+                    See screen details
                   </Button>
                 </Stack>
               </Box>

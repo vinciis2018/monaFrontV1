@@ -5,6 +5,9 @@ import { DashBoard } from "./DashBoard";
 import { History } from "./History";
 import { Actions } from "./Actions";
 import { useNavigate } from "react-router-dom";
+import { createScreen } from "Actions/screenActions";
+import { useDispatch, useSelector } from "react-redux";
+import { SCREEN_CREATE_RESET } from "../../Constants/screenConstants";
 
 export function ScreenOwner() {
   const navigate = useNavigate();
@@ -18,6 +21,15 @@ export function ScreenOwner() {
   const [dashboard, setDashboard] = useState<any>(true);
   const [histoty, setHistory] = useState<any>(false);
   const [actions, setActions] = useState<any>(false);
+  const screenCreate = useSelector((state: any) => state.screenCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    screen: createdScreen,
+  } = screenCreate;
+
+  const dispatch = useDispatch<any>();
 
   const handleDashboardClick = (e: any) => {
     setDashboard(true);
@@ -34,10 +46,16 @@ export function ScreenOwner() {
     setHistory(false);
     setActions(true);
   };
-
+  const handleCreateScree = () => {
+    dispatch(createScreen());
+  };
   useEffect(() => {
+    if (successCreate) {
+      dispatch({ type: SCREEN_CREATE_RESET });
+      navigate(`/edit-screen/${createdScreen._id}`);
+    }
     setSelectedScreen(listOfScreen[0].id);
-  }, [selectedScreen]);
+  }, [selectedScreen, successCreate]);
 
   return (
     <Box pl="20" pr="20">
@@ -59,7 +77,7 @@ export function ScreenOwner() {
             align="center"
             variant="outline"
             p="3"
-            onClick={() => navigate("/create-screen")}
+            onClick={handleCreateScree}
           >
             + New Screen
           </Button>

@@ -31,7 +31,7 @@ import { BsClock } from "react-icons/bs";
 const steps = [
   { label: "Location" },
   { label: "Schedule" },
-  { label: "Schedule" },
+  { label: "Screen highlights" },
 ];
 
 export const CreateScreen = () => {
@@ -47,12 +47,8 @@ export const CreateScreen = () => {
   const [tag, setTag] = useState<any>("");
   const [tags, setTags] = useState<any>([]);
   const [startDateHere, setStartDateHere] = React.useState<any>(new Date());
-  const [endDateHere, setEndDateHere] = React.useState<any>(new Date());
-  const [value, setValue] = React.useState<any>();
+  const [location, setLocation] = useState<any>(null);
 
-  const handleChange = (newValue: any) => {
-    setValue(newValue);
-  };
   const handleAddTags = (event: any) => {
     if (event.which == 13) {
       setTags([...tags, tag]);
@@ -358,7 +354,7 @@ export const CreateScreen = () => {
               </HStack>
             </VStack>
             <Box width="70%" color="black.500" height="700px">
-              <MyMap data={data} />
+              <MyMap data={data} setLocation={setLocation} />
             </Box>
           </Stack>
         </Stack>

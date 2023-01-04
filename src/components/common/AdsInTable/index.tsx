@@ -45,7 +45,7 @@ export function AdsInTable(props: any) {
         </Thead>
         <Tbody>
           {videos.map((video: any, index: any) => (
-            <Tr>
+            <Tr key={index + 1}>
               <Td>
                 <Flex>
                   <Checkbox

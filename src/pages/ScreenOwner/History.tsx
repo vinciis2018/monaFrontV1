@@ -19,7 +19,6 @@ export function History(props: any) {
   const [startDateHere, setStartDateHere] = useState<any>(new Date());
   const [endDateHere, setEndDateHere] = useState<any>(new Date());
   const [status, setStatus] = useState<any>("All");
-  console.log("status : ", status);
   const getVideoList = async (screenId: any) => {
     try {
       const { data } = await Axios.get(

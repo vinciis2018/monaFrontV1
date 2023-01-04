@@ -64,7 +64,6 @@ export function AllScreens() {
   };
   useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
-      console.log("go to welcome page");
       navigate("/welcome");
     } else if (!userInfo) {
       navigate("/signin");
