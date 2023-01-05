@@ -59,6 +59,9 @@ export const EditScreen = (props: any) => {
   const [screenHighlights, setHighLights] = useState<any>([]);
   const [startTime, setStartTime] = useState<any>();
   const [endTime, setEndTime] = useState<any>();
+  // const [category, setCategory] = useState<any>();
+  // const [indoor, setIndoor] = useState<any>("");
+  // const [outdoor, setIndoor] = useState<any>("");
 
   const [name, setName] = useState<any>("");
   const [rentPerSlot, setRentPerSlot] = useState<any>("");

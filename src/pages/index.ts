@@ -51,8 +51,7 @@ export { SignInModal } from "./authPopup/SignInModal";
 // other
 export { Page404 } from "./404";
 
-export { Home } from "./home";
-export { HomePage } from "./home/HomePage";
+export { HomePage } from "./home";
 export { AllScreens } from "./AllScreens";
 export { ScreenDetail } from "./ScreenDetail";
 export { ScreenOwner } from "./ScreenOwner";
@@ -66,8 +65,7 @@ export { EditScreen } from "./EditScreen";
 
 // export { Adverts, AdvertDetails, AdvertCreate, AdvertEdit } from "./adverts";
 
-// export { UserProfile } from "./profile";
-export { UserProfile1 } from "./userProfile";
+export { UserProfile } from "./UserProfile";
 export { WalletPage, PaymentReceipt } from "./WalletPage";
 
 export { SendMoney, RequestMoney } from "./Payment";

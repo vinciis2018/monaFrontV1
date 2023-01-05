@@ -57,7 +57,6 @@ import {
   CreateResetPassword,
   // Home,
   Page404,
-  UserProfile1,
   WalletPage,
   PaymentReceipt,
   ViewSecrateKey,
@@ -69,6 +68,7 @@ import {
   ScreenOwner,
   CreateScreen,
   EditScreen,
+  UserProfile,
 } from "pages";
 import { FooterPage, NavBar } from "components/common";
 
@@ -96,7 +96,7 @@ export const PublicRoutes = () => {
           path="/create-reset-password/:email"
           element={<CreateResetPassword />}
         />
-        <Route path="/userProfile1" element={<UserProfile1 />} />
+        <Route path="/userprofile" element={<UserProfile />} />
         <Route path="/home" element={<Navigate to="/" />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/all-screens" element={<AllScreens />} />
