@@ -129,7 +129,7 @@ export function StartWalletModal(props: any) {
               <Button
                 bgColor="#403F49"
                 color="#EEEEEE"
-                height="54px"
+                p="3"
                 width="254px"
                 fontSize="24px"
                 borderRadius="4px"

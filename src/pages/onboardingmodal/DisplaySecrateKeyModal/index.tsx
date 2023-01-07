@@ -22,6 +22,7 @@ export function DisplaySecrateKeyModal(props: any) {
 
   useEffect(() => {
     if (mnemonics) {
+      //console.log("mnemonics : ", mnemonics);
       setMnemonicsArray(mnemonics.split(" "));
     }
   }, [mnemonics]);
@@ -32,14 +33,14 @@ export function DisplaySecrateKeyModal(props: any) {
   const renderKeyPhrase = (keyword: string, index: number) => {
     const isInput = false;
     const inputValue = "";
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => (
+    return (
       <KeyPhraseItem
         key={keyword}
         keyword={keyword}
         isInput={isInput}
         label={`${index + 1}`}
         inputValue={inputValue}
-        onInputChange={handleInputChange}
+        onInputChange={() => console.log("Input Change")}
       />
     );
   };
@@ -69,61 +70,66 @@ export function DisplaySecrateKeyModal(props: any) {
         </Stack>
         <VerticalLabels />
         <Stack align="center" justifyContent="center" px="">
-          <Box align="center" justifyContent="center" marginBottom="" p="15">
-            <Text
-              color="#000000"
-              fontSize="18px"
-              width="635px"
-              height="50px"
-              top="158px"
-              left="110px"
-              mt="10"
-            >
-              This is your Secret Recovery Phrase. Write down on a paper and
-              keep it in secure place. You’ll be asked to re enter this Phrase
-              on the next step.
-            </Text>
-            {isLoading && <HLoading loading={isLoading} />}
-            {error !== "" && <MessageBox variant="danger">{error}</MessageBox>}
+          {isLoading ? (
+            <HLoading loading={isLoading} />
+          ) : error !== "" ? (
+            <MessageBox variant="danger">{error}</MessageBox>
+          ) : (
+            <Box align="center" justifyContent="center" marginBottom="" p="15">
+              <Text
+                color="#000000"
+                fontSize="18px"
+                width="635px"
+                height="50px"
+                top="158px"
+                left="110px"
+                mt="10"
+              >
+                This is your Secret Recovery Phrase. Write down on a paper and
+                keep it in secure place. You’ll be asked to re enter this Phrase
+                on the next step.
+              </Text>
 
-            <Box
-              bgColor="#3C3C3C"
-              alignItems="center"
-              color="#EFEFEF"
-              justifyContent="center"
-              mt="10"
-              width="80%"
-              borderRadius="8px"
-              fontSize="14px"
-            >
-              <Flex direction="row" justifyContent="space-between" p="10">
-                <Box flex={1}>
-                  {leftRowMnemonics.map((keyword, index) => {
-                    return renderKeyPhrase(keyword, index);
-                  })}
-                </Box>
-                <Box flex={1}>
-                  {rightRowMnemonics.map((keyword, index) => {
-                    // moving 6 positions, as this is second half of the array
-                    index = index + 6;
-                    return renderKeyPhrase(keyword, index);
-                  })}
-                </Box>
+              <Box
+                bgColor="#3C3C3C"
+                alignItems="center"
+                color="#EFEFEF"
+                justifyContent="center"
+                mt="10"
+                width="80%"
+                borderRadius="8px"
+                fontSize="14px"
+              >
+                <Flex direction="row" justifyContent="space-between" p="10">
+                  <Box flex={1}>
+                    {leftRowMnemonics.map((keyword, index) => {
+                      return renderKeyPhrase(keyword, index);
+                    })}
+                  </Box>
+                  <Box flex={1}>
+                    {rightRowMnemonics.map((keyword, index) => {
+                      // moving 6 positions, as this is second half of the array
+                      index = index + 6;
+                      return renderKeyPhrase(keyword, index);
+                    })}
+                  </Box>
+                </Flex>
+              </Box>
+              <Flex align="center" justifyContent="center">
+                <Button
+                  bgColor="#403F49"
+                  color="#EEEEEE"
+                  width="40"
+                  mt="5"
+                  mb=""
+                  p="3"
+                  onClick={() => navigate("/key-confirm")}
+                >
+                  Continue
+                </Button>
               </Flex>
             </Box>
-            <Flex align="center" justifyContent="center">
-              <Button
-                bgColor="#403F49"
-                color="#EEEEEE"
-                width="40"
-                mt="5"
-                mb=""
-                onClick={() => navigate("/key-confirm")}
-              >
-                Continue
-              </Button>
-            </Flex>
-          </Box>
+          )}
         </Stack>
       </Modal.Body>
     </Modal>

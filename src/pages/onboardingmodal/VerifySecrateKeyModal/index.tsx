@@ -152,6 +152,7 @@ export function VerifySecrateKeyModal(props: any) {
                 width="40"
                 mt="5"
                 mb=""
+                p="3"
                 onClick={onConfirm}
               >
                 Continue

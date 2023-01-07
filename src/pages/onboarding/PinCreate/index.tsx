@@ -1,8 +1,5 @@
 import { useState } from "react";
-// hooks
-
 import { Box } from "@chakra-ui/react";
-
 import { PinCreateModal } from "pages/onboardingmodal/PinCreateModal";
 
 export function PinCreate() {

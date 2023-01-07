@@ -162,6 +162,7 @@ export function PinCreateModal(props: any) {
                   width="40"
                   mt="5"
                   mb="10"
+                  p="3"
                   onClick={onClick}
                 >
                   Create Pin

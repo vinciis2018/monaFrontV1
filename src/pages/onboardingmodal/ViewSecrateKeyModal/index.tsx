@@ -79,6 +79,7 @@ export function ViewSecrateKeyModal(props: any) {
                     width=""
                     mt="5"
                     mb="10"
+                    p="3"
                     onClick={() => navigate("/key-phrase-save")}
                   >
                     View
@@ -92,6 +93,7 @@ export function ViewSecrateKeyModal(props: any) {
                   width="40"
                   mt="5"
                   mb=""
+                  p="3"
                   onClick={() => navigate("/key-confirm")}
                 >
                   Continue

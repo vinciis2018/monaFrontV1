@@ -93,6 +93,7 @@ export function WelcomeModal(props: any) {
                 color="#EEEEEE"
                 marginTop="3"
                 width="100%"
+                p="3"
                 marginBottom="176"
                 onClick={() => navigate("/pin-create")}
               >

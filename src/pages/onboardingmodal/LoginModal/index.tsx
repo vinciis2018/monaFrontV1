@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Box, Text, Flex, Button, Stack, IconButton } from "@chakra-ui/react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { VerticalLabels } from "../VerticalLabels";
 import { useSelector } from "react-redux";
 // hooks
 import { useWallet, useLogin } from "components/contexts";
 import HPasswordInput from "components/atoms/HPasswordInput";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ERROR_IDS } from "utils/constants";
-import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
 
 export function LoginModal(props: any) {
@@ -21,22 +19,20 @@ export function LoginModal(props: any) {
   // const [pinFocus, setPinFocus] = useState(true);
   const [pin, setPin] = useState("");
   const target = searchParams.get("target");
-
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo, loading, error } = userSignin;
+  console.log("err : ", err);
 
   const {
+    isLoading,
     unlock,
     checkAndTriggerSelfDestruct,
     generateAndSave,
     wipeTempSavedPin,
   } = useWallet();
 
-  const onClick = () => {
-    checkPin(pin);
-  };
-
-  const checkPin = (pincode: string) => {
+  const checkPin = () => {
+    const pincode = pin;
     if (pincode !== "") {
       checkAndTriggerSelfDestruct(pincode).then((cleared) => {
         if (cleared) {
@@ -48,20 +44,20 @@ export function LoginModal(props: any) {
               const expired = Math.floor(Date.now() / 1000) + 10 * 60; // 10 mins
               await login(expired);
               if (target) {
-                navigate("/" + target);
+                // navigate("/" + target);
               } else {
-                navigate("/setting");
+                // navigate("/userprofile");
               }
             })
             .catch((error: Error) => {
               if (error.message.includes(ERROR_IDS.NO_CONTENT)) {
                 wipeTempSavedPin().then(() => generateAndSave(pin));
                 navigate("/walletPage");
-              }
-
-              if (error.message.includes(ERROR_IDS.INCORRECT_PIN)) {
+              } else if (error.message.includes(ERROR_IDS.INCORRECT_PIN)) {
                 setErr("PIN code is not match. Please try again.");
                 setPin("");
+              } else {
+                console.log("error : ", error);
               }
             });
         }
@@ -77,13 +73,9 @@ export function LoginModal(props: any) {
     }
   }, [navigate, userInfo]);
 
-  // const activeFocusArea = () => {
-  //   setPinFocus(true);
-  // };
-
-  const completedPin = (value: string) => {
+  const completedPin = (e: any) => {
     setActiveBtn(true);
-    checkPin(value);
+    checkPin();
   };
 
   return (
@@ -109,15 +101,7 @@ export function LoginModal(props: any) {
             aria-label="Close"
           />
         </Stack>
-        <Stack align="center">
-          <VerticalLabels activeStep={props.activeStep} />
-        </Stack>
         <Stack align="center" justifyContent="center">
-          {loading ? (
-            <HLoading loading={loading} />
-          ) : error ? (
-            <MessageBox variant="danger">{error}</MessageBox>
-          ) : null}
           <Box alignItems="center" pt="30">
             <Box alignItems="center" pt="10">
               <Text p="2" textAlign="left" fontSize="xs" fontWeight="600">
@@ -142,12 +126,15 @@ export function LoginModal(props: any) {
                 color="#EEEEEE"
                 width="80%"
                 p="3"
-                onClick={() => onClick()}
+                onClick={checkPin}
               >
                 Continue
               </Button>
             </Flex>
           </Box>
+          {err || error ? (
+            <MessageBox variant="danger">{error || err}</MessageBox>
+          ) : null}
         </Stack>
       </Modal.Body>
     </Modal>
