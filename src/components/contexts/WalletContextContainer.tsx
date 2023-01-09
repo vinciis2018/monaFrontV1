@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { JWKInterface } from "arweave/web/lib/wallet";
+// import { JWKInterface } from "arweave/web/lib/wallet";
 import Arweave from "arweave";
 import { Web } from "@_koi/sdk/web";
 import {
@@ -51,9 +51,7 @@ export const ContextProvider = ({ children }: WithChildren) => {
     initialStep: 0,
   });
   const wallet = useMemo<Web>(() => new Web(), []);
-  const [$jwk, set$jwk] = useState<Promise<JWKInterface> | undefined>(
-    undefined
-  );
+  const [$jwk, set$jwk] = useState<Promise<any> | undefined>(undefined);
   const [mnemonics, setMnemonics] = useState<any>(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -128,29 +126,24 @@ export const ContextProvider = ({ children }: WithChildren) => {
     return Boolean((await hasEncryptedData()) || $jwk);
   };
 
-  const unlock = (pin: string): Promise<void> => {
+  const unlock = (pin: string): Promise<any> => {
     setIsLoading(true);
-
-    const $walletLoad = retrieveAndDecryptContent(pin)
-      .then((dataModel) => {
-        return WalletHelper.importWallet(dataModel.jwk, wallet).then(
-          () => dataModel
-        );
-      })
-      .catch((e) => {
-        return e;
-      });
-
-    set$jwk($walletLoad.then(({ jwk }) => jwk));
-
-    $walletLoad.then(({ mnemonics }) => {
-      return setMnemonics(mnemonics);
+    const $walletLoad = new Promise((resolve, reject) => {
+      retrieveAndDecryptContent(pin)
+        .then((dataModel: any) => {
+          WalletHelper.importWallet(dataModel.jwk, wallet).then(() => {
+            resolve(dataModel);
+          });
+        })
+        .catch(reject);
     });
-    return $walletLoad
-      .then(() => {})
-      .finally(() => {
-        setIsLoading(false);
-      });
+    set$jwk($walletLoad.then((data: any) => data.jwk));
+    $walletLoad.then((data: any) => {
+      setMnemonics(data.mnemonics);
+    });
+    setIsLoading(false);
+
+    return $walletLoad;
   };
 
   const lock = (): void => {

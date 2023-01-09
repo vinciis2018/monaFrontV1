@@ -39,7 +39,7 @@ export function SendMoney(props: any) {
   }, [dispatch, navigate, userInfo]);
 
   return (
-    <Box pb="20">
+    <Box>
       <Center>
         {walletLoading ? (
           <HLoading loading={walletLoading} />
@@ -54,9 +54,7 @@ export function SendMoney(props: any) {
             width="858px"
             fontFamily="Sans"
             borderColor="rgba(33, 33, 33, 0.4)"
-            pb="20"
-            pl="20"
-            pr="20"
+            p="20"
           >
             <Stack
               align="center"

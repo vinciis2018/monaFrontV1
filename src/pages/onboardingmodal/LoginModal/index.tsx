@@ -15,13 +15,12 @@ export function LoginModal(props: any) {
   const [searchParams] = useSearchParams();
   const { login } = useLogin();
   const [err, setErr] = useState("");
-  const [activeBtn, setActiveBtn] = useState(false);
+  const [activeBtn, setActiveBtn] = useState(true);
   // const [pinFocus, setPinFocus] = useState(true);
   const [pin, setPin] = useState("");
   const target = searchParams.get("target");
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo, loading, error } = userSignin;
-  console.log("err : ", err);
 
   const {
     isLoading,
@@ -31,39 +30,33 @@ export function LoginModal(props: any) {
     wipeTempSavedPin,
   } = useWallet();
 
-  const checkPin = () => {
+  const checkPin = async () => {
     const pincode = pin;
     if (pincode !== "") {
-      checkAndTriggerSelfDestruct(pincode).then((cleared) => {
+      try {
+        const cleared = await checkAndTriggerSelfDestruct(pincode);
         if (cleared) {
-          // TODO: On Self Destruct App should be populated with safe content
           navigate("/");
         } else {
-          unlock(pincode)
-            .then(async () => {
-              const expired = Math.floor(Date.now() / 1000) + 10 * 60; // 10 mins
-              await login(expired);
-              if (target) {
-                // navigate("/" + target);
-              } else {
-                // navigate("/userprofile");
-              }
-            })
-            .catch((error: Error) => {
-              if (error.message.includes(ERROR_IDS.NO_CONTENT)) {
-                wipeTempSavedPin().then(() => generateAndSave(pin));
-                navigate("/walletPage");
-              } else if (error.message.includes(ERROR_IDS.INCORRECT_PIN)) {
-                setErr("PIN code is not match. Please try again.");
-                setPin("");
-              } else {
-                console.log("error : ", error);
-              }
-            });
+          try {
+            await unlock(pincode);
+            const expired = Math.floor(Date.now() / 1000) + 10 * 60; // 10 mins
+            await login(expired);
+            props.onHide();
+          } catch (error: any) {
+            if (error?.message?.includes(ERROR_IDS.NO_CONTENT)) {
+              wipeTempSavedPin().then(() => generateAndSave(pin));
+              navigate("/walletPage");
+            } else if (error?.message?.includes(ERROR_IDS.INCORRECT_PIN)) {
+              setErr("PIN code is not match. Please try again.");
+            } else {
+              console.log(error);
+            }
+          }
         }
-      });
-    } else {
-      setErr("Please input PIN.");
+      } catch (error: any) {
+        alert(error);
+      }
     }
   };
 
@@ -74,8 +67,8 @@ export function LoginModal(props: any) {
   }, [navigate, userInfo]);
 
   const completedPin = (e: any) => {
-    setActiveBtn(true);
-    checkPin();
+    setActiveBtn(false);
+    setErr("");
   };
 
   return (
@@ -126,6 +119,7 @@ export function LoginModal(props: any) {
                 color="#EEEEEE"
                 width="80%"
                 p="3"
+                isDisabled={activeBtn}
                 onClick={checkPin}
               >
                 Continue

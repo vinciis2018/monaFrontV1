@@ -45,14 +45,19 @@ export async function decrypt(
   iv: ArrayBuffer,
   key: CryptoKey
 ): Promise<ArrayBuffer> {
-  return crypto.subtle.decrypt(
-    {
-      iv,
-      name: "AES-GCM",
-    },
-    key,
-    ciphertext
-  );
+  return new Promise((resolve: any, reject: any) => {
+    crypto.subtle
+      .decrypt(
+        {
+          iv,
+          name: "AES-GCM",
+        },
+        key,
+        ciphertext
+      )
+      .then(resolve)
+      .catch(reject);
+  });
 }
 
 export function encode(content: any): ArrayBuffer {
@@ -78,27 +83,33 @@ export async function encryptContentAndSave(
   await localforage.setItem(IV_KEY, iv);
 }
 
-export function retrieveAndDecryptContent(
+export async function retrieveAndDecryptContent(
   textPassword: string
 ): Promise<EncryptedDataModel> {
-  return getKey(textPassword).then((key) =>
-    Promise.all([
+  try {
+    const key = await getKey(textPassword);
+    const [retrievedContent, retrievedIv] = await Promise.all([
       localforage.getItem<ArrayBuffer | null>(SECURED_CONTENT_KEY),
       localforage.getItem<ArrayBuffer | null>(IV_KEY),
-    ]).then(([retrievedContent, retrievedIv]) => {
-      if (retrievedContent && retrievedIv) {
-        return decrypt(retrievedContent, retrievedIv, key)
-          .then((decryptedContent) =>
-            decode<EncryptedDataModel>(decryptedContent)
-          )
-          .catch((e) => {
-            throw new Error(`${ERROR_IDS.INCORRECT_PIN}:${e}`);
-          });
-      } else {
-        throw new Error(ERROR_IDS.NO_CONTENT);
+    ]);
+    if (retrievedContent && retrievedIv) {
+      try {
+        const decryptedContent = await decrypt(
+          retrievedContent,
+          retrievedIv,
+          key
+        );
+        const data = await decode<EncryptedDataModel>(decryptedContent);
+        return Promise.resolve(data);
+      } catch (e) {
+        return Promise.reject(new Error(ERROR_IDS.INCORRECT_PIN));
       }
-    })
-  );
+    } else {
+      return Promise.reject(new Error(ERROR_IDS.NO_CONTENT));
+    }
+  } catch (error) {
+    return Promise.reject(error);
+  }
 }
 
 export async function clearSecureContent(): Promise<void> {

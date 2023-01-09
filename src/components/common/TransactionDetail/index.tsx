@@ -1,5 +1,4 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
 import { Box, Text, IconButton, Stack, Divider } from "@chakra-ui/react";
 import { BsArrowDown, BsArrowUp } from "react-icons/bs";
 
@@ -8,8 +7,7 @@ export function TransactionDetail(props: any) {
   return (
     <Box
       key={tranjection._id}
-      as={RouterLink}
-      to={`/paymentreceipt/${tranjection._id}`}
+      onClick={() => props.handalOpenPaymentReceipt(tranjection)}
     >
       <Stack direction="column" key={tranjection._id}>
         <Stack

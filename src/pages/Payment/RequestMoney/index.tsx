@@ -53,9 +53,7 @@ export function RequestMoney(props: any) {
             width="858px"
             fontFamily="Sans"
             borderColor="rgba(33, 33, 33, 0.4)"
-            pb="20"
-            pl="20"
-            pr="20"
+            p="20"
           >
             <Stack
               align="center"

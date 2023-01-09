@@ -25,10 +25,15 @@ import MessageBox from "components/atoms/MessageBox";
 import post from "utils/payment";
 import Axios from "axios";
 import { TransactionDetail } from "components/common/TransactionDetail";
+import { LoginModal } from "pages/onboardingmodal/LoginModal";
+import { PaymentReceiptPopup } from "./PaymentReceiptPopup";
 export function WalletPage(props: any) {
   const navigate = useNavigate();
 
   const [paymentModalShow, setPaymentModalShow] = useState(false);
+  const [loginModalShow, setLoginModalShow] = useState(true);
+  const [paymentReceiptModalShow, setPaymentReceiptModalShow] = useState(false);
+  const [selectedTranjection, setSelectedTranjection] = useState<any>();
   const [amount, setAmount] = useState(0);
 
   const userSignin = useSelector((state: any) => state.userSignin);
@@ -79,6 +84,11 @@ export function WalletPage(props: any) {
       alert(err);
     }
   };
+  const handalOpenPaymentReceipt = (id: any) => {
+    console.log("handalOpenPaymentReceipt : ", id);
+    setSelectedTranjection(id);
+    setPaymentReceiptModalShow(true);
+  };
 
   useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
@@ -91,8 +101,17 @@ export function WalletPage(props: any) {
   }, [dispatch, navigate, userInfo]);
 
   return (
-    <Box px="2" pt="0" color="black.500">
+    <Box px="2" pt="20" color="black.500">
       {/* Container */}
+      <LoginModal
+        show={loginModalShow}
+        onHide={() => setLoginModalShow(false)}
+      />
+      <PaymentReceiptPopup
+        tranjctionData={selectedTranjection}
+        show={paymentReceiptModalShow}
+        onHide={() => setPaymentReceiptModalShow(false)}
+      />
       <Modal
         show={paymentModalShow}
         onHide={handlePaymentModal}
@@ -268,7 +287,11 @@ export function WalletPage(props: any) {
                   <Box>
                     {topUpData &&
                       topUpData.map((eachTranjection: any) => (
-                        <TransactionDetail tranjection={eachTranjection} />
+                        <TransactionDetail
+                          key={eachTranjection._id}
+                          tranjection={eachTranjection}
+                          handalOpenPaymentReceipt={handalOpenPaymentReceipt}
+                        />
                       ))}
                   </Box>
                 </Box>
