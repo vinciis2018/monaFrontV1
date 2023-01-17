@@ -20,6 +20,9 @@ export const InputItem = ({
       p="2"
       borderRadius="4px"
       height="38px"
+      borderColor="#1E1E1E"
+      borderStyle="dashed"
+      borderWidth="2px"
     >
       <Text>{label}.</Text>
       <Input

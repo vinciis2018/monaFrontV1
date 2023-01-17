@@ -28,6 +28,8 @@ import { AtvertiseBox } from "components/common/AtvertiseBox";
 import { MyMap } from "pages/MyMap";
 import { GiRoundStar } from "react-icons/gi";
 import { Review } from "components/common";
+import { CreateNewCampaign } from "./CreateNewCampaign";
+import { UploadCampaign } from "./UploadCampaign";
 
 export function ScreenDetail(props: any) {
   const navigate = useNavigate();
@@ -40,6 +42,9 @@ export function ScreenDetail(props: any) {
   const [videosList, setVideosList] = useState<any>([]);
   const [videosListError, setVideosListError] = useState<any>([]);
   const [videoLoading, setVideoLoading] = useState<any>(true);
+  const [campaignModal, setCampaignModal] = useState(false);
+  const [uploadCampaignModal, setUploadCampaignModal] = useState(false);
+  const [campaignName, setCampaignName] = useState("");
   const countEachRating = {
     5: 0,
     4: 0,
@@ -127,6 +132,16 @@ export function ScreenDetail(props: any) {
 
   return (
     <Box>
+      <CreateNewCampaign
+        show={campaignModal}
+        onHide={() => setCampaignModal(false)}
+        openUloadCamaign={() => setUploadCampaignModal(true)}
+        setCampaignName={(e: any) => setCampaignName(e.target.value)}
+      />
+      <UploadCampaign
+        show={uploadCampaignModal}
+        onHide={() => setUploadCampaignModal(false)}
+      />
       {screenLoading || videoLoading || pinLoading ? (
         <HLoading loading={screenLoading || videoLoading || pinLoading} />
       ) : (
@@ -295,6 +310,7 @@ export function ScreenDetail(props: any) {
                 bgColor="#D7380E"
                 fontWeight="semibold"
                 fontSize="xl"
+                onClick={() => setCampaignModal(true)}
               >
                 Add to cart
               </Button>
