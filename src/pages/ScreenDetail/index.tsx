@@ -18,8 +18,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import HLoading from "components/atoms/HLoading";
 // import MessageBox from "components/atoms/MessageBox";
-import rectangle from "../../assets/image/Rectangle86.png";
-import girl2 from "../../assets/image/girl2.png";
+
 import Axios from "axios";
 import { AiFillStar } from "react-icons/ai";
 import { BsCheck2Circle, BsDot } from "react-icons/bs";
@@ -27,7 +26,7 @@ import { BiRupee } from "react-icons/bi";
 import { AtvertiseBox } from "components/common/AtvertiseBox";
 import { MyMap } from "pages/MyMap";
 import { GiRoundStar } from "react-icons/gi";
-import { Review } from "components/common";
+import { ContactUs, Review } from "components/common";
 import { CreateNewCampaign } from "./CreateNewCampaign";
 import { UploadCampaign } from "./UploadCampaign";
 
@@ -532,64 +531,7 @@ export function ScreenDetail(props: any) {
                   : null}
               </Stack>
             </Stack>
-            <Box
-              backgroundImage={rectangle}
-              backgroundRepeat="no-repeat"
-              backgroundSize="100%"
-              borderRadius="67px"
-              height="521px"
-            >
-              <Flex>
-                <Box
-                  height="204px"
-                  color="#EBEBEB"
-                  align="left"
-                  p="20"
-                  left="180px"
-                >
-                  <Text
-                    fontSize="4xl"
-                    fontWeight="bold"
-                    align="left"
-                    mt="2"
-                    width="780px"
-                  >
-                    Need help or want to know how it works?
-                  </Text>
-                  <Text
-                    fontSize="4xl"
-                    fontWeight="bold"
-                    align="left"
-                    mt="2"
-                    width="702px"
-                  >
-                    Our industry expersts are here to help you.
-                  </Text>
-                  <Button
-                    mt="10"
-                    width="251px"
-                    height="54px"
-                    bgColor="#D7380E"
-                    color="#FFFFFF"
-                    fontSize="xl"
-                    fontWeight="semibold"
-                    p="5"
-                  >
-                    {" "}
-                    Contact us
-                  </Button>
-                </Box>
-                <Image
-                  src={girl2}
-                  alt=""
-                  p=""
-                  height="540px"
-                  width="580px"
-                  mt="-50"
-                  ml="20"
-                ></Image>
-              </Flex>
-            </Box>
+            <ContactUs />
           </Stack>
         </Stack>
       )}

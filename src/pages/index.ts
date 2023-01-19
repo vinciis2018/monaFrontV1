@@ -52,6 +52,7 @@ export { SignInModal } from "./authPopup/SignInModal";
 export { Page404 } from "./404";
 
 export { HomePage } from "./home";
+export { AllAds } from "./AllAds";
 export { AllScreens } from "./AllScreens";
 export { ScreenDetail } from "./ScreenDetail";
 export { ScreenOwner } from "./ScreenOwner";

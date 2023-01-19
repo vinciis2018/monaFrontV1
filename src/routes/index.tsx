@@ -10,6 +10,7 @@ import {
   KeyRecovery,
   PinCreate,
   PinSuccess,
+  AllAds,
 
   // CameraHome,
 
@@ -101,6 +102,7 @@ export const PublicRoutes = () => {
         <Route path="/userprofile" element={<UserProfile />} />
         <Route path="/home" element={<Navigate to="/" />} />
         <Route path="/homepage" element={<HomePage />} />
+        <Route path="/allads" element={<AllAds />} />
         <Route path="/all-screens" element={<AllScreens />} />
         <Route path="/screen/:id" element={<ScreenDetail />} />
         <Route path="/screen-owner" element={<ScreenOwner />} />

@@ -8,3 +8,4 @@ export { MediaContainer } from "./MediaContainer";
 export { Review } from "./Review";
 export { AdsInTable } from "./AdsInTable";
 export { AdsPlaying } from "./AdsPlaying";
+export { ContactUs } from "./ContactUs";
