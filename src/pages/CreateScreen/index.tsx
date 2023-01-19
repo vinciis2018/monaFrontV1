@@ -131,7 +131,6 @@ export const CreateScreen = () => {
                 bgColor="#FAFAFA"
                 fontSize="sm"
                 p="4"
-                DateTimePicker
                 _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
               >
                 Outdores

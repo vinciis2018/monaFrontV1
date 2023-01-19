@@ -10,8 +10,10 @@ import {
   Input,
   Button,
   FormControl,
+  Tooltip,
+  Image,
 } from "@chakra-ui/react";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlinePlusCircle } from "react-icons/ai";
 import { MyMap } from "pages/MyMap";
 import React, { useEffect, useState } from "react";
 import DateFnsUtils from "@date-io/date-fns"; // choose your lib
@@ -62,6 +64,14 @@ export const EditScreen = (props: any) => {
   // const [category, setCategory] = useState<any>();
   // const [indoor, setIndoor] = useState<any>("");
   // const [outdoor, setIndoor] = useState<any>("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [screenImage, setScreenImage] = useState<any>();
+  let hiddenInput: any = null;
+  async function handlePhotoSelect(file: any) {
+    setIsUploading(true);
+    setScreenImage(URL.createObjectURL(file));
+    setIsUploading(false);
+  }
 
   const [name, setName] = useState<any>("");
   const [rentPerSlot, setRentPerSlot] = useState<any>("");
@@ -101,8 +111,6 @@ export const EditScreen = (props: any) => {
     error: errorScreenCalender,
     calender,
   } = screenCalender;
-
-  console.log("screenCalender : ", screenCalender);
 
   const screenPinDetails = useSelector((state: any) => state.screenPinDetails);
   const {
@@ -269,6 +277,14 @@ export const EditScreen = (props: any) => {
       },
     });
   };
+  const handleEditHighlites = (selectedIndex: any) => {
+    let newHighlights = [...screenHighlights];
+    newHighlights = newHighlights.filter(
+      (value, index) => index != selectedIndex
+    );
+    setHighLight(screenHighlights[selectedIndex]);
+    setHighLights([...newHighlights]);
+  };
   const handleAddHighlites = () => {
     setHighLights([...screenHighlights, highlight]);
     setHighLight("");
@@ -387,7 +403,6 @@ export const EditScreen = (props: any) => {
                     bgColor="#FAFAFA"
                     fontSize="sm"
                     p="4"
-                    DateTimePicker
                     _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
                     onClick={() => setScreenCategory("OutDore")}
                   >
@@ -401,7 +416,6 @@ export const EditScreen = (props: any) => {
                     bgColor="#FAFAFA"
                     fontSize="sm"
                     p="4"
-                    DateTimePicker
                     _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
                     onClick={() => setScreenCategory("RailWay Station")}
                   >
@@ -415,7 +429,6 @@ export const EditScreen = (props: any) => {
                     bgColor="#FAFAFA"
                     fontSize="sm"
                     p="4"
-                    DateTimePicker
                     _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
                     onClick={() => setScreenCategory("Appartment")}
                   >
@@ -647,6 +660,40 @@ export const EditScreen = (props: any) => {
               <HStack pt="5">
                 <VStack fontSize="sm" spacing="2" width="30%" align="left">
                   <Text color="#393939" fontWeight="semibold" align="left">
+                    Screen photos
+                  </Text>
+                  <Text color="#4D4D4D" align="left">
+                    Upload the screen details
+                  </Text>
+                </VStack>
+                <HStack>
+                  <Box>
+                    <Image src={screenImage} width="76px" height="86px" />
+                  </Box>
+                  <Button
+                    variant="outline"
+                    width="76px"
+                    height="86px"
+                    isLoading={isUploading}
+                    loadingText="Uploading..."
+                    onClick={() => hiddenInput.click()}
+                    borderColor="#8B8B8B"
+                    color="#8B8B8B"
+                  >
+                    <AiOutlinePlusCircle size="30px" />
+                  </Button>
+                  <Input
+                    hidden
+                    type="file"
+                    ref={(el) => (hiddenInput = el)}
+                    accept="image/png, image/jpeg"
+                    onChange={(e: any) => handlePhotoSelect(e.target.files[0])}
+                  />
+                </HStack>
+              </HStack>
+              <HStack pt="5">
+                <VStack fontSize="sm" spacing="2" width="30%" align="left">
+                  <Text color="#393939" fontWeight="semibold" align="left">
                     screenTags
                   </Text>
                   <Text color="#4D4D4D" align="left">
@@ -667,16 +714,16 @@ export const EditScreen = (props: any) => {
                     py="2"
                   />
                 </InputGroup>
-                <Flex>
+                <HStack spacing={2}>
                   {screenTags &&
                     screenTags.map((tag: any, index: number) => (
-                      <InputGroup key={index + 1} size="lg" pl="3">
+                      <InputGroup key={index + 1} size="lg">
                         <Button
                           variant="outline"
                           color="#515151"
                           bgColor="#FAFAFA"
                           fontSize="sm"
-                          p="4"
+                          p="3"
                           borderColor="#555555"
                           _hover={{
                             bg: "rgba(14, 188, 245, 0.3)",
@@ -692,7 +739,7 @@ export const EditScreen = (props: any) => {
                         </Button>
                       </InputGroup>
                     ))}
-                </Flex>
+                </HStack>
               </HStack>
               <HStack pt="5">
                 <VStack fontSize="sm" spacing="2" width="30%" align="left">
@@ -704,6 +751,29 @@ export const EditScreen = (props: any) => {
                   </Text>
                 </VStack>
                 <VStack spacing="2" width="70%" align="left">
+                  {screenHighlights &&
+                    screenHighlights.map((highLight: any, index: any) => (
+                      <Tooltip
+                        label="Click for edit"
+                        fontSize="md"
+                        key={index + 1}
+                        aria-label="A tooltip"
+                        hasArrow
+                        bg="red.600"
+                      >
+                        <Text
+                          color="#000000"
+                          width="70%"
+                          fontSize="sm"
+                          p="2"
+                          align="left"
+                          type="Button"
+                          onClick={() => handleEditHighlites(index)}
+                        >
+                          {highLight}
+                        </Text>
+                      </Tooltip>
+                    ))}
                   <InputGroup size="lg" width="70%" color="#555555">
                     <Input
                       placeholder="Enter tag"
@@ -732,29 +802,7 @@ export const EditScreen = (props: any) => {
                   </Button>
                 </VStack>
               </HStack>
-              <HStack pt="5">
-                <VStack width="30%"></VStack>
-                <VStack spacing="2" width="70%" align="left">
-                  {screenHighlights &&
-                    screenHighlights.map((highLight: any, index: any) => (
-                      <Stack key={index + 1}>
-                        <Button
-                          color="#555555"
-                          borderColor="#C8C8C8"
-                          variant="outline"
-                          bgColor="#F5F5F5"
-                          width="70%"
-                          fontSize="xl"
-                          fontWeight="semibold"
-                          p="2"
-                          onClick={handleAddHighlites}
-                        >
-                          {highLight}
-                        </Button>
-                      </Stack>
-                    ))}
-                </VStack>
-              </HStack>
+
               <HStack justifyContent="flex-end" pr="30" pb="30" pt="30">
                 <Button
                   variant="outline"

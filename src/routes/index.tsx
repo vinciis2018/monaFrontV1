@@ -69,6 +69,8 @@ import {
   CreateScreen,
   EditScreen,
   UserProfile,
+  CartAndSummary,
+  CampaignListOfUser,
 } from "pages";
 import { FooterPage, NavBar } from "components/common";
 
@@ -104,6 +106,8 @@ export const PublicRoutes = () => {
         <Route path="/screen-owner" element={<ScreenOwner />} />
         <Route path="/create-screen" element={<CreateScreen />} />
         <Route path="/edit-screen/:id" element={<EditScreen />} />
+        <Route path="/carts" element={<CartAndSummary />} />
+        <Route path="/campaignlist" element={<CampaignListOfUser />} />
 
         <Route path="/walletpage" element={<WalletPage />} />
         <Route path="/paymentreceipt/:id" element={<PaymentReceipt />} />

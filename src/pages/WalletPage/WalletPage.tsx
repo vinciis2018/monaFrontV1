@@ -85,7 +85,6 @@ export function WalletPage(props: any) {
     }
   };
   const handalOpenPaymentReceipt = (id: any) => {
-    console.log("handalOpenPaymentReceipt : ", id);
     setSelectedTranjection(id);
     setPaymentReceiptModalShow(true);
   };

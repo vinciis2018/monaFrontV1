@@ -39,7 +39,7 @@ export function inWords(num) {
     .substr(-9)
     .match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
   if (!n) return;
-  console.log("n ------- : ", n);
+  // console.log("n ------- : ", n);
   var str = "";
   str +=
     n[1] !== "00"

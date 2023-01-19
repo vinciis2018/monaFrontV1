@@ -8,7 +8,6 @@ import { Modal } from "react-bootstrap";
 
 export function PaymentReceiptPopup(props: any) {
   const { tranjctionData } = props;
-  console.log("tranjctionData : ", tranjctionData);
 
   return (
     <Modal

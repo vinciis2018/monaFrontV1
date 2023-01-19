@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import {
   Stack,
@@ -9,7 +9,6 @@ import {
   InputGroup,
   Input,
   Box,
-  AspectRatio,
   Image,
   SimpleGrid,
   Button,
@@ -36,6 +35,9 @@ export function UploadCampaign(props: any) {
         "https://bafybeihcaruado32uog3nagvxoilh6vnglbair4kqgrkplybkgddbcebpe.ipfs.w3s.link/magdonal.png",
     },
   ];
+  const [isUploading, setIsUploading] = useState(false);
+  const [screenImage, setScreenImage] = useState<any>();
+  let hiddenInput: any = null;
   const startAnimation = () => controls.start("hover");
   const stopAnimation = () => controls.stop();
 
@@ -80,35 +82,27 @@ export function UploadCampaign(props: any) {
                   border="1px"
                   align="center"
                   justifyContent="center"
+                  type="Button"
+                  isLoading={isUploading}
+                  loadingText="Uploading..."
+                  onClick={() => hiddenInput.click()}
                 >
-                  <AspectRatio width="100%" ratio={1}>
-                    <Box>
-                      <Box position="relative" height="100%" width="100%">
-                        <Stack p="10">
-                          <Text
-                            fontSize="lg"
-                            fontWeight="semibold"
-                            color="#000000"
-                          >
-                            Drag & Drop{" "}
-                          </Text>
-                        </Stack>
-                        <Input
-                          type="file"
-                          height="100%"
-                          width="100%"
-                          position="absolute"
-                          top="0"
-                          left="0"
-                          opacity="0"
-                          aria-hidden="true"
-                          accept="image/*"
-                          onDragEnter={startAnimation}
-                          onDragLeave={stopAnimation}
-                        />
-                      </Box>
-                    </Box>
-                  </AspectRatio>
+                  <Text
+                    fontSize="lg"
+                    fontWeight="semibold"
+                    color="#000000"
+                    p="8"
+                  >
+                    Drag & Drop{" "}
+                  </Text>
+                  <Input
+                    hidden
+                    type="file"
+                    ref={(el) => (hiddenInput = el)}
+                    accept="image/png, image/jpeg"
+                    onDragEnter={startAnimation}
+                    onDragLeave={stopAnimation}
+                  />
                 </Box>
               </InputGroup>
             </FormControl>

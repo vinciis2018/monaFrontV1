@@ -1,5 +1,4 @@
 import {
-  Checkbox,
   Flex,
   Table,
   TableContainer,
@@ -10,15 +9,28 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import Form from "react-bootstrap/Form";
+
 import React, { useState } from "react";
 import { BsDot } from "react-icons/bs";
 import { convertIntoDateAndTime } from "utils/dateAndTime";
 
 export function AdsInTable(props: any) {
   const { videos } = props;
-  const [checkedItems, setCheckedItems] = useState([false, false]);
+  const [checkedItems, setCheckedItems] = useState(
+    new Array(videos.length).fill(false)
+  );
   const allChecked = checkedItems.every(Boolean);
-  const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
+
+  const handleall = () => {
+    const arr = new Array(videos.length).fill(true);
+    setCheckedItems([...arr]);
+  };
+  const handleSingle = (index: any) => {
+    const newArray = [...checkedItems];
+    newArray[index] = !newArray[index];
+    setCheckedItems([...newArray]);
+  };
 
   return (
     <TableContainer borderRadius="5px" bgColor="#FFFFFF">
@@ -27,13 +39,11 @@ export function AdsInTable(props: any) {
           <Tr>
             <Th>
               <Flex>
-                <Checkbox
-                  isChecked={allChecked}
-                  isIndeterminate={isIndeterminate}
-                  onChange={(e) =>
-                    setCheckedItems([e.target.checked, e.target.checked])
-                  }
-                ></Checkbox>
+                <Form.Check
+                  aria-label="option 1"
+                  onChange={handleall}
+                  checked={allChecked}
+                />
                 <Text pl="5">Brand</Text>
               </Flex>
             </Th>
@@ -48,12 +58,11 @@ export function AdsInTable(props: any) {
             <Tr key={index + 1}>
               <Td>
                 <Flex>
-                  <Checkbox
-                    isChecked={checkedItems[index]}
-                    onChange={(e) =>
-                      setCheckedItems([e.target.checked, checkedItems[1]])
-                    }
-                  ></Checkbox>
+                  <Form.Check
+                    aria-label="option 1"
+                    onChange={() => handleSingle(index)}
+                    checked={checkedItems[index]}
+                  />
                   <Text color=" #403F49 " fontSize="sm" pl="5">
                     {video.brandName}
                   </Text>
