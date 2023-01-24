@@ -327,30 +327,14 @@ export function ScreenDetail(props: any) {
             </Text>
             <Stack align="center">
               <SimpleGrid gap="10" columns={[2, 2]} pt="5">
-                <Flex align="center">
-                  <BsCheck2Circle size="16px" color="black" />
-                  <Text fontSize="sm" color="#787878" pl="3">
-                    jahndsbfjbsajhchbsdjhcbhjhsbcjcxsCsdcscvsxc
-                  </Text>
-                </Flex>
-                <Flex align="center">
-                  <BsCheck2Circle size="16px" color="black" />
-                  <Text fontSize="sm" color="#787878" pl="3">
-                    jahndsbfjbsajhchbsdjhcbhjhsbcjcxsCsdcscvsxc
-                  </Text>
-                </Flex>
-                <Flex align="center">
-                  <BsCheck2Circle size="16px" color="black" />
-                  <Text fontSize="sm" color="#787878" pl="3">
-                    jahndsbfjbsajhchbsdjhcbhjhsbcjcxsCsdcscvsxc
-                  </Text>
-                </Flex>
-                <Flex align="center">
-                  <BsCheck2Circle size="16px" color="black" />
-                  <Text fontSize="sm" color="#787878" pl="3">
-                    jahndsbfjbsajhchbsdjhcbhjhsbcjcxsCsdcscvsxc
-                  </Text>
-                </Flex>
+                {screen.screenHighlights.map((highlight: any, index: any) => (
+                  <Flex align="center" key={index + 1}>
+                    <BsCheck2Circle size="16px" color="black" />
+                    <Text fontSize="sm" color="#787878" pl="3">
+                      {highlight}
+                    </Text>
+                  </Flex>
+                ))}
               </SimpleGrid>
             </Stack>
             <Stack align="left">

@@ -6,6 +6,7 @@ export function TransactionDetail(props: any) {
   const { tranjection } = props;
   return (
     <Box
+      type="Button"
       key={tranjection._id}
       onClick={() => props.handalOpenPaymentReceipt(tranjection)}
     >

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  Checkbox,
+  Stack,
   Flex,
   Table,
   TableContainer,
@@ -13,68 +13,44 @@ import {
   Box,
   Select,
 } from "@chakra-ui/react";
-import Axios from "axios";
 import { convertIntoDateAndTime } from "utils/dateAndTime";
-import HLoading from "components/atoms/HLoading";
+import { Form } from "react-bootstrap";
 
 export function Actions(props: any) {
-  const { screenID } = props;
-  const [checkedItems, setCheckedItems] = useState([false, false]);
+  const { screen, videosList } = props;
+  const [checkedItems, setCheckedItems] = useState(
+    new Array(videosList.length).fill(false)
+  );
   const allChecked = checkedItems.every(Boolean);
-  const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
-  const [videosList, setVideosList] = useState<any>([]);
-  const [videosListError, setVideosListError] = useState<any>([]);
-  const [videoLoading, setVideoLoading] = useState<any>(true);
 
-  const getVideoList = async (screenId: any) => {
-    try {
-      const { data } = await Axios.get(
-        `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}/screenVideos`
-      );
-      setVideosList(data);
-      setVideoLoading(false);
-    } catch (error: any) {
-      setVideosListError(
-        error.response && error.response.data.message
-          ? error.response.data.messages
-          : error.message
-      );
-    }
+  const handleall = () => {
+    const arr = new Array(videosList.length).fill(true);
+    setCheckedItems([...arr]);
+  };
+  const handleSingle = (index: any) => {
+    const newArray = [...checkedItems];
+    newArray[index] = !newArray[index];
+    setCheckedItems([...newArray]);
   };
 
-  useEffect(() => {
-    if (screenID) {
-      getVideoList(screenID);
-    }
-  }, [props]);
   return (
     <Box>
-      {videoLoading ? (
-        <HLoading loading={videoLoading} />
-      ) : (
-        <Box>
-          <Text
-            color="#403F49"
-            fontSize="lg"
-            fontWeight="semibold"
-            align="left"
-          >
-            Screen 1231422
-          </Text>
+      <Box>
+        <Text color="#403F49" fontSize="lg" fontWeight="semibold" align="left">
+          {screen.name}
+        </Text>
+        <Stack pt="10">
           <TableContainer borderRadius="5px" bgColor="#FFFFFF">
             <Table variant="simple">
               <Thead>
                 <Tr>
                   <Th>
                     <Flex>
-                      <Checkbox
-                        borderColor="#202020"
-                        isChecked={allChecked}
-                        isIndeterminate={isIndeterminate}
-                        onChange={(e) =>
-                          setCheckedItems([e.target.checked, e.target.checked])
-                        }
-                      ></Checkbox>
+                      <Form.Check
+                        aria-label="option 1"
+                        onChange={handleall}
+                        checked={allChecked}
+                      />
                       <Text pl="5">Brand</Text>
                     </Flex>
                   </Th>
@@ -89,12 +65,11 @@ export function Actions(props: any) {
                   <Tr>
                     <Td>
                       <Flex>
-                        <Checkbox
-                          isChecked={checkedItems[index]}
-                          onChange={(e) =>
-                            setCheckedItems([e.target.checked, checkedItems[1]])
-                          }
-                        ></Checkbox>
+                        <Form.Check
+                          aria-label="option 1"
+                          onChange={() => handleSingle(index)}
+                          checked={checkedItems[index]}
+                        />
                         <Text color=" #403F49 " fontSize="sm" pl="5">
                           {video.brandName}
                         </Text>
@@ -109,10 +84,10 @@ export function Actions(props: any) {
                       color="#403F49"
                       fontWeight="semibold"
                     >
-                      2226
+                      {video.totalNoOfSlots}
                     </Td>
                     <Td fontSize="sm" color="#403F49" fontWeight="semibold">
-                      ₹2056
+                      ₹{video.totalNoOfSlots * screen.rentPerSlot}
                     </Td>
                     <Td>
                       <Select
@@ -133,8 +108,8 @@ export function Actions(props: any) {
               </Tbody>
             </Table>
           </TableContainer>
-        </Box>
-      )}
+        </Stack>
+      </Box>
     </Box>
   );
 }

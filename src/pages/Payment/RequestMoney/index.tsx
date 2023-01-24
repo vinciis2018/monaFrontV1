@@ -79,46 +79,49 @@ export function RequestMoney(props: any) {
               </Text>
             </Stack>
             <Box
-              mt="5"
               align="left"
               borderRadius="10px"
               border="1px"
               borderColor="rgba(33, 33, 33, 0.4)"
             >
-              <Stack pt="10" pl="5">
-                <Text color="#000000" fontSize="xl" fontWeight="semibold">
+              <Stack pt="10" pl="5" spacing="5">
+                <Text color="#323234" fontSize="xl" fontWeight="semibold">
                   Enter Amount
                 </Text>
                 <Input
-                  mt="5"
+                  size="lg"
+                  variant="flushed"
                   placeholder="Enter amount to send"
                   color="#000000"
                   width="50%"
+                  borderColor="#000000"
                   justifyContent="flex-start"
                   borderRadius="5px"
                 ></Input>
-                <Text color="#000000" fontSize="lg" mt="5" pb="5">
+                <Text color="rgba(64, 63, 73, 0.8)" fontSize="lg" pb="5">
                   {`Current balance $ ${
                     walletData.balances[Object.keys(walletData.balances)[0]]
                   }`}
                 </Text>
               </Stack>
               <Divider />
-              <Stack pl="5" pt="5" pb="10" pr="5">
+              <Stack pl="5" pt="5" pb="10" pr="5" spacing="5">
                 <Text color="#000000" fontSize="sm">
                   You are requesting from
                 </Text>
                 <Input
+                  p="3"
                   placeholder="Enter Phone number, wallet ID, or name"
                   color="#000000"
                   width="100%"
                   justifyContent="flex-start"
                   borderRadius="5px"
                   border="1px"
+                  borderColor="#878787"
                 ></Input>
+
                 <Button
                   p="5"
-                  mt="5"
                   color="#D7380E"
                   width="100%"
                   borderRadius="4px"

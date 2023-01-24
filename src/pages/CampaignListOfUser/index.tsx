@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Box, Text, Stack, Select } from "@chakra-ui/react";
-import { AdsInTable } from "components/common";
+import { AdsListOfSinglScreen } from "components/common";
 
 import { userVideosList } from "Actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,7 +56,7 @@ export function CampaignListOfUser() {
         ) : errorMyVideos ? (
           <MessageBox variant="danger">{errorMyVideos}</MessageBox>
         ) : (
-          <AdsInTable videos={myVideos} />
+          <AdsListOfSinglScreen videos={myVideos} />
         )}
       </Stack>
     </Box>

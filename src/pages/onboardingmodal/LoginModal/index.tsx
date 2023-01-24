@@ -96,16 +96,21 @@ export function LoginModal(props: any) {
         </Stack>
         <Stack align="center" justifyContent="center">
           <Box alignItems="center" pt="30">
-            <Box alignItems="center" pt="10">
-              <Text p="2" textAlign="left" fontSize="xs" fontWeight="600">
-                Enter PIN
+            <Box align="center" pt="10">
+              <Text p="2" fontSize="2xl" fontWeight="semibold" color="#313131">
+                Enter PIN to continue
               </Text>
-              <HPasswordInput
-                label="Enter Access PIN"
-                onChange={setPin}
-                onComplete={completedPin}
-                labelAlign="center"
-              />
+              <Text p="2" fontSize="md" color="#403F49">
+                Please enter PIN to contine
+              </Text>
+              <Stack pt="5">
+                <HPasswordInput
+                  label="Enter Access PIN"
+                  onChange={setPin}
+                  onComplete={completedPin}
+                  labelAlign="center"
+                />
+              </Stack>
             </Box>
             <Flex
               direction="column"

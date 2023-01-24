@@ -37,7 +37,6 @@ export function AllAds() {
   const [count, setCount] = useState(1);
   const jsonPins = useSelector((state: any) => state.jsonPins);
   const { loading: loadingAllPins, error: errorAllPins, jsonData } = jsonPins;
-  console.log("json data : ", jsonData);
 
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;

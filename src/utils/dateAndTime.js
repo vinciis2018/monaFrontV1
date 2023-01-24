@@ -15,3 +15,34 @@ export function convertIntoDateAndTime(string) {
     return ` ${date[2]} ${date[1]}, ${date[3]}, ${time[0]}:${time[1]} ${am_pm}`; // 24 December 2022, 10:00 AM,
   }
 }
+
+export function consvertSecondToHrAndMinutes(value) {
+  const hr = (value / 3600).toFixed(0);
+  const min = ((value % 3600) / 60).toFixed(0);
+  const s = (value % 3600) % 60;
+  if (hr > 0) {
+    if (min > 0) {
+      if (s > 0) {
+        return `${hr} hr, ${min} min, ${s} s`;
+      } else {
+        return `${hr} hr, ${min} min`;
+      }
+    } else {
+      return `${hr} hr, ${min} min`;
+    }
+  } else {
+    if (min > 0) {
+      if (s > 0) {
+        return `${min} min, ${s} s`;
+      } else {
+        return `${min} min`;
+      }
+    } else {
+      if (s > 0) {
+        return `${s} s`;
+      } else {
+        return `0 sec`;
+      }
+    }
+  }
+}

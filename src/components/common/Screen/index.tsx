@@ -72,7 +72,7 @@ export function Screen(props: any) {
               fontWeight="semibold"
               align="left"
             >
-              {eachScreen.ratting || 4.5}
+              {eachScreen.rating}
             </Text>
           </Flex>
           <Flex>

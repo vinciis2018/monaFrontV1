@@ -6,6 +6,6 @@ export { Screen } from "./Screen";
 export { Rating } from "./Rating";
 export { MediaContainer } from "./MediaContainer";
 export { Review } from "./Review";
-export { AdsInTable } from "./AdsInTable";
+export { AdsListOfSinglScreen } from "./AdsListOfSinglScreen";
 export { AdsPlaying } from "./AdsPlaying";
 export { ContactUs } from "./ContactUs";

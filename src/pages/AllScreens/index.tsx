@@ -30,12 +30,6 @@ import { FiMap } from "react-icons/fi";
 import { BsSliders } from "react-icons/bs";
 import { MyMap } from "pages/MyMap";
 import { getPinJson } from "Actions/pinActions";
-//image
-import railway from "../../assets/image/raily.png";
-import indor from "../../assets/image/indor.png";
-import outdor from "../../assets/image/outdore.png";
-// import rectangle from "../../assets/image/Rectangle86.png";
-import appartment from "../../assets/image/appartment.png";
 
 export function AllScreens() {
   const navigate = useNavigate();
@@ -65,25 +59,6 @@ export function AllScreens() {
     dispatch(listScreens({ pageNumber }));
     dispatch(getPinJson());
   }, [dispatch, navigate, userInfo]);
-
-  const categorys = [
-    {
-      image: appartment,
-      category: "APPARTMENTS",
-    },
-    {
-      image: railway,
-      category: "RAILWAY PLATFORMS",
-    },
-    {
-      image: indor,
-      category: "INDOOR",
-    },
-    {
-      image: outdor,
-      category: "OUTDOORS",
-    },
-  ];
 
   return (
     <Box

@@ -1,9 +1,13 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { consvertSecondToHrAndMinutes } from "utils/dateAndTime";
 
 export function AdsPlaying(props: any) {
   const { video } = props;
+  const playingTime = consvertSecondToHrAndMinutes(
+    video.duration * video.totalNoOfSlots
+  ); // sending time in seconds only and get in hr, mn,sec
 
   return (
     <Box
@@ -34,7 +38,8 @@ export function AdsPlaying(props: any) {
           Playtime
         </Text>
         <Text color="#403F49" fontSize="sm" align="left">
-          {`${video.hrsToComplete} hours`}
+          {/* {`${video.hrsToComplete} hours`} */}
+          {`${playingTime}`}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" pt="2" align="center">
@@ -42,7 +47,7 @@ export function AdsPlaying(props: any) {
           Total no of slots
         </Text>
         <Text color="#403F49" fontSize="sm" align="left">
-          232
+          {video.totalNoOfSlots}
         </Text>
       </Flex>
     </Box>

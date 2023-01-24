@@ -15,8 +15,8 @@ import React, { useState } from "react";
 import { BsDot } from "react-icons/bs";
 import { convertIntoDateAndTime } from "utils/dateAndTime";
 
-export function AdsInTable(props: any) {
-  const { videos } = props;
+export function AdsListOfSinglScreen(props: any) {
+  const { videos, rentPerSlot } = props;
   const [checkedItems, setCheckedItems] = useState(
     new Array(videos.length).fill(false)
   );
@@ -72,10 +72,10 @@ export function AdsInTable(props: any) {
                 {convertIntoDateAndTime(video.createdAt)}
               </Td>
               <Td isNumeric fontSize="sm" color="#403F49" fontWeight="semibold">
-                2226
+                {video.totalNoOfSlots}
               </Td>
               <Td fontSize="sm" color="#403F49" fontWeight="semibold">
-                ₹2056
+                ₹{rentPerSlot * video.totalNoOfSlots}
               </Td>
               {video.paidForSlots ? (
                 <Td>

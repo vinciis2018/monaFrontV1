@@ -61,9 +61,6 @@ export const EditScreen = (props: any) => {
   const [screenHighlights, setHighLights] = useState<any>([]);
   const [startTime, setStartTime] = useState<any>();
   const [endTime, setEndTime] = useState<any>();
-  // const [category, setCategory] = useState<any>();
-  // const [indoor, setIndoor] = useState<any>("");
-  // const [outdoor, setIndoor] = useState<any>("");
   const [isUploading, setIsUploading] = useState(false);
   const [screenImage, setScreenImage] = useState<any>();
   let hiddenInput: any = null;
@@ -100,11 +97,14 @@ export const EditScreen = (props: any) => {
     zoom: 18,
     height: "360px",
   });
+  console.log("image : ", image);
   const userSignin = useSelector((state: any) => state.userSignin);
   const { loading: loadingUser, error: errorUser, userInfo } = userSignin;
 
   const screenDetails = useSelector((state: any) => state.screenDetails);
   const { loading: loadingScreen, error: errorScreen, screen } = screenDetails;
+  // console.log("screen : ", JSON.stringify(screen));
+  // console.log("screenCategory: ", screenCategory);
   const screenCalender = useSelector((state: any) => state.screenCalender);
   const {
     loading: loadingScreenCalender,
@@ -112,12 +112,15 @@ export const EditScreen = (props: any) => {
     calender,
   } = screenCalender;
 
+  // console.log("calender : ", JSON.stringify(calender));
+
   const screenPinDetails = useSelector((state: any) => state.screenPinDetails);
   const {
     loading: loadingScreenPin,
     error: errorScreenPin,
     screenPin,
   } = screenPinDetails;
+  // console.log("screenPin : ", JSON.stringify(screenPin));
 
   const pinDetails = useSelector((state: any) => state.pinDetails);
   const { loading: loadingPin, error: pinError, pin } = pinDetails;
@@ -167,7 +170,10 @@ export const EditScreen = (props: any) => {
       setMeasurementUnit(screen.size.measurementUnit);
       setHighLights(screen.screenHighlights);
     }
-
+    if (calender) {
+      setStartTime(calender.startTime);
+      setEndTime(calender.endTime);
+    }
     if (!screenPin || successPinUpdate) {
       dispatch({
         type: PIN_UPDATE_RESET,
@@ -201,8 +207,6 @@ export const EditScreen = (props: any) => {
     userInfo,
     screenId,
     successUpdate,
-    image,
-    successPinUpdate,
     screenPin,
     navigate,
     redirect,
@@ -387,8 +391,8 @@ export const EditScreen = (props: any) => {
                 </VStack>
                 <Button
                   variant="outline"
-                  color="#515151"
-                  bgColor="#FAFAFA"
+                  color={screenCategory == "Indoors" ? "#4C4C4C" : "#515151"}
+                  bgColor={screenCategory == "Indoors" ? "#D6FFFF" : "#FAFAFA"}
                   fontSize="sm"
                   p="4"
                   _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
@@ -399,8 +403,10 @@ export const EditScreen = (props: any) => {
                 <Stack pl="10">
                   <Button
                     variant="outline"
-                    color="#515151"
-                    bgColor="#FAFAFA"
+                    color={screenCategory == "Outdores" ? "#4C4C4C" : "#515151"}
+                    bgColor={
+                      screenCategory == "Outdores" ? "#D6FFFF" : "#FAFAFA"
+                    }
                     fontSize="sm"
                     p="4"
                     _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
@@ -412,8 +418,16 @@ export const EditScreen = (props: any) => {
                 <Stack pl="10">
                   <Button
                     variant="outline"
-                    color="#515151"
-                    bgColor="#FAFAFA"
+                    color={
+                      screenCategory == "RailWay Station"
+                        ? "#4C4C4C"
+                        : "#515151"
+                    }
+                    bgColor={
+                      screenCategory == "RailWay Station"
+                        ? "#D6FFFF"
+                        : "#FAFAFA"
+                    }
                     fontSize="sm"
                     p="4"
                     _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
@@ -425,8 +439,12 @@ export const EditScreen = (props: any) => {
                 <Stack pl="10">
                   <Button
                     variant="outline"
-                    color="#515151"
-                    bgColor="#FAFAFA"
+                    color={
+                      screenCategory == "Appartment" ? "#4C4C4C" : "#515151"
+                    }
+                    bgColor={
+                      screenCategory == "Appartment" ? "#D6FFFF" : "#FAFAFA"
+                    }
                     fontSize="sm"
                     p="4"
                     _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
@@ -576,17 +594,42 @@ export const EditScreen = (props: any) => {
                     Enter your screen location here
                   </Text>
                   <InputGroup size="lg" width="100%" pt="2">
-                    <Input
-                      placeholder="Screen name"
-                      size="lg"
-                      borderRadius="md"
-                      fontSize="lg"
-                      border="1px"
-                      color="#555555"
-                      py="2"
-                      value={screenAddress}
-                      onChange={(e) => setScreenAddress(e.target.value)}
-                    />
+                    <VStack>
+                      <Input
+                        placeholder="DistrictCity"
+                        size="lg"
+                        borderRadius="md"
+                        fontSize="lg"
+                        border="1px"
+                        color="#555555"
+                        py="2"
+                        value={districtCity}
+                        onChange={(e) => setDistrictCity(e.target.value)}
+                      />
+                      <Input
+                        placeholder="State"
+                        size="lg"
+                        borderRadius="md"
+                        fontSize="lg"
+                        border="1px"
+                        color="#555555"
+                        py="2"
+                        value={stateUT}
+                        onChange={(e) => setStateUT(e.target.value)}
+                      />
+
+                      <Input
+                        placeholder="Country"
+                        size="lg"
+                        borderRadius="md"
+                        fontSize="lg"
+                        border="1px"
+                        color="#555555"
+                        py="2"
+                        value={country}
+                        onChange={(e) => setCountry(e.target.value)}
+                      />
+                    </VStack>
                   </InputGroup>
                   <Text
                     color="#393939"
@@ -668,7 +711,11 @@ export const EditScreen = (props: any) => {
                 </VStack>
                 <HStack>
                   <Box>
-                    <Image src={screenImage} width="76px" height="86px" />
+                    <Image
+                      src={screenImage || image}
+                      width="76px"
+                      height="86px"
+                    />
                   </Box>
                   <Button
                     variant="outline"

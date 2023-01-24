@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
@@ -18,25 +18,10 @@ import {
 import { IoSearchCircleSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-
 import { listScreens } from "../../Actions/screenActions";
 import { listAllVideos } from "../../Actions/advertActions";
-// import { triggerPort } from "services/utils";
-
-// import { TopNftsContent } from "components/widgets";
-// import { TimeFilter } from "components/filters";
-
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
-//image
-// import homeScreen from "../../assets/image/homescreen.png";
-import railway from "../../assets/image/raily.png";
-import indor from "../../assets/image/indor.png";
-import outdor from "../../assets/image/outdore.png";
-import appartment from "../../assets/image/appartment.png";
-// import rectangle from "../../assets/image/Rectangle86.png";
 import { ContactUs, Screen } from "components/common";
 import { AtvertiseBox } from "components/common/AtvertiseBox";
 import { motion } from "framer-motion";
@@ -52,16 +37,13 @@ export function HomePage() {
   const { loading: loadingScreens, error: errorScreens, screens } = screenList;
 
   const videoListAll = useSelector((state: any) => state.videoListAll);
+  const [topThreeVideos, setTopThreevideo] = useState<any>([]);
 
   const {
     loading: loadingVideos,
     error: errorVideos,
     allVideos,
   } = videoListAll;
-  let topThreeVideos = [];
-  if (allVideos !== undefined) {
-    topThreeVideos = allVideos.slice(allVideos.length - 3, allVideos.length);
-  }
 
   const dispatch = useDispatch<any>();
   React.useEffect(() => {
@@ -70,25 +52,36 @@ export function HomePage() {
     } else if (!userInfo) {
       navigate("/signin");
     }
-    dispatch(listScreens({}));
+    if (allVideos) {
+      const topThreeVideos = allVideos.slice(
+        allVideos.length - 3,
+        allVideos.length
+      );
+      setTopThreevideo(topThreeVideos);
+    }
     dispatch(listAllVideos());
+    dispatch(listScreens({}));
   }, [dispatch, navigate, userInfo]);
 
   const categorys = [
     {
-      image: appartment,
+      image:
+        "https://bafybeicnlmmrb2x7efxsaxu6o6xvipaed6wvrmufjbbsqx77csmfvffn6y.ipfs.w3s.link/appartment.png",
       category: "APPARTMENTS",
     },
     {
-      image: railway,
+      image:
+        "https://bafybeicduvlghzcrjtuxkro7foazucvuyej25rh3humeujbzt7bmio4hsa.ipfs.w3s.link/raily.png",
       category: "RAILWAY PLATFORMS",
     },
     {
-      image: indor,
+      image:
+        "https://bafybeidn5bnz4vlo6h3l3g5eqswwu7ygmktzai2dfdn6vka4xz4xpscpsy.ipfs.w3s.link/indor.png",
       category: "INDOOR",
     },
     {
-      image: outdor,
+      image:
+        "https://bafybeih3x5kv5zosfm5vpkgk7ixspqsbfhbowiihdql4dhky3ajo65lsga.ipfs.w3s.link/outdore.png",
       category: "OUTDOORS",
     },
   ];
