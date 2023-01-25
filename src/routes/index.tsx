@@ -11,13 +11,11 @@ import {
   PinCreate,
   PinSuccess,
   AllAds,
-
   // CameraHome,
-
-  // Active,
-  // PhotoView,
-  // UploadConfirm,
-  // Success,
+  Active,
+  PhotoView,
+  UploadConfirm,
+  Success,
 
   // auth
   Login,
@@ -52,7 +50,6 @@ import {
   // UserDashboard,
   // CampaignDashboard,
   // PleaBucket,
-  // CustomImages,
   // NFT,
   // CustomCreate,
   CreateResetPassword,
@@ -116,6 +113,13 @@ export const PublicRoutes = () => {
         <Route path="/send-money" element={<SendMoney />} />
         <Route path="/request-money" element={<RequestMoney />} />
         <Route path="*" element={<Page404 />} />
+        {/* upload */}
+        <Route path="/upload" element={<Active />} />
+        <Route path="/upload-active" element={<Active />} />
+        <Route path="/upload-photos" element={<PhotoView />} />
+        <Route path="/upload-confirm" element={<UploadConfirm />} />
+        <Route path="/upload-success/:cid" element={<Success />} />
+        {/* <Route path="/customImages" element={<CustomImages />} /> */}
       </Routes>
       <FooterPage />
     </>

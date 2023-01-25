@@ -17,11 +17,11 @@ export { VerifySecrateKeyModal } from "./onboardingmodal/VerifySecrateKeyModal";
 export { ViewSecrateKeyModal } from "./onboardingmodal/ViewSecrateKeyModal";
 
 // uploading
-// export { CameraHome } from "./uploading/CameraHome";
-// export { Active } from "./uploading/Active";
-// export { PhotoView } from "./uploading/PhotoView";
-// export { Success } from "./uploading/Success";
-// export { UploadConfirm } from "./uploading/UploadConfirm";
+export { CameraHome } from "./uploading/CameraHome";
+export { Active } from "./uploading/Active";
+export { PhotoView } from "./uploading/PhotoView";
+export { Success } from "./uploading/Success";
+export { UploadConfirm } from "./uploading/UploadConfirm";
 
 // auth
 export { Login } from "./auth/Login";

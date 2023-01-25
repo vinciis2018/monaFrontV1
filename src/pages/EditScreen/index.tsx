@@ -38,6 +38,8 @@ import MessageBox from "components/atoms/MessageBox";
 import HLoading from "components/atoms/HLoading";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useIpfs } from "components/contexts";
+import { getFileData } from "services/utils";
 
 const steps = [
   { label: "Location" },
@@ -46,6 +48,8 @@ const steps = [
 ];
 
 export const EditScreen = (props: any) => {
+  const [loading, setLoading] = useState(false);
+  const { addFile } = useIpfs();
   const screenId = window.location.pathname.split("/")[2];
   const { nextStep, prevStep, reset, activeStep } = useSteps({
     initialStep: 0,
@@ -55,6 +59,7 @@ export const EditScreen = (props: any) => {
       {value}
     </Text>
   );
+
   const navigate = useNavigate();
   const [tag, setTag] = useState<any>("");
   const [highlight, setHighLight] = useState<any>("");
@@ -63,10 +68,14 @@ export const EditScreen = (props: any) => {
   const [endTime, setEndTime] = useState<any>();
   const [isUploading, setIsUploading] = useState(false);
   const [screenImage, setScreenImage] = useState<any>();
+  const [fileUrl, setFileUrl] = useState<any>();
   let hiddenInput: any = null;
   async function handlePhotoSelect(file: any) {
     setIsUploading(true);
-    setScreenImage(URL.createObjectURL(file));
+    const fileThumbnail = URL.createObjectURL(file);
+    const [dataBuffer] = await getFileData(fileThumbnail);
+    setFileUrl(dataBuffer);
+    setScreenImage(fileThumbnail);
     setIsUploading(false);
   }
 
@@ -97,7 +106,6 @@ export const EditScreen = (props: any) => {
     zoom: 18,
     height: "360px",
   });
-  console.log("image : ", image);
   const userSignin = useSelector((state: any) => state.userSignin);
   const { loading: loadingUser, error: errorUser, userInfo } = userSignin;
 
@@ -214,36 +222,42 @@ export const EditScreen = (props: any) => {
   ]);
 
   const submitScreenHandler = (e: any) => {
-    dispatch(
-      updateScreen({
-        _id: screenId,
-        name,
-        rentPerSlot,
-        image,
-        screenCategory,
-        screenType,
-        screenWorth,
-        slotsTimePeriod,
-        description,
-        screenAddress,
-        districtCity,
-        stateUT,
-        country,
-        screenTags,
-        screenHighlights,
-        screenLength,
-        measurementUnit,
-        screenWidth,
-        startTime,
-        endTime,
-      })
-    );
+    setLoading(true);
+    addFile(fileUrl).then(({ cid }) => {
+      const strCid = cid.toString();
+      // console.log("strcid : ", strCid);
+      dispatch(
+        updateScreen({
+          _id: screenId,
+          name,
+          rentPerSlot,
+          image: `https://ipfs.io/ipfs/${strCid}`,
+          screenCategory,
+          screenType,
+          screenWorth,
+          slotsTimePeriod,
+          description,
+          screenAddress,
+          districtCity,
+          stateUT,
+          country,
+          screenTags,
+          screenHighlights,
+          screenLength,
+          measurementUnit,
+          screenWidth,
+          startTime,
+          endTime,
+        })
+      );
+    });
     dispatch(
       updatePin(screenId, {
         lng: lng,
         lat: lat,
       })
     );
+    setLoading(false);
   };
 
   const handleAddPinClick = (e: any) => {
@@ -306,8 +320,8 @@ export const EditScreen = (props: any) => {
   };
   return (
     <Box pl="20" pr="20" pt="20">
-      {loadingScreen || loadingPin ? (
-        <HLoading loading={loadingScreen || loadingPin} />
+      {loadingScreen || loadingPin || loading ? (
+        <HLoading loading={loadingScreen || loadingPin || loading} />
       ) : errorScreen || pinError ? (
         <MessageBox message={errorScreen || pinError}></MessageBox>
       ) : (

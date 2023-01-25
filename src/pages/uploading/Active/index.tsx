@@ -102,9 +102,9 @@ export function Active() {
   const { userInfo, loading: loadingUser, error: errorUser } = userSignin;
 
   useEffect(() => {
-    if (!getArweavePublicAddress()) {
-      navigate("/login");
-    }
+    // if (!getArweavePublicAddress()) {
+    //   navigate("/login");
+    // }
 
     if (fileUrl) {
       setUsingCam(true);
