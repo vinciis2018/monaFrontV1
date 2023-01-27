@@ -17,7 +17,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import { useAnimation } from "framer-motion";
 import { getFileData } from "services/utils";
 
-export function UploadCampaign(props: any) {
+export function UploadThumbnail(props: any) {
   const controls = useAnimation();
   const collection = [
     {
@@ -45,12 +45,13 @@ export function UploadCampaign(props: any) {
     setIsUploading(true);
     const fileThumbnail = URL.createObjectURL(file);
     const [dataBuffer] = await getFileData(fileThumbnail);
-    props.setFileUrl(dataBuffer);
+    props.setThumbnailUrl(dataBuffer);
     setIsUploading(false);
   }
-  const handleNext = () => {
+
+  const handleAddToCart = () => {
     props.onHide();
-    props.openUploadThumbnailModal();
+    props.videoUploadHandler();
   };
 
   return (
@@ -80,7 +81,7 @@ export function UploadCampaign(props: any) {
           <Stack p="5">
             <Stack align="center">
               <Text fontSize="xl" fontWeight="semibold" color="#000000">
-                Add campaign
+                Add campaign Thumbnail
               </Text>
             </Stack>
             <FormControl pt="5">
@@ -153,9 +154,9 @@ export function UploadCampaign(props: any) {
                 fontWeight="semiBold"
                 width="40%"
                 p="2"
-                onClick={handleNext}
+                onClick={handleAddToCart}
               >
-                Next
+                Add to cart
               </Button>
             </Stack>
           </Stack>

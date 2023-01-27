@@ -16,7 +16,7 @@ export function CreateNewCampaign(props: any) {
   const handleAddCampaignName = (event: any) => {
     if (event.which == 13) {
       props.onHide();
-      props.openUloadCamaign();
+      props.openUploadCampaignModal();
     }
   };
   return (
@@ -57,6 +57,7 @@ export function CreateNewCampaign(props: any) {
                   name="share"
                   id="share"
                   size="lg"
+                  py="1"
                   onChange={props.setCampaignName}
                   onKeyPress={(e) => handleAddCampaignName(e)}
                 />

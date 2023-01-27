@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { Box, Text, Stack, Select } from "@chakra-ui/react";
-import { AdsListOfSinglScreen } from "components/common";
+import { Box, Text, Stack } from "@chakra-ui/react";
 
 import { userVideosList } from "Actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
+import { MySingleCampaign } from "components/common";
 
 export function CampaignListOfUser() {
   const userVideos = useSelector((state: any) => state.userVideos);
@@ -15,6 +15,7 @@ export function CampaignListOfUser() {
     error: errorMyVideos,
     videos: myVideos,
   } = userVideos;
+  // console.log("myvideo : ", JSON.stringify(myVideos));
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch<any>();
@@ -33,10 +34,10 @@ export function CampaignListOfUser() {
   return (
     <Box p="20" pt="20">
       <Stack direction="row" justifyContent="space-between">
-        <Text color="#000000" fontSize="2xl" fontWeight="semibold">
+        <Text color="#000000" fontSize="2xl" fontWeight="semibold" pt="5">
           My Campaign
         </Text>
-        <Select
+        {/* <Select
           height="36px"
           variant="outline"
           borderColor="#797979"
@@ -47,16 +48,18 @@ export function CampaignListOfUser() {
         >
           <option value="pending">Pending</option>
           <option value="active">Active</option>
-        </Select>
+        </Select> */}
       </Stack>
 
-      <Stack pt="20">
+      <Stack pt="10" spacing={5}>
         {loadingMyVideos ? (
           <HLoading loading={loadingMyVideos} />
         ) : errorMyVideos ? (
           <MessageBox variant="danger">{errorMyVideos}</MessageBox>
         ) : (
-          <AdsListOfSinglScreen videos={myVideos} />
+          myVideos.map((eachVideo: any) => (
+            <MySingleCampaign video={eachVideo} key={eachVideo._id} />
+          ))
         )}
       </Stack>
     </Box>

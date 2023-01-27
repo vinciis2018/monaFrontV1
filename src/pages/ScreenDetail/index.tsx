@@ -12,7 +12,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
@@ -29,8 +29,15 @@ import { GiRoundStar } from "react-icons/gi";
 import { ContactUs, Review } from "components/common";
 import { CreateNewCampaign } from "./CreateNewCampaign";
 import { UploadCampaign } from "./UploadCampaign";
+import { uploadVideo } from "Actions/advertActions";
+import { getMyMedia } from "Actions/mediaActions";
+import { UploadThumbnail } from "./UploadThumbnail";
+import { useIpfs } from "components/contexts";
+import { uploadMedia } from "Actions/mediaActions";
 
 export function ScreenDetail(props: any) {
+  const screenid = window.location.pathname.split("/")[2];
+
   const navigate = useNavigate();
   const [screen, setScreen] = useState<any>(null);
   const [screenLoading, setScreenLoading] = useState<any>(true);
@@ -43,7 +50,15 @@ export function ScreenDetail(props: any) {
   const [videoLoading, setVideoLoading] = useState<any>(true);
   const [campaignModal, setCampaignModal] = useState(false);
   const [uploadCampaignModal, setUploadCampaignModal] = useState(false);
+  const [uploadThumbnailModal, setUploadThumbnailModal] = useState<any>(false);
+
   const [campaignName, setCampaignName] = useState("");
+  const [fileUrl, setFileUrl] = useState<any>();
+  const [advert, setAdvert] = useState<any>();
+  const [thumbnailUrl, setThumbnailUrl] = useState<any>();
+  const [loading, setLoading] = useState<any>(false);
+  const { addFile } = useIpfs();
+
   const countEachRating = {
     5: 0,
     4: 0,
@@ -52,8 +67,19 @@ export function ScreenDetail(props: any) {
     1: 0,
   };
   const userSignin = useSelector((state: any) => state.userSignin);
-
   const { userInfo } = userSignin;
+  const videoUpload = useSelector((state: any) => state.videoUpload);
+  const {
+    loading: loadingVideoSave,
+    success: successVideoSave,
+    error: errorVideoSave,
+    uploadedVideo,
+  } = videoUpload;
+
+  const myMedia = useSelector((state: any) => state.myMedia);
+  const { loading: loadingMyMedia, error: errorMyMedia, medias } = myMedia;
+  // console.log("media  : ", medias);
+
   if (!screenLoading && screen) {
     screen.reviews.forEach((review: any) => {
       if (review.rating === 5) {
@@ -114,10 +140,12 @@ export function ScreenDetail(props: any) {
       setScreenError(
         error.response && error.response.data.message
           ? error.response.data.message
-          : error.message
+          : error.messsetFileUrlage
       );
     }
   };
+
+  const dispatch = useDispatch<any>();
 
   useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
@@ -125,24 +153,83 @@ export function ScreenDetail(props: any) {
     } else if (!userInfo) {
       navigate("/signin");
     }
-    const screenID = window.location.pathname.split("/")[2];
-    getScreentDetail(screenID);
-  }, [navigate, userInfo]);
+    getScreentDetail(screenid);
+    dispatch(getMyMedia());
+  }, [dispatch, navigate, userInfo, loading]);
+
+  const videoUploadHandler = (e: any) => {
+     e.preventDefault();
+    console.log("uplaod video fumction called!");
+    // First get cid if not
+    setLoading(true);
+    addFile(fileUrl)
+      .then(({ cid }) => {
+        const strCid = cid.toString();
+        dispatch(
+          uploadMedia({
+            cid: strCid,
+            owner: userInfo.defaultWallet,
+            userId: userInfo._id,
+          })
+        );
+        return strCid;
+      })
+      .then((videoCid) => {
+        addFile(thumbnailUrl).then(({ cid }) => {
+          const strCid = cid.toString();
+          dispatch(
+            uploadVideo(screenid, {
+              advert: `https://ipfs.io/ipfs/${videoCid}`,
+              title: campaignName,
+              thumbnail: `https://ipfs.io/ipfs/${strCid}`,
+              defaultWallet: userInfo.defaultWallet,
+            })
+          );
+        });
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
+  };
 
   return (
     <Box>
       <CreateNewCampaign
         show={campaignModal}
         onHide={() => setCampaignModal(false)}
-        openUloadCamaign={() => setUploadCampaignModal(true)}
+        openUploadCampaignModal={() => setUploadCampaignModal(true)}
         setCampaignName={(e: any) => setCampaignName(e.target.value)}
       />
       <UploadCampaign
         show={uploadCampaignModal}
         onHide={() => setUploadCampaignModal(false)}
+        openUploadThumbnailModal={() => setUploadThumbnailModal(true)}
+        setFileUrl={(value: any) => setFileUrl(value)}
+        medias={medias}
       />
-      {screenLoading || videoLoading || pinLoading ? (
-        <HLoading loading={screenLoading || videoLoading || pinLoading} />
+      <UploadThumbnail
+        show={uploadThumbnailModal}
+        onHide={() => setUploadThumbnailModal(false)}
+        setThumbnailUrl={(value: any) => setThumbnailUrl(value)}
+        videoUploadHandler={videoUploadHandler}
+        medias={medias}
+      />
+      {screenLoading ||
+      videoLoading ||
+      pinLoading ||
+      loading ||
+      loadingVideoSave ||
+      loadingMyMedia ? (
+        <HLoading
+          loading={
+            screenLoading ||
+            videoLoading ||
+            pinLoading ||
+            loading ||
+            loadingVideoSave ||
+            loadingMyMedia
+          }
+        />
       ) : (
         <Stack>
           <Flex height="804px">

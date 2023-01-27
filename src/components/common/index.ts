@@ -9,3 +9,4 @@ export { Review } from "./Review";
 export { AdsListOfSinglScreen } from "./AdsListOfSinglScreen";
 export { AdsPlaying } from "./AdsPlaying";
 export { ContactUs } from "./ContactUs";
+export { MySingleCampaign } from "./MySingleCampaign";
