@@ -53,7 +53,6 @@ import {
   // NFT,
   // CustomCreate,
   CreateResetPassword,
-  // Home,
   Page404,
   WalletPage,
   PaymentReceipt,
@@ -69,6 +68,7 @@ import {
   UserProfile,
   CartAndSummary,
   CampaignListOfUser,
+  CustomImages,
 } from "pages";
 import { FooterPage, NavBar } from "components/common";
 
@@ -119,7 +119,7 @@ export const PublicRoutes = () => {
         <Route path="/upload-photos" element={<PhotoView />} />
         <Route path="/upload-confirm" element={<UploadConfirm />} />
         <Route path="/upload-success/:cid" element={<Success />} />
-        {/* <Route path="/customImages" element={<CustomImages />} /> */}
+        <Route path="/customImages" element={<CustomImages />} />
       </Routes>
       <FooterPage />
     </>

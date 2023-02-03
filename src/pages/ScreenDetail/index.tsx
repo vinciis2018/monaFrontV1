@@ -30,10 +30,11 @@ import { ContactUs, Review } from "components/common";
 import { CreateNewCampaign } from "./CreateNewCampaign";
 import { UploadCampaign } from "./UploadCampaign";
 import { uploadVideo } from "Actions/advertActions";
-import { getMyMedia } from "Actions/mediaActions";
+import { generateVideoFromImages, getMyMedia } from "Actions/mediaActions";
 import { UploadThumbnail } from "./UploadThumbnail";
 import { useIpfs } from "components/contexts";
 import { uploadMedia } from "Actions/mediaActions";
+import { UplaodCampaignThroughImage } from "./UplaodCampaignThroughImage";
 
 export function ScreenDetail(props: any) {
   const screenid = window.location.pathname.split("/")[2];
@@ -51,13 +52,19 @@ export function ScreenDetail(props: any) {
   const [campaignModal, setCampaignModal] = useState(false);
   const [uploadCampaignModal, setUploadCampaignModal] = useState(false);
   const [uploadThumbnailModal, setUploadThumbnailModal] = useState<any>(false);
+  const [
+    uplaodCampaignThroughImageModalShow,
+    setUplaodCampaignThroughImageModalShow,
+  ] = useState<any>(false);
 
   const [campaignName, setCampaignName] = useState("");
   const [fileUrl, setFileUrl] = useState<any>();
   const [advert, setAdvert] = useState<any>();
   const [thumbnailUrl, setThumbnailUrl] = useState<any>();
   const [loading, setLoading] = useState<any>(false);
+  const [images, setImages] = useState<any>([]);
   const { addFile } = useIpfs();
+  //console.log("Type of data buffer ----: ", typeof fileUrl, fileUrl);
 
   const countEachRating = {
     5: 0,
@@ -75,6 +82,9 @@ export function ScreenDetail(props: any) {
     error: errorVideoSave,
     uploadedVideo,
   } = videoUpload;
+  const videoFromImages = useSelector((state: any) => state.videoFromImages);
+  const { loading: loadingVideo, error: errorVideo, video } = videoFromImages;
+  console.log("videoFromImages : 331311-----", video);
 
   const myMedia = useSelector((state: any) => state.myMedia);
   const { loading: loadingMyMedia, error: errorMyMedia, medias } = myMedia;
@@ -155,11 +165,14 @@ export function ScreenDetail(props: any) {
     }
     getScreentDetail(screenid);
     dispatch(getMyMedia());
+    if (video) {
+      console.log("video : 331311", video);
+    }
   }, [dispatch, navigate, userInfo, loading]);
 
   const videoUploadHandler = (e: any) => {
-     e.preventDefault();
-    console.log("uplaod video fumction called!");
+    e.preventDefault();
+    //console.log("uplaod video fumction called!");
     // First get cid if not
     setLoading(true);
     addFile(fileUrl)
@@ -191,6 +204,24 @@ export function ScreenDetail(props: any) {
         setLoading(false);
       });
   };
+  // if (
+  //   screenLoading ||
+  //   videoLoading ||
+  //   pinLoading ||
+  //   loading ||
+  //   loadingVideoSave ||
+  //   loadingMyMedia
+  // ) {
+  //   console.log(
+  //     `${screenLoading} ${videoLoading} ${pinLoading} ${loading} ${loadingVideoSave} ${loadingMyMedia}`
+  //   );
+  // }
+  const sendImages = () => {
+    // console.log(images);
+    window.alert(`Sending ${images.length} images for creating video`);
+    //dispatch(generateVideoFromImages(images, duration, width, height));
+    dispatch(generateVideoFromImages(images, 10, 1280, 720));
+  };
 
   return (
     <Box>
@@ -199,6 +230,10 @@ export function ScreenDetail(props: any) {
         onHide={() => setCampaignModal(false)}
         openUploadCampaignModal={() => setUploadCampaignModal(true)}
         setCampaignName={(e: any) => setCampaignName(e.target.value)}
+        campaignName={campaignName}
+        openUploadCampaignThrougnImages={() =>
+          setUplaodCampaignThroughImageModalShow(true)
+        }
       />
       <UploadCampaign
         show={uploadCampaignModal}
@@ -213,6 +248,14 @@ export function ScreenDetail(props: any) {
         setThumbnailUrl={(value: any) => setThumbnailUrl(value)}
         videoUploadHandler={videoUploadHandler}
         medias={medias}
+      />
+      <UplaodCampaignThroughImage
+        show={uplaodCampaignThroughImageModalShow}
+        onHide={() => setUplaodCampaignThroughImageModalShow(false)}
+        setThumbnailUrl={(value: any) => setThumbnailUrl(value)}
+        videoUploadHandler={sendImages}
+        medias={medias}
+        setImages={setImages}
       />
       {screenLoading ||
       videoLoading ||

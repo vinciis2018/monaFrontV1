@@ -14,7 +14,7 @@ import { AiFillStar, AiOutlinePlus } from "react-icons/ai";
 import { BsDot } from "react-icons/bs";
 
 export function Screen(props: any) {
-  const { eachScreen } = props;
+  const { eachScreen: screen } = props;
   return (
     <Box
       bgColor="#F7F7F7"
@@ -24,9 +24,9 @@ export function Screen(props: any) {
       height="100%"
       borderRadius="lg"
       boxShadow="2xl"
-      key={eachScreen._id}
+      key={screen._id}
       as={RouterLink}
-      to={`/screen/${eachScreen._id}`}
+      to={`/screen/${screen._id}`}
     >
       {/* image */}
       <Box p="2" height={{ height: 50, lg: "200px" }}>
@@ -34,8 +34,8 @@ export function Screen(props: any) {
           width="100%"
           height="240px"
           borderRadius="10px"
-          src={eachScreen?.image}
-          // onLoad={() => triggerPort(eachScreen?.image?.split("/").slice(-1)[0])}
+          src={screen?.image}
+          // onLoad={() => triggerPort(screen?.image?.split("/").slice(-1)[0])}
         />
       </Box>
       {/* details of screem */}
@@ -49,7 +49,7 @@ export function Screen(props: any) {
             align="left"
             width="85%"
           >
-            {eachScreen.name}
+            {screen.name}
           </Text>
           <IconButton
             bg="none"
@@ -72,7 +72,7 @@ export function Screen(props: any) {
               fontWeight="semibold"
               align="left"
             >
-              {eachScreen.rating}
+              {screen.rating}
             </Text>
           </Flex>
           <Flex>
@@ -105,10 +105,10 @@ export function Screen(props: any) {
               fontWeight="semibold"
               align="left"
             >
-              {`${eachScreen.rentPerSlot}/slot`}
+              {`${screen.rentPerSlot}/slot`}
             </Text>
           </Flex>
-          <Flex align="center">
+          <Flex align="center" as="s">
             <IconButton
               bg="none"
               icon={<BiRupee size="16px" color="#403F49" />}
@@ -135,7 +135,7 @@ export function Screen(props: any) {
         </Flex>
         {/* Address */}
         <Tooltip
-          label={`${eachScreen.screenAddress}, ${eachScreen.districtCity}, ${eachScreen.country}`}
+          label={`${screen.screenAddress}, ${screen.districtCity}, ${screen.country}`}
           aria-label="A tooltip"
         >
           <Stack align="left">
@@ -146,7 +146,7 @@ export function Screen(props: any) {
               align="left"
               isTruncated
             >
-              {`${eachScreen.screenAddress}`}
+              {`${screen.screenAddress}`}
             </Text>
             <Text
               color="#666666"
@@ -154,7 +154,7 @@ export function Screen(props: any) {
               fontWeight="semibold"
               align="left"
             >
-              {`${eachScreen.districtCity}, ${eachScreen.country}`}
+              {`${screen.districtCity}, ${screen.country}`}
             </Text>
           </Stack>
         </Tooltip>

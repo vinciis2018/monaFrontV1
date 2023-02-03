@@ -6,7 +6,7 @@ import { WithChildren } from "types/utils";
 import { mergeUint8Arrays } from "utils/util";
 
 interface Context {
-  addFile(file: Buffer): ReturnType<IPFS["add"]>;
+  addFile(file: any): ReturnType<IPFS["add"]>;
   getFile(cid: string): Promise<Uint8Array | undefined>;
 }
 
@@ -22,7 +22,7 @@ const ContextProvider = (props: WithChildren) => {
     set$node(initializeNode);
   }, []);
 
-  const addFile = (buffer: Buffer): ReturnType<IPFS["add"]> => {
+  const addFile = (buffer: any): ReturnType<IPFS["add"]> => {
     return getNode().then((node) => node.add(buffer));
   };
 

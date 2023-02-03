@@ -15,7 +15,7 @@ export function CampaignListOfUser() {
     error: errorMyVideos,
     videos: myVideos,
   } = userVideos;
-  // console.log("myvideo : ", JSON.stringify(myVideos));
+  console.log("myvideo : ", JSON.stringify(myVideos));
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch<any>();

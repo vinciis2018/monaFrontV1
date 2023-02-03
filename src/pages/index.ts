@@ -78,6 +78,6 @@ export { SendMoney, RequestMoney } from "./Payment";
 
 // export { UserDashboard, ScreenDashboard, CampaignDashboard } from "./dashboard";
 
-// export { CustomImages } from "./custom";
+export { CustomImages } from "./custom";
 
 // export { CustomCreate } from "./Admin";

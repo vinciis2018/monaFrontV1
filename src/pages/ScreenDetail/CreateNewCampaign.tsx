@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import {
   Stack,
@@ -9,20 +9,54 @@ import {
   InputGroup,
   Input,
   Box,
+  Button,
+  Flex,
 } from "@chakra-ui/react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import MessageBox from "components/atoms/MessageBox";
 
 export function CreateNewCampaign(props: any) {
-  const handleAddCampaignName = (event: any) => {
-    if (event.which == 13) {
+  const [error, setError] = useState<any>("");
+  // const handleAddCampaignName = (event: any, click: any) => {
+  //   if (props.campaignName) {
+  //     if (event.which == 13 || click) {
+  //       props.onHide();
+  //       props.openUploadCampaignModal();
+  //     }
+  //   }
+  // };
+
+  const handleCreateCampaignThroughVideo = () => {
+    if (props.campaignName) {
       props.onHide();
       props.openUploadCampaignModal();
+    } else {
+      setError("Please Enter Campaign name!");
+      setTimeout(() => {
+        setError("");
+        console.log("error = ", error);
+      }, 2000);
     }
   };
+  const handleCreateCampaignThroughImages = () => {
+    if (props.campaignName) {
+      props.onHide();
+      props.openUploadCampaignThrougnImages();
+    } else {
+      setError("Please Enter Campaign name!");
+      setTimeout(() => {
+        setError("");
+        console.log("error = ", error);
+      }, 2000);
+    }
+  };
+
+  useEffect(() => {}, [error]);
+
   return (
     <Modal
       {...props}
-      size="md"
+      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       backdrop="static"
       keyboard={false}
@@ -44,6 +78,7 @@ export function CreateNewCampaign(props: any) {
               aria-label="Close"
             />
           </Stack>
+          {error && <MessageBox variant="danger">{error}</MessageBox>}
           <Stack pl="20" pr="20">
             <Stack align="center">
               <Text fontSize="xl" fontWeight="semibold" color="#000000">
@@ -58,8 +93,9 @@ export function CreateNewCampaign(props: any) {
                   id="share"
                   size="lg"
                   py="1"
+                  value={props.campaignName}
                   onChange={props.setCampaignName}
-                  onKeyPress={(e) => handleAddCampaignName(e)}
+                  // onKeyPress={(e) => handleAddCampaignName(e, false)}
                 />
               </InputGroup>
             </FormControl>
@@ -86,6 +122,14 @@ export function CreateNewCampaign(props: any) {
               <Text type="Button">Diwali divas campiagn</Text>
               <Text type="Button">Diwali divas campiagn</Text>
             </Stack>
+            <Flex gap={4}>
+              <Button p="3" onClick={handleCreateCampaignThroughImages}>
+                Create campaign through Images
+              </Button>
+              <Button p="3" onClick={handleCreateCampaignThroughVideo}>
+                Create campaign through Video
+              </Button>
+            </Flex>
           </Stack>
         </Box>
       </Modal.Body>
