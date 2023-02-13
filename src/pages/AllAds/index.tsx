@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -13,7 +12,6 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-// import { IoSearchCircleSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -22,9 +20,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
 
-// import rectangle from "../../assets/image/Rectangle86.png";
 import { AtvertiseBox } from "components/common/AtvertiseBox";
-import { motion } from "framer-motion";
 import { ContactUs } from "components/common";
 import { getPinJson } from "Actions/pinActions";
 import { MyMap } from "pages/MyMap";
@@ -33,7 +29,6 @@ import { IoSearchOutline } from "react-icons/io5";
 
 export function AllAds() {
   const navigate = useNavigate();
-  const MotionFlex = motion(Flex);
   const [count, setCount] = useState(1);
   const jsonPins = useSelector((state: any) => state.jsonPins);
   const { loading: loadingAllPins, error: errorAllPins, jsonData } = jsonPins;

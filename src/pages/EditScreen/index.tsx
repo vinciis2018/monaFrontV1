@@ -33,7 +33,6 @@ import { SCREEN_UPDATE_RESET } from "../../Constants/screenConstants";
 import { PIN_UPDATE_RESET } from "../../Constants/pinConstants";
 import { getScreenCalender } from "../../Actions/calendarActions";
 
-// import { getMyNfts } from "api/hooks/useArtist";
 import MessageBox from "components/atoms/MessageBox";
 import HLoading from "components/atoms/HLoading";
 import { useNavigate } from "react-router-dom";
@@ -320,8 +319,10 @@ export const EditScreen = (props: any) => {
   };
   return (
     <Box pl="20" pr="20" pt="20">
-      {loadingScreen || loadingPin || loading ? (
-        <HLoading loading={loadingScreen || loadingPin || loading} />
+      {loadingScreen || loadingUser || loadingPin || loading ? (
+        <HLoading
+          loading={loadingScreen || loadingPin || loading || errorUser}
+        />
       ) : errorScreen || pinError ? (
         <MessageBox message={errorScreen || pinError}></MessageBox>
       ) : (

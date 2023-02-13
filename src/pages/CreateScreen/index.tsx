@@ -50,7 +50,7 @@ export const CreateScreen = () => {
   const [location, setLocation] = useState<any>(null);
 
   const handleAddTags = (event: any) => {
-    if (event.which == 13) {
+    if (event.which === 13) {
       setTags([...tags, tag]);
       setTag("");
     }
@@ -340,6 +340,7 @@ export const CreateScreen = () => {
               <HStack justifyContent="flex-end" pr="30" pb="30" pt="30">
                 <Button
                   variant="outline"
+                  setLocation
                   color="#515151"
                   bgColor="#FAFAFA"
                   fontSize="sm"

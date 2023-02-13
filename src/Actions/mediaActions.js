@@ -165,20 +165,20 @@ export const generateVideoFromImages =
       width,
       height,
     });
-    console.log("generateVideoFromImages called!");
+    // console.log("generateVideoFromImages called!");
     try {
       const { data } = await Axios.post(
         // `${process.env.REACT_APP_BLINDS_SERVER}/api/media/createVideoFromImages`,
         `https://img2vdo.herokuapp.com/i2v`,
         { images, duration, width, height }
       );
-      console.log("generateVideoFromImages called!", data);
+      // console.log("generateVideoFromImages called!", data);
       dispatch({
         type: GENERATE_VIDEO_FROM_IMAGES_SUCCESS,
         payload: data,
       });
     } catch (error) {
-      console.log("generateVideoFromImages called error!", error);
+      // console.log("generateVideoFromImages called error!", error);
       const message =
         error.response && error.response.data.message
           ? error.response.data.message

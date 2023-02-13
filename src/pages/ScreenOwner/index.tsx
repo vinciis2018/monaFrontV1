@@ -10,27 +10,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { SCREEN_CREATE_RESET } from "../../Constants/screenConstants";
 import Axios from "axios";
 import HLoading from "components/atoms/HLoading";
-import { getScreenCalender } from "Actions/calendarActions";
+import { userScreensList } from "Actions/userActions";
 
 export function ScreenOwner() {
   const navigate = useNavigate();
-  const listOfScreen = [
-    { name: "Screen1", id: "6396f6922665b32d1193eeb9" },
-    { name: "Screen2", id: "6396e3322665b32d119364ee" },
-    { name: "Screen3", id: "6395aac32665b32d119226c0" },
-    { name: "Screen4", id: "6395aa0a2665b32d1192260a" },
-  ];
   const [selectedScreen, setSelectedScreen] = useState<any>(null);
   const [dashboard, setDashboard] = useState<any>(true);
   const [histoty, setHistory] = useState<any>(false);
   const [actions, setActions] = useState<any>(false);
-  const data = { features: [] };
   const [videosList, setVideosList] = useState<any>([]);
   const [videosListError, setVideosListError] = useState<any>([]);
   const [videoLoading, setVideoLoading] = useState<any>(true);
   const [screen, setScreen] = useState<any>(null);
   const [screenLoading, setScreenLoading] = useState<any>(true);
   const [screenError, setScreenError] = useState<any>(null);
+  const [selectedScreenIndex, setSelectedScreenIndex] = useState<any>(0);
+
+  console.log("screenLoading : ", screenLoading);
+  console.log("videoLoading : ", videoLoading);
 
   const getVideoList = async (screenId: any) => {
     try {
@@ -63,6 +60,11 @@ export function ScreenOwner() {
       );
     }
   };
+  const userSignin = useSelector((state: any) => state.userSignin);
+  const { userInfo } = userSignin;
+  const userScreens = useSelector((state: any) => state.userScreens);
+  const { loading: loadingScreens, error: errorScreens, screens } = userScreens;
+  //console.log("screens : ", JSON.stringify(screens));
 
   const screenCreate = useSelector((state: any) => state.screenCreate);
   const {
@@ -71,13 +73,6 @@ export function ScreenOwner() {
     success: successCreate,
     screen: createdScreen,
   } = screenCreate;
-  const screenCalender = useSelector((state: any) => state.screenCalender);
-  const {
-    loading: loadingScreenCalender,
-    error: errorScreenCalender,
-    calender,
-  } = screenCalender;
-  // console.log("calender : ", JSON.stringify(calender));
 
   const dispatch = useDispatch<any>();
 
@@ -104,23 +99,31 @@ export function ScreenOwner() {
     setVideoLoading(true);
     setScreenLoading(true);
     getScreentDetail(screenId);
-    dispatch(getScreenCalender(screenId));
   };
 
   useEffect(() => {
+    if (userInfo && !userInfo.defaultWallet) {
+      navigate("/welcome");
+    } else if (!userInfo) {
+      navigate("/signin");
+    }
     if (successCreate) {
       dispatch({ type: SCREEN_CREATE_RESET });
       navigate(`/edit-screen/${createdScreen._id}`);
     }
-    setSelectedScreen(listOfScreen[0].id);
-    getScreentDetail(listOfScreen[0].id);
-    dispatch(getScreenCalender(listOfScreen[0].id));
-  }, [successCreate, dispatch]);
+    console.log("screens : ", screens);
+    if (screens.length > 0) {
+      setSelectedScreen(screens[0]._id);
+      getScreentDetail(screens[0]._id);
+    } else {
+      dispatch(userScreensList(userInfo));
+    }
+  }, [successCreate, dispatch, screenLoading, videoLoading]);
 
   return (
     <Box pl="20" pr="20">
-      {screenLoading || videoLoading ? (
-        <HLoading loading={screenLoading || videoLoading} />
+      {screenLoading || videoLoading || loadingScreens ? (
+        <HLoading loading={screenLoading || videoLoading || loadingScreens} />
       ) : (
         <Flex>
           <Stack p="5" bgColor="#FEFEFE" width="15%" boxShadow="2xl">
@@ -145,7 +148,7 @@ export function ScreenOwner() {
               + New Screen
             </Button>
             <Stack pt="10">
-              {listOfScreen.map((eachScreen, index) => (
+              {screens.map((eachScreen: any, index: any) => (
                 <Text
                   fontSize="sm"
                   fontWeight="regular"
@@ -154,10 +157,12 @@ export function ScreenOwner() {
                   align="left"
                   p="3"
                   borderRadius="8px"
+                  bg={index === selectedScreenIndex ? "#0EBCF5" : ""}
                   type="Button"
                   _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#674780" }}
                   onClick={(e) => {
-                    handleSelectScreen(eachScreen.id);
+                    setSelectedScreenIndex(index);
+                    handleSelectScreen(eachScreen._id);
                   }}
                 >
                   {eachScreen.name}
@@ -223,8 +228,10 @@ export function ScreenOwner() {
                   fontWeight="semibold"
                   color="#333333"
                   pl="5"
+                  type="Button"
+                  onClick={() => navigate(`/edit-screen/${selectedScreen}`)}
                 >
-                  Settings
+                  edit
                 </Text>
               </Stack>
             </Stack>

@@ -39,11 +39,6 @@ export function EmailVerificationModal(props: any) {
   const [userName, setName] = useState<any>("abc");
   const [emailErrorStatus, setEmailErrorStatus] = useState<any>(false);
   const [emailError, setEmailError] = useState<any>("");
-  //http://localhost:3000/create-reset-password/vishalkumar70522@gmail.com
-
-  const clientId =
-    "829203424949-dkctdksnijr38djuoa2mm3i7m1b979ih.apps.googleusercontent.com";
-
   const redirect = props?.location?.search.split("=")[1]
     ? props?.location?.search.split("=")[1]
     : "/welcome";
@@ -79,7 +74,7 @@ export function EmailVerificationModal(props: any) {
     }
     const initClient = () => {
       gapi.client.init({
-        clientId: clientId,
+        clientId: process.env.GOOGLE_CLIENT_ID,
         scope: "",
       });
     };
@@ -211,7 +206,7 @@ export function EmailVerificationModal(props: any) {
                     mt="2"
                   >
                     <GoogleLogin
-                      clientId={clientId}
+                      clientId={`${process.env.GOOGLE_CLIENT_ID}`}
                       buttonText="Log In with Google"
                       render={(renderProps) => (
                         <Box

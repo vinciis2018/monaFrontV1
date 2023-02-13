@@ -58,7 +58,7 @@ export function AllScreens() {
     }
     dispatch(listScreens({ pageNumber }));
     dispatch(getPinJson());
-  }, [dispatch, navigate, userInfo]);
+  }, [dispatch, navigate, userInfo, pageNumber]);
 
   return (
     <Box
@@ -156,7 +156,7 @@ export function AllScreens() {
 
               <SimpleGrid columns={[1, 2, 3]} spacing="4">
                 {screens.map((eachScreen: any) => (
-                  <Screen eachScreen={eachScreen} />
+                  <Screen eachScreen={eachScreen} key={eachScreen._id} />
                 ))}
               </SimpleGrid>
 

@@ -1,6 +1,10 @@
 import { Box, Stack, Image, Text, Button, SimpleGrid } from "@chakra-ui/react";
-import React from "react";
+import { getMyMedia } from "Actions/mediaActions";
+import HLoading from "components/atoms/HLoading";
+import MessageBox from "components/atoms/MessageBox";
+import React, { useEffect, useState } from "react";
 import { RiFileUploadLine } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
 
 export function UserProfile() {
   const collection = [
@@ -35,6 +39,19 @@ export function UserProfile() {
         "https://bafybeige5wxbqyb6vdftdgxssja6dloplrv26pv4b7ctxhoz35uxz6sg2e.ipfs.w3s.link/coca%20cola.png",
     },
   ];
+  const [allMedia, setMyMedias] = useState<any>([]);
+  const userSignin = useSelector((state: any) => state.userSignin);
+  const { userInfo } = userSignin;
+  //console.log("userInfo 423432423", JSON.stringify(userInfo));
+  const myMedia = useSelector((state: any) => state.myMedia);
+  const { loading: loadingMyMedia, error: errorMyMedia, medias } = myMedia;
+  const dispatch = useDispatch<any>();
+  useEffect(() => {
+    if (medias) {
+      setMyMedias(medias);
+    }
+    dispatch(getMyMedia());
+  }, [dispatch, allMedia]);
   return (
     <Box pt="10">
       <Box
@@ -47,14 +64,15 @@ export function UserProfile() {
         backgroundSize="cover"
         position="relative"
       >
-        <Box pt="200" width="20%" height="" pl="20">
+        <Box pt="200" width="30%" height="" pl="20">
           <Stack bgColor="#FEFEFE" p="5" boxShadow="2xl">
             <Stack align="center" pt="5">
               <Image
                 alt="user Image"
                 borderRadius="full"
                 boxSize="150px"
-                src="https://bafybeifp4ffz7qj5fhfeejtnuofbke77rh5tsqxctbnsxxg4uzko6yxwhq.ipfs.w3s.link/userprofile.png"
+                //src="https://bafybeifp4ffz7qj5fhfeejtnuofbke77rh5tsqxctbnsxxg4uzko6yxwhq.ipfs.w3s.link/userprofile.png"
+                src={userInfo.avatar}
               ></Image>
             </Stack>
             <Stack>
@@ -64,16 +82,16 @@ export function UserProfile() {
                 fontWeight="semibold"
                 align="left"
               >
-                Brand Name
+                {userInfo.name}
               </Text>
               <Text color="#593FFC" fontSize="lg" align="left">
-                tanirika.das@aim.org
+                {userInfo.email}
               </Text>
               <Text color="#313131" fontSize="lg" align="left">
-                +91-8638235341
+                +91-{userInfo.phone}
               </Text>
               <Text color="#747474" fontSize="lg" align="left">
-                Lakshadweep, Pincode-676491
+                {`${userInfo.districtCity}, Pincode-${userInfo.pincode}`}
               </Text>
             </Stack>
             <Stack align="cetner" justifyContent="center" pt="10">
@@ -119,17 +137,29 @@ export function UserProfile() {
           </Text>
         </Stack>
         <Stack pt="5">
-          <SimpleGrid columns={[1, null, 2]} spacing={10}>
-            {collection.map((eachCollection: any) => (
-              <Stack key={eachCollection._id}>
-                <Image
-                  src={eachCollection.image}
-                  alt={eachCollection.image}
-                  width="100%"
-                ></Image>
-              </Stack>
-            ))}
-          </SimpleGrid>
+          {allMedia.length === 0 ? (
+            <Text color="#3A3A3A" fontSize="xl" align="left">
+              Upload your first collection
+            </Text>
+          ) : null}
+
+          {loadingMyMedia ? (
+            <HLoading loading={loadingMyMedia} />
+          ) : errorMyMedia ? (
+            <MessageBox variant="danger">{errorMyMedia}</MessageBox>
+          ) : (
+            <SimpleGrid columns={[1, null, 2]} spacing={10}>
+              {allMedia.map((media: any) => (
+                <Stack key={media._id}>
+                  <Image
+                    src={`https://ipfs.io/ipfs/${media.cid}`}
+                    alt="media"
+                    width="100%"
+                  ></Image>
+                </Stack>
+              ))}
+            </SimpleGrid>
+          )}
         </Stack>
       </Box>
     </Box>

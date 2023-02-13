@@ -1,20 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
 import {
   Box,
   Image,
-
-  // Center,
   Stack,
-  // SimpleGrid,
   Text,
   Button,
   IconButton,
   Flex,
 } from "@chakra-ui/react";
-// IoIosCloseCircleOutline
-// import {IoIosCloseCircleOutline }from "react-icons/io"
 import emailImage from "../../../assets/emailImg.jpg";
 
 import { AiOutlineCloseCircle } from "react-icons/ai";
@@ -26,7 +20,6 @@ import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
 
 export function ReSendEmail(props: any) {
-  // const navigate = useNavigate();
   const redirect = props?.location?.search.split("=")[1]
     ? props?.location?.search.split("=")[1]
     : "/welcome";
@@ -37,10 +30,6 @@ export function ReSendEmail(props: any) {
   const dispatch = useDispatch<any>();
   const submitHandler = async (e: any) => {
     e.preventDefault();
-
-    // dispatch(signup(props.email, password));
-    // alert("user created, please create a wallet to proceed");
-    // navigate("/welcome");
   };
 
   useEffect(() => {
@@ -52,7 +41,6 @@ export function ReSendEmail(props: any) {
 
   return (
     <Box p="10%" pl="25%" width="100%">
-      {/* <Text p="4" textAlign="center" fontSize="2xl" fontWeight="1000">KEEP CALM AND WATCH ADS AS NEVER BEFORE</Text> */}
       <Flex direction="row" columns={[1, 2]}>
         <Box
           direction="column"

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export function DashBoard(props: any) {
   const { screen, videosList } = props;
-  // console.log("selct screen id 1212: ", screen._id);
+  //console.log("selct screen id 1212: ", JSON.stringify(screen));
 
   const data = { features: [] };
   useEffect(() => {}, [props]);

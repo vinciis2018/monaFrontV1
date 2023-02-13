@@ -59,13 +59,12 @@ export function ScreenDetail(props: any) {
 
   const [campaignName, setCampaignName] = useState("");
   const [fileUrl, setFileUrl] = useState<any>();
-  const [advert, setAdvert] = useState<any>();
   const [thumbnailUrl, setThumbnailUrl] = useState<any>();
   const [loading, setLoading] = useState<any>(false);
   const [images, setImages] = useState<any>([]);
   const { addFile } = useIpfs();
   //console.log("Type of data buffer ----: ", typeof fileUrl, fileUrl);
-
+  console.log("screeen :::::::::::::", JSON.stringify(screen));
   const countEachRating = {
     5: 0,
     4: 0,
@@ -84,7 +83,7 @@ export function ScreenDetail(props: any) {
   } = videoUpload;
   const videoFromImages = useSelector((state: any) => state.videoFromImages);
   const { loading: loadingVideo, error: errorVideo, video } = videoFromImages;
-  console.log("videoFromImages : 331311-----", video);
+  //console.log("videoFromImages : 331311-----", video);
 
   const myMedia = useSelector((state: any) => state.myMedia);
   const { loading: loadingMyMedia, error: errorMyMedia, medias } = myMedia;
@@ -295,7 +294,7 @@ export function ScreenDetail(props: any) {
                   align="left"
                   mr="5"
                 >
-                  {screen.ratting || 4.5}
+                  {screen.rating}
                 </Text>
                 <BsDot size="16px" color="#403F49" />
                 <Text color="#666666" fontWeight="semibold" align="left">
@@ -331,7 +330,11 @@ export function ScreenDetail(props: any) {
                   align="left"
                   pl="2"
                 >
-                  ₹250 per slot
+                  ₹
+                  {screen.rentPerSlot - screen.rentOffInPercent
+                    ? (screen.rentPerSlot * 100) / screen.rentOffInPercent
+                    : 0}{" "}
+                  per slot
                 </Text>
                 <Text
                   pl="1"
@@ -340,7 +343,7 @@ export function ScreenDetail(props: any) {
                   fontWeight="semibold"
                   align="left"
                 >
-                  ( 50% OFF)
+                  ( {screen.rentOffInPercent}% OFF)
                 </Text>
               </Flex>
               <SimpleGrid gap="4" columns={[3, 2]} pt="5">

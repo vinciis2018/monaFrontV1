@@ -7,9 +7,7 @@ import {
   FormControl,
   FormLabel,
   Input,
-  // Center,
   Stack,
-  // SimpleGrid,
   Text,
   Button,
   IconButton,
@@ -35,13 +33,10 @@ export function EmailVerification(props: any) {
 
   const [email, setEmail] = useState("");
   const [userName, setName] = useState("abc");
-  const clientId =
-    "829203424949-dkctdksnijr38djuoa2mm3i7m1b979ih.apps.googleusercontent.com";
-
   const redirect = props?.location?.search.split("=")[1]
     ? props?.location?.search.split("=")[1]
     : "/welcome";
-
+  // console.log("process.env.GOOGLE_CLIENT_ID : ", process.env.GOOGLE_CLIENT_ID);
   const submitHandler = async (e: any) => {
     e.preventDefault();
     dispatch(signup(userName, email, ""));
@@ -64,7 +59,7 @@ export function EmailVerification(props: any) {
     }
     const initClient = () => {
       gapi.client.init({
-        clientId: clientId,
+        clientId: process.env.GOOGLE_CLIENT_ID,
         scope: "",
       });
     };
@@ -174,7 +169,7 @@ export function EmailVerification(props: any) {
               mt="2"
             >
               <GoogleLogin
-                clientId={clientId}
+                clientId={`${process.env.GOOGLE_CLIENT_ID}`}
                 buttonText="Log In with Google"
                 render={(renderProps) => (
                   <Stack

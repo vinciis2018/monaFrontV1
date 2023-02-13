@@ -15,7 +15,7 @@ export function CampaignListOfUser() {
     error: errorMyVideos,
     videos: myVideos,
   } = userVideos;
-  console.log("myvideo : ", JSON.stringify(myVideos));
+  //console.log("myvideo : ", JSON.stringify(myVideos));
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch<any>();
@@ -29,7 +29,7 @@ export function CampaignListOfUser() {
     } else {
       dispatch(userVideosList(userInfo));
     }
-  }, [navigate]);
+  }, [navigate, dispatch]);
 
   return (
     <Box p="20" pt="20">
@@ -37,18 +37,6 @@ export function CampaignListOfUser() {
         <Text color="#000000" fontSize="2xl" fontWeight="semibold" pt="5">
           My Campaign
         </Text>
-        {/* <Select
-          height="36px"
-          variant="outline"
-          borderColor="#797979"
-          color="#403F49"
-          fontSize="sm"
-          width="15%"
-          placeholder="Status"
-        >
-          <option value="pending">Pending</option>
-          <option value="active">Active</option>
-        </Select> */}
       </Stack>
 
       <Stack pt="10" spacing={5}>

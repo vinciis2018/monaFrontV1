@@ -109,18 +109,17 @@ export function Screen(props: any) {
             </Text>
           </Flex>
           <Flex align="center" as="s">
-            <IconButton
-              bg="none"
-              icon={<BiRupee size="16px" color="#403F49" />}
-              aria-label="Star"
-            ></IconButton>
             <Text
               color="#787878"
               fontSize="xs"
               fontWeight="semibold"
               align="left"
             >
-              250/slot
+              ₹
+              {screen.rentPerSlot - screen.rentOffInPercent
+                ? (screen.rentPerSlot * 100) / screen.rentOffInPercent
+                : 0}{" "}
+              per slot
             </Text>
           </Flex>
           <Text
@@ -130,7 +129,7 @@ export function Screen(props: any) {
             fontWeight="semibold"
             align="left"
           >
-            ( 50% OFF)
+            ( {screen.rentOffInPercent}% OFF)
           </Text>
         </Flex>
         {/* Address */}

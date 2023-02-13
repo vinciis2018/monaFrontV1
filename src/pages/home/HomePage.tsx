@@ -29,6 +29,7 @@ import { motion } from "framer-motion";
 export function HomePage() {
   const navigate = useNavigate();
   const MotionFlex = motion(Flex);
+  const [topThreeVideos, setTopThreevideo] = useState<any>([]);
 
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
@@ -37,13 +38,14 @@ export function HomePage() {
   const { loading: loadingScreens, error: errorScreens, screens } = screenList;
 
   const videoListAll = useSelector((state: any) => state.videoListAll);
-  const [topThreeVideos, setTopThreevideo] = useState<any>([]);
+  //console.log("topThreeVideo : ", JSON.stringify(topThreeVideos[0]));
 
   const {
     loading: loadingVideos,
     error: errorVideos,
     allVideos,
   } = videoListAll;
+  //console.log("allVideos : ", allVideos);
 
   const dispatch = useDispatch<any>();
   React.useEffect(() => {
@@ -57,6 +59,7 @@ export function HomePage() {
         allVideos.length - 3,
         allVideos.length
       );
+      //console.log("sdsd", topThreeVideos);
       setTopThreevideo(topThreeVideos);
     }
     dispatch(listAllVideos());
@@ -252,6 +255,8 @@ export function HomePage() {
                 fontWeight="semibold"
                 mt="20"
                 mb="20"
+                as={RouterLink}
+                to={`/allads`}
               >
                 See All
               </Button>

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
 import {
   Box,
   Image,
@@ -11,10 +10,7 @@ import {
   Flex,
   SimpleGrid,
 } from "@chakra-ui/react";
-// IoIosCloseCircleOutline
-// import {IoIosCloseCircleOutline }from "react-icons/io"
 import emailImage from "../../../assets/email.png";
-
 import { Modal } from "react-bootstrap";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import mylogo from "../../../assets/mylogo.png";

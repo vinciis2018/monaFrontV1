@@ -210,7 +210,7 @@ export const NavBar = () => {
                     size="20px"
                     fontWeight="1"
                     color="#403F49"
-                    onClick={() => navigate("/userProfile1")}
+                    onClick={() => navigate("/userprofile")}
                   />
                 </Stack>
               </Box>

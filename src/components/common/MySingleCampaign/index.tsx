@@ -28,7 +28,7 @@ export function MySingleCampaign(props: any) {
   useEffect(() => {
     dispatch(detailsScreen(screenId));
     dispatch(getScreenCalender(screenId));
-  }, []);
+  }, [dispatch]);
 
   return (
     <Box boxShadow="2xl" p="5">

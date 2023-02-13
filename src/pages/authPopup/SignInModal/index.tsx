@@ -52,7 +52,6 @@ export function SignInModal(props: any) {
   const [emailErrorStatus, setEmailErrorStatus] = useState<any>(false);
   const [emailError, setEmailError] = useState<any>("");
   const [passwordErrorStatus, setPasswordErrorStatus] = useState<any>(false);
-  const [passwordError, setPasswordError] = useState<any>("");
 
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo, loading, error } = userSignin;

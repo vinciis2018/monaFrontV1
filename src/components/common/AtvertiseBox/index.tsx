@@ -1,5 +1,4 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
 import { Box, Stack, Image, Text } from "@chakra-ui/react";
 
 export function AtvertiseBox(props: any) {
@@ -13,10 +12,6 @@ export function AtvertiseBox(props: any) {
       borderRadius="lg"
       boxShadow="2xl"
       key={video._id}
-      as={RouterLink}
-      to={`/advert/${video._id}/${video?.video?.split("/").slice(-1)[0]}/${
-        video.video
-      }`}
     >
       <Box p="2" height={{ height: 50, lg: "200px" }}>
         <Image
@@ -44,7 +39,8 @@ export function AtvertiseBox(props: any) {
           fontWeight="600 "
           align="left"
         >
-          Location : Lanka, Varanasi, India
+          Location :{" "}
+          {`${video.districtCity}, ${video.stateUT}, ${video.country}`}
         </Text>
       </Stack>
     </Box>

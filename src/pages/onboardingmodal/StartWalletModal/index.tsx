@@ -47,11 +47,7 @@ export function StartWalletModal(props: any) {
           dispatch(createWallet(defWallet));
         }
         if (userInfo?.defaultWallet !== defWallet) {
-          dispatch(
-            editWallet({
-              defWallet,
-            })
-          );
+          dispatch(editWallet({ walletAdd: getArweavePublicAddress() }));
         }
         navigate("/view-secrate-key");
       } else {
