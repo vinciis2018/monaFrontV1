@@ -49,9 +49,9 @@ export function UploadThumbnail(props: any) {
     setIsUploading(false);
   }
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: any) => {
     props.onHide();
-    props.videoUploadHandler();
+    props.videoUploadHandler(e);
   };
 
   return (

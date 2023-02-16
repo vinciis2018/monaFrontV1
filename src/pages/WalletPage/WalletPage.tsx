@@ -121,7 +121,7 @@ export function WalletPage(props: any) {
         keyboard={false}
       >
         <Modal.Body className="popup">
-          <Box bgGradient="linear(to-t, #fffad9, #ffffff)" p="5">
+          <Box p="5">
             <FormControl id="amount" p="5">
               <FormLabel fontSize="xs">Enter Amount</FormLabel>
               <Stack direction="column" align="left">

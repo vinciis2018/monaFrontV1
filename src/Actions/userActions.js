@@ -255,11 +255,17 @@ export const userScreensList = (user) => async (dispatch, getState) => {
       userSignin: { userInfo },
     } = getState();
     if (userInfo) {
+      var startTime = performance.now();
       const { data } = await Axios.get(
         `${process.env.REACT_APP_BLINDS_SERVER}/api/users/${user._id}/${user.defaultWallet}/myScreens`,
         {
           headers: { Authorization: "Bearer " + userInfo.token },
         }
+      );
+      console.log("userScreensList : ", JSON.stringify(data));
+      var endTime = performance.now();
+      console.log(
+        `Call to doSomething took ${endTime - startTime} milliseconds`
       );
       dispatch({ type: USER_SCREENS_SUCCESS, payload: data });
     } else {

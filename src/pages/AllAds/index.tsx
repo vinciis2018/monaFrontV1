@@ -63,7 +63,6 @@ export function AllAds() {
     <Box
       color="black.500"
       align="center"
-      bgGradient={["linear-gradient(to right, #FFFDE9, #FFFFFF)"]}
       py="20"
       // border="1px solid black"
     >
@@ -111,7 +110,7 @@ export function AllAds() {
             <Flex align="center" justifyContent="center">
               <Button
                 width="250px"
-                p="7"
+                p="3"
                 variant="outline"
                 borderColor="black"
                 color="#D7380E"

@@ -78,7 +78,7 @@ export function CreateAndResetPassword(props: any) {
       centered
     >
       <Modal.Body className="popup">
-        <Box bgGradient="linear(to-t, #fffad9, #ffffff)">
+        <Box>
           <SimpleGrid columns={[1, 2]} gap="0">
             <Stack width="90%" bgColor="rgba(244, 86, 0, 0.3)">
               {/* backgroundImage={rectangle} backgroundPosition="center" backgroundRepeat="no-repeat" */}
@@ -112,7 +112,7 @@ export function CreateAndResetPassword(props: any) {
                 />
               </Stack>
             </Stack>
-            <Stack width="100%" bgGradient="linear(to-t, #fffad9, #ffffff)">
+            <Stack width="100%">
               <Stack p="2" align="end" justifyContent="flex-end" mt="0">
                 <IconButton
                   bg="none"
@@ -231,7 +231,6 @@ export function CreateAndResetPassword(props: any) {
                 <Stack p="1" pt="2" align="center" mt="2">
                   <Button
                     width="100%"
-                    //   bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
                     bgColor="#D7380E"
                     size="md"
                     type="submit"

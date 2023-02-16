@@ -100,7 +100,6 @@ export function ReportModal({ isOpen, onClose, nftId, nftTitle }: Props) {
             <FormControl id="attachments" mt="2">
               <Stack direction="row" align="center" spacing="0">
                 <FormLabel
-                  bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
                   m="0 6px 0 0"
                   p="2"
                   textAlign="center"

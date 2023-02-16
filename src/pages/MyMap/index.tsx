@@ -42,30 +42,31 @@ export function MyMap(props: any) {
         onMove={(e) => setViewState(e.viewState)}
         onDblClick={(e) => props?.setLocation(e)}
       >
-        {listOfScreens?.features.map((singleData: any) => (
-          <Marker
-            key={singleData.properties.pin}
-            latitude={singleData.geometry.coordinates[0]}
-            longitude={singleData.geometry.coordinates[1]}
-          >
-            <Button
-              borderRadius="100px"
-              bgColor="#D7380E"
-              width="40px"
-              height="40px"
-              align="center"
-              onClick={(e) => {
-                getSingleScreenData(
-                  e,
-                  singleData.properties.screen,
-                  singleData
-                );
-              }}
+        {listOfScreens &&
+          listOfScreens?.features.map((singleData: any) => (
+            <Marker
+              key={singleData.properties.pin}
+              latitude={singleData.geometry.coordinates[0]}
+              longitude={singleData.geometry.coordinates[1]}
             >
-              <FiMapPin size="30px" color="" />
-            </Button>
-          </Marker>
-        ))}
+              <Button
+                borderRadius="100px"
+                bgColor="#D7380E"
+                width="40px"
+                height="40px"
+                align="center"
+                onClick={(e) => {
+                  getSingleScreenData(
+                    e,
+                    singleData.properties.screen,
+                    singleData
+                  );
+                }}
+              >
+                <FiMapPin size="30px" color="" />
+              </Button>
+            </Marker>
+          ))}
         {viewSingleScreen && screenData ? (
           <Popup
             className="map"
@@ -81,9 +82,6 @@ export function MyMap(props: any) {
               width="307px"
               height="390px"
               borderRadius="15px"
-              // bgGradient={[
-              //   "linear-gradient(156.06deg, rgba(255, 255, 255, 0.4) -1.7%, rgba(255, 255, 255, 0.6) 102.25%)",
-              // ]}
               bgGradient={[
                 "linear-gradient(156.06deg, rgba(255, 255, 255) -1.7%, rgba(255, 255, 255) 102.25%)",
               ]}

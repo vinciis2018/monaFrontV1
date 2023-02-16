@@ -37,7 +37,7 @@ import { uploadMedia } from "Actions/mediaActions";
 import { UplaodCampaignThroughImage } from "./UplaodCampaignThroughImage";
 
 export function ScreenDetail(props: any) {
-  const screenid = window.location.pathname.split("/")[2];
+  const screenId = window.location.pathname.split("/")[2];
 
   const navigate = useNavigate();
   const [screen, setScreen] = useState<any>(null);
@@ -162,7 +162,7 @@ export function ScreenDetail(props: any) {
     } else if (!userInfo) {
       navigate("/signin");
     }
-    getScreentDetail(screenid);
+    getScreentDetail(screenId);
     dispatch(getMyMedia());
     if (video) {
       console.log("video : 331311", video);
@@ -190,7 +190,7 @@ export function ScreenDetail(props: any) {
         addFile(thumbnailUrl).then(({ cid }) => {
           const strCid = cid.toString();
           dispatch(
-            uploadVideo(screenid, {
+            uploadVideo(screenId, {
               advert: `https://ipfs.io/ipfs/${videoCid}`,
               title: campaignName,
               thumbnail: `https://ipfs.io/ipfs/${strCid}`,
@@ -221,9 +221,12 @@ export function ScreenDetail(props: any) {
     //dispatch(generateVideoFromImages(images, duration, width, height));
     dispatch(generateVideoFromImages(images, 10, 1280, 720));
   };
-
+  if (successVideoSave) {
+    alert("Video uploaded success full");
+    navigate(`/carts/${screenId}/${uploadedVideo._id}`);
+  }
   return (
-    <Box>
+    <Box pt="10">
       <CreateNewCampaign
         show={campaignModal}
         onHide={() => setCampaignModal(false)}
@@ -492,7 +495,7 @@ export function ScreenDetail(props: any) {
             <Flex align="center" justifyContent="center">
               <Button
                 width="250px"
-                p="7"
+                p="3"
                 variant="outline"
                 borderColor="black"
                 color="#D7380E"
@@ -619,11 +622,11 @@ export function ScreenDetail(props: any) {
                 Rate your screen
               </Text>
               <Flex pt="5">
-                <GiRoundStar size="20px" color="#0EBCF5" />
-                <GiRoundStar size="20px" color="#0EBCF5" />
-                <GiRoundStar size="20px" color="#0EBCF5" />
-                <GiRoundStar size="20px" color="#E2E2E2" />
-                <GiRoundStar size="20px" color="#E2E2E2" />
+                <GiRoundStar size="30px" color="#0EBCF5" />
+                <GiRoundStar size="30px" color="#0EBCF5" />
+                <GiRoundStar size="30px" color="#0EBCF5" />
+                <GiRoundStar size="30px" color="#E2E2E2" />
+                <GiRoundStar size="30px" color="#E2E2E2" />
               </Flex>
               <Text
                 fontSize="xl"

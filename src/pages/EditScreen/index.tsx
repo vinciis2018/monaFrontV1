@@ -23,15 +23,8 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 import { BsClock } from "react-icons/bs";
-import {
-  detailsScreen,
-  getScreenPinDetails,
-  updateScreen,
-} from "../../Actions/screenActions";
-import { updatePin, getPinDetails } from "../../Actions/pinActions";
+import { detailsScreen, updateScreen } from "../../Actions/screenActions";
 import { SCREEN_UPDATE_RESET } from "../../Constants/screenConstants";
-import { PIN_UPDATE_RESET } from "../../Constants/pinConstants";
-import { getScreenCalender } from "../../Actions/calendarActions";
 
 import MessageBox from "components/atoms/MessageBox";
 import HLoading from "components/atoms/HLoading";
@@ -39,10 +32,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useIpfs } from "components/contexts";
 import { getFileData } from "services/utils";
+import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 
 const steps = [
-  { label: "Location" },
   { label: "Schedule" },
+  { label: "Payment" },
+  { label: "Location" },
   { label: "Screen highlights" },
 ];
 
@@ -60,6 +55,8 @@ export const EditScreen = (props: any) => {
   );
 
   const navigate = useNavigate();
+
+  const screenSizeUnit = ["CM", "M", "Ft", "Inch"];
   const [tag, setTag] = useState<any>("");
   const [highlight, setHighLight] = useState<any>("");
   const [screenHighlights, setHighLights] = useState<any>([]);
@@ -77,6 +74,19 @@ export const EditScreen = (props: any) => {
     setScreenImage(fileThumbnail);
     setIsUploading(false);
   }
+  const [screenSizeUnitIndex, setScreenSizeUnitIndex] = useState<any>(0);
+  const hancleSelectSizeTypeUp = () => {
+    if (screenSizeUnitIndex < screenSizeUnit.length - 1) {
+      setScreenSizeUnitIndex(screenSizeUnitIndex + 1);
+      setMeasurementUnit(screenSizeUnit[screenSizeUnitIndex]);
+    }
+  };
+  const hancleSelectSizeTypeDown = () => {
+    if (screenSizeUnitIndex > 0) {
+      setScreenSizeUnitIndex(screenSizeUnitIndex - 1);
+      setMeasurementUnit(screenSizeUnit[screenSizeUnitIndex]);
+    }
+  };
 
   const [name, setName] = useState<any>("");
   const [rentPerSlot, setRentPerSlot] = useState<any>("");
@@ -96,6 +106,7 @@ export const EditScreen = (props: any) => {
   const [measurementUnit, setMeasurementUnit] = useState<any>("ft");
   const [geometry, setGeometry] = useState<any>();
   const [jsonData, setJsonData] = useState<any>(null);
+  const [size, setSize] = useState<any>({});
 
   const [lng, setLng] = useState<number | undefined>(25.52);
   const [lat, setLat] = useState<number | undefined>(82.33);
@@ -112,23 +123,7 @@ export const EditScreen = (props: any) => {
   const { loading: loadingScreen, error: errorScreen, screen } = screenDetails;
   // console.log("screen : ", JSON.stringify(screen));
   // console.log("screenCategory: ", screenCategory);
-  const screenCalender = useSelector((state: any) => state.screenCalender);
-  const {
-    loading: loadingScreenCalender,
-    error: errorScreenCalender,
-    calender,
-  } = screenCalender;
-
   // console.log("calender : ", JSON.stringify(calender));
-
-  const screenPinDetails = useSelector((state: any) => state.screenPinDetails);
-  const {
-    loading: loadingScreenPin,
-    error: errorScreenPin,
-    screenPin,
-  } = screenPinDetails;
-  // console.log("screenPin : ", JSON.stringify(screenPin));
-
   const pinDetails = useSelector((state: any) => state.pinDetails);
   const { loading: loadingPin, error: pinError, pin } = pinDetails;
 
@@ -138,13 +133,6 @@ export const EditScreen = (props: any) => {
     error: errorUpdate,
     success: successUpdate,
   } = screenUpdate;
-
-  const pinUpdate = useSelector((state: any) => state.pinUpdate);
-  const {
-    loading: loadingPinUpdate,
-    error: errorPinUpdate,
-    success: successPinUpdate,
-  } = pinUpdate;
 
   const redirect = props?.location?.search
     ? props?.location?.search.split("=")[1]
@@ -157,7 +145,6 @@ export const EditScreen = (props: any) => {
         type: SCREEN_UPDATE_RESET,
       });
       dispatch(detailsScreen(screenId));
-      dispatch(getScreenPinDetails(screenId));
     } else {
       setName(screen.name);
       setRentPerSlot(screen.rentPerSlot);
@@ -176,20 +163,10 @@ export const EditScreen = (props: any) => {
       setScreenWidth(screen.size.width);
       setMeasurementUnit(screen.size.measurementUnit);
       setHighLights(screen.screenHighlights);
-    }
-    if (calender) {
-      setStartTime(calender.startTime);
-      setEndTime(calender.endTime);
-    }
-    if (!screenPin || successPinUpdate) {
-      dispatch({
-        type: PIN_UPDATE_RESET,
-      });
-      dispatch(getScreenPinDetails(screenId));
-    } else {
-      setLng(screenPin.lng);
-      setLat(screenPin.lat);
-      dispatch(getPinDetails(screenPin._id));
+      setStartTime(screen.startTime);
+      setEndTime(screen.endTime);
+      setLng(screen.lng);
+      setLat(screen.lat);
       setGeometry({
         geometry: {
           coordinates: [lng, lat],
@@ -200,37 +177,51 @@ export const EditScreen = (props: any) => {
       setJsonData(pin);
     }
 
-    if (successPinUpdate) {
-      window.alert("Screen Pin Updated successfully");
-    }
-
     if (!userInfo) {
       navigate("/signin");
     }
-
-    dispatch(getScreenCalender(screenId));
-  }, [
-    dispatch,
-    userInfo,
-    screenId,
-    successUpdate,
-    screenPin,
-    navigate,
-    redirect,
-    screen,
-  ]);
+  }, [dispatch, userInfo, successUpdate, navigate, redirect, screen]);
 
   const submitScreenHandler = (e: any) => {
     setLoading(true);
-    addFile(fileUrl).then(({ cid }) => {
-      const strCid = cid.toString();
-      // console.log("strcid : ", strCid);
+    if (fileUrl) {
+      addFile(fileUrl).then(({ cid }) => {
+        const strCid = cid.toString();
+        // console.log("strcid : ", strCid);
+        dispatch(
+          updateScreen({
+            _id: screenId,
+            name,
+            rentPerSlot,
+            image: `https://ipfs.io/ipfs/${strCid}`,
+            screenCategory,
+            screenType,
+            screenWorth,
+            slotsTimePeriod,
+            description,
+            screenAddress,
+            districtCity,
+            stateUT,
+            country,
+            screenTags,
+            screenHighlights,
+            screenLength,
+            measurementUnit,
+            screenWidth,
+            startTime,
+            endTime,
+            lng,
+            lat,
+          })
+        );
+      });
+    } else {
       dispatch(
         updateScreen({
           _id: screenId,
           name,
           rentPerSlot,
-          image: `https://ipfs.io/ipfs/${strCid}`,
+          image,
           screenCategory,
           screenType,
           screenWorth,
@@ -247,15 +238,11 @@ export const EditScreen = (props: any) => {
           screenWidth,
           startTime,
           endTime,
+          lng,
+          lat,
         })
       );
-    });
-    dispatch(
-      updatePin(screenId, {
-        lng: lng,
-        lat: lat,
-      })
-    );
+    }
     setLoading(false);
   };
 
@@ -319,12 +306,10 @@ export const EditScreen = (props: any) => {
   };
   return (
     <Box pl="20" pr="20" pt="20">
-      {loadingScreen || loadingUser || loadingPin || loading ? (
-        <HLoading
-          loading={loadingScreen || loadingPin || loading || errorUser}
-        />
-      ) : errorScreen || pinError ? (
-        <MessageBox message={errorScreen || pinError}></MessageBox>
+      {loadingScreen ? (
+        <HLoading loading={loadingScreen} />
+      ) : errorScreen ? (
+        <MessageBox message={errorScreen}></MessageBox>
       ) : (
         <Box>
           <Stack p="10" boxShadow="2xl" borderRadius="lg">
@@ -362,16 +347,7 @@ export const EditScreen = (props: any) => {
             </Flex>
           </Stack>
           {activeStep === 0 ? (
-            <Stack boxShadow="2xl" p="5" borderRadius="lg" spacing="5">
-              <Text
-                pt="10"
-                fontSize="lg"
-                fontWeight="semibold"
-                color="#383838"
-                align="left"
-              >
-                Add new screen
-              </Text>
+            <Stack boxShadow="2xl" p="5" borderRadius="lg" spacing="5" pt="10">
               <HStack>
                 <VStack fontSize="sm" spacing="2" width="30%" align="left">
                   <Text color="#393939" fontWeight="semibold" align="left">
@@ -406,28 +382,28 @@ export const EditScreen = (props: any) => {
                 </VStack>
                 <Button
                   variant="outline"
-                  color={screenCategory == "Indoors" ? "#4C4C4C" : "#515151"}
-                  bgColor={screenCategory == "Indoors" ? "#D6FFFF" : "#FAFAFA"}
+                  color={screenCategory == "InDoors" ? "#4C4C4C" : "#515151"}
+                  bgColor={screenCategory == "InDoors" ? "#D6FFFF" : "#FAFAFA"}
                   fontSize="sm"
                   p="4"
                   _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
-                  onClick={() => setScreenCategory("Indoor")}
+                  onClick={() => setScreenCategory("InDoors")}
                 >
                   Indoors
                 </Button>
                 <Stack pl="10">
                   <Button
                     variant="outline"
-                    color={screenCategory == "Outdores" ? "#4C4C4C" : "#515151"}
+                    color={screenCategory == "OutDoors" ? "#4C4C4C" : "#515151"}
                     bgColor={
-                      screenCategory == "Outdores" ? "#D6FFFF" : "#FAFAFA"
+                      screenCategory == "OutDoors" ? "#D6FFFF" : "#FAFAFA"
                     }
                     fontSize="sm"
                     p="4"
                     _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
-                    onClick={() => setScreenCategory("OutDore")}
+                    onClick={() => setScreenCategory("OutDoors")}
                   >
-                    Outdores
+                    Outdoors
                   </Button>
                 </Stack>
                 <Stack pl="10">
@@ -531,6 +507,23 @@ export const EditScreen = (props: any) => {
                   </FormControl>
                 </Flex>
               </HStack>
+              <HStack justifyContent="flex-end" pr="30" pb="30">
+                <Button
+                  variant="outline"
+                  color="#515151"
+                  bgColor="#FAFAFA"
+                  fontSize="sm"
+                  p="4"
+                  borderColor="#0EBCF5"
+                  _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#674780" }}
+                  onClick={nextStep}
+                >
+                  Save & next
+                </Button>
+              </HStack>
+            </Stack>
+          ) : activeStep === 1 ? (
+            <Stack boxShadow="2xl" p="5" borderRadius="lg" spacing="5" pt="10">
               <HStack>
                 <VStack fontSize="sm" spacing="2" width="30%" align="left">
                   <Text color="#393939" fontWeight="semibold" align="left">
@@ -555,6 +548,83 @@ export const EditScreen = (props: any) => {
                   />
                 </InputGroup>
               </HStack>
+              <HStack>
+                <VStack fontSize="sm" spacing="2" width="30%" align="left">
+                  <Text color="#393939" fontWeight="semibold" align="left">
+                    Screen dimentions
+                  </Text>
+                  <Text color="#4D4D4D" align="left">
+                    Enter your screen dimensions
+                  </Text>
+                </VStack>
+                <InputGroup size="lg" width="10%">
+                  <HStack spacing="3">
+                    <Input
+                      placeholder="Width"
+                      size="lg"
+                      fontSize="md"
+                      borderRadius="md"
+                      border="1px"
+                      color="#555555"
+                      py="2"
+                      type="number"
+                      value={screenWidth}
+                      onChange={(e) => setScreenWidth(e.target.value)}
+                    />
+                    <Input
+                      placeholder="Hight"
+                      size="lg"
+                      fontSize="md"
+                      borderRadius="md"
+                      border="1px"
+                      color="#555555"
+                      py="2"
+                      type="number"
+                      value={screenLength}
+                      onChange={(e) => setScreenLength(e.target.value)}
+                    />
+                    <VStack>
+                      <BiUpArrow
+                        color="#555555"
+                        size="16px"
+                        onClick={hancleSelectSizeTypeUp}
+                      />
+                      <Text color="#555555" fontSize="sm" fontWeight="bold">
+                        {measurementUnit}
+                      </Text>
+                      <BiDownArrow
+                        color="#555555"
+                        size="16px"
+                        onClick={hancleSelectSizeTypeDown}
+                      />
+                    </VStack>
+                  </HStack>
+                </InputGroup>
+              </HStack>
+              <HStack>
+                <VStack fontSize="sm" spacing="2" width="30%" align="left">
+                  <Text color="#393939" fontWeight="semibold" align="left">
+                    Enter price for slot
+                  </Text>
+                  <Text color="#4D4D4D" align="left">
+                    Enter price for each slot
+                  </Text>
+                </VStack>
+                <InputGroup size="lg" width="10%">
+                  <Input
+                    placeholder="20 Second"
+                    size="lg"
+                    fontSize="md"
+                    borderRadius="md"
+                    border="1px"
+                    color="#555555"
+                    py="2"
+                    type="number"
+                    value={rentPerSlot}
+                    onChange={(e) => setRentPerSlot(e.target.value)}
+                  />
+                </InputGroup>
+              </HStack>
               <HStack justifyContent="flex-end" pr="30" pb="30">
                 <Button
                   variant="outline"
@@ -570,7 +640,7 @@ export const EditScreen = (props: any) => {
                 </Button>
               </HStack>
             </Stack>
-          ) : activeStep === 1 ? (
+          ) : activeStep === 2 ? (
             <Stack boxShadow="2xl" borderRadius="lg" pt="3">
               <Stack direction="row">
                 <VStack
@@ -697,7 +767,7 @@ export const EditScreen = (props: any) => {
                 </Box>
               </Stack>
             </Stack>
-          ) : activeStep === 2 ? (
+          ) : activeStep === 3 ? (
             <Stack boxShadow="2xl" borderRadius="lg" pt="3" p="5">
               <Flex align="center" pt="10">
                 <AiOutlineArrowLeft

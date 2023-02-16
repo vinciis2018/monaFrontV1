@@ -129,7 +129,6 @@ export function ReSendEmail(props: any) {
             <Stack p="1" pt="2" align="center" mt="2">
               <Button
                 width="50%"
-                //   bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
                 bgColor="#D7380E"
                 size="md"
                 type="submit"

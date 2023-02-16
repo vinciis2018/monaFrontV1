@@ -20,7 +20,7 @@ import { AiOutlineYoutube } from "react-icons/ai";
 
 export function FooterPage() {
   return (
-    <Box pt="10">
+    <Box pt="20">
       <Flex pl="20" pr="20">
         <Box width="50%">
           <Stack as={RouterLink} to="/" direction="row" align="center">

@@ -20,9 +20,9 @@ export function ScreenOwner() {
   const [actions, setActions] = useState<any>(false);
   const [videosList, setVideosList] = useState<any>([]);
   const [videosListError, setVideosListError] = useState<any>([]);
-  const [videoLoading, setVideoLoading] = useState<any>(true);
+  const [videoLoading, setVideoLoading] = useState<any>(false);
   const [screen, setScreen] = useState<any>(null);
-  const [screenLoading, setScreenLoading] = useState<any>(true);
+  const [screenLoading, setScreenLoading] = useState<any>(false);
   const [screenError, setScreenError] = useState<any>(null);
   const [selectedScreenIndex, setSelectedScreenIndex] = useState<any>(0);
 
@@ -31,11 +31,20 @@ export function ScreenOwner() {
 
   const getVideoList = async (screenId: any) => {
     try {
+      var startTime = performance.now();
+
       const { data } = await Axios.get(
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}/screenVideos`
       );
+      console.log("videos  : ", JSON.stringify(data));
       setVideosList(data);
       setVideoLoading(false);
+      var endTime = performance.now();
+      console.log(
+        `Call to doSomething took getVideoList ${
+          endTime - startTime
+        } milliseconds`
+      );
     } catch (error: any) {
       setVideosListError(
         error.response && error.response.data.message
@@ -46,12 +55,19 @@ export function ScreenOwner() {
   };
   const getScreentDetail = async (screenId: any) => {
     try {
+      var startTime = performance.now();
       const { data } = await Axios.get(
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}`
       );
       setScreen(data);
       getVideoList(screenId);
       setScreenLoading(false);
+      var endTime = performance.now();
+      console.log(
+        `Call to doSomething took getScreentDetail ${
+          endTime - startTime
+        } milliseconds`
+      );
     } catch (error: any) {
       setScreenError(
         error.response && error.response.data.message
@@ -64,7 +80,7 @@ export function ScreenOwner() {
   const { userInfo } = userSignin;
   const userScreens = useSelector((state: any) => state.userScreens);
   const { loading: loadingScreens, error: errorScreens, screens } = userScreens;
-  //console.log("screens : ", JSON.stringify(screens));
+  //console.log("screens 333 : ", JSON.stringify(screens));
 
   const screenCreate = useSelector((state: any) => state.screenCreate);
   const {
@@ -94,7 +110,9 @@ export function ScreenOwner() {
   const handleCreateScree = () => {
     dispatch(createScreen());
   };
-  const handleSelectScreen = (screenId: any) => {
+  const handleSelectScreen = (screenId: any, index: any) => {
+    //console.log("handleSelectScreen : ", screenId);
+    setSelectedScreenIndex(index);
     setSelectedScreen(screenId);
     setVideoLoading(true);
     setScreenLoading(true);
@@ -113,140 +131,143 @@ export function ScreenOwner() {
     }
     console.log("screens : ", screens);
     if (screens.length > 0) {
+      setVideoLoading(true);
+      setScreenLoading(true);
       setSelectedScreen(screens[0]._id);
       getScreentDetail(screens[0]._id);
     } else {
       dispatch(userScreensList(userInfo));
     }
-  }, [successCreate, dispatch, screenLoading, videoLoading]);
+  }, [successCreate, dispatch]);
 
   return (
-    <Box pl="20" pr="20">
-      {screenLoading || videoLoading || loadingScreens ? (
-        <HLoading loading={screenLoading || videoLoading || loadingScreens} />
-      ) : (
-        <Flex>
-          <Stack p="5" bgColor="#FEFEFE" width="15%" boxShadow="2xl">
-            <Text
-              fontSize="lg"
-              fontWeight="semibold"
-              color="#000000"
-              align="left"
-              pt="20"
-            >
-              All Screen
-            </Text>
-            <Button
-              color="#000000"
-              fontSize="sm"
-              boxShadow="2xl"
-              align="center"
-              variant="outline"
-              p="3"
-              onClick={handleCreateScree}
-            >
-              + New Screen
-            </Button>
-            <Stack pt="10">
-              {screens.map((eachScreen: any, index: any) => (
-                <Text
-                  fontSize="sm"
-                  fontWeight="regular"
-                  key={index + 1}
-                  color="#403F49"
-                  align="left"
-                  p="3"
-                  borderRadius="8px"
-                  bg={index === selectedScreenIndex ? "#0EBCF5" : ""}
-                  type="Button"
-                  _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#674780" }}
-                  onClick={(e) => {
-                    setSelectedScreenIndex(index);
-                    handleSelectScreen(eachScreen._id);
-                  }}
-                >
-                  {eachScreen.name}
-                </Text>
-              ))}
-            </Stack>
-          </Stack>
-          <Stack p="5" width="100%">
-            <Stack direction="row" justifyContent="space-around" pt="20">
-              <Stack
-                direction="row"
-                borderRadius="48px"
+    <Box pt="10">
+      <Box pl="20" pr="20">
+        {screenLoading || videoLoading || loadingScreens ? (
+          <HLoading loading={screenLoading || videoLoading || loadingScreens} />
+        ) : (
+          <Flex>
+            <Stack p="5" bgColor="#FEFEFE" width="15%" boxShadow="2xl">
+              <Text
+                fontSize="lg"
+                fontWeight="semibold"
+                color="#000000"
+                align="left"
+                pt="20"
+              >
+                All Screen
+              </Text>
+              <Button
+                color="#000000"
+                fontSize="sm"
                 boxShadow="2xl"
                 align="center"
+                variant="outline"
+                p="3"
+                onClick={handleCreateScree}
               >
-                <Button
-                  variant="outline"
-                  fontSize="sm"
-                  fontWeight={dashboard ? "semibold" : "normal"}
-                  color={dashboard ? "#000000" : "#333333"}
-                  borderColor={dashboard ? "#0EBCF5" : ""}
-                  border={dashboard ? "1px" : ""}
-                  borderRadius="48px"
-                  bgColor="#FBFBFB"
-                  p="3"
-                  onClick={handleDashboardClick}
-                >
-                  DashBoard
-                </Button>
-                <Button
-                  variant="outline"
-                  fontSize="sm"
-                  fontWeight={histoty ? "semibold" : "normal"}
-                  color={histoty ? "#000000" : "#333333"}
-                  borderColor={histoty ? "#0EBCF5" : ""}
-                  border={histoty ? "1px" : ""}
-                  borderRadius="48px"
-                  bgColor="#FBFBFB"
-                  p="3"
-                  onClick={handleHistoryClick}
-                >
-                  History
-                </Button>
-                <Button
-                  variant="outline"
-                  fontSize="sm"
-                  fontWeight={actions ? "semibold" : "normal"}
-                  color={actions ? "#000000" : "#333333"}
-                  borderColor={actions ? "#0EBCF5" : ""}
-                  border={actions ? "1px" : ""}
-                  borderRadius="48px"
-                  bgColor="#FBFBFB"
-                  p="3"
-                  onClick={handleActionClick}
-                >
-                  Actions
-                </Button>
-              </Stack>
-              <Stack direction="row" justifyContent="flex-end" align="center">
-                <FiSettings size="20px" color="#333333" />
-                <Text
-                  fontSize="sm"
-                  fontWeight="semibold"
-                  color="#333333"
-                  pl="5"
-                  type="Button"
-                  onClick={() => navigate(`/edit-screen/${selectedScreen}`)}
-                >
-                  edit
-                </Text>
+                + New Screen
+              </Button>
+              <Stack pt="10">
+                {screens.map((eachScreen: any, index: any) => (
+                  <Text
+                    fontSize="sm"
+                    fontWeight="regular"
+                    key={index + 1}
+                    color="#403F49"
+                    align="left"
+                    p="3"
+                    borderRadius="8px"
+                    bg={index === selectedScreenIndex ? "#0EBCF5" : ""}
+                    type="Button"
+                    _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#674780" }}
+                    onClick={() => {
+                      handleSelectScreen(eachScreen._id, index);
+                    }}
+                  >
+                    {eachScreen.name}
+                  </Text>
+                ))}
               </Stack>
             </Stack>
-            <Box>
-              {dashboard && selectedScreen ? (
-                <DashBoard screen={screen} videosList={videosList} />
-              ) : histoty ? (
-                <History screen={screen} videosList={videosList} />
-              ) : actions ? (
-                <Actions screen={screen} videosList={videosList} />
-              ) : null}
-            </Box>
-          </Stack>
-        </Flex>
-      )}
+            <Stack p="5" width="100%">
+              <Stack direction="row" justifyContent="space-around" pt="20">
+                <Stack
+                  direction="row"
+                  borderRadius="48px"
+                  boxShadow="2xl"
+                  align="center"
+                >
+                  <Button
+                    variant="outline"
+                    fontSize="sm"
+                    fontWeight={dashboard ? "semibold" : "normal"}
+                    color={dashboard ? "#000000" : "#333333"}
+                    borderColor={dashboard ? "#0EBCF5" : ""}
+                    border={dashboard ? "1px" : ""}
+                    borderRadius="48px"
+                    bgColor="#FBFBFB"
+                    p="3"
+                    onClick={handleDashboardClick}
+                  >
+                    DashBoard
+                  </Button>
+                  <Button
+                    variant="outline"
+                    fontSize="sm"
+                    fontWeight={histoty ? "semibold" : "normal"}
+                    color={histoty ? "#000000" : "#333333"}
+                    borderColor={histoty ? "#0EBCF5" : ""}
+                    border={histoty ? "1px" : ""}
+                    borderRadius="48px"
+                    bgColor="#FBFBFB"
+                    p="3"
+                    onClick={handleHistoryClick}
+                  >
+                    History
+                  </Button>
+                  <Button
+                    variant="outline"
+                    fontSize="sm"
+                    fontWeight={actions ? "semibold" : "normal"}
+                    color={actions ? "#000000" : "#333333"}
+                    borderColor={actions ? "#0EBCF5" : ""}
+                    border={actions ? "1px" : ""}
+                    borderRadius="48px"
+                    bgColor="#FBFBFB"
+                    p="3"
+                    onClick={handleActionClick}
+                  >
+                    Actions
+                  </Button>
+                </Stack>
+                <Stack direction="row" justifyContent="flex-end" align="center">
+                  <FiSettings size="20px" color="#333333" />
+                  <Text
+                    fontSize="sm"
+                    fontWeight="semibold"
+                    color="#333333"
+                    pl="5"
+                    type="Button"
+                    onClick={() => navigate(`/edit-screen/${selectedScreen}`)}
+                  >
+                    edit
+                  </Text>
+                </Stack>
+              </Stack>
+              <Box>
+                {dashboard && selectedScreen ? (
+                  <DashBoard screen={screen} videosList={videosList} />
+                ) : histoty ? (
+                  <History screen={screen} videosList={videosList} />
+                ) : actions ? (
+                  <Actions screen={screen} videosList={videosList} />
+                ) : null}
+              </Box>
+            </Stack>
+          </Flex>
+        )}
+      </Box>
     </Box>
   );
 }

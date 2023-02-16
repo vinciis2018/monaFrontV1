@@ -28,11 +28,20 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 import { BsCalendar2Date } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { bookSlot } from "Actions/calendarActions";
 
 export function CartAndSummary(props: any) {
   const [startTime, setStartTime] = useState<any>();
   const [endTime, setEndTime] = useState<any>();
   const [sliderValue, setSliderValue] = useState(50);
+  const [Campaign, setCampaignName] = useState("");
+  const screenId = "63c93d23c1d5101a28da535d";
+  const videoId = "63b3e7bb8eb1e1983f0cde64";
+  const slotId = "63b3e7bb8eb1e1983f0cde64";
+  const [dateHere, setDateHere] = React.useState<any>(new Date());
+  const [slotBooked, setSlotBooked] = useState<any>(true);
+
   const handleEndTime = (value: any) => {
     // let time = value.toString().split(" "); // Wed Jan 04 2023 08:22:28 GMT+0530
     // time = time[4];
@@ -42,8 +51,32 @@ export function CartAndSummary(props: any) {
   const handleStartTime = (value: any) => {
     // let time = value.toString().split(" "); // Wed Jan 04 2023 08:22:28 GMT+0530
     // time = time[4];
-    setStartTime(value);
+    setDateHere(value);
   };
+  const slotBooking = useSelector((state: any) => state.slotBooking);
+  const {
+    loading: loadingSlotBooking,
+    error: errorSlotBooking,
+    success: successSlotBooking,
+    bookedSlot,
+  } = slotBooking;
+  console.log("bookedSlot : ", JSON.stringify(bookedSlot));
+  const dispatch = useDispatch<any>();
+  const slotBookingHandler = () => {
+    window.alert("Confirm Booking slot");
+    dispatch(
+      bookSlot(screenId, slotId, {
+        dateHere,
+        slotBooked,
+        video: {
+          _id: videoId,
+        },
+      })
+    );
+  };
+  if (successSlotBooking) {
+    window.alert("slot booked successfully");
+  }
   return (
     <Box p="20" pt="20">
       <Stack>
@@ -106,6 +139,7 @@ export function CartAndSummary(props: any) {
                       size="lg"
                       color="#888888"
                       placeholder="Puma snicks"
+                      onChange={(e) => setCampaignName(e.target.value)}
                     />
                     <Stack align="center" justifyContent="center" width="40%">
                       <Text
@@ -220,8 +254,8 @@ export function CartAndSummary(props: any) {
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <DatePicker
                           inputVariant="outlined"
-                          value={endTime}
-                          onChange={handleEndTime}
+                          value={startTime}
+                          onChange={handleStartTime}
                           InputProps={{
                             endAdornment: (
                               <InputAdornment position="start">
@@ -318,32 +352,25 @@ export function CartAndSummary(props: any) {
               <Flex justifyContent="space-between" pt="3">
                 <Stack pt="5" width="70%">
                   <Slider
-                    defaultValue={60}
-                    min={0}
-                    max={300}
-                    step={1}
-                    aria-label="slider-ex-1"
-                    size="xl"
+                    aria-label="slider-ex-6"
                     onChange={(val) => setSliderValue(val)}
                   >
                     <SliderMark
                       value={sliderValue}
                       textAlign="center"
-                      bg="#0EBCF5"
+                      bg="blue.500"
                       color="white"
-                      mt="-7"
+                      mt="-30"
                       ml="-5"
-                      pr="5"
-                      fontSize="xs"
-                      borderRadius="sm"
+                      w="12"
+                      p="1"
                     >
                       {sliderValue}
                     </SliderMark>
-                    <SliderTrack bg="#D6D6D6">
-                      <Box position="relative" right={10} />
-                      <SliderFilledTrack bg="#0EBCF5" />
+                    <SliderTrack>
+                      <SliderFilledTrack />
                     </SliderTrack>
-                    <SliderThumb boxSize={6} />
+                    <SliderThumb />
                   </Slider>
                 </Stack>
                 <Stack pr="5">
@@ -437,6 +464,7 @@ export function CartAndSummary(props: any) {
                 fontWeight="semibold"
                 bgColor="#D7380E"
                 p="3"
+                onClick={slotBookingHandler}
               >
                 Proceed to pay
               </Button>

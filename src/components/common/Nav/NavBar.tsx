@@ -39,7 +39,6 @@ import { signout } from "../../../Actions/userActions";
 export const NavBar = () => {
   const navigate = useNavigate();
   const style = {
-    bgColor: "#FFFDE9",
     borderTop: "1px solid #E7E7E7",
     textAlign: "center",
     position: "fixed",

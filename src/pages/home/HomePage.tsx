@@ -90,13 +90,7 @@ export function HomePage() {
   ];
 
   return (
-    <Box
-      color="black.500"
-      align="center"
-      bgGradient={["linear-gradient(to right, #FFFDE9, #FFFFFF)"]}
-      py="20"
-      // border="1px solid black"
-    >
+    <Box color="black.500" align="center" py="20">
       <Center px="10">
         {loadingScreens || loadingVideos ? (
           <HLoading loading={loadingScreens || loadingVideos} />
@@ -215,7 +209,7 @@ export function HomePage() {
             <Flex align="center" justifyContent="center">
               <Button
                 width="250px"
-                p="7"
+                p="3"
                 variant="outline"
                 borderColor="black"
                 color="#D7380E"
@@ -247,7 +241,7 @@ export function HomePage() {
             <Flex align="center" justifyContent="center">
               <Button
                 width="250px"
-                p="7"
+                p="3"
                 variant="outline"
                 borderColor="black"
                 color="#D7380E"
