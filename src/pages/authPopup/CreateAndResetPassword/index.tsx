@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
@@ -33,7 +33,6 @@ import MessageBox from "components/atoms/MessageBox";
 
 export function CreateAndResetPassword(props: any) {
   const navigate = useNavigate();
-  const [email, setEmail] = useState<any>("");
   const [password, setPassword] = useState<any>("");
   const [confirmPassword, setConfirmPassword] = useState<any>("");
   const [showPassword, setShowPassword] = useState<any>(false);
@@ -60,12 +59,6 @@ export function CreateAndResetPassword(props: any) {
       navigate("/signin");
     }
   };
-
-  useEffect(() => {
-    if (userInfo) {
-      props?.history?.push(redirect);
-    }
-  }, [dispatch, props?.history, redirect, userInfo]);
 
   return (
     <Modal
@@ -118,7 +111,7 @@ export function CreateAndResetPassword(props: any) {
                   bg="none"
                   icon={
                     <AiOutlineCloseCircle
-                      size="lg"
+                      size="30px"
                       color="gray"
                       onClick={props.onHide}
                     />
@@ -128,7 +121,7 @@ export function CreateAndResetPassword(props: any) {
               </Stack>
               <Stack pr="10">
                 <Text
-                  p="0"
+                  p="1`  "
                   fontSize="20"
                   textAlign="left"
                   fontWeight="600"
@@ -157,6 +150,7 @@ export function CreateAndResetPassword(props: any) {
                     <InputGroup size="md">
                       <Input
                         id="password"
+                        py="3"
                         onChange={(e) => setPassword(e?.target?.value)}
                         type={showPassword ? "text" : "password"}
                         placeholder="Password"
@@ -166,6 +160,7 @@ export function CreateAndResetPassword(props: any) {
                       <InputRightElement width="4.5rem">
                         {showPassword ? (
                           <IconButton
+                            pt="2"
                             bg="none"
                             onClick={handleShowPassword}
                             icon={<AiOutlineEye size="20px" color="black" />}
@@ -195,6 +190,7 @@ export function CreateAndResetPassword(props: any) {
                   <Stack direction="row" align="center">
                     <InputGroup size="md">
                       <Input
+                        py="3"
                         id="confirmPassword"
                         onChange={(e) => setConfirmPassword(e?.target?.value)}
                         value={confirmPassword}
@@ -230,6 +226,7 @@ export function CreateAndResetPassword(props: any) {
 
                 <Stack p="1" pt="2" align="center" mt="2">
                   <Button
+                    py="3"
                     width="100%"
                     bgColor="#D7380E"
                     size="md"

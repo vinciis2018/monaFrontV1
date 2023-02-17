@@ -26,10 +26,9 @@ import logo from "../../../assets/logo.png";
 import name from "../../../assets/name.png";
 import { signup, signout } from "../../../Actions/userActions";
 import HLoading from "components/atoms/HLoading";
-import MessageBox from "components/atoms/MessageBox";
 import { ReSendEmailModal } from "../ResendEmailModal";
 
-export function EmailVerificationModal(props: any) {
+export function EmailVerificationForForgetPasswordModal(props: any) {
   const navigate = useNavigate();
   const dispatch = useDispatch<any>();
   const userSignup = useSelector((state: any) => state.userSignup);
@@ -152,10 +151,9 @@ export function EmailVerificationModal(props: any) {
                     fontWeight="600"
                     color="#333333"
                   >
-                    Create your account and start building your brand!
+                    Forget password
                   </Text>
                   {loading && <HLoading loading={loading} />}
-                  {error && <MessageBox variant="danger">{error}</MessageBox>}
                   <FormControl id="email" mt="10" isInvalid={emailErrorStatus}>
                     <FormLabel fontSize="xs" mt="2">
                       Enter Email

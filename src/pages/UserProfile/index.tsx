@@ -7,38 +7,6 @@ import { RiFileUploadLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 
 export function UserProfile() {
-  const collection = [
-    {
-      _id: "1",
-      image:
-        "https://bafybeid7zb5iw4oy7jvj7emoenrdrhmsfhh5smph3ce4u5ew4oayaw5uje.ipfs.w3s.link/pepsi.png",
-    },
-    {
-      _id: "2",
-      image:
-        "https://bafybeic5qx24cqwvytaoqovdz2l2n4uzbff3f7ugkljqs5ekg3rz2c6ine.ipfs.w3s.link/fesbook.png",
-    },
-    {
-      _id: "3",
-      image:
-        "https://bafybeihcaruado32uog3nagvxoilh6vnglbair4kqgrkplybkgddbcebpe.ipfs.w3s.link/magdonal.png",
-    },
-    {
-      _id: "4",
-      image:
-        "https://bafybeiakotdgoccefe6vify2x2wpv3qfqz4abquq4jqmnm5357q2aulbsm.ipfs.w3s.link/flower.png",
-    },
-    {
-      _id: "5",
-      image:
-        "https://bafybeigo2yio7yigraerutye74lossybforxvlpr2uosisf3yxbgrbkuvy.ipfs.w3s.link/girlAds.png",
-    },
-    {
-      _id: "6",
-      image:
-        "https://bafybeige5wxbqyb6vdftdgxssja6dloplrv26pv4b7ctxhoz35uxz6sg2e.ipfs.w3s.link/coca%20cola.png",
-    },
-  ];
   const [allMedia, setMyMedias] = useState<any>([]);
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
@@ -53,7 +21,7 @@ export function UserProfile() {
     dispatch(getMyMedia());
   }, [dispatch, allMedia]);
   return (
-    <Box pt="10">
+    <Box pt="20">
       <Box
         width="100%"
         height="350px"
@@ -65,7 +33,7 @@ export function UserProfile() {
         position="relative"
       >
         <Box pt="200" width="30%" height="" pl="20">
-          <Stack bgColor="#FEFEFE" p="5" boxShadow="2xl">
+          <Stack bgColor="#FEFEFE" p="5" boxShadow="2xl" position="relative">
             <Stack align="center" pt="5">
               <Image
                 alt="user Image"
@@ -94,7 +62,7 @@ export function UserProfile() {
                 {`${userInfo.districtCity}, Pincode-${userInfo.pincode}`}
               </Text>
             </Stack>
-            <Stack align="cetner" justifyContent="center" pt="10">
+            <Stack align="cetner" justifyContent="center" pt="5">
               <Button
                 color="#FFFFFF"
                 fontSize="xl"
@@ -106,7 +74,7 @@ export function UserProfile() {
                 Edit profile
               </Button>
             </Stack>
-            <Stack align="cetner" justifyContent="center" pt="10">
+            <Stack align="cetner" justifyContent="center" pt="5">
               <Button
                 color="#313131"
                 fontSize="xl"

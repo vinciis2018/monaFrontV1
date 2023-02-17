@@ -9,15 +9,15 @@ import {
   Box,
   Text,
   Stack,
+  HStack,
   Center,
   Flex,
-  IconButton,
   FormControl,
   FormLabel,
   Button,
   Input,
 } from "@chakra-ui/react";
-import { BsArrowUpRightCircle, BsArrowDownLeftCircle } from "react-icons/bs";
+import { BsArrowDownLeft, BsArrowUpRight } from "react-icons/bs";
 import { Modal } from "react-bootstrap";
 import { BiWalletAlt } from "react-icons/bi";
 import HLoading from "components/atoms/HLoading";
@@ -35,6 +35,7 @@ export function WalletPage(props: any) {
   const [paymentReceiptModalShow, setPaymentReceiptModalShow] = useState(false);
   const [selectedTranjection, setSelectedTranjection] = useState<any>();
   const [amount, setAmount] = useState(0);
+  const [selectValue, setSelectedValue] = useState<any>("All");
 
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
@@ -98,6 +99,10 @@ export function WalletPage(props: any) {
     dispatch(getWalletDataAction());
     dispatch(getTranjectionDataAction());
   }, [dispatch, navigate, userInfo]);
+
+  const handleSelect = (value: any) => {
+    setSelectedValue(value);
+  };
 
   return (
     <Box px="2" pt="20" color="black.500">
@@ -202,70 +207,75 @@ export function WalletPage(props: any) {
                       Wallet address : {Object.keys(walletData.balances)[0]}
                     </Text>
                   </Stack>
-                  <Flex mt="10" color="#313131" fontSize="14px">
-                    <Stack>
-                      <IconButton
-                        bg="none"
-                        icon={
-                          <BsArrowUpRightCircle
-                            size="40px"
-                            fontWeight="10"
-                            color="#575757"
-                            onClick={props.onHide}
-                          />
-                        }
-                        aria-label="Send Money"
-                        onClick={() => navigate("/send-money")}
-                      />
-                      <Text>Send</Text>
-                    </Stack>
-                    <Stack ml="10">
-                      <IconButton
-                        bg="none"
-                        icon={
-                          <BsArrowDownLeftCircle
-                            size="40px"
-                            fontWeight="10"
-                            color="#575757"
-                            onClick={props.onHide}
-                          />
-                        }
-                        aria-label="Send Money"
-                        onClick={() => navigate("/request-money")}
-                      />
-                      <Text>Receive</Text>
-                    </Stack>
-                    <Stack ml="10" align="center">
-                      <Box
-                        borderRadius="100%"
-                        border="4px"
-                        height="40px"
-                        width="40px"
-                        borderColor="#575757"
-                        onClick={() => setPaymentModalShow(true)}
-                      >
-                        <IconButton
-                          bg="none"
-                          icon={
-                            <BiWalletAlt
-                              size="20px"
-                              fontWeight=""
-                              color="#575757"
-                            />
-                          }
-                          aria-label="Send Money"
+                  <HStack pt="10" spacing="10">
+                    <HStack
+                      border="1px"
+                      borderRadius="30px"
+                      p="2"
+                      align="center"
+                      boxShadow="xl"
+                      onClick={() => navigate("/send-money")}
+                    >
+                      <Stack pl="3">
+                        <BsArrowUpRight
+                          size="16px"
+                          color="#575757"
+                          onClick={() => navigate("/send-money")}
                         />
-                      </Box>
-                      <Text>Top up</Text>
-                    </Stack>
-                  </Flex>
+                      </Stack>
+
+                      <Text color="#313131" fontSize="sm" pr="3">
+                        Send
+                      </Text>
+                    </HStack>
+                    <HStack
+                      border="1px"
+                      borderRadius="30px"
+                      boxShadow="xl"
+                      p="2"
+                      align="center"
+                      onClick={() => navigate("/request-money")}
+                    >
+                      <Stack pl="3">
+                        <BsArrowDownLeft
+                          size="16px"
+                          color="#575757"
+                          onClick={() => navigate("/request-money")}
+                        />
+                      </Stack>
+
+                      <Text color="#313131" fontSize="sm" pr="3">
+                        Receive
+                      </Text>
+                    </HStack>
+                    <HStack
+                      border="1px"
+                      borderRadius="30px"
+                      p="2"
+                      align="center"
+                      boxShadow="xl"
+                      onClick={() => setPaymentModalShow(true)}
+                    >
+                      <Stack pl="3">
+                        <BiWalletAlt
+                          size="16px"
+                          color="#575757"
+                          onClick={() => navigate("/request-money")}
+                        />
+                      </Stack>
+
+                      <Text color="#313131" fontSize="sm" pr="3">
+                        Top up
+                      </Text>
+                    </HStack>
+                  </HStack>
                   <Box
                     borderBottom="1px"
                     height="0"
                     mt="5"
                     borderColor="rgba(33, 33, 33, 0.4)"
                   ></Box>
-                  <Flex>
+                  <Flex justifyContent="space-between">
                     <Text
                       fontSize="2xl"
                       // fontFamily="manrope"
@@ -273,9 +283,44 @@ export function WalletPage(props: any) {
                       p="5"
                       pl="0"
                       fontWeight="bold"
+                      align="left"
                     >
-                      Tranjection
+                      Transations
                     </Text>
+                    <HStack spacing="3">
+                      <Text
+                        fontSize="sm"
+                        color={selectValue === "All" ? "#000000" : "#8B8B8B"}
+                        p="5"
+                        pl="0"
+                        type="Button"
+                        onClick={() => handleSelect("All")}
+                      >
+                        All
+                      </Text>
+                      <Text
+                        fontSize="sm"
+                        color={selectValue === "Sent" ? "#000000" : "#8B8B8B"}
+                        p="5"
+                        pl="0"
+                        type="Button"
+                        onClick={() => handleSelect("Sent")}
+                      >
+                        Sent
+                      </Text>
+                      <Text
+                        fontSize="sm"
+                        type="Button"
+                        color={
+                          selectValue === "Received" ? "#000000" : "#8B8B8B"
+                        }
+                        p="5"
+                        pl="0"
+                        onClick={() => handleSelect("Received")}
+                      >
+                        Received
+                      </Text>
+                    </HStack>
                   </Flex>
                   <Box
                     borderBottom="1px"

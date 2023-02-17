@@ -17,7 +17,6 @@ import mylogo from "../../../assets/mylogo.png";
 import logo from "../../../assets/logo.png";
 import name from "../../../assets/name.png";
 import HLoading from "components/atoms/HLoading";
-import MessageBox from "components/atoms/MessageBox";
 import { signout, signup } from "../../../Actions/userActions";
 
 export function ReSendEmailModal(props: any) {
@@ -108,7 +107,6 @@ export function ReSendEmailModal(props: any) {
                   Verify Your Email
                 </Text>
                 <Text
-                  p="2"
                   fontSize="13"
                   textAlign="left"
                   fontWeight="10"
@@ -117,17 +115,15 @@ export function ReSendEmailModal(props: any) {
                   You will need to verify your emaill to complete registration
                 </Text>
                 {loading && <HLoading loading={loading} />}
-                {error && <MessageBox variant="danger">{error}</MessageBox>}
-                <Box align="center" justifyContent="center" p="2">
+                <Box align="center" justifyContent="center">
                   <Image
                     src={emailImage}
-                    height="100%"
-                    width="100%"
+                    height="80%"
+                    width="70%"
                     pt={{ base: "10", lg: "5" }}
                   />
                 </Box>
                 <Text
-                  p="2"
                   fontSize="13"
                   textAlign="left"
                   fontWeight="10"
@@ -136,7 +132,7 @@ export function ReSendEmailModal(props: any) {
                   To confirm your email address, tap the verify button in the
                   email we sent to abc@xyz.com
                 </Text>
-                <Stack p="1" pt="2" align="center">
+                <Stack pt="2" align="center" pb="2">
                   <Button
                     py="3"
                     width="100%"

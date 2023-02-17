@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Text, IconButton, Stack, Divider } from "@chakra-ui/react";
-import { BsArrowDown, BsArrowUp } from "react-icons/bs";
+import { Box, Text, Stack, Divider } from "@chakra-ui/react";
+import { convertIntoDateAndTime } from "utils/dateAndTime";
 
 export function TransactionDetail(props: any) {
   const { tranjection } = props;
@@ -33,38 +33,17 @@ export function TransactionDetail(props: any) {
             </Text>
           </Stack>
           <Text color="#747474" fontSize="14px">
-            {tranjection.createdAt}
+            {convertIntoDateAndTime(tranjection.createdAt)}
           </Text>
           {tranjection.method === "add" ? (
-            <IconButton
-              bg="none"
-              icon={
-                <BsArrowDown
-                  size="30px"
-                  fontWeight="10"
-                  color="#31A727"
-                  onClick={props.onHide}
-                />
-              }
-              aria-label="receive Money"
-            />
+            <Text color="#747474" fontSize="20px">
+              +{tranjection.amount}
+            </Text>
           ) : (
-            <IconButton
-              bg="none"
-              icon={
-                <BsArrowUp
-                  size="30px"
-                  fontWeight="10"
-                  color="#FF2F0C"
-                  onClick={props.onHide}
-                />
-              }
-              aria-label="Send Money"
-            />
+            <Text color="#747474" fontSize="20px">
+              -{tranjection.amount}
+            </Text>
           )}
-          <Text color="#747474" fontSize="20px">
-            {tranjection.amount}
-          </Text>
         </Stack>
         <Divider orientation="horizontal" />
       </Stack>{" "}

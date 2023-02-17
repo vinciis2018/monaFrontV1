@@ -36,10 +36,15 @@ import { FcGoogle } from "react-icons/fc";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import { EmailVerificationModal } from "pages";
+import { EmailVerificationForForgetPassword } from "pages/auth/EmailVerificationForForgetPassword";
 
 export function SignInModal(props: any) {
   const [emailVerificationShow, setEmailVerificationShow] =
     useState<any>(false);
+  const [
+    emailVerificationForForgetPassword,
+    setEmailVerificationForForgetPassword,
+  ] = useState<any>(false);
   const navigate = useNavigate();
   const btnRef = React.useRef(null);
   const clientId =
@@ -104,6 +109,10 @@ export function SignInModal(props: any) {
     props.onHide();
     navigate("/signup");
   };
+  const handleForgetPasswordModal = () => {
+    props.onHide();
+    navigate("/forgetPassword");
+  };
 
   return (
     <Box>
@@ -111,6 +120,12 @@ export function SignInModal(props: any) {
         <EmailVerificationModal
           show={emailVerificationShow}
           onHide={() => setEmailVerificationShow(false)}
+        />
+      )}
+      {emailVerificationForForgetPassword && (
+        <EmailVerificationForForgetPassword
+          show={emailVerificationForForgetPassword}
+          onHide={() => setEmailVerificationForForgetPassword(false)}
         />
       )}
       <Modal
@@ -288,7 +303,14 @@ export function SignInModal(props: any) {
                     >
                       Create account
                     </Text>
-                    <Text fontSize="xs">Forget password ?</Text>
+                    <Text
+                      fontSize="xs"
+                      type="button"
+                      onClick={handleForgetPasswordModal}
+                      ref={btnRef}
+                    >
+                      Forget password ?
+                    </Text>
                   </Stack>
                   <Text p="2" textAlign="center" fontSize="sm" width="100%">
                     ---------------- or sign in with --------------

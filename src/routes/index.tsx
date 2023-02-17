@@ -69,8 +69,10 @@ import {
   CartAndSummary,
   CampaignListOfUser,
   CustomImages,
+  CampaignDetails,
 } from "pages";
 import { FooterPage, NavBar } from "components/common";
+import { EmailVerificationForForgetPassword } from "pages/auth/EmailVerificationForForgetPassword";
 
 export const PublicRoutes = () => {
   return (
@@ -96,6 +98,11 @@ export const PublicRoutes = () => {
           path="/create-reset-password/:email"
           element={<CreateResetPassword />}
         />
+        <Route
+          path="/forgetPassword"
+          element={<EmailVerificationForForgetPassword />}
+        />
+
         <Route path="/userprofile" element={<UserProfile />} />
         <Route path="/home" element={<Navigate to="/" />} />
         <Route path="/homepage" element={<HomePage />} />
@@ -106,8 +113,8 @@ export const PublicRoutes = () => {
         <Route path="/create-screen" element={<CreateScreen />} />
         <Route path="/edit-screen/:id" element={<EditScreen />} />
         <Route path="/carts" element={<CartAndSummary />} />
-        <Route path="/campaignlist" element={<CampaignListOfUser />} />
-
+        <Route path="/myCampaignList" element={<CampaignListOfUser />} />
+        <Route path="/campaignDetails/:id" element={<CampaignDetails />} />
         <Route path="/walletpage" element={<WalletPage />} />
         <Route path="/paymentreceipt/:id" element={<PaymentReceipt />} />
         <Route path="/send-money" element={<SendMoney />} />

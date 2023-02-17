@@ -61,6 +61,7 @@ export { EditScreen } from "./EditScreen";
 
 export { CartAndSummary } from "./CartAndSummary";
 export { CampaignListOfUser } from "./CampaignListOfUser";
+export { CampaignDetails } from "./CampaignDetails";
 
 // export { MapBox } from "./map";
 // export { NFT } from "./nft";

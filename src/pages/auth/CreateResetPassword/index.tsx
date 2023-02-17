@@ -17,14 +17,8 @@ export function CreateResetPassword(props: any) {
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    if (userInfo && !userInfo.defaultWallet) {
-      navigate("/welcome");
-    } else if (!userInfo) {
-      navigate("/signin");
-    }
-    const url = window.location.pathname;
-    const email = url.split("/");
-    setEmail(email[2]);
+    const email = window.location.pathname.split("/")[2];
+    setEmail(email);
   }, [dispatch, navigate, userInfo]);
 
   return (
