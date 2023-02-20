@@ -1,6 +1,8 @@
 import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
 
+import { createCampaignReducer } from "Reducers/campaignReducers";
+
 import {
   mailSendReducer,
   userDeleteReducer,
@@ -91,6 +93,8 @@ const initialState = {
 };
 
 const reducer = combineReducers({
+  createCampaign: createCampaignReducer,
+
   playlistCheck: playlistCheckReducer,
 
   userSignin: userSigninReducer,

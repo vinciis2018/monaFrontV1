@@ -140,6 +140,10 @@ export const EditScreen = (props: any) => {
 
   const dispatch = useDispatch<any>();
   useEffect(() => {
+    if (successUpdate) {
+      alert("Screen updated successfully");
+      navigate("/screen-owner");
+    }
     if (!screen || screen._id !== screenId || successUpdate) {
       dispatch({
         type: SCREEN_UPDATE_RESET,
@@ -612,7 +616,7 @@ export const EditScreen = (props: any) => {
                 </VStack>
                 <InputGroup size="lg" width="10%">
                   <Input
-                    placeholder="20 Second"
+                    placeholder="4000"
                     size="lg"
                     fontSize="md"
                     borderRadius="md"

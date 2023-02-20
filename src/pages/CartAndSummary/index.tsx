@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Divider,
@@ -29,18 +29,24 @@ import {
 } from "@material-ui/core";
 import { BsCalendar2Date } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { bookSlot } from "Actions/calendarActions";
+import { createCamapaign } from "Actions/campaignAction";
+import { detailsScreen } from "Actions/screenActions";
 
 export function CartAndSummary(props: any) {
   const [startTime, setStartTime] = useState<any>();
   const [endTime, setEndTime] = useState<any>();
-  const [sliderValue, setSliderValue] = useState(50);
-  const [Campaign, setCampaignName] = useState("");
-  const screenId = "63c93d23c1d5101a28da535d";
+  const [startDate, setStartDate] = useState<any>();
+  const [endDate, setEndDate] = useState<any>();
+  const [totalSlotBooked, setTotalSlotBooked] = useState<any>(50);
+  const [Campaign, setCampaignName] = useState<any>("");
+  const screenId = "63b4126778f5c028328038e9";
   const videoId = "63b3e7bb8eb1e1983f0cde64";
-  const slotId = "63b3e7bb8eb1e1983f0cde64";
-  const [dateHere, setDateHere] = React.useState<any>(new Date());
-  const [slotBooked, setSlotBooked] = useState<any>(true);
+  //const slotId = "63b3e7bb8eb1e1983f0cde64";
+  // console.log("start date : ", startDate);
+  // console.log("end date : ", endDate);
+  // console.log("start time : ", startTime);
+  // console.log("end date : ", endTime);
+  // console.log("totalSlotBooked : ", totalSlotBooked);
 
   const handleEndTime = (value: any) => {
     // let time = value.toString().split(" "); // Wed Jan 04 2023 08:22:28 GMT+0530
@@ -51,32 +57,53 @@ export function CartAndSummary(props: any) {
   const handleStartTime = (value: any) => {
     // let time = value.toString().split(" "); // Wed Jan 04 2023 08:22:28 GMT+0530
     // time = time[4];
-    setDateHere(value);
+    setStartTime(value);
   };
-  const slotBooking = useSelector((state: any) => state.slotBooking);
+  const handleEndDate = (value: any) => {
+    // let time = value.toString().split(" "); // Wed Jan 04 2023 08:22:28 GMT+0530
+    // time = time[4];
+    // console.log("time : ", time);
+    setEndDate(value);
+  };
+  const handleStartDate = (value: any) => {
+    // let time = value.toString().split(" "); // Wed Jan 04 2023 08:22:28 GMT+0530
+    // time = time[4];
+    setStartDate(value);
+  };
+  const campaign = useSelector((state: any) => state.createCampaign);
   const {
     loading: loadingSlotBooking,
     error: errorSlotBooking,
     success: successSlotBooking,
-    bookedSlot,
-  } = slotBooking;
-  console.log("bookedSlot : ", JSON.stringify(bookedSlot));
+    uploadedCampaign,
+  } = campaign;
+  const screenDetails = useSelector((state: any) => state.screenDetails);
+  const { loading: loadingScreen, error: errorScreen, screen } = screenDetails;
+  console.log("uploadedCampaign : ", JSON.stringify(uploadedCampaign));
+  // console.log("screen details  : ", JSON.stringify(screen));
+
   const dispatch = useDispatch<any>();
   const slotBookingHandler = () => {
     window.alert("Confirm Booking slot");
     dispatch(
-      bookSlot(screenId, slotId, {
-        dateHere,
-        slotBooked,
-        video: {
-          _id: videoId,
-        },
+      createCamapaign({
+        screenId,
+        videoId,
+        totalSlotBooked,
+        startDate,
+        endDate,
+        startTime,
+        endTime,
       })
     );
   };
-  if (successSlotBooking) {
-    window.alert("slot booked successfully");
-  }
+  // if (successSlotBooking) {
+  //   window.alert("Campaign Createde successfully");
+  // }
+  useEffect(() => {
+    dispatch(detailsScreen(screenId));
+  }, [dispatch]);
+
   return (
     <Box p="20" pt="20">
       <Stack>
@@ -254,8 +281,8 @@ export function CartAndSummary(props: any) {
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <DatePicker
                           inputVariant="outlined"
-                          value={startTime}
-                          onChange={handleStartTime}
+                          value={startDate}
+                          onChange={handleStartDate}
                           InputProps={{
                             endAdornment: (
                               <InputAdornment position="start">
@@ -272,8 +299,8 @@ export function CartAndSummary(props: any) {
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <TimePicker
                           inputVariant="outlined"
-                          value={endTime}
-                          onChange={handleEndTime}
+                          value={startTime}
+                          onChange={handleStartTime}
                         />
                       </MuiPickersUtilsProvider>
                     </FormControl>
@@ -290,8 +317,8 @@ export function CartAndSummary(props: any) {
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <DatePicker
                           inputVariant="outlined"
-                          value={endTime}
-                          onChange={handleEndTime}
+                          value={endDate}
+                          onChange={handleEndDate}
                           InputProps={{
                             endAdornment: (
                               <InputAdornment position="end">
@@ -353,19 +380,19 @@ export function CartAndSummary(props: any) {
                 <Stack pt="5" width="70%">
                   <Slider
                     aria-label="slider-ex-6"
-                    onChange={(val) => setSliderValue(val)}
+                    onChange={(val) => setTotalSlotBooked(val)}
                   >
                     <SliderMark
-                      value={sliderValue}
+                      value={totalSlotBooked}
                       textAlign="center"
                       bg="blue.500"
                       color="white"
-                      mt="-30"
+                      mt="-50px"
                       ml="-5"
-                      w="12"
-                      p="1"
+                      w="20"
+                      p="2"
                     >
-                      {sliderValue}
+                      {totalSlotBooked}
                     </SliderMark>
                     <SliderTrack>
                       <SliderFilledTrack />
@@ -381,14 +408,20 @@ export function CartAndSummary(props: any) {
                     fontSize="md"
                     fontWeight="semibold"
                   >
-                    <Text p="3">Selected: {sliderValue}</Text>
+                    <Text p="3">Selected: {totalSlotBooked}</Text>
                   </Box>
                 </Stack>
               </Flex>
               <Divider pt="5" />
               <Flex justifyContent="space-between" pt="2" pb="2">
-                <Text color="#28282E" fontSize="lg" fontWeight="semibold">
-                  Total Cost for screen 1
+                <Text
+                  color="#28282E"
+                  fontSize="lg"
+                  fontWeight="semibold"
+                  width="70%"
+                  align="left"
+                >
+                  Total Cost for {screen?.name}
                 </Text>
                 <Text
                   color="#28282E"
@@ -396,7 +429,7 @@ export function CartAndSummary(props: any) {
                   fontWeight="semibold"
                   pr="20"
                 >
-                  $2124.00
+                  ${totalSlotBooked * screen?.rentPerSlot}
                 </Text>
               </Flex>
             </Stack>
@@ -444,7 +477,7 @@ export function CartAndSummary(props: any) {
                 Total no of slots
               </Text>
               <Text color="#28282E" fontSize="lg" fontWeight="semibold" pr="20">
-                {sliderValue}
+                {totalSlotBooked}
               </Text>
             </Flex>
             <Divider pt="5" />
@@ -453,7 +486,7 @@ export function CartAndSummary(props: any) {
                 Total cost
               </Text>
               <Text color="#28282E" fontSize="lg" fontWeight="semibold" pr="20">
-                $2124.00
+                ${totalSlotBooked * screen?.rentPerSlot}
               </Text>
             </Flex>
             <Divider pt="5" />
