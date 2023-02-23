@@ -12,10 +12,6 @@ import {
   PinSuccess,
   AllAds,
   // CameraHome,
-  Active,
-  PhotoView,
-  UploadConfirm,
-  Success,
 
   // auth
   Login,
@@ -68,7 +64,6 @@ import {
   UserProfile,
   CartAndSummary,
   CampaignListOfUser,
-  CustomImages,
   CampaignDetails,
 } from "pages";
 import { FooterPage, NavBar } from "components/common";
@@ -112,7 +107,10 @@ export const PublicRoutes = () => {
         <Route path="/screen-owner" element={<ScreenOwner />} />
         <Route path="/create-screen" element={<CreateScreen />} />
         <Route path="/edit-screen/:id" element={<EditScreen />} />
-        <Route path="/carts" element={<CartAndSummary />} />
+        <Route
+          path="/carts/:mediaId/:screenId/:name/:url"
+          element={<CartAndSummary />}
+        />
         <Route path="/myCampaignList" element={<CampaignListOfUser />} />
         <Route path="/campaignDetails/:id" element={<CampaignDetails />} />
         <Route path="/walletpage" element={<WalletPage />} />
@@ -121,12 +119,6 @@ export const PublicRoutes = () => {
         <Route path="/request-money" element={<RequestMoney />} />
         <Route path="*" element={<Page404 />} />
         {/* upload */}
-        <Route path="/upload" element={<Active />} />
-        <Route path="/upload-active" element={<Active />} />
-        <Route path="/upload-photos" element={<PhotoView />} />
-        <Route path="/upload-confirm" element={<UploadConfirm />} />
-        <Route path="/upload-success/:cid" element={<Success />} />
-        <Route path="/customImages" element={<CustomImages />} />
       </Routes>
       <FooterPage />
     </>

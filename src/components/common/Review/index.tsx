@@ -3,7 +3,8 @@ import React from "react";
 import { GiRoundStar } from "react-icons/gi";
 
 export function Review(props: any) {
-  const { rating, name, comments } = props;
+  const { review } = props;
+  //console.log(rating, name, comments);
   const ratingArray = [1, 2, 3, 4, 5];
 
   const getRatingBox = (color: any) => {
@@ -12,19 +13,19 @@ export function Review(props: any) {
   return (
     <Box>
       <Text color="#403F49" fontSize="3xl" fontWeight="semibold" align="left">
-        {name}
+        {review.name}
       </Text>
       <Flex pt="5">
         {ratingArray.map((rat, index) => {
-          if (rat <= rating) {
+          if (rat <= review.rating) {
             return getRatingBox("#0EBCF5");
           } else {
             return getRatingBox("#E2E2E2");
           }
         })}
       </Flex>
-      <Text color="#686868" fontSize="lg" pt="5" align="left">
-        {comments}
+      <Text color="#686868" fontSize="sm" pt="5" align="left">
+        {review.comment}
       </Text>
     </Box>
   );

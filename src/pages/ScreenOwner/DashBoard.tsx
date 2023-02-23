@@ -6,6 +6,7 @@ import { useEffect } from "react";
 export function DashBoard(props: any) {
   const { screen, videosList } = props;
   //console.log("selct screen id 1212: ", JSON.stringify(screen));
+  //console.log("videosList: ", JSON.stringify(videosList));
 
   const data = { features: [] };
   useEffect(() => {}, [props]);
@@ -66,7 +67,7 @@ export function DashBoard(props: any) {
         <SimpleGrid columns={[1, null, 3]} spacing="10" pt="5">
           {videosList &&
             videosList
-              .slice(0, 3)
+              ?.slice(0, 3)
               .map((video: any) => (
                 <AdsPlaying video={video} key={video._id} />
               ))}

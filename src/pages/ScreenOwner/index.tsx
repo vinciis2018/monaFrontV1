@@ -11,6 +11,7 @@ import { SCREEN_CREATE_RESET } from "../../Constants/screenConstants";
 import Axios from "axios";
 import HLoading from "components/atoms/HLoading";
 import { userScreensList } from "Actions/userActions";
+import MessageBox from "components/atoms/MessageBox";
 
 export function ScreenOwner() {
   const navigate = useNavigate();
@@ -26,22 +27,21 @@ export function ScreenOwner() {
   const [screenError, setScreenError] = useState<any>(null);
   const [selectedScreenIndex, setSelectedScreenIndex] = useState<any>(0);
 
-  console.log("screenLoading : ", screenLoading);
-  console.log("videoLoading : ", videoLoading);
+  // console.log("screenLoading : ", screenLoading);
+  // console.log("videoLoading : ", videoLoading);
 
-  const getVideoList = async (screenId: any) => {
+  const getCampaignListByScreenId = async (screenId: any) => {
     try {
       var startTime = performance.now();
-
       const { data } = await Axios.get(
-        `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}/screenVideos`
+        `${process.env.REACT_APP_BLINDS_SERVER}/api/campaign/${screenId}/screen/campaignAndMedia`
       );
-      console.log("videos  : ", JSON.stringify(data));
+      //console.log("videos  : ", JSON.stringify(data));
       setVideosList(data);
       setVideoLoading(false);
       var endTime = performance.now();
       console.log(
-        `Call to doSomething took getVideoList ${
+        `Call to doSomething took getCampaignListByScreenId ${
           endTime - startTime
         } milliseconds`
       );
@@ -51,6 +51,7 @@ export function ScreenOwner() {
           ? error.response.data.messages
           : error.message
       );
+      setVideoLoading(false);
     }
   };
   const getScreentDetail = async (screenId: any) => {
@@ -60,7 +61,9 @@ export function ScreenOwner() {
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}`
       );
       setScreen(data);
-      getVideoList(screenId);
+      //console.log("screen details  : ", JSON.stringify(data));
+
+      getCampaignListByScreenId(screenId);
       setScreenLoading(false);
       var endTime = performance.now();
       console.log(
@@ -74,6 +77,7 @@ export function ScreenOwner() {
           ? error.response.data.message
           : error.message
       );
+      setScreenLoading(false);
     }
   };
   const userSignin = useSelector((state: any) => state.userSignin);
@@ -129,8 +133,8 @@ export function ScreenOwner() {
       dispatch({ type: SCREEN_CREATE_RESET });
       navigate(`/edit-screen/${createdScreen._id}`);
     }
-    console.log("screens : ", screens);
-    if (screens.length > 0) {
+    //console.log("screens : ", screens);
+    if (screens?.length > 0) {
       setVideoLoading(true);
       setScreenLoading(true);
       setSelectedScreen(screens[0]._id);
@@ -145,6 +149,8 @@ export function ScreenOwner() {
       <Box pl="20" pr="20">
         {screenLoading || videoLoading || loadingScreens ? (
           <HLoading loading={screenLoading || videoLoading || loadingScreens} />
+        ) : errorScreens ? (
+          <MessageBox variant="danger">{errorScreens}</MessageBox>
         ) : (
           <Flex>
             <Stack p="5" bgColor="#FEFEFE" width="15%" boxShadow="2xl">
@@ -169,7 +175,7 @@ export function ScreenOwner() {
                 + New Screen
               </Button>
               <Stack pt="10">
-                {screens.map((eachScreen: any, index: any) => (
+                {screens?.map((eachScreen: any, index: any) => (
                   <Text
                     fontSize="sm"
                     fontWeight="regular"

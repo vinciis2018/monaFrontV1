@@ -9,8 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { convertIntoDateAndTime } from "utils/dateAndTime";
 export function MySingleCampaign(props: any) {
-  const { video } = props;
-  const screenId = video.screen;
+  const { campaign } = props;
+  const screenId = campaign.screen;
 
   const screenDetails = useSelector((state: any) => state.screenDetails);
   const { loading: loadingScreen, error: errorScreen, screen } = screenDetails;
@@ -35,7 +35,7 @@ export function MySingleCampaign(props: any) {
     <Box
       boxShadow="2xl"
       p="5"
-      onClick={() => navigate(`/campaignDetails/${video._id}`)}
+      onClick={() => navigate(`/campaignDetails/${campaign._id}`)}
       _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#674780" }}
     >
       {loadingScreenCalender || loadingScreen ? (
@@ -51,7 +51,7 @@ export function MySingleCampaign(props: any) {
               borderRadius="sm"
               width="50%"
               height="70%"
-              src={video.thumbnail}
+              src={campaign.thumbnail}
             ></Image>
             <VStack align="left">
               <Text
@@ -60,7 +60,7 @@ export function MySingleCampaign(props: any) {
                 fontWeight="semibold"
                 align="left"
               >
-                {video.description}
+                {campaign.campaignName}
               </Text>
               <Text
                 color="#0D0D0D"
@@ -72,11 +72,11 @@ export function MySingleCampaign(props: any) {
               </Text>
               {}
               <Text color="#575757" fontSize="md" align="left">
-                {convertIntoDateAndTime(video.createdAt)?.split(",")[0]},
-                {convertIntoDateAndTime(video.createdAt)?.split(",")[1]}
+                {convertIntoDateAndTime(campaign.createdAt)?.split(",")[0]},
+                {convertIntoDateAndTime(campaign.createdAt)?.split(",")[1]}
               </Text>
               <Text color="#575757" fontSize="md" align="left">
-                {convertIntoDateAndTime(video.createdAt)?.split(",")[2]}
+                {convertIntoDateAndTime(campaign.createdAt)?.split(",")[2]}
               </Text>
             </VStack>
             <VStack align="left">
@@ -94,7 +94,7 @@ export function MySingleCampaign(props: any) {
                 fontWeight="semibold"
                 align="left"
               >
-                Total number of slots: 15
+                Total number of slots: {campaign.totalSlotBooked}
               </Text>
               <Text
                 color="#0D0D0D"
@@ -102,10 +102,10 @@ export function MySingleCampaign(props: any) {
                 fontWeight="semibold"
                 align="left"
               >
-                Amount paid: ₹ 8698
+                Amount paid: ₹ {campaign.totalAmount}
               </Text>
             </VStack>
-            {video.paidForSlots ? (
+            {campaign.paidForSlot ? (
               <Flex>
                 <BsDot color="#00D615" size="20px" />
                 <Text color="#403F45" fontSize="sm" pl="2">

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Box, Text, Stack } from "@chakra-ui/react";
 
-import { userVideosList } from "Actions/userActions";
+import { userCampaignsList } from "Actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import HLoading from "components/atoms/HLoading";
@@ -9,12 +9,12 @@ import MessageBox from "components/atoms/MessageBox";
 import { MySingleCampaign } from "components/common";
 
 export function CampaignListOfUser() {
-  const userVideos = useSelector((state: any) => state.userVideos);
+  const userCampaign = useSelector((state: any) => state.userCampaign);
   const {
     loading: loadingMyVideos,
     error: errorMyVideos,
-    videos: myVideos,
-  } = userVideos;
+    campaign: myVideos,
+  } = userCampaign;
   //console.log("myvideo : ", JSON.stringify(myVideos));
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
@@ -27,7 +27,7 @@ export function CampaignListOfUser() {
     } else if (!userInfo) {
       navigate("/signin");
     } else {
-      dispatch(userVideosList(userInfo));
+      dispatch(userCampaignsList(userInfo));
     }
   }, [navigate, dispatch]);
 
@@ -45,8 +45,8 @@ export function CampaignListOfUser() {
         ) : errorMyVideos ? (
           <MessageBox variant="danger">{errorMyVideos}</MessageBox>
         ) : (
-          myVideos.map((eachVideo: any) => (
-            <MySingleCampaign video={eachVideo} key={eachVideo._id} />
+          myVideos.map((eachCampaign: any) => (
+            <MySingleCampaign campaign={eachCampaign} key={eachCampaign._id} />
           ))
         )}
       </Stack>

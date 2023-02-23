@@ -38,6 +38,8 @@ export function UploadThumbnail(props: any) {
   ];
   const [isUploading, setIsUploading] = useState(false);
   const [screenImage, setScreenImage] = useState<any>();
+  const [selectedMediaThumbnail, setSelectedMediaThumbnail] = useState<any>("");
+
   let hiddenInput: any = null;
   const startAnimation = () => controls.start("hover");
   const stopAnimation = () => controls.stop();
@@ -48,6 +50,10 @@ export function UploadThumbnail(props: any) {
     props.setThumbnailUrl(dataBuffer);
     setIsUploading(false);
   }
+  const handleSelectMediaThumbnail = (thumbnail: any) => {
+    props.setThumbnailUrl(thumbnail.split("/")[4]);
+    setSelectedMediaThumbnail(thumbnail);
+  };
 
   const handleAddToCart = (e: any) => {
     props.onHide();
@@ -120,6 +126,14 @@ export function UploadThumbnail(props: any) {
                 </Box>
               </InputGroup>
             </FormControl>
+            {selectedMediaThumbnail ? (
+              <Image
+                src={selectedMediaThumbnail}
+                alt=""
+                width="100%"
+                height="100%"
+              ></Image>
+            ) : null}
             <Text
               fontSize="lg"
               fontWeight="light"
@@ -132,13 +146,16 @@ export function UploadThumbnail(props: any) {
             </Text>
             <Stack pt="5">
               <SimpleGrid columns={[1, null, 3]} spacing={3}>
-                {collection.map((eachCollection: any) => (
-                  <Stack key={eachCollection._id} borderRadius="lg">
+                {props?.medias?.map((media: any) => (
+                  <Stack key={media._id} borderRadius="lg">
                     <Image
-                      src={eachCollection.image}
-                      alt={eachCollection.image}
+                      src={media.thumbnail}
+                      alt=""
                       width="100%"
                       height="100%"
+                      onClick={() =>
+                        handleSelectMediaThumbnail(media.thumbnail)
+                      }
                     ></Image>
                   </Stack>
                 ))}

@@ -132,7 +132,7 @@ export const getMyMedia = () => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.get(
-      `${process.env.REACT_APP_BLINDS_SERVER}/api/media/${userInfo._id}/my`,
+      `${process.env.REACT_APP_BLINDS_SERVER}/api/media/${userInfo._id}/myMedias`,
       userInfo,
       {
         headers: {

@@ -16,31 +16,32 @@ import Axios from "axios";
 import { MyMap } from "pages/MyMap";
 
 export function CampaignDetails(props: any) {
-  //   const videoId = "63b3e7bb8eb1e1983f0cde64";
-  //   const [videoId, setVideoId] = useState<any>();
-  const [videoDetail, setVideoDetails] = useState<any>();
+  //   const campaignId = "63b3e7bb8eb1e1983f0cde64";
+  //   const [campaignId, setcampaignId] = useState<any>();
+  // const [videoDetail, setCampaignDetails] = useState<any>();
   const getDiscount = (total: any, discount: any) => {
-    return total - (total * 100) / discount;
+    return total - (total * discount) / 100;
   };
 
   const [screen, setScreen] = useState<any>();
   const [loadingScreen, setLoadingScreen] = useState<any>(true);
   const [errorScreen, setErrorScreen] = useState<any>();
-  const [video, setVideo] = useState<any>();
+  const [campaign, setCampaign] = useState<any>();
   const [loadingVideo, setLoadingVideo] = useState<any>(true);
   const [errorVideo, setErrorVideo] = useState<any>();
   const [geometry, setGeometry] = useState<any>();
   const [jsonData, setJsonData] = useState<any>();
 
-  console.log("screen  : ", JSON.stringify(screen));
-  console.log("video  : ", JSON.stringify(video));
+  // console.log("screen  : ", JSON.stringify(screen));
+  // console.log("campaign  : ", JSON.stringify(campaign));
 
   const getScreenDetail = async (screenId: any) => {
     try {
-      console.log("getScreenDetail : ", screenId);
+      // console.log("getScreenDetail : ", screenId);
       const { data } = await Axios.get(
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}`
       );
+      // console.log("screen  : ", JSON.stringify(data));
       setScreen(data);
       setGeometry({
         geometry: {
@@ -71,12 +72,12 @@ export function CampaignDetails(props: any) {
       );
     }
   };
-  const getVideoDetails = async (videoId: any) => {
+  const getCampaignDetail = async (campaignId: any) => {
     try {
       const { data } = await Axios.get(
-        `${process.env.REACT_APP_BLINDS_SERVER}/api/videos/${videoId}`
+        `${process.env.REACT_APP_BLINDS_SERVER}/api/campaign/${campaignId}`
       );
-      setVideo(data);
+      setCampaign(data);
       setLoadingVideo(false);
       getScreenDetail(data.screen);
     } catch (error: any) {
@@ -89,8 +90,8 @@ export function CampaignDetails(props: any) {
   };
 
   useEffect(() => {
-    const videoId = window.location.pathname.split("/")[2];
-    getVideoDetails(videoId);
+    const campaignId = window.location.pathname.split("/")[2];
+    getCampaignDetail(campaignId);
   }, []);
 
   return (
@@ -113,11 +114,11 @@ export function CampaignDetails(props: any) {
                   Campaign details
                 </Text>
                 <Text color="#575757" fontSize="sm" align="left">
-                  {convertIntoDateAndTime(video.createdAt)}
+                  {convertIntoDateAndTime(campaign.createdAt)}
                 </Text>
               </VStack>
               <Stack align="end">
-                {video.paidForSlots ? (
+                {campaign.paidForSlots ? (
                   <Flex>
                     <BsDot color="#00D615" size="20px" />
                     <Text color="#403F45" fontSize="sm" pl="2">
@@ -136,7 +137,7 @@ export function CampaignDetails(props: any) {
             </Flex>
             <Stack align="center" pt="5" borderRadius="8px">
               <Image
-                src={video.thumbnail}
+                src={campaign.thumbnail}
                 alt=""
                 width="70%"
                 borderRadius="8px"
@@ -166,7 +167,7 @@ export function CampaignDetails(props: any) {
                           Slots selected:
                         </Text>
                         <Text color="#0D0D0D" fontSize="lg">
-                          {video.totalNoOfSlots}
+                          {campaign.totalSlotBooked}
                         </Text>
                       </Flex>
                       <Flex justifyContent="space-between">
@@ -190,7 +191,7 @@ export function CampaignDetails(props: any) {
                           fontSize="lg"
                           fontWeight="semibold"
                         >
-                          ₹{screen.rentPerSlot * video.totalNoOfSlots}
+                          ₹{campaign.totalAmount}
                         </Text>
                       </Flex>
                       <Flex justifyContent="space-between">
@@ -198,11 +199,7 @@ export function CampaignDetails(props: any) {
                           Tax (16%):
                         </Text>
                         <Text color="#0D0D0D" fontSize="sm">
-                          ₹
-                          {getDiscount(
-                            screen.rentPerSlot * video.totalNoOfSlots,
-                            16
-                          )}
+                          ₹{getDiscount(campaign.totalAmount, 16)}
                         </Text>
                       </Flex>
                       <Flex justifyContent="space-between">
@@ -219,11 +216,8 @@ export function CampaignDetails(props: any) {
                           fontWeight="semibold"
                         >
                           ₹
-                          {screen.rentPerSlot * video.totalNoOfSlots +
-                            getDiscount(
-                              screen.rentPerSlot * video.totalNoOfSlots,
-                              16
-                            )}
+                          {campaign.totalAmount +
+                            getDiscount(campaign.totalAmount, 16)}
                         </Text>
                       </Flex>
                     </VStack>

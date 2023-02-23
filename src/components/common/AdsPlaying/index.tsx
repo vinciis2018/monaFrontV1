@@ -6,7 +6,7 @@ import { consvertSecondToHrAndMinutes } from "utils/dateAndTime";
 export function AdsPlaying(props: any) {
   const { video } = props;
   const playingTime = consvertSecondToHrAndMinutes(
-    video.duration * video.totalNoOfSlots
+    video.media.duration * video.campaign.totalSlotBooked
   ); // sending time in seconds only and get in hr, mn,sec
 
   return (
@@ -23,7 +23,12 @@ export function AdsPlaying(props: any) {
         video.video
       }`}
     >
-      <Image height="50%" width="212px" src={video.thumbnail} alt=""></Image>
+      <Image
+        height="50%"
+        width="212px"
+        src={video.media.thumbnail}
+        alt=""
+      ></Image>
       <Text
         color="#403F49"
         pt="2"
@@ -31,7 +36,7 @@ export function AdsPlaying(props: any) {
         fontWeight="semibold"
         align="left"
       >
-        {video.brandName}
+        {video.media.brandName}
       </Text>
       <Flex justifyContent="space-between" pt="2">
         <Text color="#403F49" fontSize="sm" align="left">
@@ -47,7 +52,7 @@ export function AdsPlaying(props: any) {
           Total no of slots
         </Text>
         <Text color="#403F49" fontSize="sm" align="left">
-          {video.totalNoOfSlots}
+          {video.campaign.totalSlotBooked}
         </Text>
       </Flex>
     </Box>

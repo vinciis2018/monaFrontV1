@@ -1,26 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import { Box } from "@chakra-ui/react";
 import { EmailVerificationModal } from "pages/authPopup/EmailVerificationModal";
 
 export function Signup(props: any) {
-  const navigate = useNavigate();
-  const userSignin = useSelector((state: any) => state.userSignin);
   const [emailVerificationShow, setEmailVerificationShow] = useState<any>(true);
-  const { userInfo } = userSignin;
-
-  useEffect(() => {
-    if (userInfo) {
-      if (userInfo.defaultWallet) {
-        navigate("/");
-      } else {
-        navigate("/welcome");
-      }
-    } else {
-      setEmailVerificationShow(true);
-    }
-  }, [navigate, userInfo, navigate]);
 
   return (
     <Box>
@@ -31,3 +14,51 @@ export function Signup(props: any) {
     </Box>
   );
 }
+
+/*
+
+situate
+
+2.
+
+glimpse
+
+3.
+
+coil
+
+4.
+
+garden
+
+5.
+
+scale
+
+6.
+
+few
+
+7.
+
+rib
+
+8.
+
+twice
+
+9.
+
+flee
+
+10.
+
+cinnamon
+
+11.
+
+gospel
+
+12.
+
+clarify */

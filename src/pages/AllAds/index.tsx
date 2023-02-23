@@ -24,8 +24,8 @@ import { AtvertiseBox } from "components/common/AtvertiseBox";
 import { ContactUs } from "components/common";
 import { getPinJson } from "Actions/pinActions";
 import { MyMap } from "pages/MyMap";
-import { listAllVideos } from "Actions/advertActions";
 import { IoSearchOutline } from "react-icons/io5";
+import { getCampaignList } from "Actions/campaignAction";
 
 export function AllAds() {
   const navigate = useNavigate();
@@ -36,23 +36,23 @@ export function AllAds() {
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
 
-  const videoListAll = useSelector((state: any) => state.videoListAll);
+  const campaignListAll = useSelector((state: any) => state.campaignListAll);
 
   const {
     loading: loadingVideos,
     error: errorVideos,
-    allVideos,
-  } = videoListAll;
+    allCampaign,
+  } = campaignListAll;
 
   const dispatch = useDispatch<any>();
   React.useEffect(() => {
-    if (userInfo && !userInfo.defaultWallet) {
-      navigate("/welcome");
-    } else if (!userInfo) {
-      navigate("/signin");
-    }
+    // if (userInfo && !userInfo.defaultWallet) {
+    //   navigate("/welcome");
+    // } else if (!userInfo) {
+    //   navigate("/signin");
+    // }
     dispatch(getPinJson());
-    dispatch(listAllVideos());
+    dispatch(getCampaignList());
   }, [dispatch, navigate, userInfo]);
 
   const onClickSeeAll = () => {
@@ -100,8 +100,8 @@ export function AllAds() {
               Ads playing
             </Text>
             <SimpleGrid columns={[1, 3]} spacing="10">
-              {allVideos &&
-                allVideos
+              {allCampaign &&
+                allCampaign
                   .slice(0, count * 6)
                   .map((eachVideo: any) => (
                     <AtvertiseBox video={eachVideo} key={eachVideo._id} />

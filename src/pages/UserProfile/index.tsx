@@ -1,25 +1,23 @@
 import { Box, Stack, Image, Text, Button, SimpleGrid } from "@chakra-ui/react";
-import { getMyMedia } from "Actions/mediaActions";
+import { userMediasList } from "Actions/userActions";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { RiFileUploadLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 
 export function UserProfile() {
-  const [allMedia, setMyMedias] = useState<any>([]);
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
   //console.log("userInfo 423432423", JSON.stringify(userInfo));
-  const myMedia = useSelector((state: any) => state.myMedia);
+  const myMedia = useSelector((state: any) => state.userMedia);
   const { loading: loadingMyMedia, error: errorMyMedia, medias } = myMedia;
+  //console.log("medias : ", JSON.stringify(medias));
+
   const dispatch = useDispatch<any>();
   useEffect(() => {
-    if (medias) {
-      setMyMedias(medias);
-    }
-    dispatch(getMyMedia());
-  }, [dispatch, allMedia]);
+    dispatch(userMediasList(userInfo));
+  }, [dispatch]);
   return (
     <Box pt="20">
       <Box
@@ -105,7 +103,7 @@ export function UserProfile() {
           </Text>
         </Stack>
         <Stack pt="5">
-          {allMedia.length === 0 ? (
+          {medias?.length === 0 ? (
             <Text color="#3A3A3A" fontSize="xl" align="left">
               Upload your first collection
             </Text>
@@ -117,13 +115,12 @@ export function UserProfile() {
             <MessageBox variant="danger">{errorMyMedia}</MessageBox>
           ) : (
             <SimpleGrid columns={[1, null, 2]} spacing={10}>
-              {allMedia.map((media: any) => (
+              {medias?.map((media: any) => (
                 <Stack key={media._id}>
-                  <Image
-                    src={`https://ipfs.io/ipfs/${media.cid}`}
-                    alt="media"
-                    width="100%"
-                  ></Image>
+                  <Image src={media.thumbnail} alt="media" width="100%"></Image>
+                  <Text color="#000000" align="left" fontWeight="semibold">
+                    {media.title}
+                  </Text>
                 </Stack>
               ))}
             </SimpleGrid>

@@ -527,7 +527,14 @@ export const EditScreen = (props: any) => {
               </HStack>
             </Stack>
           ) : activeStep === 1 ? (
-            <Stack boxShadow="2xl" p="5" borderRadius="lg" spacing="5" pt="10">
+            <Stack boxShadow="2xl" p="5" borderRadius="lg" spacing="5" pt="20">
+              <Flex align="center">
+                <AiOutlineArrowLeft
+                  size="20px"
+                  color="#333333"
+                  onClick={prevStep}
+                />
+              </Flex>
               <HStack>
                 <VStack fontSize="sm" spacing="2" width="30%" align="left">
                   <Text color="#393939" fontWeight="semibold" align="left">

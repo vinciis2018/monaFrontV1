@@ -26,9 +26,12 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_RESET,
   USER_UPDATE_PROFILE_SUCCESS,
-  USER_VIDEOS_FAIL,
-  USER_VIDEOS_REQUEST,
-  USER_VIDEOS_SUCCESS,
+  USER_MEDIA_FAIL,
+  USER_MEDIA_REQUEST,
+  USER_MEDIA_SUCCESS,
+  USER_CAMPAIGN_FAIL,
+  USER_CAMPAIGN_REQUEST,
+  USER_CAMPAIGN_SUCCESS,
 } from "../Constants/userConstants";
 
 export function userSignupReducer(state = {}, action) {
@@ -132,13 +135,25 @@ export function userScreensReducer(state = { screens: [] }, action) {
 
 // get user video list
 
-export function userVideosReducer(state = { videos: [] }, action) {
+export function userCampaignReducer(state = { campaign: [] }, action) {
   switch (action.type) {
-    case USER_VIDEOS_REQUEST:
+    case USER_CAMPAIGN_REQUEST:
       return { loading: true };
-    case USER_VIDEOS_SUCCESS:
-      return { loading: false, videos: action.payload };
-    case USER_VIDEOS_FAIL:
+    case USER_CAMPAIGN_SUCCESS:
+      return { loading: false, campaign: action.payload };
+    case USER_CAMPAIGN_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
+export function userMediaReducer(state = { medias: [] }, action) {
+  switch (action.type) {
+    case USER_MEDIA_REQUEST:
+      return { loading: true };
+    case USER_MEDIA_SUCCESS:
+      return { loading: false, medias: action.payload };
+    case USER_MEDIA_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

@@ -20,9 +20,6 @@ export function WelcomeModal(props: any) {
 
   useEffect(() => {
     hasEncryptedData().then((hasData) => {
-      if (hasData) {
-        navigate("/login");
-      }
       if (!userInfo) {
         navigate("/signin");
       }

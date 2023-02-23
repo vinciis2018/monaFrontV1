@@ -123,7 +123,7 @@ export function CustomImages() {
         .catch((error: Error) => {
           setLoading(false);
           if (error.message?.includes(ERROR_IDS.WALLET_LOCKED)) {
-            navigate("/login");
+            //navigate("/login");
           }
         })
         .then(() => {

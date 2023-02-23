@@ -19,12 +19,12 @@ import { IoSearchCircleSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { listScreens } from "../../Actions/screenActions";
-import { listAllVideos } from "../../Actions/advertActions";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
 import { ContactUs, Screen } from "components/common";
 import { AtvertiseBox } from "components/common/AtvertiseBox";
 import { motion } from "framer-motion";
+import { getCampaignList } from "Actions/campaignAction";
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -37,15 +37,16 @@ export function HomePage() {
   const screenList = useSelector((state: any) => state.screenList);
   const { loading: loadingScreens, error: errorScreens, screens } = screenList;
 
-  const videoListAll = useSelector((state: any) => state.videoListAll);
-  //console.log("topThreeVideo : ", JSON.stringify(topThreeVideos[0]));
+  const campaignListAll = useSelector((state: any) => state.campaignListAll);
 
   const {
     loading: loadingVideos,
     error: errorVideos,
-    allVideos,
-  } = videoListAll;
-  //console.log("allVideos : ", allVideos);
+    allCampaign,
+  } = campaignListAll;
+  //console.log("topThreeVideo : ", JSON.stringify(topThreeVideos[0]));
+
+  //console.log("allCampaign : ", allCampaign);
 
   const dispatch = useDispatch<any>();
   React.useEffect(() => {
@@ -54,15 +55,15 @@ export function HomePage() {
     } else if (!userInfo) {
       navigate("/signin");
     }
-    if (allVideos) {
-      const topThreeVideos = allVideos.slice(
-        allVideos.length - 3,
-        allVideos.length
+    if (allCampaign) {
+      const topThreeVideos = allCampaign.slice(
+        allCampaign.length - 3,
+        allCampaign.length
       );
       //console.log("sdsd", topThreeVideos);
       setTopThreevideo(topThreeVideos);
     }
-    dispatch(listAllVideos());
+    dispatch(getCampaignList());
     dispatch(listScreens({}));
   }, [dispatch, navigate, userInfo]);
 

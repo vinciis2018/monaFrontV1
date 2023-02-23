@@ -50,13 +50,10 @@ export function EmailVerification(props: any) {
   };
   const onFailure = (err: any) => {};
   const handleAllReadyAccount = () => {
-    navigate(`/signin?redirect=${redirect}`);
+    navigate(`/signin`);
   };
 
   useEffect(() => {
-    if (userInfo) {
-      props?.history?.push(redirect);
-    }
     const initClient = () => {
       gapi.client.init({
         clientId: process.env.GOOGLE_CLIENT_ID,

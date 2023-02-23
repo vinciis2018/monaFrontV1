@@ -26,7 +26,7 @@ export function ReSendEmailModal(props: any) {
 
   const redirect = props?.location?.search.split("=")[1]
     ? props?.location?.search.split("=")[1]
-    : "/welcome";
+    : "/";
 
   const submitHandler = async (e: any) => {
     e.preventDefault();

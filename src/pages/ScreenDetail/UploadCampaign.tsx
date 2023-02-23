@@ -18,7 +18,10 @@ import { useAnimation } from "framer-motion";
 import { getFileData } from "services/utils";
 
 export function UploadCampaign(props: any) {
+  const { medias } = props;
+  console.log("medial in UploadCampaign ", medias);
   const controls = useAnimation();
+  const [selectedMedia, setSelectedMedia] = useState<any>("");
   const collection = [
     {
       _id: "1",
@@ -41,6 +44,13 @@ export function UploadCampaign(props: any) {
   let hiddenInput: any = null;
   const startAnimation = () => controls.start("hover");
   const stopAnimation = () => controls.stop();
+
+  const handleSelectMedia = (media: any) => {
+    props.setMediaId(media._id);
+    //console.log("media selected : ", media.media);
+    setSelectedMedia(media.media);
+    props.setIsOldMedia(true);
+  };
   async function handlePhotoSelect(file: any) {
     setIsUploading(true);
     const fileThumbnail = URL.createObjectURL(file);
@@ -119,6 +129,19 @@ export function UploadCampaign(props: any) {
                 </Box>
               </InputGroup>
             </FormControl>
+            {selectedMedia ? (
+              <Box
+                as="video"
+                src={selectedMedia}
+                autoPlay
+                loop
+                muted
+                display="inline-block"
+                borderRadius="24px"
+                height={{ base: "100%", lg: "50%" }}
+              ></Box>
+            ) : null}
+
             <Text
               fontSize="lg"
               fontWeight="light"
@@ -131,11 +154,15 @@ export function UploadCampaign(props: any) {
             </Text>
             <Stack pt="5">
               <SimpleGrid columns={[1, null, 3]} spacing={3}>
-                {collection.map((eachCollection: any) => (
-                  <Stack key={eachCollection._id} borderRadius="lg">
+                {medias?.map((media: any) => (
+                  <Stack
+                    key={media._id}
+                    borderRadius="lg"
+                    onClick={() => handleSelectMedia(media)}
+                  >
                     <Image
-                      src={eachCollection.image}
-                      alt={eachCollection.image}
+                      src={media.thumbnail}
+                      alt=""
                       width="100%"
                       height="100%"
                     ></Image>

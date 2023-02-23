@@ -3,6 +3,12 @@ import {
   CREATE_CAMPAIGN_REQUEST,
   CREATE_CAMPAIGN_SUCCESS,
   CREATE_CAMPAIGN_FAIL,
+  CAMPAIGN_LIST_REQUEST,
+  CAMPAIGN_LIST_SUCCESS,
+  CAMPAIGN_LIST_FAIL,
+  CAMPAIGN_DETAILS_FAIL,
+  CAMPAIGN_DETAILS_REQUEST,
+  CAMPAIGN_DETAILS_SUCCESS,
 } from "Constants/campaignConstants.js";
 
 export const createCamapaign =
@@ -13,7 +19,9 @@ export const createCamapaign =
     startTime,
     endTime,
     screenId,
-    videoId,
+    mediaId,
+    campaignName,
+    thumbnail,
   }) =>
   async (dispatch, getState) => {
     dispatch({
@@ -25,7 +33,9 @@ export const createCamapaign =
         startTime,
         endTime,
         screenId,
-        videoId,
+        mediaId,
+        campaignName,
+        thumbnail,
       },
     });
     const {
@@ -42,7 +52,9 @@ export const createCamapaign =
           startTime,
           endTime,
           screenId,
-          videoId,
+          mediaId,
+          campaignName,
+          thumbnail,
         },
         {
           headers: {
@@ -65,3 +77,71 @@ export const createCamapaign =
       });
     }
   };
+
+export const getCampaignList = () => async (dispatch) => {
+  dispatch({ type: CAMPAIGN_LIST_REQUEST });
+  try {
+    const { data } = await Axios.get(
+      `${process.env.REACT_APP_BLINDS_SERVER}/api/campaign/all`
+    );
+    dispatch({ type: CAMPAIGN_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: CAMPAIGN_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getCampaignDetail = (campaignId) => async (dispatch) => {
+  dispatch({
+    type: CAMPAIGN_DETAILS_REQUEST,
+    payload: campaignId,
+  });
+
+  try {
+    const { data } = await Axios.get(
+      `${process.env.REACT_APP_BLINDS_SERVER}/api/campaign/${campaignId}`
+    );
+    dispatch({
+      type: CAMPAIGN_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CAMPAIGN_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getCampaignListByScreenId = (screenId) => async (dispatch) => {
+  dispatch({
+    type: CAMPAIGN_DETAILS_REQUEST,
+    payload: screenId,
+  });
+
+  try {
+    const { data } = await Axios.get(
+      `${process.env.REACT_APP_BLINDS_SERVER}/api/campaign/${screenId}/screen`
+    );
+    dispatch({
+      type: CAMPAIGN_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CAMPAIGN_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

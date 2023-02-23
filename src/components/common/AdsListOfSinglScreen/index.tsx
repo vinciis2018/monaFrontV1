@@ -16,7 +16,7 @@ import { BsDot } from "react-icons/bs";
 import { convertIntoDateAndTime } from "utils/dateAndTime";
 
 export function AdsListOfSinglScreen(props: any) {
-  const { videos, rentPerSlot } = props;
+  const { videos } = props;
   const [checkedItems, setCheckedItems] = useState(
     new Array(videos.length).fill(false)
   );
@@ -64,20 +64,20 @@ export function AdsListOfSinglScreen(props: any) {
                     checked={checkedItems[index]}
                   />
                   <Text color=" #403F49 " fontSize="sm" pl="5">
-                    {video.brandName}
+                    {video.media.brandName}
                   </Text>
                 </Flex>
               </Td>
               <Td color="#575757" fontSize="sm">
-                {convertIntoDateAndTime(video.createdAt)}
+                {convertIntoDateAndTime(video.campaign.createdAt)}
               </Td>
               <Td isNumeric fontSize="sm" color="#403F49" fontWeight="semibold">
-                {video.totalNoOfSlots}
+                {video.campaign.totalSlotBooked}
               </Td>
               <Td fontSize="sm" color="#403F49" fontWeight="semibold">
-                ₹{rentPerSlot * video.totalNoOfSlots}
+                ₹{video.campaign.rentPerSlot * video.campaign.totalSlotBooked}
               </Td>
-              {video.paidForSlots ? (
+              {video.campaign.paidForSlots ? (
                 <Td>
                   <Flex>
                     <BsDot color="#00D615" size="20px" />

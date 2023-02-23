@@ -20,10 +20,6 @@ import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
 
 export function ReSendEmail(props: any) {
-  const redirect = props?.location?.search.split("=")[1]
-    ? props?.location?.search.split("=")[1]
-    : "/welcome";
-
   const userSignup = useSelector((state: any) => state.userSignup);
   const { userInfo, loading, error } = userSignup;
 
@@ -33,11 +29,8 @@ export function ReSendEmail(props: any) {
   };
 
   useEffect(() => {
-    if (userInfo) {
-      props?.history?.push(redirect);
-    }
     dispatch(signout());
-  }, [dispatch, props?.history, redirect, userInfo]);
+  }, [dispatch, props?.history, userInfo]);
 
   return (
     <Box p="10%" pl="25%" width="100%">

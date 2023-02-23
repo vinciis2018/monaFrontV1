@@ -25,9 +25,12 @@ import {
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
-  USER_VIDEOS_FAIL,
-  USER_VIDEOS_REQUEST,
-  USER_VIDEOS_SUCCESS,
+  USER_MEDIA_FAIL,
+  USER_MEDIA_REQUEST,
+  USER_MEDIA_SUCCESS,
+  USER_CAMPAIGN_FAIL,
+  USER_CAMPAIGN_REQUEST,
+  USER_CAMPAIGN_SUCCESS,
 } from "Constants/userConstants";
 
 export const signup = (name, email, password) => async (dispatch) => {
@@ -262,7 +265,7 @@ export const userScreensList = (user) => async (dispatch, getState) => {
           headers: { Authorization: "Bearer " + userInfo.token },
         }
       );
-      console.log("userScreensList : ", JSON.stringify(data));
+      //console.log("userScreensList : ", JSON.stringify(data));
       var endTime = performance.now();
       console.log(
         `Call to doSomething took ${endTime - startTime} milliseconds`
@@ -285,29 +288,29 @@ export const userScreensList = (user) => async (dispatch, getState) => {
 
 // get user videolist
 
-export const userVideosList = (user) => async (dispatch, getState) => {
+export const userCampaignsList = (user) => async (dispatch, getState) => {
   // console.log("trying user video list");
   try {
-    dispatch({ type: USER_VIDEOS_REQUEST, payload: user });
+    dispatch({ type: USER_CAMPAIGN_REQUEST, payload: user });
     const {
       userSignin: { userInfo },
     } = getState();
     if (userInfo) {
       // console.log(user);
       const { data } = await Axios.get(
-        `${process.env.REACT_APP_BLINDS_SERVER}/api/users/${user._id}/${user.defaultWallet}/myVideos`,
+        `${process.env.REACT_APP_BLINDS_SERVER}/api/users/${user._id}/${user.defaultWallet}/myCampaign`,
         {
           headers: { Authorization: "Bearer " + userInfo.token },
         }
       );
-      dispatch({ type: USER_VIDEOS_SUCCESS, payload: data });
+      dispatch({ type: USER_CAMPAIGN_SUCCESS, payload: data });
     } else {
       // return console.log("no user found");
     }
   } catch (error) {
     // console.log(error);
     dispatch({
-      type: USER_VIDEOS_FAIL,
+      type: USER_CAMPAIGN_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -315,7 +318,36 @@ export const userVideosList = (user) => async (dispatch, getState) => {
     });
   }
 };
-
+export const userMediasList = (user) => async (dispatch, getState) => {
+  // console.log("trying user video list");
+  try {
+    dispatch({ type: USER_MEDIA_REQUEST, payload: user });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    if (userInfo) {
+      // console.log(user);
+      const { data } = await Axios.get(
+        `${process.env.REACT_APP_BLINDS_SERVER}/api/users/${user._id}/${user.defaultWallet}/myMedias`,
+        {
+          headers: { Authorization: "Bearer " + userInfo.token },
+        }
+      );
+      dispatch({ type: USER_MEDIA_SUCCESS, payload: data });
+    } else {
+      // return console.log("no user found");
+    }
+  } catch (error) {
+    // console.log(error);
+    dispatch({
+      type: USER_MEDIA_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 export const sendMail = (mail) => async (dispatch, getState) => {
   dispatch({
     type: SEND_MAIL_REQUEST,

@@ -51,7 +51,7 @@ export function VerifySecrateKeyModal(props: any) {
     if (phrasesPairsMatches()) {
       setSeedPhraseSaved();
       window.alert("Key Phrase Saved");
-      navigate("/upload");
+      navigate("/");
     } else {
       setErr("Please input matched characters");
     }

@@ -109,10 +109,7 @@ export function History(props: any) {
           </Stack>
         </Flex>
         <Stack pt="5" boxShadow="xl" borderRadius="8px">
-          <AdsListOfSinglScreen
-            videos={videosList}
-            rentPerSlot={screen.rentPerSlot}
-          />
+          <AdsListOfSinglScreen videos={videosList} />
         </Stack>
       </Box>
     </Box>

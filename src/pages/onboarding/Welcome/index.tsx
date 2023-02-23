@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 //hooks
 import { useWallet } from "components/contexts";
 
@@ -15,8 +14,6 @@ import { DisplaySecrateKeyModal } from "pages/onboardingmodal/DisplaySecrateKeyM
 import { VerifySecrateKeyModal } from "pages/onboardingmodal/VerifySecrateKeyModal";
 
 export function Welcome() {
-  const navigate = useNavigate();
-
   const { hasEncryptedData } = useWallet();
   const [welcomeModalShow, setWelcomeModalShow] = useState<any>(false);
   const [loginModalShow, setLoginModalShow] = useState<any>(false);
@@ -52,18 +49,8 @@ export function Welcome() {
   const { userInfo } = userSignin;
 
   useEffect(() => {
-    hasEncryptedData().then((hasData) => {
-      if (hasData) {
-        navigate("/login");
-      }
-      if (!userInfo) {
-        navigate("/signin");
-      }
-      if (userInfo && !hasData) {
-        setWelcomeModalShow(true);
-      }
-    });
-  }, [hasEncryptedData, navigate, userInfo]);
+    setWelcomeModalShow(true);
+  }, []);
 
   return (
     <Box px="2" pt="20" color="black.500">

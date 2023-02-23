@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import HLoading from "components/atoms/HLoading";
-// import MessageBox from "components/atoms/MessageBox";
+import MessageBox from "components/atoms/MessageBox";
 
 import Axios from "axios";
 import { AiFillStar } from "react-icons/ai";
@@ -29,17 +29,21 @@ import { GiRoundStar } from "react-icons/gi";
 import { ContactUs, Review } from "components/common";
 import { CreateNewCampaign } from "./CreateNewCampaign";
 import { UploadCampaign } from "./UploadCampaign";
-import { uploadVideo } from "Actions/advertActions";
-import { generateVideoFromImages, getMyMedia } from "Actions/mediaActions";
+//import { uploadVideo } from "Actions/advertActions";
+import { generateVideoFromImages } from "Actions/mediaActions";
 import { UploadThumbnail } from "./UploadThumbnail";
 import { useIpfs } from "components/contexts";
-import { uploadMedia } from "Actions/mediaActions";
+//import { uploadMedia } from "Actions/mediaActions";
+import { createReview } from "Actions/screenActions";
 import { UplaodCampaignThroughImage } from "./UplaodCampaignThroughImage";
+import { userMediasList } from "Actions/userActions";
 
 export function ScreenDetail(props: any) {
   const screenId = window.location.pathname.split("/")[2];
 
   const navigate = useNavigate();
+  const [userScreenRating, setUserScreenRating] = useState<any>(0);
+  const [userReview, setUserReview] = useState<any>("");
   const [screen, setScreen] = useState<any>(null);
   const [screenLoading, setScreenLoading] = useState<any>(true);
   const [screenError, setScreenError] = useState<any>(null);
@@ -57,6 +61,9 @@ export function ScreenDetail(props: any) {
     setUplaodCampaignThroughImageModalShow,
   ] = useState<any>(false);
 
+  const [isOldMedia, setIsOldMedia] = useState<any>(true);
+  const [isOldThumbnail, setIsOldThumbnail] = useState<any>(true);
+  const [mediaId, setMediaId] = useState<any>("");
   const [campaignName, setCampaignName] = useState("");
   const [fileUrl, setFileUrl] = useState<any>();
   const [thumbnailUrl, setThumbnailUrl] = useState<any>();
@@ -64,7 +71,7 @@ export function ScreenDetail(props: any) {
   const [images, setImages] = useState<any>([]);
   const { addFile } = useIpfs();
   //console.log("Type of data buffer ----: ", typeof fileUrl, fileUrl);
-  console.log("screeen :::::::::::::", JSON.stringify(screen));
+  //console.log("screeen :::::::::::::", JSON.stringify(screen));
   const countEachRating = {
     5: 0,
     4: 0,
@@ -83,9 +90,20 @@ export function ScreenDetail(props: any) {
   } = videoUpload;
   const videoFromImages = useSelector((state: any) => state.videoFromImages);
   const { loading: loadingVideo, error: errorVideo, video } = videoFromImages;
+
+  const screenReviewCreate = useSelector(
+    (state: any) => state.screenReviewCreate
+  );
+  const {
+    loading: loadingCommnet,
+    success: screenReviewCreateSuccess,
+    error: errorComment,
+    review,
+  } = screenReviewCreate;
+  console.log("errorComment : ", errorComment);
   //console.log("videoFromImages : 331311-----", video);
 
-  const myMedia = useSelector((state: any) => state.myMedia);
+  const myMedia = useSelector((state: any) => state.userMedia);
   const { loading: loadingMyMedia, error: errorMyMedia, medias } = myMedia;
   // console.log("media  : ", medias);
 
@@ -104,6 +122,19 @@ export function ScreenDetail(props: any) {
       }
     });
   }
+  const handlePost = () => {
+    //console.log("handlepost called!");
+    if (userScreenRating > 0 && userReview.length > 10) {
+      dispatch(
+        createReview(screenId, {
+          rating: userScreenRating,
+          comment: userReview,
+        })
+      );
+      setUserScreenRating(0);
+      setUserReview("");
+    }
+  };
 
   const getPinDetails = async (pinID: any) => {
     try {
@@ -120,10 +151,10 @@ export function ScreenDetail(props: any) {
       );
     }
   };
-  const getVideoList = async (screenId: any) => {
+  const getCampaignListByScreenId = async (screenId: any) => {
     try {
       const { data } = await Axios.get(
-        `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}/screenVideos`
+        `${process.env.REACT_APP_BLINDS_SERVER}/api/campaign/${screenId}/screen`
       );
       setVideosList(data);
       setVideoLoading(false);
@@ -142,9 +173,10 @@ export function ScreenDetail(props: any) {
         `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}`
       );
       setScreen(data);
+      //console.log("screen details page screen : ", JSON.stringify(data));
       setScreenLoading(false);
       getPinDetails(data.locationPin);
-      getVideoList(data._id);
+      getCampaignListByScreenId(data._id);
     } catch (error: any) {
       setScreenError(
         error.response && error.response.data.message
@@ -157,51 +189,68 @@ export function ScreenDetail(props: any) {
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    if (userInfo && !userInfo.defaultWallet) {
-      navigate("/welcome");
-    } else if (!userInfo) {
-      navigate("/signin");
+    // if (userInfo && !userInfo.defaultWallet) {
+    //   navigate("/welcome");
+    // } else if (!userInfo) {
+    //   navigate("/signin");
+    // }
+    if (screenReviewCreateSuccess) {
+      alert("review Added SuccessFull!");
     }
     getScreentDetail(screenId);
-    dispatch(getMyMedia());
+    dispatch(userMediasList(userInfo));
     if (video) {
-      console.log("video : 331311", video);
+      //console.log("video : 331311", video);
     }
   }, [dispatch, navigate, userInfo, loading]);
 
+  const createCampaignFromOldMediaAndThumbnail = () => {
+    navigate(`/carts/${mediaId}/${screenId}/${campaignName}/${thumbnailUrl}`);
+  };
+
   const videoUploadHandler = (e: any) => {
     e.preventDefault();
-    //console.log("uplaod video fumction called!");
+    console.log("uplaod video fumction called!");
+    //console.log("fileurl : ", fileUrl);
+    console.log("thumnail : ", thumbnailUrl);
+    console.log("campaign Name : ", campaignName);
+    console.log("mediaId : ", mediaId);
+    if (isOldMedia) {
+      createCampaignFromOldMediaAndThumbnail();
+    }
     // First get cid if not
-    setLoading(true);
-    addFile(fileUrl)
-      .then(({ cid }) => {
-        const strCid = cid.toString();
-        dispatch(
-          uploadMedia({
-            cid: strCid,
-            owner: userInfo.defaultWallet,
-            userId: userInfo._id,
-          })
-        );
-        return strCid;
-      })
-      .then((videoCid) => {
-        addFile(thumbnailUrl).then(({ cid }) => {
-          const strCid = cid.toString();
-          dispatch(
-            uploadVideo(screenId, {
-              advert: `https://ipfs.io/ipfs/${videoCid}`,
-              title: campaignName,
-              thumbnail: `https://ipfs.io/ipfs/${strCid}`,
-              defaultWallet: userInfo.defaultWallet,
-            })
-          );
-        });
-      })
-      .catch((error) => {
-        setLoading(false);
-      });
+    // setLoading(true);
+    // addFile(fileUrl)
+    //   .then(({ cid }) => {
+    //     const strCid = cid.toString();
+    //     dispatch(
+    //       uploadMedia({
+    //         cid: strCid,
+    //         owner: userInfo.defaultWallet,
+    //         userId: userInfo._id,
+    //       })
+    //     );
+    //     return strCid;
+    //   })
+    //   .then((videoCid) => {
+    //     addFile(thumbnailUrl).then(({ cid }) => {
+    //       const strCid = cid.toString();
+    //       dispatch(
+    //         uploadVideo(screenId, {
+    //           advert: `https://ipfs.io/ipfs/${videoCid}`,
+    //           title: campaignName,
+    //           thumbnail: `https://ipfs.io/ipfs/${strCid}`,
+    //           defaultWallet: userInfo.defaultWallet,
+    //         })
+    //       );
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     setLoading(false);
+    //   });
+    console.log("fileurl : ", fileUrl);
+    console.log("thumnail : ", thumbnailUrl);
+    console.log("campaign Name : ", campaignName);
   };
   // if (
   //   screenLoading ||
@@ -226,7 +275,7 @@ export function ScreenDetail(props: any) {
     navigate(`/carts/${screenId}/${uploadedVideo._id}`);
   }
   return (
-    <Box pt="10">
+    <Box pt="20">
       <CreateNewCampaign
         show={campaignModal}
         onHide={() => setCampaignModal(false)}
@@ -242,13 +291,16 @@ export function ScreenDetail(props: any) {
         onHide={() => setUploadCampaignModal(false)}
         openUploadThumbnailModal={() => setUploadThumbnailModal(true)}
         setFileUrl={(value: any) => setFileUrl(value)}
+        setIsOldMedia={(value: any) => setIsOldMedia(value)}
         medias={medias}
+        setMediaId={(value: any) => setMediaId(value)}
       />
       <UploadThumbnail
         show={uploadThumbnailModal}
         onHide={() => setUploadThumbnailModal(false)}
         setThumbnailUrl={(value: any) => setThumbnailUrl(value)}
         videoUploadHandler={videoUploadHandler}
+        setIsOldThumbnail={(value: any) => setIsOldThumbnail(value)}
         medias={medias}
       />
       <UplaodCampaignThroughImage
@@ -264,7 +316,8 @@ export function ScreenDetail(props: any) {
       pinLoading ||
       loading ||
       loadingVideoSave ||
-      loadingMyMedia ? (
+      loadingMyMedia ||
+      loadingCommnet ? (
         <HLoading
           loading={
             screenLoading ||
@@ -272,9 +325,12 @@ export function ScreenDetail(props: any) {
             pinLoading ||
             loading ||
             loadingVideoSave ||
-            loadingMyMedia
+            loadingMyMedia ||
+            loadingCommnet
           }
         />
+      ) : errorComment ? (
+        <MessageBox variant="danger">{errorComment}</MessageBox>
       ) : (
         <Stack>
           <Flex height="804px">
@@ -541,11 +597,26 @@ export function ScreenDetail(props: any) {
                       {`Based on ${screen.numReviews} reviews`}
                     </Text>
                     <Flex>
-                      <GiRoundStar size="20px" color="#0EBCF5" />
-                      <GiRoundStar size="20px" color="#0EBCF5" />
-                      <GiRoundStar size="20px" color="#0EBCF5" />
-                      <GiRoundStar size="20px" color="#0EBCF5" />
-                      <GiRoundStar size="20px" color="#E2E2E2" />
+                      <GiRoundStar
+                        size="20px"
+                        color={screen.rating >= 5 ? "#0EBCF5" : "#E2E2E2"}
+                      />
+                      <GiRoundStar
+                        size="20px"
+                        color={screen.rating >= 5 ? "#0EBCF5" : "#E2E2E2"}
+                      />
+                      <GiRoundStar
+                        size="20px"
+                        color={screen.rating >= 5 ? "#0EBCF5" : "#E2E2E2"}
+                      />
+                      <GiRoundStar
+                        size="20px"
+                        color={screen.rating >= 5 ? "#0EBCF5" : "#E2E2E2"}
+                      />
+                      <GiRoundStar
+                        size="20px"
+                        color={screen.rating >= 5 ? "#0EBCF5" : "#E2E2E2"}
+                      />
                     </Flex>
                   </Stack>
                   <Stack pt="5" width="30%">
@@ -622,11 +693,31 @@ export function ScreenDetail(props: any) {
                 Rate your screen
               </Text>
               <Flex pt="5">
-                <GiRoundStar size="30px" color="#0EBCF5" />
-                <GiRoundStar size="30px" color="#0EBCF5" />
-                <GiRoundStar size="30px" color="#0EBCF5" />
-                <GiRoundStar size="30px" color="#E2E2E2" />
-                <GiRoundStar size="30px" color="#E2E2E2" />
+                <GiRoundStar
+                  size="30px"
+                  color={userScreenRating >= 1 ? "#0EBCF5" : "#E2E2E2"}
+                  onClick={() => setUserScreenRating(1)}
+                />
+                <GiRoundStar
+                  size="30px"
+                  color={userScreenRating >= 2 ? "#0EBCF5" : "#E2E2E2"}
+                  onClick={() => setUserScreenRating(2)}
+                />
+                <GiRoundStar
+                  size="30px"
+                  color={userScreenRating >= 3 ? "#0EBCF5" : "#E2E2E2"}
+                  onClick={() => setUserScreenRating(3)}
+                />
+                <GiRoundStar
+                  size="30px"
+                  color={userScreenRating >= 4 ? "#0EBCF5" : "#E2E2E2"}
+                  onClick={() => setUserScreenRating(4)}
+                />
+                <GiRoundStar
+                  size="30px"
+                  color={userScreenRating >= 5 ? "#0EBCF5" : "#E2E2E2"}
+                  onClick={() => setUserScreenRating(5)}
+                />
               </Flex>
               <Text
                 fontSize="xl"
@@ -642,11 +733,17 @@ export function ScreenDetail(props: any) {
                 width="30%"
                 height="40%"
                 color="#000000"
+                value={userReview}
+                onChange={(e) => setUserReview(e.target.value)}
               />
+              <Button onClick={handlePost} width="30%" py="3">
+                Post
+              </Button>
+
               <Stack pt="10" pb="20">
-                {screen.reviews.length > 0
-                  ? screen.reviews.map((review: any) => (
-                      <Review review={review} />
+                {screen?.reviews.length > 0
+                  ? screen.reviews.map((review: any, index: any) => (
+                      <Review review={review} key={index} />
                     ))
                   : null}
               </Stack>

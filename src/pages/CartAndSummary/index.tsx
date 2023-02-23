@@ -31,16 +31,20 @@ import { BsCalendar2Date } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { createCamapaign } from "Actions/campaignAction";
 import { detailsScreen } from "Actions/screenActions";
+import { useParams } from "react-router-dom";
 
 export function CartAndSummary(props: any) {
+  let { mediaId, screenId, name, url } = useParams();
+
+  const [thumbnail, setThumbnail] = useState<any>("");
   const [startTime, setStartTime] = useState<any>();
   const [endTime, setEndTime] = useState<any>();
   const [startDate, setStartDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
   const [totalSlotBooked, setTotalSlotBooked] = useState<any>(50);
-  const [Campaign, setCampaignName] = useState<any>("");
-  const screenId = "63b4126778f5c028328038e9";
-  const videoId = "63b3e7bb8eb1e1983f0cde64";
+  const [campaignName, setCampaignName] = useState<any>("");
+  // const screenId = location.state.screenId || "63b4126778f5c028328038e9";
+  // const mediaId = location.state.mediaId || "63b3e7bb8eb1e1983f0cde64";
   //const slotId = "63b3e7bb8eb1e1983f0cde64";
   // console.log("start date : ", startDate);
   // console.log("end date : ", endDate);
@@ -70,16 +74,16 @@ export function CartAndSummary(props: any) {
     // time = time[4];
     setStartDate(value);
   };
-  const campaign = useSelector((state: any) => state.createCampaign);
+  const createCampaign = useSelector((state: any) => state.createCampaign);
   const {
     loading: loadingSlotBooking,
     error: errorSlotBooking,
     success: successSlotBooking,
     uploadedCampaign,
-  } = campaign;
+  } = createCampaign;
   const screenDetails = useSelector((state: any) => state.screenDetails);
   const { loading: loadingScreen, error: errorScreen, screen } = screenDetails;
-  console.log("uploadedCampaign : ", JSON.stringify(uploadedCampaign));
+  //console.log("uploadedCampaign : ", JSON.stringify(uploadedCampaign));
   // console.log("screen details  : ", JSON.stringify(screen));
 
   const dispatch = useDispatch<any>();
@@ -88,12 +92,14 @@ export function CartAndSummary(props: any) {
     dispatch(
       createCamapaign({
         screenId,
-        videoId,
+        mediaId,
+        campaignName,
         totalSlotBooked,
         startDate,
         endDate,
         startTime,
         endTime,
+        thumbnail,
       })
     );
   };
@@ -101,6 +107,9 @@ export function CartAndSummary(props: any) {
   //   window.alert("Campaign Createde successfully");
   // }
   useEffect(() => {
+    setCampaignName(name);
+    setThumbnail(`https://ipfs.io/ipfs/${url}`);
+
     dispatch(detailsScreen(screenId));
   }, [dispatch]);
 
@@ -164,8 +173,9 @@ export function CartAndSummary(props: any) {
                       name="share"
                       id="share"
                       size="lg"
-                      color="#888888"
+                      color="#333333"
                       placeholder="Puma snicks"
+                      value={campaignName}
                       onChange={(e) => setCampaignName(e.target.value)}
                     />
                     <Stack align="center" justifyContent="center" width="40%">

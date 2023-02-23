@@ -71,12 +71,12 @@ export function Actions(props: any) {
                           checked={checkedItems[index]}
                         />
                         <Text color=" #403F49 " fontSize="sm" pl="5">
-                          {video.brandName}
+                          {video.media.brandName}
                         </Text>
                       </Flex>
                     </Td>
                     <Td color="#575757" fontSize="sm">
-                      {convertIntoDateAndTime(video.createdAt)}
+                      {convertIntoDateAndTime(video.campaign.createdAt)}
                     </Td>
                     <Td
                       isNumeric
@@ -84,10 +84,12 @@ export function Actions(props: any) {
                       color="#403F49"
                       fontWeight="semibold"
                     >
-                      {video.totalNoOfSlots}
+                      {video.campaign.totalSlotBooked}
                     </Td>
                     <Td fontSize="sm" color="#403F49" fontWeight="semibold">
-                      ₹{video.totalNoOfSlots * screen.rentPerSlot}
+                      ₹
+                      {video.campaign.rentPerSlot *
+                        video.campaign.totalSlotBooked}
                     </Td>
                     <Td>
                       <Select

@@ -1,7 +1,11 @@
 import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
 
-import { createCampaignReducer } from "Reducers/campaignReducers";
+import {
+  createCampaignReducer,
+  campaignListAllReducer,
+  campaignDetailsReducer,
+} from "Reducers/campaignReducers";
 
 import {
   mailSendReducer,
@@ -12,7 +16,8 @@ import {
   userSigninReducer,
   userSignupReducer,
   userUpdateProfileReducer,
-  userVideosReducer,
+  userCampaignReducer,
+  userMediaReducer,
 } from "Reducers/userReducers";
 import {
   walletCreateReducer,
@@ -94,6 +99,8 @@ const initialState = {
 
 const reducer = combineReducers({
   createCampaign: createCampaignReducer,
+  campaignListAll: campaignListAllReducer,
+  campaignDetail: campaignDetailsReducer,
 
   playlistCheck: playlistCheckReducer,
 
@@ -104,7 +111,8 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userScreens: userScreensReducer,
-  userVideos: userVideosReducer,
+  userCampaign: userCampaignReducer,
+  userMedia: userMediaReducer,
   mailSend: mailSendReducer,
 
   walletCreate: walletCreateReducer,

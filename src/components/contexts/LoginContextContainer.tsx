@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-import React, { useEffect } from "react";
+import React from "react";
 // hooks
 import { useWallet } from "./WalletContextContainer";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useLocalStorage } from "hooks";
-import { AUTH_ROUTES } from "utils/constants";
+//import { AUTH_ROUTES } from "utils/constants";
 
 import { WithChildren } from "types/utils";
 import { mnemonicSavePeriodicSyncTag } from "utils/serviceWorkerMessages";
@@ -91,60 +91,60 @@ const ContextProvider = ({ children }: WithChildren) => {
     ]).then();
   };
 
-  useEffect(() => {
-    if (user) {
-      const expired = user.expired;
-      const current = Math.floor(Date.now() / 1000);
-      if (current - Number(expired) < 0 && isUnlocked()) {
-        if (AUTH_ROUTES.includes(pathname)) {
-          const expired = Math.floor(Date.now() / 1000) + 10 * 60; // 10 mins
-          setUser({
-            expired,
-          });
-          // navigate(pathname);
-        } else {
-          if (pathname === "/login") {
-            const target = searchParams.get("target");
-            if (target) return;
-          }
-          // navigate("/upload");
-        }
-      } else {
-        if (AUTH_ROUTES.includes(pathname)) {
-          navigate("/login");
-        }
-      }
-    } else {
-      if (AUTH_ROUTES.includes(pathname)) {
-        // navigate("/");
-      }
-    }
-    /* eslint-disable-next-line */
-  }, [pathname]);
+  // useEffect(() => {
+  //   if (user) {
+  //     const expired = user.expired;
+  //     const current = Math.floor(Date.now() / 1000);
+  //     if (current - Number(expired) < 0 && isUnlocked()) {
+  //       if (AUTH_ROUTES.includes(pathname)) {
+  //         const expired = Math.floor(Date.now() / 1000) + 10 * 60; // 10 mins
+  //         setUser({
+  //           expired,
+  //         });
+  //         // navigate(pathname);
+  //       } else {
+  //         if (pathname === "/login") {
+  //           const target = searchParams.get("target");
+  //           if (target) return;
+  //         }
+  //         // navigate("/upload");
+  //       }
+  //     } else {
+  //       if (AUTH_ROUTES.includes(pathname)) {
+  //         navigate("/login");
+  //       }
+  //     }
+  //   } else {
+  //     if (AUTH_ROUTES.includes(pathname)) {
+  //       // navigate("/");
+  //     }
+  //   }
+  //   /* eslint-disable-next-line */
+  // }, [pathname]);
 
-  useEffect(() => {
-    if (user) {
-      const expired = user.expired;
-      const current = Math.floor(Date.now() / 1000);
-      if (current - Number(expired) > 0) {
-        if (AUTH_ROUTES.includes(pathname)) {
-          navigate("/login");
-        }
-      }
-    }
-    /* eslint-disable-next-line */
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     const expired = user.expired;
+  //     const current = Math.floor(Date.now() / 1000);
+  //     if (current - Number(expired) > 0) {
+  //       if (AUTH_ROUTES.includes(pathname)) {
+  //         navigate("/login");
+  //       }
+  //     }
+  //   }
+  //   /* eslint-disable-next-line */
+  // }, [user]);
 
-  useEffect(() => {
-    isPinSetup().then((hasData) => {
-      if (!hasData) {
-        navigate("/welcome");
-      }
-    });
+  // useEffect(() => {
+  //   isPinSetup().then((hasData) => {
+  //     if (!hasData) {
+  //       navigate("/welcome");
+  //     }
+  //   });
 
-    askForPermissions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   askForPermissions();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const loginUser = async (expired: number) => {
     // check user verification and send message to service worker
