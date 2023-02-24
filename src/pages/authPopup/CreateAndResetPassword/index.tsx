@@ -41,10 +41,6 @@ export function CreateAndResetPassword(props: any) {
   const handleShowConformPassword = () =>
     setShowConformPassword(!showConformPassword);
 
-  const redirect = props?.location?.search.split("=")[1]
-    ? props?.location?.search.split("=")[1]
-    : "/welcome";
-
   const userSignup = useSelector((state: any) => state.userSignup);
   const { userInfo, loading, error } = userSignup;
 

@@ -22,13 +22,15 @@ export function CampaignListOfUser() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userInfo && !userInfo.defaultWallet) {
-      navigate("/welcome");
-    } else if (!userInfo) {
-      navigate("/signin");
-    } else {
-      dispatch(userCampaignsList(userInfo));
-    }
+    // if (userInfo && !userInfo.defaultWallet) {
+    //   console.log("userInfo CampaignListOfUser : ", userInfo);
+    //   navigate("/welcome");
+    // } else if (!userInfo) {
+    //   navigate("/signin");
+    // } else {
+    //   dispatch(userCampaignsList(userInfo));
+    // }
+    dispatch(userCampaignsList(userInfo));
   }, [navigate, dispatch]);
 
   return (

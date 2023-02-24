@@ -19,6 +19,22 @@ import { useSteps } from "chakra-ui-steps";
 
 import { ERROR_IDS } from "utils/constants";
 import { WithChildren } from "types/utils";
+// import * as SolWeb3 from "@solana/web3.js";
+// import bip39 from "bip39";
+
+// const Solana = new SolWeb3.Connection(SolWeb3.clusterApiUrl("devnet"));
+
+// const generateSolanaAddress = async () => {
+//   let mnemonic = bip39.generateMnemonic();
+//   console.log(mnemonic);
+//   const seed = await bip39.mnemonicToSeed(mnemonic);
+//   console.log(seed);
+//   let a = new Uint8Array(seed.toJSON().data.slice(0, 32));
+//   console.log(a);
+//   var kp = SolWeb3.Keypair.fromSeed(a);
+//   console.log(kp);
+//   console.log(kp.publicKey.toBase58());
+// };
 
 interface Context {
   mnemonics: any;
@@ -65,6 +81,7 @@ export const ContextProvider = ({ children }: WithChildren) => {
   const generateAndSave = (pin: string): Promise<void> => {
     var startTime = performance.now();
     setIsLoading(true);
+    console.log("generateAndSave : ", wallet);
     const $walletGenerate = WalletHelper.generateAndSave(pin, wallet);
     const $newJwk = $walletGenerate.then(({ jwk }) => jwk);
     set$jwk($newJwk);

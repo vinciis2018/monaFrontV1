@@ -31,10 +31,11 @@ import { BsCalendar2Date } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { createCamapaign } from "Actions/campaignAction";
 import { detailsScreen } from "Actions/screenActions";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export function CartAndSummary(props: any) {
   let { mediaId, screenId, name, url } = useParams();
+  const navigate = useNavigate();
 
   const [thumbnail, setThumbnail] = useState<any>("");
   const [startTime, setStartTime] = useState<any>();
@@ -81,6 +82,10 @@ export function CartAndSummary(props: any) {
     success: successSlotBooking,
     uploadedCampaign,
   } = createCampaign;
+  if (successSlotBooking) {
+    alert("Campaign created successfully");
+    navigate("/");
+  }
   const screenDetails = useSelector((state: any) => state.screenDetails);
   const { loading: loadingScreen, error: errorScreen, screen } = screenDetails;
   //console.log("uploadedCampaign : ", JSON.stringify(uploadedCampaign));

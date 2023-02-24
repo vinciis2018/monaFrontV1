@@ -19,26 +19,9 @@ import { getFileData } from "services/utils";
 
 export function UploadCampaign(props: any) {
   const { medias } = props;
-  console.log("medial in UploadCampaign ", medias);
+  // console.log("medial in UploadCampaign ", medias);
   const controls = useAnimation();
   const [selectedMedia, setSelectedMedia] = useState<any>("");
-  const collection = [
-    {
-      _id: "1",
-      image:
-        "https://bafybeid7zb5iw4oy7jvj7emoenrdrhmsfhh5smph3ce4u5ew4oayaw5uje.ipfs.w3s.link/pepsi.png",
-    },
-    {
-      _id: "2",
-      image:
-        "https://bafybeic5qx24cqwvytaoqovdz2l2n4uzbff3f7ugkljqs5ekg3rz2c6ine.ipfs.w3s.link/fesbook.png",
-    },
-    {
-      _id: "3",
-      image:
-        "https://bafybeihcaruado32uog3nagvxoilh6vnglbair4kqgrkplybkgddbcebpe.ipfs.w3s.link/magdonal.png",
-    },
-  ];
   const [isUploading, setIsUploading] = useState(false);
   const [screenImage, setScreenImage] = useState<any>();
   let hiddenInput: any = null;
@@ -56,6 +39,8 @@ export function UploadCampaign(props: any) {
     const fileThumbnail = URL.createObjectURL(file);
     const [dataBuffer] = await getFileData(fileThumbnail);
     props.setFileUrl(dataBuffer);
+    props.setIsOldMedia(false);
+    setSelectedMedia(fileThumbnail);
     setIsUploading(false);
   }
   const handleNext = () => {

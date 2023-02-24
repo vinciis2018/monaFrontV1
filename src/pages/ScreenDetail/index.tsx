@@ -29,16 +29,15 @@ import { GiRoundStar } from "react-icons/gi";
 import { ContactUs, Review } from "components/common";
 import { CreateNewCampaign } from "./CreateNewCampaign";
 import { UploadCampaign } from "./UploadCampaign";
-//import { uploadVideo } from "Actions/advertActions";
 import { generateVideoFromImages } from "Actions/mediaActions";
 import { UploadThumbnail } from "./UploadThumbnail";
 import { useIpfs } from "components/contexts";
-//import { uploadMedia } from "Actions/mediaActions";
 import { createReview } from "Actions/screenActions";
 import { UplaodCampaignThroughImage } from "./UplaodCampaignThroughImage";
 import { userMediasList } from "Actions/userActions";
 
 export function ScreenDetail(props: any) {
+  const dispatch = useDispatch<any>();
   const screenId = window.location.pathname.split("/")[2];
 
   const navigate = useNavigate();
@@ -66,9 +65,11 @@ export function ScreenDetail(props: any) {
   const [mediaId, setMediaId] = useState<any>("");
   const [campaignName, setCampaignName] = useState("");
   const [fileUrl, setFileUrl] = useState<any>();
-  const [thumbnailUrl, setThumbnailUrl] = useState<any>();
+  const [thumbnailCid, setThumbnailCid] = useState<any>();
   const [loading, setLoading] = useState<any>(false);
   const [images, setImages] = useState<any>([]);
+  const [loadingUploadMedia, setLoadingUploadMedia] = useState<any>();
+  const [errorUploadMedia, setErrorUploadMedia] = useState<any>();
   const { addFile } = useIpfs();
   //console.log("Type of data buffer ----: ", typeof fileUrl, fileUrl);
   //console.log("screeen :::::::::::::", JSON.stringify(screen));
@@ -81,13 +82,7 @@ export function ScreenDetail(props: any) {
   };
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
-  const videoUpload = useSelector((state: any) => state.videoUpload);
-  const {
-    loading: loadingVideoSave,
-    success: successVideoSave,
-    error: errorVideoSave,
-    uploadedVideo,
-  } = videoUpload;
+
   const videoFromImages = useSelector((state: any) => state.videoFromImages);
   const { loading: loadingVideo, error: errorVideo, video } = videoFromImages;
 
@@ -100,11 +95,16 @@ export function ScreenDetail(props: any) {
     error: errorComment,
     review,
   } = screenReviewCreate;
-  console.log("errorComment : ", errorComment);
+  //console.log("errorComment : ", errorComment);
   //console.log("videoFromImages : 331311-----", video);
 
   const myMedia = useSelector((state: any) => state.userMedia);
-  const { loading: loadingMyMedia, error: errorMyMedia, medias } = myMedia;
+  const {
+    loading: loadingMyMedia,
+    error: errorMyMedia,
+    success,
+    medias,
+  } = myMedia;
   // console.log("media  : ", medias);
 
   if (!screenLoading && screen) {
@@ -185,8 +185,31 @@ export function ScreenDetail(props: any) {
       );
     }
   };
+  const createMedia = async (body: any) => {
+    try {
+      const { data } = await Axios.post(
+        `${process.env.REACT_APP_BLINDS_SERVER}/api/medias/create`,
 
-  const dispatch = useDispatch<any>();
+        { userInfo, ...body },
+        {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      console.log("created media : ", JSON.stringify(data));
+      navigate(
+        `/carts/${data._id}/${screenId}/${data.title}/${
+          data.thumbnail.split("/")[4]
+        }`
+      );
+    } catch (error: any) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+    }
+  };
 
   useEffect(() => {
     // if (userInfo && !userInfo.defaultWallet) {
@@ -205,52 +228,68 @@ export function ScreenDetail(props: any) {
   }, [dispatch, navigate, userInfo, loading]);
 
   const createCampaignFromOldMediaAndThumbnail = () => {
-    navigate(`/carts/${mediaId}/${screenId}/${campaignName}/${thumbnailUrl}`);
+    navigate(`/carts/${mediaId}/${screenId}/${campaignName}/${thumbnailCid}`);
   };
+  // console.log("fileurl : ", fileUrl);
+  // console.log("thumnail : ", thumbnailCid);
+  // console.log("campaign Name : ", campaignName);
 
-  const videoUploadHandler = (e: any) => {
+  const videoUploadHandler = async (e: any) => {
     e.preventDefault();
     console.log("uplaod video fumction called!");
-    //console.log("fileurl : ", fileUrl);
-    console.log("thumnail : ", thumbnailUrl);
-    console.log("campaign Name : ", campaignName);
-    console.log("mediaId : ", mediaId);
-    if (isOldMedia) {
+    // console.log("fileurl : ", fileUrl);
+    // console.log("thumnail : ", thumbnailCid);
+    // console.log("campaign Name : ", campaignName);
+    // console.log("mediaId : ", mediaId);
+
+    if (isOldMedia && isOldThumbnail) {
+      console.log("Both are old");
       createCampaignFromOldMediaAndThumbnail();
+    } else if (!isOldThumbnail && isOldMedia) {
+      console.log("old media new thumbnail");
+      setLoading(true);
+      addFile(thumbnailCid).then(({ cid }) => {
+        const strCid = cid.toString();
+        setLoading(true);
+        navigate(`/carts/${mediaId}/${screenId}/${campaignName}/${strCid}`);
+      });
+    } else if (!isOldMedia && !isOldThumbnail) {
+      console.log("new media new thumbnail");
+      setLoading(true);
+      addFile(fileUrl)
+        .then(({ cid }) => {
+          const strCid = cid.toString();
+          return strCid;
+        })
+        .then((media) => {
+          addFile(thumbnailCid).then(async ({ cid }) => {
+            const strCid = cid.toString();
+            setThumbnailCid(strCid);
+            createMedia({
+              title: campaignName,
+              media: `https://ipfs.io/ipfs/${media}`,
+              thumbnail: `https://ipfs.io/ipfs/${strCid}`,
+            });
+
+            setLoading(false);
+          });
+        })
+        .catch((error) => {
+          setLoading(false);
+        });
+    } else {
+      console.log("new media old thumbnail");
+      setLoading(true);
+      addFile(fileUrl).then(({ cid }) => {
+        const strCid = cid.toString();
+        createMedia({
+          title: campaignName,
+          media: `https://ipfs.io/ipfs/${strCid}`,
+          thumbnail: `https://ipfs.io/ipfs/${thumbnailCid}`,
+        });
+        setLoading(true);
+      });
     }
-    // First get cid if not
-    // setLoading(true);
-    // addFile(fileUrl)
-    //   .then(({ cid }) => {
-    //     const strCid = cid.toString();
-    //     dispatch(
-    //       uploadMedia({
-    //         cid: strCid,
-    //         owner: userInfo.defaultWallet,
-    //         userId: userInfo._id,
-    //       })
-    //     );
-    //     return strCid;
-    //   })
-    //   .then((videoCid) => {
-    //     addFile(thumbnailUrl).then(({ cid }) => {
-    //       const strCid = cid.toString();
-    //       dispatch(
-    //         uploadVideo(screenId, {
-    //           advert: `https://ipfs.io/ipfs/${videoCid}`,
-    //           title: campaignName,
-    //           thumbnail: `https://ipfs.io/ipfs/${strCid}`,
-    //           defaultWallet: userInfo.defaultWallet,
-    //         })
-    //       );
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //   });
-    console.log("fileurl : ", fileUrl);
-    console.log("thumnail : ", thumbnailUrl);
-    console.log("campaign Name : ", campaignName);
   };
   // if (
   //   screenLoading ||
@@ -270,10 +309,7 @@ export function ScreenDetail(props: any) {
     //dispatch(generateVideoFromImages(images, duration, width, height));
     dispatch(generateVideoFromImages(images, 10, 1280, 720));
   };
-  if (successVideoSave) {
-    alert("Video uploaded success full");
-    navigate(`/carts/${screenId}/${uploadedVideo._id}`);
-  }
+
   return (
     <Box pt="20">
       <CreateNewCampaign
@@ -298,7 +334,7 @@ export function ScreenDetail(props: any) {
       <UploadThumbnail
         show={uploadThumbnailModal}
         onHide={() => setUploadThumbnailModal(false)}
-        setThumbnailUrl={(value: any) => setThumbnailUrl(value)}
+        setThumbnailCid={(value: any) => setThumbnailCid(value)}
         videoUploadHandler={videoUploadHandler}
         setIsOldThumbnail={(value: any) => setIsOldThumbnail(value)}
         medias={medias}
@@ -306,7 +342,7 @@ export function ScreenDetail(props: any) {
       <UplaodCampaignThroughImage
         show={uplaodCampaignThroughImageModalShow}
         onHide={() => setUplaodCampaignThroughImageModalShow(false)}
-        setThumbnailUrl={(value: any) => setThumbnailUrl(value)}
+        setThumbnailCid={(value: any) => setThumbnailCid(value)}
         videoUploadHandler={sendImages}
         medias={medias}
         setImages={setImages}
@@ -315,22 +351,24 @@ export function ScreenDetail(props: any) {
       videoLoading ||
       pinLoading ||
       loading ||
-      loadingVideoSave ||
       loadingMyMedia ||
-      loadingCommnet ? (
+      loadingCommnet ||
+      loadingUploadMedia ? (
         <HLoading
           loading={
             screenLoading ||
             videoLoading ||
             pinLoading ||
             loading ||
-            loadingVideoSave ||
             loadingMyMedia ||
-            loadingCommnet
+            loadingCommnet ||
+            loadingUploadMedia
           }
         />
-      ) : errorComment ? (
-        <MessageBox variant="danger">{errorComment}</MessageBox>
+      ) : errorComment || errorUploadMedia ? (
+        <MessageBox variant="danger">
+          {errorComment || errorUploadMedia}
+        </MessageBox>
       ) : (
         <Stack>
           <Flex height="804px">

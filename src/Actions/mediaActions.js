@@ -18,23 +18,21 @@ import {
 } from "Constants/mediaConstants";
 
 export const uploadMedia =
-  ({ cid, owner, userId }) =>
+  ({ title, media, thumbnail }) =>
   async (dispatch, getState) => {
     dispatch({
       type: MEDIA_UPLOAD_REQUEST,
-      payload: { cid, owner, userId },
+      payload: { title, media, thumbnail },
     });
     const {
       userSignin: { userInfo },
     } = getState();
+    console.log("userInfo : ", userInfo);
     try {
       const { data } = await Axios.post(
-        `${process.env.REACT_APP_BLINDS_SERVER}/api/media/create`,
-        {
-          cid,
-          owner,
-          userId,
-        },
+        `${process.env.REACT_APP_BLINDS_SERVER}/api/medias/create`,
+
+        { userInfo, title, media, thumbnail },
         {
           headers: {
             Authorization: `Bearer ${userInfo.token}`,
@@ -67,7 +65,7 @@ export const getMedia = (mediaId) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.get(
-      `${process.env.REACT_APP_BLINDS_SERVER}/api/media/${mediaId}`,
+      `${process.env.REACT_APP_BLINDS_SERVER}/api/medias/${mediaId}`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
@@ -99,7 +97,7 @@ export const getAllMedia = () => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.get(
-      `${process.env.REACT_APP_BLINDS_SERVER}/api/media`,
+      `${process.env.REACT_APP_BLINDS_SERVER}/api/medias`,
       {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
@@ -132,7 +130,7 @@ export const getMyMedia = () => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.get(
-      `${process.env.REACT_APP_BLINDS_SERVER}/api/media/${userInfo._id}/myMedias`,
+      `${process.env.REACT_APP_BLINDS_SERVER}/api/medias/${userInfo._id}/myMedias`,
       userInfo,
       {
         headers: {

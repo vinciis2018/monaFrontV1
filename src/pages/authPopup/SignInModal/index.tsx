@@ -80,14 +80,6 @@ export function SignInModal(props: any) {
       });
     };
     gapi.load("client:auth2", initClient);
-
-    if (userInfo) {
-      if (userInfo.defaultWallet) {
-        navigate(redirect);
-      } else {
-        navigate("/welcome");
-      }
-    }
   }, [props?.history, redirect, userInfo, navigate, error]);
 
   const onSuccess = async (res: any) => {

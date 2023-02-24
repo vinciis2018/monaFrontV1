@@ -38,9 +38,6 @@ export function EmailVerificationForForgetPasswordModal(props: any) {
   const [userName, setName] = useState<any>("abc");
   const [emailErrorStatus, setEmailErrorStatus] = useState<any>(false);
   const [emailError, setEmailError] = useState<any>("");
-  const redirect = props?.location?.search.split("=")[1]
-    ? props?.location?.search.split("=")[1]
-    : "/welcome";
 
   function ValidateEmail(email: string) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -76,7 +73,7 @@ export function EmailVerificationForForgetPasswordModal(props: any) {
     };
     gapi.load("client:auth2", initClient);
     dispatch(signout());
-  }, [dispatch, props?.history, redirect, userInfo]);
+  }, [dispatch, props?.history, userInfo]);
 
   return (
     <Box>

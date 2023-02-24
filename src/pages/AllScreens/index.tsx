@@ -51,9 +51,7 @@ export function AllScreens() {
     dispatch(listScreens({ pageNumber }));
   };
   useEffect(() => {
-    if (userInfo && !userInfo.defaultWallet) {
-      navigate("/welcome");
-    } else if (!userInfo) {
+    if (!userInfo) {
       navigate("/signin");
     }
     dispatch(listScreens({ pageNumber }));

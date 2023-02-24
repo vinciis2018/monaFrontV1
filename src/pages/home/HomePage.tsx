@@ -50,9 +50,14 @@ export function HomePage() {
 
   const dispatch = useDispatch<any>();
   React.useEffect(() => {
-    if (userInfo && !userInfo.defaultWallet) {
-      navigate("/welcome");
-    } else if (!userInfo) {
+    console.log("userInfo CampaignListOfUser : ", userInfo);
+    // if (userInfo && !userInfo.defaultWallet) {
+    //   console.log("userInfo homepage : ", userInfo);
+    //   navigate("/welcome");
+    // } else if (!userInfo) {
+    //   navigate("/signin");
+    // }
+    if (!userInfo) {
       navigate("/signin");
     }
     if (allCampaign) {
@@ -235,7 +240,7 @@ export function HomePage() {
             </Text>
             <SimpleGrid columns={[1, 3]} spacing="10">
               {topThreeVideos &&
-                topThreeVideos.map((eachVideo: any) => (
+                topThreeVideos?.map((eachVideo: any) => (
                   <AtvertiseBox video={eachVideo} key={eachVideo._id} />
                 ))}
             </SimpleGrid>

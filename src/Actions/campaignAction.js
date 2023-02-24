@@ -84,6 +84,7 @@ export const getCampaignList = () => async (dispatch) => {
     const { data } = await Axios.get(
       `${process.env.REACT_APP_BLINDS_SERVER}/api/campaign/all`
     );
+    console.log("all campaign data : ", data);
     dispatch({ type: CAMPAIGN_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({

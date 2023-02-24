@@ -98,34 +98,23 @@ export function PinCreateModal(props: any) {
             )}
 
             <Box py="2" px="0" align="center">
-              <Box align="center">
-                <Text
-                  textAlign="left"
-                  px="4"
-                  pt="4"
-                  fontSize="xs"
-                  fontWeight="600"
-                >
+              <Box>
+                <Text pt="4" fontSize="md" fontWeight="600">
                   Enter your 6 digit secret pin
                 </Text>
-                <HPasswordInput
-                  label="Create Access PIN"
-                  onChange={setCreatePin}
-                  onComplete={() => completedCreatePin()}
-                  focused={createPinFocus}
-                  ref={pinInputRef}
-                  onFocus={() => activeFocusArea("create")}
-                  labelAlign="left"
-                />
+                <Stack justifyContent="flex-start">
+                  <HPasswordInput
+                    label="Create Access PIN"
+                    onChange={setCreatePin}
+                    onComplete={() => completedCreatePin()}
+                    focused={createPinFocus}
+                    ref={pinInputRef}
+                    onFocus={() => activeFocusArea("create")}
+                  />
+                </Stack>
               </Box>
               <Box align="center">
-                <Text
-                  textAlign="left"
-                  px="4"
-                  pt="4"
-                  fontSize="xs"
-                  fontWeight="600"
-                >
+                <Text px="4" pt="4" fontSize="md" fontWeight="600">
                   Confirm your 6 digit secret pin
                 </Text>
                 <HPasswordInput

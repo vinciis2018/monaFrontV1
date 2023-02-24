@@ -33,9 +33,6 @@ export function EmailVerification(props: any) {
 
   const [email, setEmail] = useState("");
   const [userName, setName] = useState("abc");
-  const redirect = props?.location?.search.split("=")[1]
-    ? props?.location?.search.split("=")[1]
-    : "/welcome";
   // console.log("process.env.GOOGLE_CLIENT_ID : ", process.env.GOOGLE_CLIENT_ID);
   const submitHandler = async (e: any) => {
     e.preventDefault();
@@ -62,7 +59,7 @@ export function EmailVerification(props: any) {
     };
     gapi.load("client:auth2", initClient);
     dispatch(signout());
-  }, [dispatch, props?.history, redirect, userInfo]);
+  }, [dispatch, props?.history, userInfo]);
 
   return (
     <Box p="1%" pl="25%" width="100%">

@@ -12,11 +12,7 @@ export function Signin(props: any) {
   const { userInfo } = userSignin;
 
   useEffect(() => {
-    if (userInfo) {
-      navigate("/welcome");
-    } else {
-      setSigninModalShow(true);
-    }
+    setSigninModalShow(true);
   }, [props?.history, userInfo, navigate]);
 
   return (

@@ -136,10 +136,15 @@ export const EditScreen = (props: any) => {
 
   const redirect = props?.location?.search
     ? props?.location?.search.split("=")[1]
-    : "/signin";
+    : "/";
 
   const dispatch = useDispatch<any>();
   useEffect(() => {
+    if (userInfo) {
+      props?.history?.push(redirect);
+    } else {
+      navigate("/signin");
+    }
     if (successUpdate) {
       alert("Screen updated successfully");
       navigate("/screen-owner");
@@ -179,10 +184,6 @@ export const EditScreen = (props: any) => {
     }
     if (!loadingPin && pin) {
       setJsonData(pin);
-    }
-
-    if (!userInfo) {
-      navigate("/signin");
     }
   }, [dispatch, userInfo, successUpdate, navigate, redirect, screen]);
 
@@ -568,7 +569,7 @@ export const EditScreen = (props: any) => {
                     Enter your screen dimensions
                   </Text>
                 </VStack>
-                <InputGroup size="lg" width="10%">
+                <InputGroup size="lg" width="20%">
                   <HStack spacing="3">
                     <Input
                       placeholder="Width"

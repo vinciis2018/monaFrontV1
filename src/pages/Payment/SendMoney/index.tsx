@@ -31,7 +31,8 @@ export function SendMoney(props: any) {
 
   useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
-      //navigate("/welcome");
+      //console.log("userInfo SendMoney : ", userInfo);
+      navigate("/welcome");
     } else if (!userInfo) {
       navigate("/signin");
     }

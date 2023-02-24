@@ -72,11 +72,11 @@ export function MySingleCampaign(props: any) {
               </Text>
               {}
               <Text color="#575757" fontSize="md" align="left">
-                {convertIntoDateAndTime(campaign.createdAt)?.split(",")[0]},
-                {convertIntoDateAndTime(campaign.createdAt)?.split(",")[1]}
+                {convertIntoDateAndTime(campaign.startDate)?.split(",")[0]},
+                {convertIntoDateAndTime(campaign.startDate)?.split(",")[1]}
               </Text>
               <Text color="#575757" fontSize="md" align="left">
-                {convertIntoDateAndTime(campaign.createdAt)?.split(",")[2]}
+                {convertIntoDateAndTime(campaign.startDate)?.split(",")[2]}
               </Text>
             </VStack>
             <VStack align="left">

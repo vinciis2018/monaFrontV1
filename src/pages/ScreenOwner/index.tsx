@@ -82,6 +82,7 @@ export function ScreenOwner() {
   };
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
+  //console.log("userInfo", JSON.stringify(userInfo));
   const userScreens = useSelector((state: any) => state.userScreens);
   const { loading: loadingScreens, error: errorScreens, screens } = userScreens;
   //console.log("screens 333 : ", JSON.stringify(screens));
@@ -125,6 +126,7 @@ export function ScreenOwner() {
 
   useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
+      console.log("userInfo screenowner : ", userInfo);
       navigate("/welcome");
     } else if (!userInfo) {
       navigate("/signin");

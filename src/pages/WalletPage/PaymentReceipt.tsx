@@ -22,6 +22,7 @@ export function PaymentReceipt(props: any) {
 
   useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
+      console.log("userInfo paymentReci : ", userInfo);
       navigate("/welcome");
     } else if (!userInfo) {
       navigate("/signin");

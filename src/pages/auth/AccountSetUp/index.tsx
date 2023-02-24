@@ -41,7 +41,7 @@ export function AccountSetUp(props: any) {
 
   const redirect = props?.location?.search.split("=")[1]
     ? props?.location?.search.split("=")[1]
-    : "/welcome";
+    : "/";
 
   const userSignup = useSelector((state: any) => state.userSignup);
   const { userInfo, loading, error } = userSignup;
@@ -54,7 +54,7 @@ export function AccountSetUp(props: any) {
     } else {
       dispatch(signup(props.email, password));
       alert("user created, please create a wallet to proceed");
-      navigate("/welcome");
+      navigate("/");
     }
   };
 

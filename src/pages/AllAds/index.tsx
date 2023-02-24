@@ -46,11 +46,9 @@ export function AllAds() {
 
   const dispatch = useDispatch<any>();
   React.useEffect(() => {
-    // if (userInfo && !userInfo.defaultWallet) {
-    //   navigate("/welcome");
-    // } else if (!userInfo) {
-    //   navigate("/signin");
-    // }
+    if (!userInfo) {
+      navigate("/signin");
+    }
     dispatch(getPinJson());
     dispatch(getCampaignList());
   }, [dispatch, navigate, userInfo]);
