@@ -20,6 +20,7 @@ export default function HLoading({
       isOpen={loading}
       onClose={handleClose}
       isCentered
+      blockScrollOnMount={false}
     >
       <ModalContent align="center">
         <Box align="center">

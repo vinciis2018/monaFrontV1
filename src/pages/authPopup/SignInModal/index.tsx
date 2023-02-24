@@ -91,6 +91,8 @@ export function SignInModal(props: any) {
     if (validateEmail(email)) {
       dispatch(signin(email, password));
       props.onHide();
+      console.log("gjkhjkkkjh");
+
       navigate("/");
     } else {
       setEmailErrorStatus(true);
@@ -203,7 +205,7 @@ export function SignInModal(props: any) {
                       <Input
                         id="email"
                         onChange={(e) => setEmail(e?.target?.value)}
-                        placeholder="rrrrrrrr@gmail.com"
+                        placeholder="youremail@gmail.com"
                         value={email}
                         required
                         type="email"

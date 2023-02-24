@@ -32,7 +32,11 @@ export function HomePage() {
   const [topThreeVideos, setTopThreevideo] = useState<any>([]);
 
   const userSignin = useSelector((state: any) => state.userSignin);
-  const { userInfo } = userSignin;
+  const {
+    loading: loadingUserInfo,
+    error: errorUserInfo,
+    userInfo,
+  } = userSignin;
 
   const screenList = useSelector((state: any) => state.screenList);
   const { loading: loadingScreens, error: errorScreens, screens } = screenList;
@@ -50,8 +54,8 @@ export function HomePage() {
 
   const dispatch = useDispatch<any>();
   React.useEffect(() => {
-    console.log("userInfo CampaignListOfUser : ", userInfo);
-    if (!userInfo) {
+    // console.log("userInfo : ", userInfo);
+    if (!loadingUserInfo && !userInfo && errorUserInfo) {
       navigate("/signin");
     }
     if (allCampaign) {
@@ -64,7 +68,8 @@ export function HomePage() {
     }
     dispatch(getCampaignList());
     dispatch(listScreens({}));
-  }, [dispatch, navigate, userInfo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, navigate, userInfo, loadingUserInfo, errorUserInfo]);
 
   const categorys = [
     {

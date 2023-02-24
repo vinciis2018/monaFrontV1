@@ -18,7 +18,7 @@ import {
   AiOutlineFundProjectionScreen,
   AiOutlineSetting,
   AiOutlineWallet,
-  AiOutlineAim,
+  // AiOutlineAim,
   AiOutlinePicture,
   AiOutlineBell,
   AiOutlineUser,
@@ -112,20 +112,18 @@ export const NavBar = () => {
             <Image width={{ base: 70, lg: "100px" }} src={Name} />
           </Stack>
           {!userInfo ? (
-            <>
-              <Button
-                bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
-                as={RouterLink}
-                to={`/signin`}
-                size="sm"
-                fontSize="xs"
-                onClick={() => navigate("/signin")}
-                ref={btnRef}
-                p="2"
-              >
-                Please Signin
-              </Button>
-            </>
+            <Button
+              bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
+              as={RouterLink}
+              to={`/signin`}
+              size="sm"
+              fontSize="xs"
+              onClick={() => navigate("/signin")}
+              ref={btnRef}
+              p="2"
+            >
+              Please Signin
+            </Button>
           ) : (
             <Stack
               align="center"
@@ -142,7 +140,7 @@ export const NavBar = () => {
                 type="Button"
                 onClick={() => navigate("/screen-owner")}
               >
-                Screan Owners
+                My Screens
               </Text>
               <Text
                 color="#3E3D48"
@@ -151,7 +149,7 @@ export const NavBar = () => {
                 pr="5"
                 fontWeight="semibold"
               >
-                My Screan
+                My Campaigns
               </Text>
 
               <Box
@@ -245,17 +243,17 @@ export const NavBar = () => {
                   </Tooltip>
                 </MenuButton>
                 <MenuList>
-                  <MenuItem
+                  {/* <MenuItem
                     as={RouterLink}
                     to={`/mapbox`}
                     color="black"
                     icon={<AiOutlineAim size="20px" />}
                   >
                     Explore
-                  </MenuItem>
+                  </MenuItem> */}
                   <MenuItem
                     as={RouterLink}
-                    to={`/screens`}
+                    to={`/all-screens`}
                     color="black"
                     icon={<AiOutlineFundProjectionScreen size="20px" />}
                   >
@@ -263,7 +261,7 @@ export const NavBar = () => {
                   </MenuItem>
                   <MenuItem
                     as={RouterLink}
-                    to={`/adverts`}
+                    to={`/allads`}
                     color="black"
                     icon={<AiOutlinePicture size="20px" />}
                   >

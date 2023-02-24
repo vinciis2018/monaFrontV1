@@ -28,10 +28,10 @@ export function FooterPage() {
             <Image width={{ base: 70, lg: "100px" }} src={Name} />
           </Stack>
           <Box align="left" mt="10">
+            <Text fontWeight="semibold" color="#000000">
+              Registered Office Address:
+            </Text>{" "}
             <Text fontSize="sm" color="#333333">
-              <Text fontWeight="semibold" color="#000000">
-                Registered Office Address:
-              </Text>{" "}
               Vinciis Creations Private Limited, D 65/319 C, Lahartara, B
               Shivdaspur, Varanasi, UP, 221002
             </Text>

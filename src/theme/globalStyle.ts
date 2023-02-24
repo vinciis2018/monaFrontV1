@@ -10,7 +10,6 @@ const GlobalStyle = createGlobalStyle`
   .App {
     background: ${colors.white};
     color: white;
-    overflow-y: auto;
     display: column;
     height: 100%;
     @media all and (display-mode: standalone) {

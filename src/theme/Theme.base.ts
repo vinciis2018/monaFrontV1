@@ -7,6 +7,7 @@ export const theme = extendTheme({
     global: {
       "html, body, #root": {
         height: "100%",
+        overflow: "auto",
       },
     },
   },
