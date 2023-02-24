@@ -57,7 +57,7 @@ export function CampaignDetails(props: any) {
               screen: data._id,
             },
             geometry: {
-              coordinates: [data.lat, data.lng],
+              coordinates: [data.lng, data.lat],
               type: "Point",
             },
           },
@@ -139,7 +139,8 @@ export function CampaignDetails(props: any) {
               <Image
                 src={campaign.thumbnail}
                 alt=""
-                width="70%"
+                width="856px"
+                height="333px"
                 borderRadius="8px"
               />
             </Stack>

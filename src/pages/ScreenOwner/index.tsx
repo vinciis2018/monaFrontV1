@@ -125,10 +125,7 @@ export function ScreenOwner() {
   };
 
   useEffect(() => {
-    if (userInfo && !userInfo.defaultWallet) {
-      console.log("userInfo screenowner : ", userInfo);
-      navigate("/welcome");
-    } else if (!userInfo) {
+    if (!userInfo) {
       navigate("/signin");
     }
     if (successCreate) {
