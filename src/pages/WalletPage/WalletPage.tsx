@@ -93,7 +93,6 @@ export function WalletPage(props: any) {
   useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
       console.log("userInfo  pageney : ", userInfo);
-
       navigate("/welcome");
     } else if (!userInfo) {
       navigate("/signin");

@@ -51,12 +51,6 @@ export function HomePage() {
   const dispatch = useDispatch<any>();
   React.useEffect(() => {
     console.log("userInfo CampaignListOfUser : ", userInfo);
-    // if (userInfo && !userInfo.defaultWallet) {
-    //   console.log("userInfo homepage : ", userInfo);
-    //   navigate("/welcome");
-    // } else if (!userInfo) {
-    //   navigate("/signin");
-    // }
     if (!userInfo) {
       navigate("/signin");
     }

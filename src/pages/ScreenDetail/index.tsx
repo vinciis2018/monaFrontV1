@@ -212,11 +212,6 @@ export function ScreenDetail(props: any) {
   };
 
   useEffect(() => {
-    // if (userInfo && !userInfo.defaultWallet) {
-    //   navigate("/welcome");
-    // } else if (!userInfo) {
-    //   navigate("/signin");
-    // }
     if (screenReviewCreateSuccess) {
       alert("review Added SuccessFull!");
     }
