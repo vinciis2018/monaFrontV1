@@ -1,4 +1,12 @@
-import { Box, Stack, Image, Text, Button, SimpleGrid } from "@chakra-ui/react";
+import {
+  Box,
+  Stack,
+  Image,
+  Text,
+  Button,
+  SimpleGrid,
+  // Flex,
+} from "@chakra-ui/react";
 import { userMediasList } from "Actions/userActions";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
@@ -17,9 +25,9 @@ export function UserProfile() {
   const dispatch = useDispatch<any>();
   useEffect(() => {
     dispatch(userMediasList(userInfo));
-  }, [dispatch]);
+  }, [dispatch, userInfo]);
   return (
-    <Box pt="20">
+    <Stack pt="20" height="100%">
       <Box
         width="100%"
         height="350px"
@@ -30,7 +38,7 @@ export function UserProfile() {
         backgroundSize="cover"
         position="relative"
       >
-        <Box pt="200" width="30%" height="" pl="20">
+        <Box pt="200" width="30%" height="" pl="10">
           <Stack bgColor="#FEFEFE" p="5" boxShadow="2xl" position="relative">
             <Stack align="center" pt="5">
               <Image
@@ -66,7 +74,7 @@ export function UserProfile() {
                 fontSize="xl"
                 fontWeight="semibold"
                 bgColor="#D7380E"
-                width="90%"
+                // width="100%"
                 p="3"
               >
                 Edit profile
@@ -78,7 +86,7 @@ export function UserProfile() {
                 fontSize="xl"
                 fontWeight="semibold"
                 bgColor="#F1F1F1"
-                width="90%"
+                // width="100%"
                 p="3"
                 align="center"
               >
@@ -91,42 +99,46 @@ export function UserProfile() {
           </Stack>
         </Box>
       </Box>
-      <Box pl="500" width="80%">
-        <Stack>
-          <Text
-            color="#000000"
-            fontSize="2xl"
-            fontWeight="semibold"
-            align="left"
-          >
-            Collections
-          </Text>
-        </Stack>
-        <Stack pt="5">
-          {medias?.length === 0 ? (
-            <Text color="#3A3A3A" fontSize="xl" align="left">
-              Upload your first collection
+      <Box pl="10" align="right">
+        <Stack align="end" p="5">
+          <Stack width="70%" align="left">
+            <Text
+              color="#000000"
+              fontSize="2xl"
+              fontWeight="semibold"
+              align="left"
+            >
+              Collections
             </Text>
-          ) : null}
+            {medias?.length === 0 ? (
+              <Text color="#3A3A3A" fontSize="xl" align="left">
+                Upload your first collection
+              </Text>
+            ) : null}
 
-          {loadingMyMedia ? (
-            <HLoading loading={loadingMyMedia} />
-          ) : errorMyMedia ? (
-            <MessageBox variant="danger">{errorMyMedia}</MessageBox>
-          ) : (
-            <SimpleGrid columns={[1, null, 2]} spacing={10}>
-              {medias?.map((media: any) => (
-                <Stack key={media._id}>
-                  <Image src={media.thumbnail} alt="media" width="100%"></Image>
-                  <Text color="#000000" align="left" fontWeight="semibold">
-                    {media.title}
-                  </Text>
-                </Stack>
-              ))}
-            </SimpleGrid>
-          )}
+            {loadingMyMedia ? (
+              <HLoading loading={loadingMyMedia} />
+            ) : errorMyMedia ? (
+              <MessageBox variant="danger">{errorMyMedia}</MessageBox>
+            ) : (
+              <SimpleGrid columns={[1, null, 2]} spacing={10}>
+                {medias?.map((media: any) => (
+                  <Stack key={media._id}>
+                    <Image
+                      src={media.thumbnail}
+                      alt="media"
+                      width="100%"
+                    ></Image>
+                    <Text color="#000000" align="left" fontWeight="semibold">
+                      {media.title}
+                    </Text>
+                  </Stack>
+                ))}
+              </SimpleGrid>
+            )}
+          </Stack>
         </Stack>
       </Box>
-    </Box>
+    </Stack>
   );
 }

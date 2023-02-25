@@ -80,12 +80,12 @@ export function HomePage() {
     {
       image:
         "https://bafybeicduvlghzcrjtuxkro7foazucvuyej25rh3humeujbzt7bmio4hsa.ipfs.w3s.link/raily.png",
-      category: "RAILWAY PLATFORMS",
+      category: "RAILWAYS",
     },
     {
       image:
         "https://bafybeidn5bnz4vlo6h3l3g5eqswwu7ygmktzai2dfdn6vka4xz4xpscpsy.ipfs.w3s.link/indor.png",
-      category: "INDOOR",
+      category: "INDOORS",
     },
     {
       image:

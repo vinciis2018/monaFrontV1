@@ -106,7 +106,7 @@ export const EditScreen = (props: any) => {
   const [measurementUnit, setMeasurementUnit] = useState<any>("ft");
   const [geometry, setGeometry] = useState<any>();
   const [jsonData, setJsonData] = useState<any>(null);
-  const [size, setSize] = useState<any>({});
+  const [syncCode, setSyncCode] = useState<any>("");
 
   const [lng, setLng] = useState<number | undefined>(25.52);
   const [lat, setLat] = useState<number | undefined>(82.33);
@@ -181,6 +181,7 @@ export const EditScreen = (props: any) => {
           coordinates: [lng, lat],
         },
       });
+      setSyncCode(screen.screenCode);
     }
     if (!loadingPin && pin) {
       setJsonData(pin);
@@ -217,6 +218,7 @@ export const EditScreen = (props: any) => {
             endTime,
             lng,
             lat,
+            syncCode,
           })
         );
       });
@@ -245,6 +247,7 @@ export const EditScreen = (props: any) => {
           endTime,
           lng,
           lat,
+          syncCode,
         })
       );
     }
@@ -429,7 +432,7 @@ export const EditScreen = (props: any) => {
                     _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
                     onClick={() => setScreenCategory("RailWay Station")}
                   >
-                    RailWay Station
+                    RailWays
                   </Button>
                 </Stack>
                 <Stack pl="10">
@@ -446,7 +449,7 @@ export const EditScreen = (props: any) => {
                     _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
                     onClick={() => setScreenCategory("Appartment")}
                   >
-                    Appartment
+                    Appartments
                   </Button>
                 </Stack>
               </HStack>
@@ -535,6 +538,15 @@ export const EditScreen = (props: any) => {
                   color="#333333"
                   onClick={prevStep}
                 />
+                <Text
+                  fontSize="lg"
+                  fontWeight="semibold"
+                  color="#333333"
+                  align="left"
+                  pl="5"
+                >
+                  A little details for pricing
+                </Text>
               </Flex>
               <HStack>
                 <VStack fontSize="sm" spacing="2" width="30%" align="left">
@@ -563,7 +575,7 @@ export const EditScreen = (props: any) => {
               <HStack>
                 <VStack fontSize="sm" spacing="2" width="30%" align="left">
                   <Text color="#393939" fontWeight="semibold" align="left">
-                    Screen dimentions
+                    Screen dimentions (height/width)
                   </Text>
                   <Text color="#4D4D4D" align="left">
                     Enter your screen dimensions
@@ -616,7 +628,7 @@ export const EditScreen = (props: any) => {
               <HStack>
                 <VStack fontSize="sm" spacing="2" width="30%" align="left">
                   <Text color="#393939" fontWeight="semibold" align="left">
-                    Enter price for slot
+                    Enter price for slot (in credits)
                   </Text>
                   <Text color="#4D4D4D" align="left">
                     Enter price for each slot
@@ -692,6 +704,17 @@ export const EditScreen = (props: any) => {
                   </Text>
                   <InputGroup size="lg" width="100%" pt="2">
                     <VStack>
+                      <Input
+                        placeholder="DistrictCity"
+                        size="lg"
+                        borderRadius="md"
+                        fontSize="lg"
+                        border="1px"
+                        color="#555555"
+                        py="2"
+                        value={screenAddress}
+                        onChange={(e) => setScreenAddress(e.target.value)}
+                      />
                       <Input
                         placeholder="DistrictCity"
                         size="lg"
@@ -794,7 +817,7 @@ export const EditScreen = (props: any) => {
                   align="left"
                   pl="5"
                 >
-                  Pin your screen location
+                  You are all set to go
                 </Text>
               </Flex>
               <HStack pt="5">
@@ -838,6 +861,29 @@ export const EditScreen = (props: any) => {
               <HStack pt="5">
                 <VStack fontSize="sm" spacing="2" width="30%" align="left">
                   <Text color="#393939" fontWeight="semibold" align="left">
+                    Screen Code
+                  </Text>
+                  <Text color="#4D4D4D" align="left">
+                    Enter code to sync the screen
+                  </Text>
+                </VStack>
+                <InputGroup size="lg" width="15%">
+                  <Input
+                    placeholder="Screen Code"
+                    size="lg"
+                    borderRadius="md"
+                    fontSize="lg"
+                    border="1px"
+                    color="#555555"
+                    value={syncCode}
+                    onChange={(e) => setSyncCode(e.target.value)}
+                    py="2"
+                  />
+                </InputGroup>
+              </HStack>
+              <HStack pt="5">
+                <VStack fontSize="sm" spacing="2" width="30%" align="left">
+                  <Text color="#393939" fontWeight="semibold" align="left">
                     screenTags
                   </Text>
                   <Text color="#4D4D4D" align="left">
@@ -846,7 +892,7 @@ export const EditScreen = (props: any) => {
                 </VStack>
                 <InputGroup size="lg" width="15%">
                   <Input
-                    placeholder="Enter tag"
+                    placeholder="Enter tags"
                     size="lg"
                     borderRadius="md"
                     fontSize="lg"
@@ -885,10 +931,10 @@ export const EditScreen = (props: any) => {
                     ))}
                 </HStack>
               </HStack>
-              <HStack pt="5">
+              <HStack align="top" pt="5">
                 <VStack fontSize="sm" spacing="2" width="30%" align="left">
                   <Text color="#393939" fontWeight="semibold" align="left">
-                    Enter screen hilights
+                    Enter screen highlights
                   </Text>
                   <Text color="#4D4D4D" align="left">
                     Enter your screen highlights here
@@ -920,7 +966,7 @@ export const EditScreen = (props: any) => {
                     ))}
                   <InputGroup size="lg" width="70%" color="#555555">
                     <Input
-                      placeholder="Enter tag"
+                      placeholder="Enter highlights"
                       size="lg"
                       borderRadius="md"
                       fontSize="lg"
