@@ -4,12 +4,15 @@ import {
   Image,
   Text,
   Button,
-  SimpleGrid,
+  // SimpleGrid,
   // Flex,
 } from "@chakra-ui/react";
 import { userMediasList } from "Actions/userActions";
 import HLoading from "components/atoms/HLoading";
 import MessageBox from "components/atoms/MessageBox";
+import { UserCollections } from "components/common/UserCollections";
+// import { MediaContainer } from "components/common";
+// import { useMedia } from "hooks";
 import React, { useEffect } from "react";
 import { RiFileUploadLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +25,11 @@ export function UserProfile() {
   const { loading: loadingMyMedia, error: errorMyMedia, medias } = myMedia;
   //console.log("medias : ", JSON.stringify(medias));
 
+  // const {
+  //   data: media,
+  //   isLoading,
+  //   isError,
+  // } = useMedia({ id: medias.media.split("/").slice(4)[0] });
   const dispatch = useDispatch<any>();
   useEffect(() => {
     dispatch(userMediasList(userInfo));
@@ -121,20 +129,13 @@ export function UserProfile() {
             ) : errorMyMedia ? (
               <MessageBox variant="danger">{errorMyMedia}</MessageBox>
             ) : (
-              <SimpleGrid columns={[1, null, 2]} spacing={10}>
+              <Stack>
                 {medias?.map((media: any) => (
                   <Stack key={media._id}>
-                    <Image
-                      src={media.thumbnail}
-                      alt="media"
-                      width="100%"
-                    ></Image>
-                    <Text color="#000000" align="left" fontWeight="semibold">
-                      {media.title}
-                    </Text>
+                    <UserCollections props={media} />
                   </Stack>
                 ))}
-              </SimpleGrid>
+              </Stack>
             )}
           </Stack>
         </Stack>
