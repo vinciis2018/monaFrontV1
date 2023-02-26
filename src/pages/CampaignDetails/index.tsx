@@ -43,7 +43,7 @@ export function CampaignDetails(props: any) {
     isLoading,
     isError,
   } = useMedia({ id: cid.split("/").slice(4)[0] });
-  console.log(media);
+  // console.log(media);
 
   const getScreenDetail = async (screenId: any) => {
     try {
