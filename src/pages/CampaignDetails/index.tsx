@@ -4,7 +4,7 @@ import {
   Stack,
   Text,
   VStack,
-  Image,
+  // Image,
   SimpleGrid,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -14,6 +14,8 @@ import { convertIntoDateAndTime } from "utils/dateAndTime";
 import { BsDot } from "react-icons/bs";
 import Axios from "axios";
 import { MyMap } from "pages/MyMap";
+import { useMedia } from "hooks";
+import { MediaContainer } from "components/common";
 
 export function CampaignDetails(props: any) {
   //   const campaignId = "63b3e7bb8eb1e1983f0cde64";
@@ -31,9 +33,16 @@ export function CampaignDetails(props: any) {
   const [errorVideo, setErrorVideo] = useState<any>();
   const [geometry, setGeometry] = useState<any>();
   const [jsonData, setJsonData] = useState<any>();
+  const [cid, setCid] = useState<any>("");
 
   // console.log("screen  : ", JSON.stringify(screen));
   // console.log("campaign  : ", JSON.stringify(campaign));
+
+  const {
+    data: media,
+    isLoading,
+    isError,
+  } = useMedia({ id: cid.split("/").slice(4)[0] });
 
   const getScreenDetail = async (screenId: any) => {
     try {
@@ -78,6 +87,7 @@ export function CampaignDetails(props: any) {
       setCampaign(data);
       setLoadingVideo(false);
       getScreenDetail(data.screen);
+      setCid(data.mediaURL);
     } catch (error: any) {
       setErrorVideo(
         error.response && error.response.data.message
@@ -90,15 +100,18 @@ export function CampaignDetails(props: any) {
   useEffect(() => {
     const campaignId = window.location.pathname.split("/")[2];
     getCampaignDetail(campaignId);
-  }, []);
+    // console.log(media);
+  }, [cid]);
 
   return (
     <Box p="10" pt="20">
       <Box shadow="2xl" p="10" pt="0">
-        {loadingVideo || loadingScreen ? (
-          <HLoading loading={loadingVideo || loadingScreen} />
-        ) : errorVideo ? (
-          <MessageBox variant="danger">{errorVideo || errorScreen}</MessageBox>
+        {loadingVideo || loadingScreen || isLoading ? (
+          <HLoading loading={loadingVideo || loadingScreen || isLoading} />
+        ) : errorVideo || isError ? (
+          <MessageBox variant="danger">
+            {errorVideo || errorScreen || isError}
+          </MessageBox>
         ) : (
           <Box>
             <Flex justifyContent="space-between" align="center">
@@ -134,13 +147,14 @@ export function CampaignDetails(props: any) {
               </Stack>
             </Flex>
             <Stack align="center" pt="5" borderRadius="8px">
-              <Image
+              {/* <Image
                 src={campaign.thumbnail}
                 alt=""
-                width="856px"
-                height="333px"
-                borderRadius="8px"
-              />
+               
+              /> */}
+              {/* <Box width="856px" height="333px" borderRadius="8px"> */}
+              <MediaContainer media={media} />
+              {/* </Box> */}
             </Stack>
             <Box p="5" pt="10">
               <Box align="center" bgColor="#F7F7F7" boxShadow="2xl">

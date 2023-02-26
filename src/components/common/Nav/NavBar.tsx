@@ -148,7 +148,6 @@ export const NavBar = () => {
                 pl="5"
                 pr="5"
                 fontWeight="semibold"
-                type="Button"
                 onClick={() => navigate("/myCampaignList")}
               >
                 My Campaigns

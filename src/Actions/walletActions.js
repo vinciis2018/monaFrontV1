@@ -92,14 +92,13 @@ export const editWallet = (wallet) => async (dispatch, getState) => {
   }
 };
 export const getWalletDataAction = () => async (dispatch, getState) => {
-  dispatch({
-    type: GET_WALLET_DATA_REQUEST,
-    payload: null,
-  });
-
   const {
     userSignin: { userInfo },
   } = getState();
+  dispatch({
+    type: GET_WALLET_DATA_REQUEST,
+    payload: userInfo.defaultWallet,
+  });
 
   try {
     const { data } = await Axios.get(

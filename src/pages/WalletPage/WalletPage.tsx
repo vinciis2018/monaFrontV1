@@ -92,7 +92,7 @@ export function WalletPage(props: any) {
 
   useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
-      console.log("userInfo  pageney : ", userInfo);
+      console.log("userInfo  page : ", userInfo);
       navigate("/welcome");
     } else if (!userInfo) {
       navigate("/signin");
@@ -192,7 +192,7 @@ export function WalletPage(props: any) {
                   >
                     <Text>Total Balance </Text>
                     <Text>
-                      $
+                      {walletData.balances}
                       {walletData.balances[Object.keys(walletData.balances)[0]]}
                     </Text>
                   </Stack>
@@ -204,9 +204,7 @@ export function WalletPage(props: any) {
                     mt="10"
                   >
                     <Text>Wallet ID: {walletData.walletId}</Text>
-                    <Text>
-                      Wallet address : {Object.keys(walletData.balances)[0]}
-                    </Text>
+                    <Text>Wallet address : {userInfo.defaultWallet}</Text>
                   </Stack>
                   <HStack pt="10" spacing="10">
                     <HStack

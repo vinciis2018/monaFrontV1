@@ -8,6 +8,7 @@ const instance: AxiosInstance = axios.create({
 // TODO: we could do better by creating an instance and assign the instance configs/options.
 
 instance.defaults.headers.common["Content-Type"] = "application/json";
+instance.defaults.headers.post["Content-Type"] = "application/json";
 
 export function extractData<T>(response: AxiosResponse<T>): T {
   return response.data;

@@ -28,35 +28,72 @@ export function LoginModal(props: any) {
     checkAndTriggerSelfDestruct,
     generateAndSave,
     wipeTempSavedPin,
+    getArweavePublicAddress,
   } = useWallet();
 
-  const checkPin = async () => {
+  const checkPin = () => {
     const pincode = pin;
+    // if (pincode !== "") {
+    //   try {
+    //     const cleared = await checkAndTriggerSelfDestruct(pincode);
+    //     if (cleared) {
+    //       navigate("/");
+    //     } else {
+    //       try {
+    //         await unlock(pincode);
+    //         const expired = Math.floor(Date.now() / 1000) + 10 * 60; // 10 mins
+    //         await login(expired);
+    //         props.onHide();
+    //       } catch (error: any) {
+    //         if (error?.message?.includes(ERROR_IDS.NO_CONTENT)) {
+    //           wipeTempSavedPin()
+    //             .then(() => generateAndSave(pincode))
+    //             .then(() => navigate("/walletPage"));
+    //         } else if (error?.message?.includes(ERROR_IDS.INCORRECT_PIN)) {
+    //           setErr("PIN code is not match. Please try again.");
+    //         } else {
+    //           console.log(error);
+    //         }
+    //       }
+    //     }
+    //   } catch (error: any) {
+    //     alert(error);
+    //   }
+    // }
     if (pincode !== "") {
-      try {
-        const cleared = await checkAndTriggerSelfDestruct(pincode);
+      checkAndTriggerSelfDestruct(pincode).then((cleared) => {
         if (cleared) {
+          // TODO: On Self Destruct App should be populated with safe content
           navigate("/");
         } else {
-          try {
-            await unlock(pincode);
-            const expired = Math.floor(Date.now() / 1000) + 10 * 60; // 10 mins
-            await login(expired);
-            props.onHide();
-          } catch (error: any) {
-            if (error?.message?.includes(ERROR_IDS.NO_CONTENT)) {
-              wipeTempSavedPin().then(() => generateAndSave(pin));
-              navigate("/walletPage");
-            } else if (error?.message?.includes(ERROR_IDS.INCORRECT_PIN)) {
-              setErr("PIN code is not match. Please try again.");
-            } else {
-              console.log(error);
-            }
-          }
+          unlock(pincode)
+            .then(async (res) => {
+              console.log(res);
+              console.log(getArweavePublicAddress());
+              const expired = Math.floor(Date.now() / 1000) + 10 * 60; // 10 mins
+              await login(expired);
+              if (target) {
+                navigate("/" + target);
+              } else {
+                navigate("/walletPage");
+                props.onHide();
+              }
+            })
+            .catch((error: Error) => {
+              if (error.message.includes(ERROR_IDS.NO_CONTENT)) {
+                wipeTempSavedPin().then(() => generateAndSave(pin));
+                navigate("/");
+              }
+
+              if (error.message.includes(ERROR_IDS.INCORRECT_PIN)) {
+                setErr("PIN code is not match. Please try again.");
+                setPin("");
+              }
+            });
         }
-      } catch (error: any) {
-        alert(error);
-      }
+      });
+    } else {
+      setErr("Please input PIN.");
     }
   };
 

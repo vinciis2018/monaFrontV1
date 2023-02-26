@@ -1,9 +1,12 @@
 import React from "react";
 import { Box, Stack, Image, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export function AtvertiseBox(props: any) {
   const { video } = props;
+  const navigate = useNavigate();
 
+  console.log(video);
   return (
     <Box
       width="100%"
@@ -12,6 +15,7 @@ export function AtvertiseBox(props: any) {
       borderRadius="lg"
       boxShadow="2xl"
       key={video._id}
+      onClick={() => navigate(`/campaignDetails/${video._id}`)}
     >
       <Box p="2" height={{ height: 50, lg: "200px" }}>
         <Image
