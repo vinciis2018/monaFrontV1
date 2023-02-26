@@ -124,8 +124,6 @@ export const EditScreen = (props: any) => {
   // console.log("screen : ", JSON.stringify(screen));
   // console.log("screenCategory: ", screenCategory);
   // console.log("calender : ", JSON.stringify(calender));
-  const pinDetails = useSelector((state: any) => state.pinDetails);
-  const { loading: loadingPin, error: pinError, pin } = pinDetails;
 
   const screenUpdate = useSelector((state: any) => state.screenUpdate);
   const {
@@ -177,14 +175,24 @@ export const EditScreen = (props: any) => {
       setLng(screen.lng);
       setLat(screen.lat);
       setGeometry({
-        geometry: {
-          coordinates: [lng, lat],
-        },
+        coordinates: [screen.lat, screen.lng],
+      });
+      setJsonData({
+        features: [
+          {
+            type: "Feature",
+            properties: {
+              pin: screen._id,
+              screen: screen._id,
+            },
+            geometry: {
+              coordinates: [screen.lat, screen.lng],
+              type: "Point",
+            },
+          },
+        ],
       });
       setSyncCode(screen.screenCode);
-    }
-    if (!loadingPin && pin) {
-      setJsonData(pin);
     }
   }, [dispatch, userInfo, successUpdate, navigate, redirect, screen]);
 
@@ -259,9 +267,22 @@ export const EditScreen = (props: any) => {
     setLng(lng);
     setLat(lat);
     setGeometry({
-      geometry: {
-        coordinates: [lng, lat],
-      },
+      coordinates: [lat, lng],
+    });
+    setJsonData({
+      features: [
+        {
+          type: "Feature",
+          properties: {
+            pin: screen._id,
+            screen: screen._id,
+          },
+          geometry: {
+            coordinates: [lat, lng],
+            type: "Point",
+          },
+        },
+      ],
     });
     setMapProps({
       lng: lng,
@@ -284,9 +305,7 @@ export const EditScreen = (props: any) => {
     setLng(geometry[1]);
     setLat(geometry[0]);
     setGeometry({
-      geometry: {
-        coordinates: [lng, lat],
-      },
+      coordinates: [lng, lat],
     });
   };
   const handleEditHighlites = (selectedIndex: any) => {
@@ -325,7 +344,7 @@ export const EditScreen = (props: any) => {
               <AiOutlineArrowLeft
                 size="20px"
                 color="#333333"
-                onClick={prevStep}
+                onClick={() => navigate("/screen-owner")}
               />
               <Text
                 fontSize="lg"
@@ -356,6 +375,17 @@ export const EditScreen = (props: any) => {
           </Stack>
           {activeStep === 0 ? (
             <Stack boxShadow="2xl" p="5" borderRadius="lg" spacing="5" pt="10">
+              <Flex align="center">
+                <Text
+                  fontSize="lg"
+                  fontWeight="semibold"
+                  color="#333333"
+                  align="left"
+                >
+                  Enter screen details
+                </Text>
+              </Flex>
+
               <HStack>
                 <VStack fontSize="sm" spacing="2" width="30%" align="left">
                   <Text color="#393939" fontWeight="semibold" align="left">
@@ -798,6 +828,7 @@ export const EditScreen = (props: any) => {
                     data={jsonData}
                     setLocation={handleAddPinClick}
                     geometry={geometry}
+                    zoom="4"
                   />
                 </Box>
               </Stack>

@@ -141,10 +141,10 @@ export function ScreenOwner() {
     } else {
       dispatch(userScreensList(userInfo));
     }
-  }, [successCreate, dispatch]);
+  }, [successCreate, dispatch, navigate]);
 
   return (
-    <Box pt="10">
+    <Box pt="20">
       <Box pl="20" pr="20">
         {screenLoading || videoLoading || loadingScreens ? (
           <HLoading loading={screenLoading || videoLoading || loadingScreens} />
@@ -196,12 +196,19 @@ export function ScreenOwner() {
               </Stack>
             </Stack>
             <Stack p="5" width="100%">
-              <Stack direction="row" justifyContent="space-around" pt="20">
+              <Stack
+                direction="row"
+                pt="20"
+                align="center"
+                justifyContent="space-between"
+              >
+                <Stack></Stack>
                 <Stack
                   direction="row"
                   borderRadius="48px"
                   boxShadow="2xl"
                   align="center"
+                  justifyContent="center"
                 >
                   <Button
                     variant="outline"
@@ -246,7 +253,13 @@ export function ScreenOwner() {
                     Actions
                   </Button>
                 </Stack>
-                <Stack direction="row" justifyContent="flex-end" align="center">
+                <Stack
+                  direction="row"
+                  align="center"
+                  alignItems="flex-end"
+                  justifyContent="flex-end"
+                  pr="10"
+                >
                   <FiSettings size="20px" color="#333333" />
                   <Text
                     fontSize="sm"

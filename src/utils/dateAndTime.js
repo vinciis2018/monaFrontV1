@@ -12,7 +12,7 @@ export function convertIntoDateAndTime(string) {
       am_pm = "AM";
     }
     time[0] = Number(time[0]) % 12;
-    return ` ${date[2]} ${date[1]}, ${date[3]}, ${time[0]}:${time[1]} ${am_pm}`; // 24 December 2022, 10:00 AM,
+    return `${date[2]} ${date[1]}, ${date[3]}, ${time[0]}:${time[1]} ${am_pm}`; // 24 December 2022, 10:00 AM,
   }
 }
 

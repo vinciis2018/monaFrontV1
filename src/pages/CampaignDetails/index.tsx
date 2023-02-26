@@ -44,9 +44,7 @@ export function CampaignDetails(props: any) {
       // console.log("screen  : ", JSON.stringify(data));
       setScreen(data);
       setGeometry({
-        geometry: {
-          coordinates: [data.lng, data.lat],
-        },
+        coordinates: [data.lat, data.lng],
       });
       setJsonData({
         features: [
@@ -57,7 +55,7 @@ export function CampaignDetails(props: any) {
               screen: data._id,
             },
             geometry: {
-              coordinates: [data.lng, data.lat],
+              coordinates: [data.lat, data.lng],
               type: "Point",
             },
           },

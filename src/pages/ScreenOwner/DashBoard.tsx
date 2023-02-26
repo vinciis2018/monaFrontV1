@@ -1,15 +1,36 @@
 import { Box, Stack, Text, SimpleGrid } from "@chakra-ui/react";
 import { AdsListOfSinglScreen, AdsPlaying } from "components/common";
 import { MyMap } from "pages/MyMap";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
+import { convertIntoDateAndTime } from "utils/dateAndTime";
 export function DashBoard(props: any) {
   const { screen, videosList } = props;
-  //console.log("selct screen id 1212: ", JSON.stringify(screen));
+  const [geometry, setGiometry] = useState<any>();
+  const [jsonData, setJsonData] = useState<any>({});
+  console.log("selct screen id 1212: ", JSON.stringify(screen));
   //console.log("videosList: ", JSON.stringify(videosList));
-
   const data = { features: [] };
-  useEffect(() => {}, [props]);
+  useEffect(() => {
+    setGiometry({
+      coordinates: [screen?.lat, screen?.lng],
+      type: "Point",
+    });
+    setJsonData({
+      features: [
+        {
+          type: "Feature",
+          properties: {
+            pin: screen._id,
+            screen: screen._id,
+          },
+          geometry: {
+            coordinates: [screen.lat, screen.lng],
+            type: "Point",
+          },
+        },
+      ],
+    });
+  }, [props]);
 
   return (
     <Box>
@@ -47,12 +68,15 @@ export function DashBoard(props: any) {
               color="#403F49"
               align="left"
             >
-              3:30 AM to 5:30 PM
+              {convertIntoDateAndTime(screen.startTime)?.split(",")[2]} to{" "}
+              {convertIntoDateAndTime(screen.endTime)?.split(",")[2]}
             </Text>
           </Stack>
           <Stack p="5" direction="column" boxShadow="2xl" width="50%"></Stack>
           <Stack direction="column" boxShadow="2xl" width="25%">
-            <MyMap data={data} />
+            {jsonData && geometry ? (
+              <MyMap data={jsonData} geometry={geometry} zoom={3} />
+            ) : null}
           </Stack>
         </Stack>
         <Text

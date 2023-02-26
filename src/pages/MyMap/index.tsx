@@ -4,13 +4,17 @@ import React, { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { FiMapPin } from "react-icons/fi";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
+import { useNavigate } from "react-router-dom";
 
 export function MyMap(props: any) {
+  const navigate = useNavigate();
   const listOfScreens = props?.data;
+  console.log("listOfScreens : ", JSON.stringify(listOfScreens.features));
+  console.log("geometry : ", props.geometry);
   const [viewState, setViewState] = useState({
-    longitude: 84 || props?.geometry?.coordinates[0],
-    latitude: 25 || props?.geometry?.coordinates[1],
-    zoom: 7 || props?.geometry?.zoom,
+    longitude: props?.geometry?.coordinates[1] || 85,
+    latitude: props?.geometry?.coordinates[0] || 25,
+    zoom: props.zoom || 5,
   });
   const [screenData, setScreenData] = useState<any>(null);
   const [viewSingleScreen, setViewSingleScreen] = useState<any>(false);
@@ -26,7 +30,6 @@ export function MyMap(props: any) {
       console.log(error);
     }
   };
-
   return (
     <Box
       height="100%"
@@ -45,9 +48,9 @@ export function MyMap(props: any) {
         {listOfScreens &&
           listOfScreens?.features.map((singleData: any) => (
             <Marker
-              key={singleData.properties.pin}
-              latitude={singleData.geometry.coordinates[0]}
-              longitude={singleData.geometry.coordinates[1]}
+              key={singleData?.properties?.screen}
+              latitude={singleData?.geometry?.coordinates[0]}
+              longitude={singleData?.geometry?.coordinates[1]}
             >
               <Button
                 borderRadius="100px"
@@ -180,6 +183,7 @@ export function MyMap(props: any) {
                     variant="outline"
                     borderRadius="15px"
                     width="100%"
+                    onClick={() => navigate(`/screen/${screenData._id}`)}
                   >
                     See screen details
                   </Button>

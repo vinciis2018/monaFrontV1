@@ -178,7 +178,7 @@ export function AllScreens() {
             ) : errorAllPins ? (
               <MessageBox variant="danger">{errorAllPins}</MessageBox>
             ) : (
-              <MyMap data={jsonData} />
+              <MyMap data={jsonData} zoom="3" />
             )}
           </Box>
           <ContactUs />

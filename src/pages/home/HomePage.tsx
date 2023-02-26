@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
@@ -29,7 +29,6 @@ import { getCampaignList } from "Actions/campaignAction";
 export function HomePage() {
   const navigate = useNavigate();
   const MotionFlex = motion(Flex);
-  const [topThreeVideos, setTopThreevideo] = useState<any>([]);
 
   const userSignin = useSelector((state: any) => state.userSignin);
   const {
@@ -48,7 +47,6 @@ export function HomePage() {
     error: errorVideos,
     allCampaign,
   } = campaignListAll;
-  //console.log("topThreeVideo : ", JSON.stringify(topThreeVideos[0]));
 
   //console.log("allCampaign : ", allCampaign);
 
@@ -57,14 +55,6 @@ export function HomePage() {
     // console.log("userInfo : ", userInfo);
     if (!loadingUserInfo && !userInfo && errorUserInfo) {
       navigate("/signin");
-    }
-    if (allCampaign) {
-      const topThreeVideos = allCampaign.slice(
-        allCampaign.length - 3,
-        allCampaign.length
-      );
-      //console.log("sdsd", topThreeVideos);
-      setTopThreevideo(topThreeVideos);
     }
     dispatch(getCampaignList());
     dispatch(listScreens({}));
@@ -238,10 +228,12 @@ export function HomePage() {
               Ads playing
             </Text>
             <SimpleGrid columns={[1, 3]} spacing="10">
-              {topThreeVideos &&
-                topThreeVideos?.map((eachVideo: any) => (
-                  <AtvertiseBox video={eachVideo} key={eachVideo._id} />
-                ))}
+              {allCampaign &&
+                allCampaign
+                  ?.slice(allCampaign.length - 3, allCampaign.length)
+                  ?.map((eachVideo: any) => (
+                    <AtvertiseBox video={eachVideo} key={eachVideo._id} />
+                  ))}
             </SimpleGrid>
             <Flex align="center" justifyContent="center">
               <Button
