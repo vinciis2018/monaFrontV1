@@ -134,10 +134,7 @@ export function ScreenOwner() {
     }
     //console.log("screens : ", screens);
     if (screens?.length > 0) {
-      setVideoLoading(true);
-      setScreenLoading(true);
-      setSelectedScreen(screens[0]._id);
-      getScreentDetail(screens[0]._id);
+      handleSelectScreen(screens[0]._id, 0);
     } else {
       dispatch(userScreensList(userInfo));
     }
