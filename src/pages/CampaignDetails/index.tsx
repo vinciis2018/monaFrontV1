@@ -88,7 +88,7 @@ export function CampaignDetails(props: any) {
       setCampaign(data);
       setLoadingVideo(false);
       getScreenDetail(data.screen);
-      setCid(data.video);
+      setCid(data.mediaURL);
     } catch (error: any) {
       setErrorVideo(
         error.response && error.response.data.message
