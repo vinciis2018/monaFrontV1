@@ -91,7 +91,7 @@ export function SignInModal(props: any) {
     if (validateEmail(email)) {
       dispatch(signin(email, password));
       props.onHide();
-      console.log("gjkhjkkkjh");
+      // console.log("gjkhjkkkjh");
 
       navigate("/");
     } else {
