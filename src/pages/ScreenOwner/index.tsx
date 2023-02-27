@@ -151,7 +151,7 @@ export function ScreenOwner() {
           <Flex>
             <Stack p="5" bgColor="#FEFEFE" width="15%" boxShadow="2xl">
               <Text
-                fontSize="lg"
+                fontSize={{ base: "sm", lg: "lg" }}
                 fontWeight="semibold"
                 color="#000000"
                 align="left"
@@ -161,14 +161,14 @@ export function ScreenOwner() {
               </Text>
               <Button
                 color="#000000"
-                fontSize="sm"
+                fontSize={{ base: "xs", lg: "sm" }}
                 boxShadow="2xl"
                 align="center"
                 variant="outline"
                 p="3"
                 onClick={handleCreateScree}
               >
-                + New Screen
+                + New
               </Button>
               <Stack pt="10">
                 {screens?.map((eachScreen: any, index: any) => (

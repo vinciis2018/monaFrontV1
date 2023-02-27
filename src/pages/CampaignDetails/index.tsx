@@ -4,7 +4,7 @@ import {
   Stack,
   Text,
   VStack,
-  // Image,
+  Image,
   SimpleGrid,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -148,13 +148,12 @@ export function CampaignDetails(props: any) {
               </Stack>
             </Flex>
             <Stack align="center" pt="5" borderRadius="8px">
-              {/* <Image
-                src={campaign.thumbnail}
-                alt=""
-               
-              /> */}
+              {media ? (
+                <MediaContainer media={media} />
+              ) : (
+                <Image src={campaign.thumbnail} alt="" />
+              )}
               {/* <Box width="856px" height="333px" borderRadius="8px"> */}
-              <MediaContainer media={media} />
               {/* </Box> */}
             </Stack>
             <Box p="5" pt="10">

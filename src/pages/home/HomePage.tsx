@@ -110,7 +110,7 @@ export function HomePage() {
                 <Text
                   mt={{ base: "-300", lg: "-500" }}
                   pb={{ base: "10", lg: "20" }}
-                  fontSize={{ base: "4xl", lg: "80px" }}
+                  fontSize={{ base: "lg", lg: "4xl" }}
                   fontWeight="1000"
                   color="#FFFFFF"
                 >
@@ -140,7 +140,7 @@ export function HomePage() {
               color="#403F49"
               pt="5"
               pb="5"
-              fontSize="4xl"
+              fontSize={{ base: "2xl", lg: "4xl" }}
               fontWeight="700"
               align="left"
             >
@@ -166,7 +166,12 @@ export function HomePage() {
                     src={eachCategory.image}
                     alt={`${eachCategory.category}`}
                   />
-                  <Text color="#3E3D48" p="5" fontSize="lg" fontWeight="600">
+                  <Text
+                    color="#3E3D48"
+                    p="5"
+                    fontSize={{ base: "sm", lg: "lg" }}
+                    fontWeight="600"
+                  >
                     {eachCategory.category}
                   </Text>
                 </Box>
@@ -176,7 +181,7 @@ export function HomePage() {
               color="#403F49"
               pt="10"
               pb="10"
-              fontSize="4xl"
+              fontSize={{ base: "2xl", lg: "4xl" }}
               fontWeight="700"
               align="left"
             >
