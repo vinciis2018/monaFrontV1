@@ -22,7 +22,7 @@ export function CampaignDetails(props: any) {
   //   const [campaignId, setcampaignId] = useState<any>();
   // const [videoDetail, setCampaignDetails] = useState<any>();
   const getDiscount = (total: any, discount: any) => {
-    return total - (total * discount) / 100;
+    return (total * discount) / 100;
   };
 
   const [screen, setScreen] = useState<any>();
@@ -88,7 +88,7 @@ export function CampaignDetails(props: any) {
       setCampaign(data);
       setLoadingVideo(false);
       getScreenDetail(data.screen);
-      setCid(data.mediaURL);
+      setCid(data.video);
     } catch (error: any) {
       setErrorVideo(
         error.response && error.response.data.message
@@ -126,7 +126,7 @@ export function CampaignDetails(props: any) {
                   Campaign details
                 </Text>
                 <Text color="#575757" fontSize="sm" align="left">
-                  {convertIntoDateAndTime(campaign.createdAt)}
+                  {convertIntoDateAndTime(campaign.startDate)}
                 </Text>
               </VStack>
               <Stack align="end">
