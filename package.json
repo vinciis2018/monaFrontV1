@@ -102,7 +102,6 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^7.0.0",
     "@types/mapbox-gl": "^2.7.5",
     "@types/react": "^16.14.23",
     "@types/react-calendar": "^3.5.0",
@@ -111,7 +110,6 @@
     "@types/react-redux": "^7.1.24",
     "@types/redux-thunk": "^2.1.0",
     "@types/styled-components": "^5.1.24",
-    "craco-babel-loader": "^1.0.4",
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.0",
