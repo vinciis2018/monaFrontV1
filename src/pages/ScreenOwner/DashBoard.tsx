@@ -92,8 +92,8 @@ export function DashBoard(props: any) {
           {videosList &&
             videosList
               ?.slice(0, 3)
-              .map((video: any) => (
-                <AdsPlaying video={video} key={video._id} />
+              .map((video: any, index: any) => (
+                <AdsPlaying video={video} key={index} />
               ))}
         </SimpleGrid>
         <Text
