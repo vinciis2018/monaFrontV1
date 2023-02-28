@@ -42,7 +42,7 @@ export function CampaignDetails(props: any) {
     data: media,
     isLoading,
     isError,
-  } = useMedia({ id: cid.split("/").slice(4)[0] });
+  } = useMedia({ id: cid?.split("/").slice(4)[0] });
   // console.log(media);
 
   const getScreenDetail = async (screenId: any) => {
