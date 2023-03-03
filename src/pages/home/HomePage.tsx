@@ -115,8 +115,8 @@ export function HomePage() {
                 <Text
                   mt={{ base: "-100", lg: "-600" }}
                   pb={{ base: "10", lg: "20" }}
-                  fontSize={{ base: "lg", lg: "80px" }}
-                  fontWeight="extrabold"
+                  fontSize={{ base: "lg", lg: "4xl" }}
+                  fontWeight="1000"
                   color="#FFFFFF"
                 >
                   Enter the new age of advertising
@@ -147,8 +147,8 @@ export function HomePage() {
             </Box>
             <Text
               color="#403F49"
-              pt="10"
-              pb="10"
+              pt={{ base: "5", lg: "10" }}
+              pb={{ base: "5", lg: "10" }}
               fontSize={{ base: "lg", lg: "5xl" }}
               fontWeight="bold"
               align="left"
@@ -188,8 +188,8 @@ export function HomePage() {
             </SimpleGrid>
             <Text
               color="#403F49"
-              pt="10"
-              pb="10"
+              pt={{ base: "5", lg: "10" }}
+              pb={{ base: "5", lg: "10" }}
               fontSize={{ base: "lg", lg: "5xl" }}
               fontWeight="bold"
               align="left"
@@ -233,8 +233,8 @@ export function HomePage() {
             </Flex>
             <Text
               color="#403F49"
-              pt="10"
-              pb="10"
+              pt={{ base: "5", lg: "10" }}
+              pb={{ base: "5", lg: "10" }}
               fontSize={{ base: "lg", lg: "5xl" }}
               fontWeight="bold"
               align="left"

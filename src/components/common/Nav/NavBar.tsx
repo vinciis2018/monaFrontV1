@@ -54,7 +54,8 @@ export const NavBar = () => {
     left: "0",
     top: "0",
     width: "100%",
-    zIndex: "2",
+    zIndex: "1",
+    backgroundColor: "#ffffff80",
   };
   const [walletBalance, setWalletBalance] = React.useState({
     ar: 0,
@@ -178,7 +179,7 @@ export const NavBar = () => {
             >
               <Text
                 color="#3E3D48"
-                fontSize="md"
+                fontSize={{ base: "sm", lg: "md" }}
                 fontWeight="semibold"
                 type="Button"
                 onClick={() => navigate("/screen-owner")}
@@ -187,7 +188,7 @@ export const NavBar = () => {
               </Text>
               <Text
                 color="#3E3D48"
-                fontSize="md"
+                fontSize={{ base: "sm", lg: "md" }}
                 pl="5"
                 pr="5"
                 fontWeight="semibold"
