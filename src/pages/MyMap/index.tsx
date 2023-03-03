@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 export function MyMap(props: any) {
   const navigate = useNavigate();
   const listOfScreens = props?.data;
-  console.log("listOfScreens : ", JSON.stringify(listOfScreens.features));
-  console.log("geometry : ", props.geometry);
+  //console.log("listOfScreens : ", JSON.stringify(listOfScreens.features));
+  //console.log("geometry : ", props.geometry);
   const [viewState, setViewState] = useState({
     longitude: props?.geometry?.coordinates[1] || 85,
     latitude: props?.geometry?.coordinates[0] || 25,

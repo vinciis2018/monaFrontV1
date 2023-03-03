@@ -12,7 +12,7 @@ export function UserCollections(props: any) {
     isLoading,
     isError,
   } = useMedia({ id: props.props.media.split("/").slice(4)[0] });
-  console.log(props.props);
+  //console.log(props.props);
 
   const navigate = useNavigate();
 

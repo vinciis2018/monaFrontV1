@@ -106,7 +106,7 @@ export function WalletPage(props: any) {
   };
 
   return (
-    <Box px="2" pt="20" color="black.500">
+    <Box px="2" pt={{ base: "3", lg: "20" }} color="black.500">
       {/* Container */}
       <LoginModal
         show={loginModalShow}

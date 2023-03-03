@@ -1,19 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+
 import { SignInModal } from "pages/authPopup/SignInModal";
 
 export function Signin(props: any) {
-  const navigate = useNavigate();
-
-  const [signinModalShow, setSigninModalShow] = useState<any>(false);
-
-  const userSignin = useSelector((state: any) => state.userSignin);
-  const { userInfo } = userSignin;
-
-  useEffect(() => {
-    setSigninModalShow(true);
-  }, [props?.history, userInfo, navigate]);
+  const [signinModalShow, setSigninModalShow] = useState<any>(true);
 
   return (
     <SignInModal

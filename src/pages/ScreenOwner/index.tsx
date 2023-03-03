@@ -138,18 +138,23 @@ export function ScreenOwner() {
     } else {
       dispatch(userScreensList(userInfo));
     }
-  }, [successCreate, dispatch, navigate]);
+  }, [successCreate, dispatch, navigate, screens]);
 
   return (
     <Box pt="20">
-      <Box pl="20" pr="20">
+      <Box pl={{ base: "2", lg: "20" }} pr={{ base: "2", lg: "20" }}>
         {screenLoading || videoLoading || loadingScreens ? (
           <HLoading loading={screenLoading || videoLoading || loadingScreens} />
         ) : errorScreens ? (
           <MessageBox variant="danger">{errorScreens}</MessageBox>
         ) : (
           <Flex>
-            <Stack p="5" bgColor="#FEFEFE" width="15%" boxShadow="2xl">
+            <Stack
+              p="5"
+              bgColor="#FEFEFE"
+              width={{ base: "70%", lg: "20%" }}
+              boxShadow="2xl"
+            >
               <Text
                 fontSize="lg"
                 fontWeight="semibold"

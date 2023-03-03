@@ -291,7 +291,7 @@ export const EditScreen = (props: any) => {
   };
 
   const handleAddTags = (event: any) => {
-    if (event.which == 13) {
+    if (event.which === 13) {
       setScreenTags([...screenTags, tag]);
       setTag("");
     }
@@ -332,7 +332,7 @@ export const EditScreen = (props: any) => {
     setStartTime(value);
   };
   return (
-    <Box pl="20" pr="20" pt="20">
+    <Box pl="20" pr="20" pt={{ base: "3", lg: "20" }}>
       {loadingScreen ? (
         <HLoading loading={loadingScreen} />
       ) : errorScreen ? (
@@ -420,8 +420,8 @@ export const EditScreen = (props: any) => {
                 </VStack>
                 <Button
                   variant="outline"
-                  color={screenCategory == "InDoors" ? "#4C4C4C" : "#515151"}
-                  bgColor={screenCategory == "InDoors" ? "#D6FFFF" : "#FAFAFA"}
+                  color={screenCategory === "InDoors" ? "#4C4C4C" : "#515151"}
+                  bgColor={screenCategory === "InDoors" ? "#D6FFFF" : "#FAFAFA"}
                   fontSize="sm"
                   p="4"
                   _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#4C4C4C" }}
@@ -432,9 +432,11 @@ export const EditScreen = (props: any) => {
                 <Stack pl="10">
                   <Button
                     variant="outline"
-                    color={screenCategory == "OutDoors" ? "#4C4C4C" : "#515151"}
+                    color={
+                      screenCategory === "OutDoors" ? "#4C4C4C" : "#515151"
+                    }
                     bgColor={
-                      screenCategory == "OutDoors" ? "#D6FFFF" : "#FAFAFA"
+                      screenCategory === "OutDoors" ? "#D6FFFF" : "#FAFAFA"
                     }
                     fontSize="sm"
                     p="4"
@@ -448,12 +450,12 @@ export const EditScreen = (props: any) => {
                   <Button
                     variant="outline"
                     color={
-                      screenCategory == "RailWay Station"
+                      screenCategory === "RailWay Station"
                         ? "#4C4C4C"
                         : "#515151"
                     }
                     bgColor={
-                      screenCategory == "RailWay Station"
+                      screenCategory === "RailWay Station"
                         ? "#D6FFFF"
                         : "#FAFAFA"
                     }
@@ -469,10 +471,10 @@ export const EditScreen = (props: any) => {
                   <Button
                     variant="outline"
                     color={
-                      screenCategory == "Appartment" ? "#4C4C4C" : "#515151"
+                      screenCategory === "Appartment" ? "#4C4C4C" : "#515151"
                     }
                     bgColor={
-                      screenCategory == "Appartment" ? "#D6FFFF" : "#FAFAFA"
+                      screenCategory === "Appartment" ? "#D6FFFF" : "#FAFAFA"
                     }
                     fontSize="sm"
                     p="4"

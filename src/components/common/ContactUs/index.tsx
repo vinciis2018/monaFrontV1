@@ -14,7 +14,7 @@ import { GrDown } from "react-icons/gr";
 
 export function ContactUs() {
   return (
-    <Center px="10" mb="10">
+    <Center p="10">
       <Stack width="100%">
         <Box
           backgroundColor="#2BB3E0"
@@ -23,25 +23,40 @@ export function ContactUs() {
           // backgroundAttachment="fixed"
           backgroundSize="100%"
           borderRadius="67px"
-          pb="10"
         >
           <Flex align="center" justify="space-between">
-            <Box width="60%" color="#EBEBEB" align="left" pt="20" pl="10">
-              <Text fontSize="4xl" fontWeight="bold" align="left" pl="10">
+            <Box
+              width="60%"
+              color="#EBEBEB"
+              align="left"
+              pt={{ base: "5", lg: "20" }}
+              pl={{ base: "10", lg: "20" }}
+            >
+              <Text
+                fontSize={{ base: "lg", lg: "5xl" }}
+                fontWeight="bold"
+                align="left"
+              >
                 Need help or want to know how it works?
               </Text>
-              <Text fontSize="4xl" fontWeight="bold" align="left" pl="10">
+              <Text
+                fontSize={{ base: "lg", lg: "5xl" }}
+                fontWeight="bold"
+                align="left"
+              >
                 Our industry expersts are here to help you.
               </Text>
+              <Stack pt="10"></Stack>
               <Button
                 bgColor="#D7380E"
                 color="#FFFFFF"
-                fontSize="xl"
+                fontSize={{ base: "lg", lg: "xl" }}
                 fontWeight="semibold"
-                px="20"
-                py="7"
-                ml="10"
-                mt="5"
+                px={{ base: "5", lg: "20" }}
+                py={{ base: "2", lg: "5" }}
+                ml={{ base: "2", lg: "10" }}
+                mt={{ base: "2", lg: "5" }}
+                mb={{ base: "5" }}
               >
                 {" "}
                 Contact us
@@ -60,17 +75,23 @@ export function ContactUs() {
         </Box>
         <Divider pt="10" />
         <Flex align="center" justifyContent="space-between">
-          <Text color="#403F49" fontSize="xl" fontWeight="700" align="left">
+          <Text
+            color="#000000"
+            fontSize={{ base: "lg", lg: "4xl" }}
+            fontWeight="semibold"
+            align="left"
+            p="3"
+          >
             All destinations
           </Text>
           <IconButton
             bg="none"
             mr="10"
-            icon={<GrDown color="#9A9A9A" height="14px" width="27px" />}
+            icon={<GrDown color="#9A9A9A" size="30px" />}
             aria-label="Star"
           ></IconButton>
         </Flex>
-        <Divider pb="" />
+        <Divider />
       </Stack>
     </Center>
   );

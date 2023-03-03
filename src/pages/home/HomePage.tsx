@@ -85,7 +85,12 @@ export function HomePage() {
   ];
 
   return (
-    <Box color="black.500" align="center" py="20">
+    <Box
+      color="black.500"
+      align="center"
+      py={{ base: "3", lg: "20" }}
+      pt={{ base: "3", lg: "20" }}
+    >
       <Center px="10">
         {loadingScreens || loadingVideos ? (
           <HLoading loading={loadingScreens || loadingVideos} />
@@ -95,7 +100,7 @@ export function HomePage() {
           </MessageBox>
         ) : (
           <Stack>
-            <Box width="100%">
+            <Box width="100%" fontFamily="sans">
               <Box
                 as="video"
                 src="https://bafybeid57yuz6xuqdniw744q62r2nmh4r3doz7i736ujh3xonjvulqkra4.ipfs.w3s.link/pexels-henry-5538832.mp4"
@@ -106,20 +111,24 @@ export function HomePage() {
                 borderRadius="24px"
                 height={{ base: "100%", lg: "50%" }}
               ></Box>
-              <Stack zIndex="1" align="center">
+              <Stack zIndex="1" align="center" width="70%">
                 <Text
-                  mt={{ base: "-300", lg: "-500" }}
+                  mt={{ base: "-100", lg: "-600" }}
                   pb={{ base: "10", lg: "20" }}
-                  fontSize={{ base: "4xl", lg: "80px" }}
-                  fontWeight="1000"
+                  fontSize={{ base: "lg", lg: "80px" }}
+                  fontWeight="extrabold"
                   color="#FFFFFF"
                 >
                   Enter the new age of advertising
                 </Text>
-                <InputGroup size="lg" width="70%" mt="20">
+                <InputGroup
+                  size="lg"
+                  width="100%"
+                  mt={{ base: "1px", lg: "10px" }}
+                >
                   <Input
                     type="text"
-                    p="5"
+                    p={{ base: "2", lg: "5" }}
                     heigth=""
                     bgColor="#FCFCFC"
                     borderRadius="80px"
@@ -138,10 +147,10 @@ export function HomePage() {
             </Box>
             <Text
               color="#403F49"
-              pt="5"
-              pb="5"
-              fontSize="4xl"
-              fontWeight="700"
+              pt="10"
+              pb="10"
+              fontSize={{ base: "lg", lg: "5xl" }}
+              fontWeight="bold"
               align="left"
             >
               Categories
@@ -150,7 +159,7 @@ export function HomePage() {
               align="center"
               // mt="10"
               gap="2"
-              columns={[4]}
+              columns={[2, null, 4]}
             >
               {categorys.map((eachCategory, index) => (
                 <Box
@@ -166,7 +175,12 @@ export function HomePage() {
                     src={eachCategory.image}
                     alt={`${eachCategory.category}`}
                   />
-                  <Text color="#3E3D48" p="5" fontSize="lg" fontWeight="600">
+                  <Text
+                    color="#3E3D48"
+                    p="5"
+                    fontSize={{ base: "sm", lg: "lg" }}
+                    fontWeight="600"
+                  >
                     {eachCategory.category}
                   </Text>
                 </Box>
@@ -176,8 +190,8 @@ export function HomePage() {
               color="#403F49"
               pt="10"
               pb="10"
-              fontSize="4xl"
-              fontWeight="700"
+              fontSize={{ base: "lg", lg: "5xl" }}
+              fontWeight="bold"
               align="left"
             >
               Popular screens
@@ -197,7 +211,7 @@ export function HomePage() {
                   pos="relative"
                   zIndex="0"
                 >
-                  <Screen eachScreen={eachScreen} />
+                  <Screen eachScreen={eachScreen} key={eachScreen._id} />
                 </MotionFlex>
               ))}
             </SimpleGrid>
@@ -211,7 +225,6 @@ export function HomePage() {
                 fontSize="xl"
                 fontWeight="semibold"
                 mt="20"
-                mb="20"
                 as={RouterLink}
                 to={`/all-screens`}
               >
@@ -220,8 +233,9 @@ export function HomePage() {
             </Flex>
             <Text
               color="#403F49"
-              mt="10"
-              fontSize="4xl"
+              pt="10"
+              pb="10"
+              fontSize={{ base: "lg", lg: "5xl" }}
               fontWeight="bold"
               align="left"
             >
@@ -231,8 +245,8 @@ export function HomePage() {
               {allCampaign &&
                 allCampaign
                   ?.slice(allCampaign.length - 3, allCampaign.length)
-                  ?.map((eachVideo: any) => (
-                    <AtvertiseBox video={eachVideo} key={eachVideo._id} />
+                  ?.map((campaign: any) => (
+                    <AtvertiseBox video={campaign} key={campaign._id} />
                   ))}
             </SimpleGrid>
             <Flex align="center" justifyContent="center">

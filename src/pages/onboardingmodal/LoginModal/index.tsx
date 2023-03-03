@@ -68,8 +68,8 @@ export function LoginModal(props: any) {
         } else {
           unlock(pincode)
             .then(async (res) => {
-              console.log(res);
-              console.log(getArweavePublicAddress());
+              //console.log(res);
+              //console.log(getArweavePublicAddress());
               const expired = Math.floor(Date.now() / 1000) + 10 * 60; // 10 mins
               await login(expired);
               if (target) {

@@ -30,7 +30,7 @@ export function RequestMoney(props: any) {
 
   useEffect(() => {
     if (userInfo && !userInfo.defaultWallet) {
-      console.log("userInfo RequestMoney : ", userInfo);
+      //console.log("userInfo RequestMoney : ", userInfo);
       navigate("/welcome");
     } else if (!userInfo) {
       navigate("/signin");

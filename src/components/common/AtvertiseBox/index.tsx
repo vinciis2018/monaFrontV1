@@ -6,7 +6,7 @@ export function AtvertiseBox(props: any) {
   const { video } = props;
   const navigate = useNavigate();
 
-  console.log(video);
+  //console.log(video);
   return (
     <Box
       width="100%"
@@ -31,16 +31,16 @@ export function AtvertiseBox(props: any) {
           px="1"
           color="#403F49"
           fontSize="xl"
-          fontWeight="1000"
+          fontWeight="bold"
           align="left"
         >
-          {video.brandName}
+          {video.campaignName}
         </Text>
         <Text
           px="1"
           color="#666666"
           fontSize="sm"
-          fontWeight="600 "
+          fontWeight="semibold"
           align="left"
         >
           Location :{" "}

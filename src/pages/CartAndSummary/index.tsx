@@ -119,7 +119,7 @@ export function CartAndSummary(props: any) {
   }, [dispatch]);
 
   return (
-    <Box p="20" pt="20">
+    <Box p="20" pt={{ base: "3", lg: "20" }}>
       <Stack>
         <Text
           color="#403F49"

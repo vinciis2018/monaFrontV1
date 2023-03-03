@@ -105,7 +105,7 @@ export function CampaignDetails(props: any) {
   }, [cid]);
 
   return (
-    <Box p="10" pt="20">
+    <Box p="10" pt={{ base: "3", lg: "20" }}>
       <Box shadow="2xl" p="10" pt="0">
         {loadingVideo || loadingScreen || isLoading ? (
           <HLoading loading={loadingVideo || loadingScreen || isLoading} />

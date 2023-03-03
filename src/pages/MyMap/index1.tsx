@@ -9,7 +9,7 @@ import { FiMapPin } from "react-icons/fi";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 
 export function MyMap(props: any) {
-  console.log(props);
+  //console.log(props);
   const [listOfScreens, setListOfScreens] = useState<any>([]);
 
   const [viewState, setViewState] = useState({
@@ -35,11 +35,11 @@ export function MyMap(props: any) {
         zoom: listOfScreens?.geometry?.zoom,
       });
     }
-    console.log(
-      listOfScreens.map((singleData: any) => {
-        return singleData.properties.pin;
-      })
-    );
+    // console.log(
+    //   listOfScreens.map((singleData: any) => {
+    //     return singleData.properties.pin;
+    //   })
+    // );
   }, [listOfScreens, props]);
 
   const getSingleScreenData = async (e: any, screenId: any, pinData: any) => {

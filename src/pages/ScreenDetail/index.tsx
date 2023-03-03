@@ -197,7 +197,7 @@ export function ScreenDetail(props: any) {
           },
         }
       );
-      console.log("created media : ", JSON.stringify(data));
+      //console.log("created media : ", JSON.stringify(data));
       navigate(
         `/carts/${data._id}/${screenId}/${data.title}/${
           data.thumbnail.split("/")[4]
@@ -213,6 +213,9 @@ export function ScreenDetail(props: any) {
   };
 
   useEffect(() => {
+    if (!userInfo) {
+      navigate("/signin");
+    }
     if (screenReviewCreateSuccess) {
       alert("review Added SuccessFull!");
     }
@@ -307,7 +310,7 @@ export function ScreenDetail(props: any) {
   };
 
   return (
-    <Box pt="20">
+    <Box pt={{ base: "3", lg: "20" }}>
       <CreateNewCampaign
         show={campaignModal}
         onHide={() => setCampaignModal(false)}

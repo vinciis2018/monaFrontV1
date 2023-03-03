@@ -34,7 +34,7 @@ export function CampaignListOfUser() {
   }, [navigate, dispatch]);
 
   return (
-    <Box p="20" pt="20">
+    <Box p="20" pt={{ base: "3", lg: "20" }}>
       <Stack direction="row" justifyContent="space-between">
         <Text color="#000000" fontSize="2xl" fontWeight="semibold" pt="5">
           My Campaign

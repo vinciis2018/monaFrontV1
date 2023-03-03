@@ -61,7 +61,7 @@ export function AllAds() {
     <Box
       color="black.500"
       align="center"
-      py="20"
+      pt={{ base: "3", lg: "20" }}
       // border="1px solid black"
     >
       <Center px="10">

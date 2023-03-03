@@ -13,6 +13,12 @@ import {
   Tooltip,
   Center,
   Button,
+  Collapse,
+  useDisclosure,
+  useColorModeValue,
+  Flex,
+  IconButton,
+  VStack,
 } from "@chakra-ui/react";
 import {
   AiOutlineFundProjectionScreen,
@@ -24,7 +30,9 @@ import {
   AiOutlineUser,
   AiOutlinePoweroff,
   AiOutlineLogout,
+  AiOutlineClose,
 } from "react-icons/ai";
+import { IoMdMenu } from "react-icons/io";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { TbUser, TbBell, TbWallet } from "react-icons/tb";
 import Logo from "assets/logo.png";
@@ -38,10 +46,11 @@ import { signout } from "../../../Actions/userActions";
 
 export const NavBar = () => {
   const navigate = useNavigate();
+  const { isOpen, onToggle } = useDisclosure();
   const style = {
     borderTop: "1px solid #E7E7E7",
     textAlign: "center",
-    position: "fixed",
+    // position: "fixed",
     left: "0",
     top: "0",
     width: "100%",
@@ -107,23 +116,56 @@ export const NavBar = () => {
           width="100%"
           px="10"
         >
-          <Stack as={RouterLink} to="/" direction="row" align="center">
+          {userInfo ? (
+            <Flex
+              //justifyContent="flex-start"
+              flex={{ base: 1, md: "auto" }}
+              ml={{ base: -2 }}
+              pt={{ base: "5" }}
+              display={{ base: "flex", md: "none" }}
+            >
+              <IconButton
+                onClick={onToggle}
+                icon={
+                  isOpen ? (
+                    <AiOutlineClose size="20px" color="#000000" />
+                  ) : (
+                    <IoMdMenu size="20px" color="#000000" />
+                  )
+                }
+                variant={"ghost"}
+                aria-label={"Toggle Navigation"}
+              />
+            </Flex>
+          ) : null}
+          <Collapse in={isOpen} animateOpacity>
+            <MobileNav />
+          </Collapse>
+          <Stack
+            as={RouterLink}
+            to="/"
+            direction="row"
+            align="center"
+            pt={{ base: 5 }}
+          >
             <Image width={{ base: 30, lg: "50px" }} src={Logo} />
             <Image width={{ base: 70, lg: "100px" }} src={Name} />
           </Stack>
           {!userInfo ? (
-            <Button
-              bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
-              as={RouterLink}
-              to={`/signin`}
-              size="sm"
-              fontSize="xs"
-              onClick={() => navigate("/signin")}
-              ref={btnRef}
-              p="2"
-            >
-              Please Signin
-            </Button>
+            <Stack pt={{ base: 5 }}>
+              <Button
+                bgGradient="linear-gradient(to left, #BC78EC, #7833B6)"
+                as={RouterLink}
+                to={`/signin`}
+                size="sm"
+                fontSize="xs"
+                onClick={() => navigate("/signin")}
+                ref={btnRef}
+                p="2"
+              >
+                Please Signin
+              </Button>
+            </Stack>
           ) : (
             <Stack
               align="center"
@@ -132,6 +174,7 @@ export const NavBar = () => {
               width="80%"
               mt="1px"
               p="3"
+              display={{ base: "none", md: "flex" }}
             >
               <Text
                 color="#3E3D48"
@@ -326,5 +369,64 @@ export const NavBar = () => {
         </Stack>
       </Center>
     </Box>
+  );
+};
+
+const MobileNav = () => {
+  const navigate = useNavigate();
+  return (
+    <Stack
+      pt="10"
+      bg={useColorModeValue("white", "gray.800")}
+      p={4}
+      display={{ md: "none" }}
+    >
+      <VStack width="100%" align="left" justifyContent="flex-start">
+        <Text
+          color="#000000"
+          fontSize="md"
+          type="Button"
+          ailgn="left"
+          bgColor="#ECF2FF"
+          _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#674780" }}
+          onClick={() => navigate("/screen-owner")}
+        >
+          My Screen
+        </Text>
+        <Text
+          color="#000000"
+          fontSize="md"
+          type="Button"
+          ailgn="left"
+          bgColor="#ECF2FF"
+          _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#674780" }}
+          onClick={() => navigate("/myCampaignList")}
+        >
+          My Campaign
+        </Text>
+        <Text
+          color="#000000"
+          fontSize="md"
+          type="Button"
+          ailgn="left"
+          bgColor="#ECF2FF"
+          _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#674780" }}
+          onClick={() => navigate("/walletPage")}
+        >
+          Wallet
+        </Text>
+        <Text
+          color="#000000"
+          fontSize="md"
+          type="Button"
+          ailgn="left"
+          bgColor="#ECF2FF"
+          _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#674780" }}
+          onClick={() => navigate("/userprofile")}
+        >
+          Profile
+        </Text>
+      </VStack>
+    </Stack>
   );
 };

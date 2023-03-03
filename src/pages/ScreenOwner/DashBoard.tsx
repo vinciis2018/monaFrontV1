@@ -7,7 +7,7 @@ export function DashBoard(props: any) {
   const { screen, videosList } = props;
   const [geometry, setGiometry] = useState<any>();
   const [jsonData, setJsonData] = useState<any>({});
-  console.log("selct screen id 1212: ", JSON.stringify(screen));
+  //console.log("selct screen id 1212: ", JSON.stringify(screen));
   //console.log("videosList: ", JSON.stringify(videosList));
   const data = { features: [] };
   useEffect(() => {
@@ -35,8 +35,8 @@ export function DashBoard(props: any) {
   return (
     <Box>
       <Box>
-        <Stack direction="row" pt="5">
-          <Stack p="5" direction="column" boxShadow="2xl" width="25%">
+        <SimpleGrid columns={[1, 0, 3]} spacing="2" pt="5">
+          <Stack p="5" direction="column" boxShadow="2xl">
             <Text
               fontSize="lg"
               fontWeight="semibold"
@@ -72,13 +72,14 @@ export function DashBoard(props: any) {
               {convertIntoDateAndTime(screen.endTime)?.split(",")[2]}
             </Text>
           </Stack>
-          <Stack p="5" direction="column" boxShadow="2xl" width="50%"></Stack>
-          <Stack direction="column" boxShadow="2xl" width="25%">
+          <Stack p="5" direction="column" boxShadow="2xl"></Stack>
+          <Stack direction="column" boxShadow="2xl">
             {jsonData && geometry ? (
               <MyMap data={jsonData} geometry={geometry} zoom={3} />
             ) : null}
           </Stack>
-        </Stack>
+        </SimpleGrid>
+        <Stack direction="row" pt="5"></Stack>
         <Text
           fontSize="lg"
           fontWeight="bold"

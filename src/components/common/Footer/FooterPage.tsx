@@ -8,6 +8,7 @@ import {
   Input,
   Button,
   Divider,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { TbBrandDiscord, TbBrandFacebook } from "react-icons/tb";
@@ -21,8 +22,14 @@ import { AiOutlineYoutube } from "react-icons/ai";
 export function FooterPage() {
   return (
     <Box pt="10">
-      <Flex pl="20" pr="20">
-        <Box width="50%">
+      <SimpleGrid
+        columns={[1, null, 2]}
+        spacing="10"
+        pt="5"
+        pl={{ base: "2", lg: "20" }}
+        pr={{ base: "2", lg: "20" }}
+      >
+        <Box>
           <Stack as={RouterLink} to="/" direction="row" align="center">
             <Image width={{ base: 30, lg: "50px" }} src={Logo} />
             <Image width={{ base: 70, lg: "100px" }} src={Name} />
@@ -100,7 +107,7 @@ export function FooterPage() {
             </Box>
           </Flex>
         </Box>
-        <Box width="50%">
+        <Box>
           <Stack>
             <Text
               align="left"
@@ -115,7 +122,7 @@ export function FooterPage() {
             </Text>
             <Stack pt="5">
               <Input
-                p="5"
+                py="3"
                 borderColor="#888888"
                 borderRadius="5px"
                 width="70%"
@@ -131,18 +138,31 @@ export function FooterPage() {
                 width="40%"
                 fontSize="xl"
                 fontWeight="semibold"
-                p="5"
+                py="3"
               >
-                Submit
+                Subscribe
               </Button>
             </Stack>
           </Stack>
         </Box>
-      </Flex>
-      <Box pt="10" px="20">
+      </SimpleGrid>
+      <Flex></Flex>
+      <Box
+        pl={{ base: "2", lg: "20" }}
+        pr={{ base: "2", lg: "20" }}
+        pt={{ base: "5" }}
+      >
         <Divider borderColor="black.500" />
       </Box>
-      <Text color="#5C5C5C" fontSize="sm" align="left" mt="10" pl="20">
+      <Text
+        color="#5C5C5C"
+        fontSize="sm"
+        align="left"
+        pt="10"
+        pb="10"
+        pl={{ base: "2", lg: "20" }}
+        pr={{ base: "2", lg: "20" }}
+      >
         Copyright @ VINCIIS CREATIONS PRIVATE LIMITED, 2022. All rights
         reserved.
       </Text>

@@ -22,7 +22,7 @@ export function UploadCampaign(props: any) {
   // console.log("medial in UploadCampaign ", medias);
   const controls = useAnimation();
   const [selectedMedia, setSelectedMedia] = useState<any>("");
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, setIsUploading] = useState<any>(false);
   const [screenImage, setScreenImage] = useState<any>();
   let hiddenInput: any = null;
   const startAnimation = () => controls.start("hover");
@@ -38,12 +38,15 @@ export function UploadCampaign(props: any) {
     setIsUploading(true);
     const fileThumbnail = URL.createObjectURL(file);
     const [dataBuffer] = await getFileData(fileThumbnail);
-    props.setFileUrl(dataBuffer);
-    props.setIsOldMedia(false);
+    props?.setFileUrl(dataBuffer);
+    props?.setIsOldMedia(false);
     setSelectedMedia(fileThumbnail);
     setIsUploading(false);
   }
   const handleNext = () => {
+    if (props?.isCameFromUserProfile) {
+      props?.uploadMediaFromUserProfile();
+    }
     props.onHide();
     props.openUploadThumbnailModal();
   };
