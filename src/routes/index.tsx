@@ -89,7 +89,7 @@ export const PublicRoutes = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route
-          path="/create-reset-password/:email"
+          path="/create-reset-password/:email/:name"
           element={<CreateResetPassword />}
         />
         <Route
