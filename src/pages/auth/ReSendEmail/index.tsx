@@ -117,7 +117,7 @@ export function ReSendEmail(props: any) {
               color="#4A4A4A"
             >
               To confirm your email address, tap the verify button in the email
-              we sent to abc@xyz.com
+              we sent to your email
             </Text>
             <Stack p="1" pt="2" align="center" mt="2">
               <Button
@@ -127,7 +127,7 @@ export function ReSendEmail(props: any) {
                 type="submit"
                 onClick={submitHandler}
               >
-                Resend Email
+                {/* Resend Email */}
               </Button>
             </Stack>
           </Box>
