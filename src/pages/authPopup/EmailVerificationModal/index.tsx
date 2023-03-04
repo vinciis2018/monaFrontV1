@@ -36,7 +36,7 @@ export function EmailVerificationModal(props: any) {
   const [resendEmailModalShow, setResendEmailModalShow] = useState<any>(false);
   const { userInfo, loading, error } = userSignup;
   const [email, setEmail] = useState<any>("");
-  const [userName, setName] = useState<any>("abc");
+  const [userName, setName] = useState<any>("");
   const [emailErrorStatus, setEmailErrorStatus] = useState<any>(false);
   const [emailError, setEmailError] = useState<any>("");
 
@@ -82,7 +82,7 @@ export function EmailVerificationModal(props: any) {
         show={resendEmailModalShow}
         onHide={() => setResendEmailModalShow(false)}
         email={email}
-        name={userName}
+        name={userName || email.split("@")[0]}
       />
       <Modal
         {...props}

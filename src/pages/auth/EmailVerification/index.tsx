@@ -32,11 +32,11 @@ export function EmailVerification(props: any) {
   const { userInfo, loading, error } = userSignup;
 
   const [email, setEmail] = useState("");
-  const [userName, setName] = useState("abc");
+  const [userName, setName] = useState("");
   // console.log("process.env.GOOGLE_CLIENT_ID : ", process.env.GOOGLE_CLIENT_ID);
   const submitHandler = async (e: any) => {
     e.preventDefault();
-    dispatch(signup(userName, email, ""));
+    dispatch(signup(userName || email?.split("@")[0], email, ""));
     alert("Please go to your email and verify!");
     // navigate("/welcome");
   };

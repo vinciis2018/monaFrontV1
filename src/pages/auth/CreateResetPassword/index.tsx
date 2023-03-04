@@ -8,6 +8,7 @@ import { CreateAndResetPassword } from "pages/authPopup/CreateAndResetPassword";
 export function CreateResetPassword(props: any) {
   const navigate = useNavigate();
   const [email, setEmail] = useState<any>("");
+  const [name, setName] = useState<any>("");
   const [createAndResetPasswordShow, setCreateAndResetPasswordShow] =
     useState(true);
 
@@ -18,7 +19,9 @@ export function CreateResetPassword(props: any) {
 
   useEffect(() => {
     const email = window.location.pathname.split("/")[2];
+    const name = window.location.pathname.split("/")[3];
     setEmail(email);
+    setName(name);
   }, [dispatch, navigate, userInfo]);
 
   return (
@@ -27,6 +30,7 @@ export function CreateResetPassword(props: any) {
         show={createAndResetPasswordShow}
         onHide={() => setCreateAndResetPasswordShow(false)}
         email={email}
+        name={name}
       />
     </Box>
   );

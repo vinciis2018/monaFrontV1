@@ -85,12 +85,7 @@ export function HomePage() {
   ];
 
   return (
-    <Box
-      color="black.500"
-      align="center"
-      py={{ base: "3", lg: "20" }}
-      pt={{ base: "3", lg: "20" }}
-    >
+    <Box color="black.500" align="center" pt={{ base: "3", lg: "5" }}>
       <Center px="10">
         {loadingScreens || loadingVideos ? (
           <HLoading loading={loadingScreens || loadingVideos} />
@@ -111,12 +106,16 @@ export function HomePage() {
                 borderRadius="24px"
                 height={{ base: "100%", lg: "50%" }}
               ></Box>
-              <Stack zIndex="1" align="center" width="70%">
+              <Stack
+                zIndex="1"
+                align="center"
+                width={{ base: "70%", lg: "50%" }}
+              >
                 <Text
-                  mt={{ base: "-100", lg: "-600" }}
+                  mt={{ base: "-100", lg: "-700", md: "-300" }}
                   pb={{ base: "10", lg: "20" }}
-                  fontSize={{ base: "lg", lg: "4xl" }}
-                  fontWeight="1000"
+                  fontSize={{ base: "lg", lg: "6xl", md: "5xl" }}
+                  fontWeight="extrabold"
                   color="#FFFFFF"
                 >
                   Enter the new age of advertising

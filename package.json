@@ -88,8 +88,8 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "start": "react-scripts start --openssl-legacy-provider  --max_old_space_size=4096",
-    "build": "react-scripts build --openssl-legacy-provider  --max_old_space_size=4096",
+    "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "build": "export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
