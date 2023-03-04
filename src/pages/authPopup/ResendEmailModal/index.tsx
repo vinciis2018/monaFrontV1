@@ -130,7 +130,7 @@ export function ReSendEmailModal(props: any) {
                   color="#4A4A4A"
                 >
                   To confirm your email address, tap the verify button in the
-                  email we sent to abc@xyz.com
+                  email we sent to your email
                 </Text>
                 <Stack pt="2" align="center" pb="2">
                   <Button
