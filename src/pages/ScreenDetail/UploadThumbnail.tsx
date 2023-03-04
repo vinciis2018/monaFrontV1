@@ -56,7 +56,7 @@ export function UploadThumbnail(props: any) {
       keyboard={false}
     >
       <Modal.Body>
-        <Box>
+        <Box bgColor="#FFFFFF">
           {isUploading ? (
             <HLoading loading={isUploading} />
           ) : (

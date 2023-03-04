@@ -50,7 +50,7 @@ export function ReSendEmailModal(props: any) {
       keyboard={false}
     >
       <Modal.Body className="popup">
-        <Box>
+        <Box bgColor="#FFFFFF">
           <SimpleGrid columns={[1, 2]} gap="0">
             <Stack width="90%" bgColor="rgba(244, 86, 0, 0.3)">
               {/* backgroundImage={rectangle} backgroundPosition="center" backgroundRepeat="no-repeat" */}

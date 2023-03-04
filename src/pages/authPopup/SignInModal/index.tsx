@@ -109,7 +109,7 @@ export function SignInModal(props: any) {
   };
 
   return (
-    <Box>
+    <>
       {emailVerificationShow && (
         <EmailVerificationModal
           show={emailVerificationShow}
@@ -351,6 +351,6 @@ export function SignInModal(props: any) {
           </Box>
         </Modal.Body>
       </Modal>
-    </Box>
+    </>
   );
 }

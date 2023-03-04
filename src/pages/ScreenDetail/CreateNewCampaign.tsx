@@ -63,7 +63,7 @@ export function CreateNewCampaign(props: any) {
       dialogClassName="modal-90w"
     >
       <Modal.Body>
-        <Box>
+        <Box bgColor="#FFFFFF">
           <Stack align="end" justifyContent="flex-end">
             <IconButton
               bg="none"

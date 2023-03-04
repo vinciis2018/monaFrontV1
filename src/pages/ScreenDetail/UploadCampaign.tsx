@@ -60,7 +60,7 @@ export function UploadCampaign(props: any) {
       keyboard={false}
     >
       <Modal.Body>
-        <Box>
+        <Box bgColor="#FFFFFF">
           <Stack align="end" justifyContent="flex-end">
             <IconButton
               bg="none"
