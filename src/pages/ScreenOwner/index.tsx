@@ -54,32 +54,32 @@ export function ScreenOwner() {
       setVideoLoading(false);
     }
   };
-  const getScreentDetail = async (screenId: any) => {
-    try {
-      var startTime = performance.now();
-      const { data } = await Axios.get(
-        `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}`
-      );
-      setScreen(data);
-      //console.log("screen details  : ", JSON.stringify(data));
+  // const getScreentDetail = async (screenId: any) => {
+  //   try {
+  //     var startTime = performance.now();
+  //     const { data } = await Axios.get(
+  //       `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}`
+  //     );
+  //     setScreen(data);
+  //     //console.log("screen details  : ", JSON.stringify(data));
 
-      getCampaignListByScreenId(screenId);
-      setScreenLoading(false);
-      var endTime = performance.now();
-      console.log(
-        `Call to doSomething took getScreentDetail ${
-          endTime - startTime
-        } milliseconds`
-      );
-    } catch (error: any) {
-      setScreenError(
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-      );
-      setScreenLoading(false);
-    }
-  };
+  //     getCampaignListByScreenId(screenId);
+  //     setScreenLoading(false);
+  //     var endTime = performance.now();
+  //     console.log(
+  //       `Call to doSomething took getScreentDetail ${
+  //         endTime - startTime
+  //       } milliseconds`
+  //     );
+  //   } catch (error: any) {
+  //     setScreenError(
+  //       error.response && error.response.data.message
+  //         ? error.response.data.message
+  //         : error.message
+  //     );
+  //     setScreenLoading(false);
+  //   }
+  // };
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
   //console.log("userInfo", JSON.stringify(userInfo));
@@ -115,14 +115,40 @@ export function ScreenOwner() {
   const handleCreateScree = () => {
     dispatch(createScreen());
   };
-  const handleSelectScreen = (screenId: any, index: any) => {
-    //console.log("handleSelectScreen : ", screenId);
-    setSelectedScreenIndex(index);
-    setSelectedScreen(screenId);
-    setVideoLoading(true);
-    setScreenLoading(true);
-    getScreentDetail(screenId);
-  };
+  const handleSelectScreen = React.useCallback(
+    async (screenId: any, index: any) => {
+      //console.log("handleSelectScreen : ", screenId);
+      setSelectedScreenIndex(index);
+      setSelectedScreen(screenId);
+      setVideoLoading(true);
+      setScreenLoading(true);
+      // getScreentDetail(screenId);
+      try {
+        var startTime = performance.now();
+        const { data } = await Axios.get(
+          `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}`
+        );
+        setScreen(data);
+        //console.log("screen details  : ", JSON.stringify(data));
+        getCampaignListByScreenId(screenId);
+        setScreenLoading(false);
+        var endTime = performance.now();
+        console.log(
+          `Call to doSomething took getScreentDetail ${
+            endTime - startTime
+          } milliseconds`
+        );
+      } catch (error: any) {
+        setScreenError(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        );
+        setScreenLoading(false);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     if (!userInfo) {
@@ -135,13 +161,22 @@ export function ScreenOwner() {
     //console.log("screens : ", screens);
     if (screens?.length > 0) {
       handleSelectScreen(screens[0]._id, 0);
-    } else {
-      dispatch(userScreensList(userInfo));
     }
-  }, [successCreate, dispatch, navigate]);
+
+    // if (!screens) {
+    dispatch(userScreensList(userInfo));
+    // }
+  }, [
+    successCreate,
+    dispatch,
+    navigate,
+    userInfo,
+    createdScreen?._id,
+    handleSelectScreen,
+  ]);
 
   return (
-    <Box pt="5">
+    <Box pt="20">
       <Box pl={{ base: "2", lg: "20" }} pr={{ base: "2", lg: "20" }}>
         {screenLoading || videoLoading || loadingScreens ? (
           <HLoading loading={screenLoading || videoLoading || loadingScreens} />
@@ -200,7 +235,7 @@ export function ScreenOwner() {
             <Stack p="5" width="100%">
               <Stack
                 direction="row"
-                pt=""
+                pt="20"
                 align="center"
                 justifyContent="space-between"
               >
