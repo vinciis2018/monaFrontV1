@@ -47,8 +47,14 @@ export function CreateAndResetPassword(props: any) {
   const dispatch = useDispatch<any>();
   const submitHandler = async (e: any) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
+    if (
+      password !== confirmPassword ||
+      password === "" ||
+      confirmPassword === ""
+    ) {
       alert("Password and confirm password donot match");
+      setPassword("");
+      setConfirmPassword("");
     } else {
       dispatch(signup(props.name, props.email, password));
       setShowConformPassword(false); // conform password modal close
@@ -143,7 +149,7 @@ export function CreateAndResetPassword(props: any) {
                     New Password
                   </FormLabel>
                   <Stack direction="row" align="center">
-                    <InputGroup size="md">
+                    <InputGroup size="md" align="center">
                       <Input
                         id="password"
                         py="3"
@@ -153,27 +159,23 @@ export function CreateAndResetPassword(props: any) {
                         value={password}
                         required
                       />
-                      <InputRightElement width="4.5rem">
+                      <InputRightElement width="4.5rem" align="center">
                         {showPassword ? (
-                          <IconButton
-                            pt="2"
-                            bg="none"
-                            onClick={handleShowPassword}
-                            icon={<AiOutlineEye size="20px" color="black" />}
-                            aria-label="Close"
-                          />
+                          <Stack mt="3">
+                            <AiOutlineEye
+                              size="20px"
+                              color="black"
+                              onClick={handleShowPassword}
+                            />
+                          </Stack>
                         ) : (
-                          <IconButton
-                            bg="none"
-                            onClick={handleShowPassword}
-                            icon={
-                              <AiOutlineEyeInvisible
-                                size="20px"
-                                color="black"
-                              />
-                            }
-                            aria-label="Close"
-                          />
+                          <Stack mt="3">
+                            <AiOutlineEyeInvisible
+                              size="20px"
+                              color="black"
+                              onClick={handleShowPassword}
+                            />
+                          </Stack>
                         )}
                       </InputRightElement>
                     </InputGroup>
@@ -196,24 +198,21 @@ export function CreateAndResetPassword(props: any) {
                       />
                       <InputRightElement width="4.5rem">
                         {showConformPassword ? (
-                          <IconButton
-                            bg="none"
-                            onClick={handleShowConformPassword}
-                            icon={<AiOutlineEye size="20px" color="black" />}
-                            aria-label="Close"
-                          />
+                          <Stack mt="3">
+                            <AiOutlineEye
+                              size="20px"
+                              color="black"
+                              onClick={handleShowConformPassword}
+                            />
+                          </Stack>
                         ) : (
-                          <IconButton
-                            bg="none"
-                            onClick={handleShowConformPassword}
-                            icon={
-                              <AiOutlineEyeInvisible
-                                size="20px"
-                                color="black"
-                              />
-                            }
-                            aria-label="Close"
-                          />
+                          <Stack mt="3">
+                            <AiOutlineEyeInvisible
+                              size="20px"
+                              color="black"
+                              onClick={handleShowConformPassword}
+                            />
+                          </Stack>
                         )}
                       </InputRightElement>
                     </InputGroup>

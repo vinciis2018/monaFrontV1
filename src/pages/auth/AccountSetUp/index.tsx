@@ -52,7 +52,7 @@ export function AccountSetUp(props: any) {
     if (password !== confirmPassword) {
       alert("Password and confirm password donot match");
     } else {
-      dispatch(signup(props.email, password));
+      dispatch(signup(props.email?.split("@")[0], props.email, password));
       alert("user created, please create a wallet to proceed");
       navigate("/");
     }

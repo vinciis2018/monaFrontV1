@@ -49,7 +49,7 @@ export function EmailVerificationForForgetPasswordModal(props: any) {
   const submitHandler = async (e: any) => {
     e.preventDefault();
     if (ValidateEmail(email)) {
-      dispatch(signup(userName, email, ""));
+      dispatch(signup(userName || email?.split("@")[0], email, ""));
       props.onHide();
       setResendEmailModalShow(true);
     } else {
