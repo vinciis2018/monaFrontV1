@@ -138,10 +138,10 @@ export function ScreenOwner() {
     } else {
       dispatch(userScreensList(userInfo));
     }
-  }, [successCreate, dispatch, navigate, screens]);
+  }, [successCreate, dispatch, navigate]);
 
   return (
-    <Box pt="20">
+    <Box pt="5">
       <Box pl={{ base: "2", lg: "20" }} pr={{ base: "2", lg: "20" }}>
         {screenLoading || videoLoading || loadingScreens ? (
           <HLoading loading={screenLoading || videoLoading || loadingScreens} />
@@ -200,7 +200,7 @@ export function ScreenOwner() {
             <Stack p="5" width="100%">
               <Stack
                 direction="row"
-                pt="20"
+                pt=""
                 align="center"
                 justifyContent="space-between"
               >
