@@ -53,9 +53,9 @@ export function SignInModal(props: any) {
   const [email, setEmail] = useState<any>("");
   const [password, setPassword] = useState<any>("");
   const [showPassword, setShowPassword] = useState<any>(false);
-  const handleShowPassword = () => setShowPassword(!showPassword);
   const [emailErrorStatus, setEmailErrorStatus] = useState<any>(false);
   const [emailError, setEmailError] = useState<any>("");
+  const [passwordError, setPasswordError] = useState<any>("");
   const [passwordErrorStatus, setPasswordErrorStatus] = useState<any>(false);
 
   const userSignin = useSelector((state: any) => state.userSignin);
@@ -66,11 +66,24 @@ export function SignInModal(props: any) {
   const redirect = props?.location?.search
     ? props?.location?.search.split("=")[1]
     : "/";
+
+  const handleShowPassword = () => setShowPassword(!showPassword);
+
   function validateEmail(email: string) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       return true;
     }
+    setEmailErrorStatus(true);
+    setEmailError("Please enter valid email");
     return false;
+  }
+  function validatePassword(pass: string) {
+    if (pass.length === 0) {
+      setPasswordError("Please enter password");
+      setPasswordErrorStatus(true);
+      return false;
+    }
+    return true;
   }
   useEffect(() => {
     const initClient = () => {
@@ -88,15 +101,10 @@ export function SignInModal(props: any) {
   const onFailure = (err: any) => {};
   const submitHandler = (e: any) => {
     e.preventDefault();
-    if (validateEmail(email)) {
+    if (validateEmail(email) && validatePassword(password)) {
       dispatch(signin(email, password));
       props.onHide();
-      // console.log("gjkhjkkkjh");
-
       navigate("/");
-    } else {
-      setEmailErrorStatus(true);
-      setEmailError("Please enter valid email");
     }
   };
   const handleSignInModal = () => {
@@ -200,12 +208,12 @@ export function SignInModal(props: any) {
                   {loading && <HLoading loading={loading} />}
                   {error && <MessageBox variant="danger">{error}</MessageBox>}
                   <FormControl id="email" pt="3" isInvalid={emailErrorStatus}>
-                    <FormLabel fontSize="xs">Enter email</FormLabel>
+                    <FormLabel fontSize="sm">Enter email</FormLabel>
                     <Stack direction="column" align="left">
                       <Input
                         id="email"
                         onChange={(e) => setEmail(e?.target?.value)}
-                        placeholder="youremail@gmail.com"
+                        placeholder="rodrigo@flight.co.uk"
                         value={email}
                         required
                         type="email"
@@ -224,7 +232,7 @@ export function SignInModal(props: any) {
                     mt="3"
                     isInvalid={passwordErrorStatus}
                   >
-                    <FormLabel fontSize="xs">Password</FormLabel>
+                    <FormLabel fontSize="sm">Enter password</FormLabel>
                     <Stack direction="column">
                       <Stack direction="row" align="center">
                         <InputGroup size="md">
@@ -232,7 +240,7 @@ export function SignInModal(props: any) {
                             id="password"
                             onChange={(e) => setPassword(e?.target?.value)}
                             type={showPassword ? "text" : "password"}
-                            placeholder="Password"
+                            placeholder="At least 6 characters"
                             value={password}
                             required
                             py="3"
@@ -263,10 +271,10 @@ export function SignInModal(props: any) {
                           </InputRightElement>
                         </InputGroup>
                       </Stack>
-                      {!error ? (
+                      {!passwordError ? (
                         <FormHelperText></FormHelperText>
                       ) : (
-                        <FormErrorMessage>{error}</FormErrorMessage>
+                        <FormErrorMessage>{passwordError}</FormErrorMessage>
                       )}
                     </Stack>
                   </FormControl>
@@ -287,19 +295,10 @@ export function SignInModal(props: any) {
                     >
                       Login
                     </Button>
-                  </Stack>
-                  <Stack direction="row" justifyContent="space-between" mt="2">
                     <Text
+                      fontSize="sm"
                       type="button"
-                      onClick={handleSignInModal}
-                      ref={btnRef}
-                      fontSize="xs"
-                    >
-                      Create account
-                    </Text>
-                    <Text
-                      fontSize="xs"
-                      type="button"
+                      color="#333333"
                       onClick={handleForgetPasswordModal}
                       ref={btnRef}
                     >
@@ -307,13 +306,13 @@ export function SignInModal(props: any) {
                     </Text>
                   </Stack>
                   <Text p="2" textAlign="center" fontSize="sm" width="100%">
-                    ---------------- or sign in with --------------
+                    ---------------------- or sign in with ---------------------
                   </Text>
                   <Stack
                     direction="row"
                     align="center"
                     justifyContent="center"
-                    mt="3"
+                    pt="3"
                   >
                     <GoogleLogin
                       clientId={clientId}
@@ -326,6 +325,9 @@ export function SignInModal(props: any) {
                           onClick={renderProps.onClick}
                           align="center"
                           py="3"
+                          fontSize="md"
+                          color="#333333"
+                          bgColor="#FFFFFF"
                         >
                           <IconButton
                             bg="none"
@@ -340,6 +342,20 @@ export function SignInModal(props: any) {
                       cookiePolicy={"single_host_origin"}
                       isSignedIn={true}
                     />
+                  </Stack>
+                  <Stack>
+                    <Button
+                      py="3"
+                      width="100%"
+                      bgColor="#FFFFFF"
+                      color="#333333"
+                      type="submit"
+                      fontSize="md"
+                      onClick={handleSignInModal}
+                      border="1px"
+                    >
+                      Create a new account
+                    </Button>
                   </Stack>
                   <Text fontSize="xs" textAlign="left" mt="4" pb="10">
                     By signing in, I agree to Monad’s Terms of Use and Privacy
