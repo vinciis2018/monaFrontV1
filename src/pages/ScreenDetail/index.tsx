@@ -780,7 +780,7 @@ export function ScreenDetail(props: any) {
               <Stack pt="10" pb="20">
                 {screen?.reviews.length > 0
                   ? screen.reviews.map((review: any, index: any) => (
-                      <Review review={review} key={index} />
+                      <Review review={review} key={index + 1} />
                     ))
                   : null}
               </Stack>

@@ -39,9 +39,17 @@ export function CartAndSummary(props: any) {
 
   const [thumbnail, setThumbnail] = useState<any>("");
   const [startTime, setStartTime] = useState<any>();
+  const [startTimeError, setStartTimeError] = useState<any>();
+
   const [endTime, setEndTime] = useState<any>();
+  const [endTimeError, setEndTimeError] = useState<any>();
+
   const [startDate, setStartDate] = useState<any>();
+  const [startDateError, setStartDateError] = useState<any>();
+
   const [endDate, setEndDate] = useState<any>();
+  const [endDateError, setEndDateError] = useState<any>();
+
   const [totalSlotBooked, setTotalSlotBooked] = useState<any>(50);
   const [campaignName, setCampaignName] = useState<any>("");
   // const screenId = location.state.screenId || "63b4126778f5c028328038e9";
@@ -90,23 +98,46 @@ export function CartAndSummary(props: any) {
   const { loading: loadingScreen, error: errorScreen, screen } = screenDetails;
   //console.log("uploadedCampaign : ", JSON.stringify(uploadedCampaign));
   // console.log("screen details  : ", JSON.stringify(screen));
+  const handleCheckConstraint = () => {
+    let response = true;
+    if (!startDate) {
+      setStartDateError("Please select start date");
+      alert("Please select start date");
+      response = false;
+    } else if (!endDate) {
+      setEndDateError("Please select end date");
+      alert("Please select end date");
+      response = false;
+    } else if (!startTime) {
+      setStartTimeError("please select start time");
+      alert("Please select start time");
+      response = false;
+    } else if (!endTime) {
+      setEndTimeError("Please select end time error");
+      alert("Please select end time");
+      response = false;
+    }
+    console.log("response : ", response);
+    return response;
+  };
 
   const dispatch = useDispatch<any>();
   const slotBookingHandler = () => {
-    window.alert("Confirm Booking slot");
-    dispatch(
-      createCamapaign({
-        screenId,
-        mediaId,
-        campaignName,
-        totalSlotBooked,
-        startDate,
-        endDate,
-        startTime,
-        endTime,
-        thumbnail,
-      })
-    );
+    //window.alert("Confirm Booking slot");
+    if (handleCheckConstraint())
+      dispatch(
+        createCamapaign({
+          screenId,
+          mediaId,
+          campaignName,
+          totalSlotBooked,
+          startDate,
+          endDate,
+          startTime,
+          endTime,
+          thumbnail,
+        })
+      );
   };
   // if (successSlotBooking) {
   //   window.alert("Campaign Createde successfully");
