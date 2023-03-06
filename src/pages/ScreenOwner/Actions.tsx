@@ -62,7 +62,7 @@ export function Actions(props: any) {
               </Thead>
               <Tbody>
                 {videosList.map((video: any, index: any) => (
-                  <Tr>
+                  <Tr key={index}>
                     <Td>
                       <Flex>
                         <Form.Check
@@ -71,12 +71,12 @@ export function Actions(props: any) {
                           checked={checkedItems[index]}
                         />
                         <Text color=" #403F49 " fontSize="sm" pl="5">
-                          {video.media.brandName}
+                          {video.brandName}
                         </Text>
                       </Flex>
                     </Td>
                     <Td color="#575757" fontSize="sm">
-                      {convertIntoDateAndTime(video.campaign.createdAt)}
+                      {convertIntoDateAndTime(video.startDate)}
                     </Td>
                     <Td
                       isNumeric
@@ -84,12 +84,10 @@ export function Actions(props: any) {
                       color="#403F49"
                       fontWeight="semibold"
                     >
-                      {video.campaign.totalSlotBooked}
+                      {video.totalSlotBooked}
                     </Td>
                     <Td fontSize="sm" color="#403F49" fontWeight="semibold">
-                      ₹
-                      {video.campaign.rentPerSlot *
-                        video.campaign.totalSlotBooked}
+                      ₹{video.rentPerSlot * video.totalSlotBooked}
                     </Td>
                     <Td>
                       <Select

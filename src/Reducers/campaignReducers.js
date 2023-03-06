@@ -8,6 +8,9 @@ import {
   CAMPAIGN_DETAILS_REQUEST,
   CAMPAIGN_DETAILS_SUCCESS,
   CAMPAIGN_DETAILS_FAIL,
+  CAMPAIGN_LIST_BY_SCREENID_FAIL,
+  CAMPAIGN_LIST_BY_SCREENID_REQUEST,
+  CAMPAIGN_LIST_BY_SCREENID_SUCCESS,
 } from "Constants/campaignConstants.js";
 
 export function createCampaignReducer(state = {}, action) {
@@ -47,6 +50,22 @@ export function campaignDetailsReducer(state = { loading: true }, action) {
     case CAMPAIGN_DETAILS_SUCCESS:
       return { loading: false, video: action.payload };
     case CAMPAIGN_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
+
+export function campaignListByScreenIDReducer(
+  state = { campaigns: [] },
+  action
+) {
+  switch (action.type) {
+    case CAMPAIGN_LIST_BY_SCREENID_REQUEST:
+      return { loading: true };
+    case CAMPAIGN_LIST_BY_SCREENID_SUCCESS:
+      return { loading: false, campaigns: action.payload };
+    case CAMPAIGN_LIST_BY_SCREENID_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
