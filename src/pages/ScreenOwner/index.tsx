@@ -8,10 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { createScreen } from "Actions/screenActions";
 import { useDispatch, useSelector } from "react-redux";
 import { SCREEN_CREATE_RESET } from "../../Constants/screenConstants";
-import Axios from "axios";
 import HLoading from "components/atoms/HLoading";
 import { userScreensList } from "Actions/userActions";
 import MessageBox from "components/atoms/MessageBox";
+import { getCampaignListByScreenId } from "Actions/campaignAction";
 
 export function ScreenOwner() {
   const navigate = useNavigate();
@@ -19,72 +19,23 @@ export function ScreenOwner() {
   const [dashboard, setDashboard] = useState<any>(true);
   const [histoty, setHistory] = useState<any>(false);
   const [actions, setActions] = useState<any>(false);
-  const [videosList, setVideosList] = useState<any>([]);
-  const [videosListError, setVideosListError] = useState<any>([]);
-  const [videoLoading, setVideoLoading] = useState<any>(false);
   const [screen, setScreen] = useState<any>(null);
-  const [screenLoading, setScreenLoading] = useState<any>(false);
-  const [screenError, setScreenError] = useState<any>(null);
+  const [loading, setLoading] = useState<any>(false);
   const [selectedScreenIndex, setSelectedScreenIndex] = useState<any>(0);
 
-  // console.log("screenLoading : ", screenLoading);
-  // console.log("videoLoading : ", videoLoading);
-
-  const getCampaignListByScreenId = async (screenId: any) => {
-    try {
-      var startTime = performance.now();
-      const { data } = await Axios.get(
-        `${process.env.REACT_APP_BLINDS_SERVER}/api/campaign/${screenId}/screen/campaignAndMedia`
-      );
-      //console.log("videos  : ", JSON.stringify(data));
-      setVideosList(data);
-      setVideoLoading(false);
-      var endTime = performance.now();
-      console.log(
-        `Call to doSomething took getCampaignListByScreenId ${
-          endTime - startTime
-        } milliseconds`
-      );
-    } catch (error: any) {
-      setVideosListError(
-        error.response && error.response.data.message
-          ? error.response.data.messages
-          : error.message
-      );
-      setVideoLoading(false);
-    }
-  };
-  const getScreentDetail = async (screenId: any) => {
-    try {
-      var startTime = performance.now();
-      const { data } = await Axios.get(
-        `${process.env.REACT_APP_BLINDS_SERVER}/api/screens/${screenId}`
-      );
-      setScreen(data);
-      //console.log("screen details  : ", JSON.stringify(data));
-
-      getCampaignListByScreenId(screenId);
-      setScreenLoading(false);
-      var endTime = performance.now();
-      console.log(
-        `Call to doSomething took getScreentDetail ${
-          endTime - startTime
-        } milliseconds`
-      );
-    } catch (error: any) {
-      setScreenError(
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-      );
-      setScreenLoading(false);
-    }
-  };
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
   //console.log("userInfo", JSON.stringify(userInfo));
   const userScreens = useSelector((state: any) => state.userScreens);
   const { loading: loadingScreens, error: errorScreens, screens } = userScreens;
+  const campaignListByScreenId = useSelector(
+    (state: any) => state.campaignListByScreenId
+  );
+  const {
+    loading: loadingCampaign,
+    error: errorCampaign,
+    campaigns: videosList,
+  } = campaignListByScreenId;
   //console.log("screens 333 : ", JSON.stringify(screens));
 
   const screenCreate = useSelector((state: any) => state.screenCreate);
@@ -115,13 +66,11 @@ export function ScreenOwner() {
   const handleCreateScree = () => {
     dispatch(createScreen());
   };
-  const handleSelectScreen = (screenId: any, index: any) => {
-    //console.log("handleSelectScreen : ", screenId);
+  const handleSelectScreen = (screen: any, index: any) => {
     setSelectedScreenIndex(index);
-    setSelectedScreen(screenId);
-    setVideoLoading(true);
-    setScreenLoading(true);
-    getScreentDetail(screenId);
+    setScreen(screen);
+    setSelectedScreen(screen._id);
+    dispatch(getCampaignListByScreenId(screen._id));
   };
 
   useEffect(() => {
@@ -134,19 +83,24 @@ export function ScreenOwner() {
     }
     //console.log("screens : ", screens);
     if (screens?.length > 0) {
-      handleSelectScreen(screens[0]._id, 0);
-    } else {
-      dispatch(userScreensList(userInfo));
+      console.log("came inside when we get screens data");
+      handleSelectScreen(screens[0], 0);
     }
-  }, [successCreate, dispatch, navigate]);
+    dispatch(userScreensList(userInfo));
+    setLoading(true);
+  }, [successCreate, dispatch, navigate, userInfo, loading]);
 
   return (
     <Box pt="5">
       <Box pl={{ base: "2", lg: "20" }} pr={{ base: "2", lg: "20" }}>
-        {screenLoading || videoLoading || loadingScreens ? (
-          <HLoading loading={screenLoading || videoLoading || loadingScreens} />
-        ) : errorScreens ? (
-          <MessageBox variant="danger">{errorScreens}</MessageBox>
+        {loadingScreens || loadingCreate || loadingCampaign ? (
+          <HLoading
+            loading={loadingScreens || loadingCreate || loadingCampaign}
+          />
+        ) : errorScreens || errorCreate || errorCampaign ? (
+          <MessageBox variant="danger">
+            {errorScreens || errorCreate || errorCampaign}
+          </MessageBox>
         ) : (
           <Flex>
             <Stack
@@ -189,7 +143,7 @@ export function ScreenOwner() {
                     type="Button"
                     _hover={{ bg: "rgba(14, 188, 245, 0.3)", color: "#674780" }}
                     onClick={() => {
-                      handleSelectScreen(eachScreen._id, index);
+                      handleSelectScreen(eachScreen, index);
                     }}
                   >
                     {eachScreen.name}
@@ -269,7 +223,13 @@ export function ScreenOwner() {
                     color="#333333"
                     pl="5"
                     type="Button"
-                    onClick={() => navigate(`/edit-screen/${selectedScreen}`)}
+                    onClick={() => {
+                      if (selectedScreen) {
+                        navigate(`/edit-screen/${selectedScreen}`);
+                      } else {
+                        alert("First select screen for edit..");
+                      }
+                    }}
                   >
                     edit
                   </Text>
@@ -278,9 +238,9 @@ export function ScreenOwner() {
               <Box>
                 {dashboard && selectedScreen ? (
                   <DashBoard screen={screen} videosList={videosList} />
-                ) : histoty ? (
+                ) : histoty && selectedScreen ? (
                   <History screen={screen} videosList={videosList} />
-                ) : actions ? (
+                ) : actions && selectedScreen ? (
                   <Actions screen={screen} videosList={videosList} />
                 ) : null}
               </Box>

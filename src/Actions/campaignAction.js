@@ -9,6 +9,9 @@ import {
   CAMPAIGN_DETAILS_FAIL,
   CAMPAIGN_DETAILS_REQUEST,
   CAMPAIGN_DETAILS_SUCCESS,
+  CAMPAIGN_LIST_BY_SCREENID_FAIL,
+  CAMPAIGN_LIST_BY_SCREENID_REQUEST,
+  CAMPAIGN_LIST_BY_SCREENID_SUCCESS,
 } from "Constants/campaignConstants.js";
 
 export const createCamapaign =
@@ -124,7 +127,7 @@ export const getCampaignDetail = (campaignId) => async (dispatch) => {
 
 export const getCampaignListByScreenId = (screenId) => async (dispatch) => {
   dispatch({
-    type: CAMPAIGN_DETAILS_REQUEST,
+    type: CAMPAIGN_LIST_BY_SCREENID_REQUEST,
     payload: screenId,
   });
 
@@ -133,12 +136,12 @@ export const getCampaignListByScreenId = (screenId) => async (dispatch) => {
       `${process.env.REACT_APP_BLINDS_SERVER}/api/campaign/${screenId}/screen`
     );
     dispatch({
-      type: CAMPAIGN_DETAILS_SUCCESS,
+      type: CAMPAIGN_LIST_BY_SCREENID_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: CAMPAIGN_DETAILS_FAIL,
+      type: CAMPAIGN_LIST_BY_SCREENID_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

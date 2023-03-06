@@ -1,12 +1,13 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+// import { Link as RouterLink } from "react-router-dom";
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { consvertSecondToHrAndMinutes } from "utils/dateAndTime";
 
 export function AdsPlaying(props: any) {
   const { video } = props;
+  console.log("video : ", JSON.stringify(video));
   const playingTime = consvertSecondToHrAndMinutes(
-    video.media.duration * video.campaign.totalSlotBooked
+    video.duration * video.totalSlotBooked
   ); // sending time in seconds only and get in hr, mn,sec
 
   return (
@@ -18,17 +19,8 @@ export function AdsPlaying(props: any) {
       borderRadius="12px"
       boxShadow="2xl"
       key={video._id}
-      as={RouterLink}
-      to={`/advert/${video._id}/${video?.video?.split("/").slice(-1)[0]}/${
-        video.video
-      }`}
     >
-      <Image
-        height="50%"
-        width="212px"
-        src={video.media.thumbnail}
-        alt=""
-      ></Image>
+      <Image height="50%" width="212px" src={video.thumbnail} alt=""></Image>
       <Text
         color="#403F49"
         pt="2"
@@ -36,7 +28,7 @@ export function AdsPlaying(props: any) {
         fontWeight="semibold"
         align="left"
       >
-        {video.media.brandName}
+        {video.brandName}
       </Text>
       <Flex justifyContent="space-between" pt="2">
         <Text color="#403F49" fontSize="sm" align="left">
@@ -52,7 +44,7 @@ export function AdsPlaying(props: any) {
           Total no of slots
         </Text>
         <Text color="#403F49" fontSize="sm" align="left">
-          {video.campaign.totalSlotBooked}
+          {video.totalSlotBooked}
         </Text>
       </Flex>
     </Box>

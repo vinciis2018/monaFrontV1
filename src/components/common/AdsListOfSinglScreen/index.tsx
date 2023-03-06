@@ -64,20 +64,20 @@ export function AdsListOfSinglScreen(props: any) {
                     checked={checkedItems[index]}
                   />
                   <Text color=" #403F49 " fontSize="sm" pl="5">
-                    {video.media.brandName}
+                    {video.brandName}
                   </Text>
                 </Flex>
               </Td>
               <Td color="#575757" fontSize="sm">
-                {convertIntoDateAndTime(video.campaign.createdAt)}
+                {convertIntoDateAndTime(video.startDate)}
               </Td>
               <Td isNumeric fontSize="sm" color="#403F49" fontWeight="semibold">
-                {video.campaign.totalSlotBooked}
+                {video.totalSlotBooked}
               </Td>
               <Td fontSize="sm" color="#403F49" fontWeight="semibold">
-                ₹{video.campaign.rentPerSlot * video.campaign.totalSlotBooked}
+                ₹{video.rentPerSlot * video.totalSlotBooked}
               </Td>
-              {video.campaign.paidForSlots ? (
+              {video.paidForSlots ? (
                 <Td>
                   <Flex>
                     <BsDot color="#00D615" size="20px" />
