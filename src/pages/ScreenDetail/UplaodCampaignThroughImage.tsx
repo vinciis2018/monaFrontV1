@@ -71,7 +71,7 @@ export function UplaodCampaignThroughImage(props: any) {
         {isUploading ? (
           <HLoading loading={isUploading} />
         ) : (
-          <Box>
+          <Box bgColor="#FFFFFF">
             <Stack align="end" justifyContent="flex-end">
               <IconButton
                 bg="none"

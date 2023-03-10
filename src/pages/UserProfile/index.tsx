@@ -55,7 +55,7 @@ export function UserProfile() {
     dispatch(userMediasList(userInfo));
   }, [dispatch, userInfo]);
   return (
-    <Box pt={{ base: "3", lg: "20" }} height="130%">
+    <Box pt={{ base: "3", lg: "5" }} height="130%">
       <CreateNewCampaign
         show={campaignModal}
         onHide={() => setCampaignModal(false)}

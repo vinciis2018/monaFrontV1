@@ -332,7 +332,7 @@ export const EditScreen = (props: any) => {
     setStartTime(value);
   };
   return (
-    <Box pl="20" pr="20" pt={{ base: "3", lg: "20" }}>
+    <Box px={{ base: "2", lg: "20" }} pt={{ base: "3", lg: "5" }}>
       {loadingScreen ? (
         <HLoading loading={loadingScreen} />
       ) : errorScreen ? (
@@ -485,37 +485,7 @@ export const EditScreen = (props: any) => {
                   </Button>
                 </Stack>
               </HStack>
-              <HStack>
-                <VStack fontSize="sm" spacing="2" width="30%" align="left">
-                  <Text color="#393939" fontWeight="semibold" align="left">
-                    End time
-                  </Text>
-                  <Text color="#4D4D4D" align="left">
-                    Enter the screen end time
-                  </Text>
-                </VStack>
-                <Flex>
-                  <FormControl id="startDateHere" width="50%">
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <TimePicker
-                        inputVariant="outlined"
-                        format="hh:mm"
-                        value={endTime}
-                        onChange={handleEndTime}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="start">
-                              <MiuiIconButton>
-                                <BsClock />
-                              </MiuiIconButton>
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </MuiPickersUtilsProvider>
-                  </FormControl>
-                </Flex>
-              </HStack>
+
               <HStack>
                 <VStack fontSize="sm" spacing="2" width="30%" align="left">
                   <Text color="#393939" fontWeight="semibold" align="left">
@@ -533,6 +503,37 @@ export const EditScreen = (props: any) => {
                         format="hh:mm"
                         value={startTime}
                         onChange={handleStartTime}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="start">
+                              <MiuiIconButton>
+                                <BsClock />
+                              </MiuiIconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </MuiPickersUtilsProvider>
+                  </FormControl>
+                </Flex>
+              </HStack>
+              <HStack>
+                <VStack fontSize="sm" spacing="2" width="30%" align="left">
+                  <Text color="#393939" fontWeight="semibold" align="left">
+                    End time
+                  </Text>
+                  <Text color="#4D4D4D" align="left">
+                    Enter the screen end time
+                  </Text>
+                </VStack>
+                <Flex>
+                  <FormControl id="startDateHere" width="50%">
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <TimePicker
+                        inputVariant="outlined"
+                        format="hh:mm"
+                        value={endTime}
+                        onChange={handleEndTime}
                         InputProps={{
                           endAdornment: (
                             <InputAdornment position="start">
@@ -796,6 +797,7 @@ export const EditScreen = (props: any) => {
                   </Text>
                   <InputGroup size="lg" width="100%" pt="2">
                     <Input
+                      disabled
                       placeholder="Screen name"
                       size="lg"
                       borderRadius="md"

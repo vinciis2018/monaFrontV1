@@ -74,92 +74,94 @@ export function PinCreateModal(props: any) {
       // centered
     >
       <Modal.Body>
-        <Stack align="end" justifyContent="flex-end">
-          <IconButton
-            bg="none"
-            icon={
-              <AiOutlineCloseCircle
-                size="40px"
-                fontWeight="10"
-                color="black"
-                onClick={props.onHide}
-              />
-            }
-            aria-label="Close"
-          />
-        </Stack>
-        <VerticalLabels activeStep={activeStep} />
-        <Stack align="center" justifyContent="center">
-          <Box alignItems="center" mt="10">
-            {err !== "" ? (
-              <MessageBox variant="danger">{err}</MessageBox>
-            ) : (
-              <span>&nbsp;</span>
-            )}
-
-            <Box py="2" px="0" align="center">
-              <Box>
-                <Text pt="4" fontSize="md" fontWeight="600">
-                  Enter your 6 digit secret pin
-                </Text>
-                <Stack justifyContent="flex-start">
-                  <HPasswordInput
-                    label="Create Access PIN"
-                    onChange={setCreatePin}
-                    onComplete={() => completedCreatePin()}
-                    focused={createPinFocus}
-                    ref={pinInputRef}
-                    onFocus={() => activeFocusArea("create")}
-                  />
-                </Stack>
-              </Box>
-              <Box align="center">
-                <Text px="4" pt="4" fontSize="md" fontWeight="600">
-                  Confirm your 6 digit secret pin
-                </Text>
-                <HPasswordInput
-                  label="Confirm Access PIN"
-                  onChange={setConfirmPin}
-                  focused={confirmPinFocus}
-                  onFocus={() => {
-                    activeFocusArea("confirm");
-                  }}
-                  labelAlign="left"
-                  ref={confirmInputRef}
-                  autoFocus={false}
+        <Box bgColor="#FFFFFF">
+          <Stack align="end" justifyContent="flex-end">
+            <IconButton
+              bg="none"
+              icon={
+                <AiOutlineCloseCircle
+                  size="40px"
+                  fontWeight="10"
+                  color="black"
+                  onClick={props.onHide}
                 />
-              </Box>
+              }
+              aria-label="Close"
+            />
+          </Stack>
+          <VerticalLabels activeStep={activeStep} />
+          <Stack align="center" justifyContent="center">
+            <Box alignItems="center" mt="10">
               {err !== "" ? (
                 <MessageBox variant="danger">{err}</MessageBox>
               ) : (
                 <span>&nbsp;</span>
               )}
 
-              <Flex
-                direction="column"
-                alignItems="center"
-                width="80"
-                mt="5"
-                justifyContent="center"
-              >
-                <Checkbox defaultChecked>
-                  I understand the wallet password cannot be recovered
-                </Checkbox>
-                <Button
-                  bgColor="#403F49"
-                  color="#EEEEEE"
-                  width="40"
+              <Box py="2" px="0" align="center">
+                <Box>
+                  <Text pt="4" fontSize="md" fontWeight="600">
+                    Enter your 6 digit secret pin
+                  </Text>
+                  <Stack justifyContent="flex-start">
+                    <HPasswordInput
+                      label="Create Access PIN"
+                      onChange={setCreatePin}
+                      onComplete={() => completedCreatePin()}
+                      focused={createPinFocus}
+                      ref={pinInputRef}
+                      onFocus={() => activeFocusArea("create")}
+                    />
+                  </Stack>
+                </Box>
+                <Box align="center">
+                  <Text px="4" pt="4" fontSize="md" fontWeight="600">
+                    Confirm your 6 digit secret pin
+                  </Text>
+                  <HPasswordInput
+                    label="Confirm Access PIN"
+                    onChange={setConfirmPin}
+                    focused={confirmPinFocus}
+                    onFocus={() => {
+                      activeFocusArea("confirm");
+                    }}
+                    labelAlign="left"
+                    ref={confirmInputRef}
+                    autoFocus={false}
+                  />
+                </Box>
+                {err !== "" ? (
+                  <MessageBox variant="danger">{err}</MessageBox>
+                ) : (
+                  <span>&nbsp;</span>
+                )}
+
+                <Flex
+                  direction="column"
+                  alignItems="center"
+                  width="80"
                   mt="5"
-                  mb="10"
-                  p="3"
-                  onClick={onClick}
+                  justifyContent="center"
                 >
-                  Create Pin
-                </Button>
-              </Flex>
+                  <Checkbox defaultChecked>
+                    I understand the wallet password cannot be recovered
+                  </Checkbox>
+                  <Button
+                    bgColor="#403F49"
+                    color="#EEEEEE"
+                    width="40"
+                    mt="5"
+                    mb="10"
+                    p="3"
+                    onClick={onClick}
+                  >
+                    Create Pin
+                  </Button>
+                </Flex>
+              </Box>
             </Box>
-          </Box>
-        </Stack>
+          </Stack>
+        </Box>
       </Modal.Body>
     </Modal>
   );

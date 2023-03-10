@@ -105,7 +105,7 @@ export function CampaignDetails(props: any) {
   }, [cid]);
 
   return (
-    <Box p="10" pt={{ base: "3", lg: "20" }}>
+    <Box px={{ base: "2", lg: "20" }} pt={{ base: "3", lg: "5" }}>
       <Box shadow="2xl" p="10" pt="0">
         {loadingVideo || loadingScreen || isLoading ? (
           <HLoading loading={loadingVideo || loadingScreen || isLoading} />
@@ -158,11 +158,15 @@ export function CampaignDetails(props: any) {
             </Stack>
             <Box p="5" pt="10">
               <Box align="center" bgColor="#F7F7F7" boxShadow="2xl">
-                <SimpleGrid columns={[1, null, 3]} spacing={3} p="10">
+                <SimpleGrid
+                  columns={[1, 1, 3]}
+                  spacing={3}
+                  p={{ base: "2", lg: "10" }}
+                >
                   <Box color="black.500" height="300px">
                     <MyMap data={jsonData} geometry={geometry} />
                   </Box>
-                  <Box p="5">
+                  <Box p={{ base: "2", lg: "5" }}>
                     <Text color="#000000" fontSize="sm">
                       {`${screen.screenAddress},
                       ${screen.districtCity},

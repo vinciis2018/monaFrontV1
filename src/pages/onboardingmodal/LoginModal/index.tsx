@@ -117,61 +117,68 @@ export function LoginModal(props: any) {
       keyboard={false}
     >
       <Modal.Body>
-        <Stack align="end" justifyContent="flex-end">
-          <IconButton
-            bg="none"
-            icon={
-              <AiOutlineCloseCircle
-                size="30px"
-                fontWeight="10"
-                color="#00000090"
-                onClick={props.onHide}
-              />
-            }
-            aria-label="Close"
-          />
-        </Stack>
-        <Stack align="center" justifyContent="center">
-          <Box alignItems="center" pt="30">
-            <Box align="center" pt="10">
-              <Text p="2" fontSize="2xl" fontWeight="semibold" color="#313131">
-                Enter PIN to continue
-              </Text>
-              <Text p="2" fontSize="md" color="#403F49">
-                Please enter PIN to contine
-              </Text>
-              <Stack pt="5">
-                <HPasswordInput
-                  label="Enter Access PIN"
-                  onChange={setPin}
-                  onComplete={completedPin}
-                  labelAlign="center"
+        <Box bgColor="#FFFFFF">
+          <Stack align="end" justifyContent="flex-end">
+            <IconButton
+              bg="none"
+              icon={
+                <AiOutlineCloseCircle
+                  size="30px"
+                  fontWeight="10"
+                  color="#00000090"
+                  onClick={props.onHide}
                 />
-              </Stack>
-            </Box>
-            <Flex
-              direction="column"
-              alignItems="center"
-              mt="10"
-              mb="40"
-              justifyContent="center"
-            >
-              <Button
-                bgColor="#403F49"
-                color="#EEEEEE"
-                width="80%"
-                p="3"
-                isDisabled={activeBtn}
-                onClick={checkPin}
+              }
+              aria-label="Close"
+            />
+          </Stack>
+          <Stack align="center" justifyContent="center">
+            <Box alignItems="center" pt="30">
+              <Box align="center" pt="10">
+                <Text
+                  p="2"
+                  fontSize="2xl"
+                  fontWeight="semibold"
+                  color="#313131"
+                >
+                  Enter PIN to continue
+                </Text>
+                <Text p="2" fontSize="md" color="#403F49">
+                  Please enter PIN to contine
+                </Text>
+                <Stack pt="5">
+                  <HPasswordInput
+                    label="Enter Access PIN"
+                    onChange={setPin}
+                    onComplete={completedPin}
+                    labelAlign="center"
+                  />
+                </Stack>
+              </Box>
+              <Flex
+                direction="column"
+                alignItems="center"
+                mt="10"
+                mb="40"
+                justifyContent="center"
               >
-                Continue
-              </Button>
-            </Flex>
-          </Box>
-          {err || error ? (
-            <MessageBox variant="danger">{error || err}</MessageBox>
-          ) : null}
-        </Stack>
+                <Button
+                  bgColor="#403F49"
+                  color="#EEEEEE"
+                  width="80%"
+                  p="3"
+                  isDisabled={activeBtn}
+                  onClick={checkPin}
+                >
+                  Continue
+                </Button>
+              </Flex>
+            </Box>
+            {err || error ? (
+              <MessageBox variant="danger">{error || err}</MessageBox>
+            ) : null}
+          </Stack>
+        </Box>
       </Modal.Body>
     </Modal>
   );

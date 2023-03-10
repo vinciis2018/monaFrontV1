@@ -106,7 +106,11 @@ export function WalletPage(props: any) {
   };
 
   return (
-    <Box px="2" pt={{ base: "3", lg: "20" }} color="black.500">
+    <Box
+      pt={{ base: "3", lg: "5" }}
+      px={{ base: "3", lg: "3" }}
+      color="black.500"
+    >
       {/* Container */}
       <LoginModal
         show={loginModalShow}
@@ -127,7 +131,7 @@ export function WalletPage(props: any) {
         keyboard={false}
       >
         <Modal.Body className="popup">
-          <Box p="5">
+          <Box p="5" bgColor="#FFFFFF">
             <FormControl id="amount" p="5">
               <FormLabel fontSize="xs">Enter Amount</FormLabel>
               <Stack direction="column" align="left">

@@ -91,8 +91,8 @@ export function ScreenOwner() {
   }, [successCreate, dispatch, navigate, userInfo, loading]);
 
   return (
-    <Box pt="5">
-      <Box pl={{ base: "2", lg: "20" }} pr={{ base: "2", lg: "20" }}>
+    <Box pt={{ base: "3", lg: "5" }}>
+      <Box px={{ base: "2", lg: "20" }}>
         {loadingScreens || loadingCreate || loadingCampaign ? (
           <HLoading
             loading={loadingScreens || loadingCreate || loadingCampaign}
