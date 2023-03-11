@@ -17,6 +17,8 @@ import {
   Flex,
   InputRightElement,
   InputGroup,
+  FormHelperText,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 
 import {
@@ -37,12 +39,13 @@ export function CreateAndResetPassword(props: any) {
   const [confirmPassword, setConfirmPassword] = useState<any>("");
   const [showPassword, setShowPassword] = useState<any>(false);
   const [showConformPassword, setShowConformPassword] = useState<any>(false);
+  const [error, setError] = useState<any>("");
   const handleShowPassword = () => setShowPassword(!showPassword);
   const handleShowConformPassword = () =>
     setShowConformPassword(!showConformPassword);
 
   const userSignup = useSelector((state: any) => state.userSignup);
-  const { userInfo, loading, error } = userSignup;
+  const { userInfo, loading, error: signUpError } = userSignup;
 
   const dispatch = useDispatch<any>();
   const submitHandler = async (e: any) => {
@@ -52,7 +55,11 @@ export function CreateAndResetPassword(props: any) {
       password === "" ||
       confirmPassword === ""
     ) {
-      alert("Password and confirm password donot match");
+      setError("Password and confirm password donot match");
+      setPassword("");
+      setConfirmPassword("");
+    } else if (password.length < 6) {
+      setError("Password must be alteast 6 character");
       setPassword("");
       setConfirmPassword("");
     } else {
@@ -61,6 +68,13 @@ export function CreateAndResetPassword(props: any) {
       navigate("/signin");
     }
   };
+
+  const clearError = () => {
+    setError("");
+  };
+  if (error) {
+    setTimeout(clearError, 2000);
+  }
 
   return (
     <Modal
@@ -142,80 +156,103 @@ export function CreateAndResetPassword(props: any) {
                   things like "password", "123456" or "abcdef"
                 </Text>
                 {loading && <HLoading loading={loading} />}
-                {error && <MessageBox variant="danger">{error}</MessageBox>}
-
-                <FormControl p="1" id="password">
+                {signUpError && (
+                  <MessageBox variant="danger">{signUpError}</MessageBox>
+                )}
+                <FormControl
+                  p="1"
+                  id="password"
+                  isInvalid={error ? true : false}
+                >
                   <FormLabel px="1" fontSize="s">
                     New Password
                   </FormLabel>
-                  <Stack direction="row" align="center">
-                    <InputGroup size="md" align="center">
-                      <Input
-                        id="password"
-                        py="3"
-                        onChange={(e) => setPassword(e?.target?.value)}
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Password"
-                        value={password}
-                        required
-                      />
-                      <InputRightElement width="4.5rem" align="center">
-                        {showPassword ? (
-                          <Stack mt="3">
-                            <AiOutlineEye
-                              size="20px"
-                              color="black"
-                              onClick={handleShowPassword}
-                            />
-                          </Stack>
-                        ) : (
-                          <Stack mt="3">
-                            <AiOutlineEyeInvisible
-                              size="20px"
-                              color="black"
-                              onClick={handleShowPassword}
-                            />
-                          </Stack>
-                        )}
-                      </InputRightElement>
-                    </InputGroup>
+                  <Stack direction="column" align="left">
+                    <Stack direction="row" align="center">
+                      <InputGroup size="md" align="center">
+                        <Input
+                          id="password"
+                          py="3"
+                          onChange={(e) => setPassword(e?.target?.value)}
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Password"
+                          value={password}
+                          required
+                        />
+                        <InputRightElement width="4.5rem" align="center">
+                          {showPassword ? (
+                            <Stack mt="3">
+                              <AiOutlineEye
+                                size="20px"
+                                color="black"
+                                onClick={handleShowPassword}
+                              />
+                            </Stack>
+                          ) : (
+                            <Stack mt="3">
+                              <AiOutlineEyeInvisible
+                                size="20px"
+                                color="black"
+                                onClick={handleShowPassword}
+                              />
+                            </Stack>
+                          )}
+                        </InputRightElement>
+                      </InputGroup>
+                    </Stack>
+                    {!error ? (
+                      <FormHelperText></FormHelperText>
+                    ) : (
+                      <FormErrorMessage>{error}</FormErrorMessage>
+                    )}
                   </Stack>
                 </FormControl>
-                <FormControl p="1" id="confirmPassword">
+                <FormControl
+                  p="1"
+                  id="confirmPassword"
+                  isInvalid={error ? true : false}
+                >
                   <FormLabel px="1" fontSize="s">
                     Confirm New Password
                   </FormLabel>
-                  <Stack direction="row" align="center">
-                    <InputGroup size="md">
-                      <Input
-                        py="3"
-                        id="confirmPassword"
-                        onChange={(e) => setConfirmPassword(e?.target?.value)}
-                        value={confirmPassword}
-                        required
-                        type={showConformPassword ? "text" : "password"}
-                        placeholder="Conform password"
-                      />
-                      <InputRightElement width="4.5rem">
-                        {showConformPassword ? (
-                          <Stack mt="3">
-                            <AiOutlineEye
-                              size="20px"
-                              color="black"
-                              onClick={handleShowConformPassword}
-                            />
-                          </Stack>
-                        ) : (
-                          <Stack mt="3">
-                            <AiOutlineEyeInvisible
-                              size="20px"
-                              color="black"
-                              onClick={handleShowConformPassword}
-                            />
-                          </Stack>
-                        )}
-                      </InputRightElement>
-                    </InputGroup>
+                  <Stack direction="column" align="left">
+                    <Stack direction="row" align="center">
+                      <InputGroup size="md">
+                        <Input
+                          py="3"
+                          id="confirmPassword"
+                          onChange={(e) => setConfirmPassword(e?.target?.value)}
+                          value={confirmPassword}
+                          required
+                          type={showConformPassword ? "text" : "password"}
+                          placeholder="Conform password"
+                        />
+                        <InputRightElement width="4.5rem">
+                          {showConformPassword ? (
+                            <Stack mt="3">
+                              <AiOutlineEye
+                                size="20px"
+                                color="black"
+                                onClick={handleShowConformPassword}
+                              />
+                            </Stack>
+                          ) : (
+                            <Stack mt="3">
+                              <AiOutlineEyeInvisible
+                                size="20px"
+                                color="black"
+                                onClick={handleShowConformPassword}
+                              />
+                            </Stack>
+                          )}
+                        </InputRightElement>
+                      </InputGroup>
+                    </Stack>
+                    {!error ? (
+                      <FormHelperText></FormHelperText>
+                    ) : (
+                      <FormErrorMessage>{error}</FormErrorMessage>
+                    )}
                   </Stack>
                 </FormControl>
 

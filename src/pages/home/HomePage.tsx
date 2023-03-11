@@ -86,7 +86,7 @@ export function HomePage() {
 
   return (
     <Box color="black.500" align="center" pt={{ base: "3", lg: "5" }}>
-      <Center px="10">
+      <Center px={{ base: "2", lg: "20" }}>
         {loadingScreens || loadingVideos ? (
           <HLoading loading={loadingScreens || loadingVideos} />
         ) : errorScreens || errorVideos ? (

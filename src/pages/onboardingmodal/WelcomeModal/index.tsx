@@ -36,68 +36,78 @@ export function WelcomeModal(props: any) {
         keyboard={false}
       >
         <Modal.Body>
-          <Stack align="end" justifyContent="flex-end">
-            <IconButton
-              bg="none"
-              icon={
-                <AiOutlineCloseCircle
-                  size="40px"
-                  fontWeight="10"
-                  color="black"
-                  onClick={props.onHide}
-                />
-              }
-              aria-label="Close"
-            />
-          </Stack>
-          <Stack align="center" justifyContent="center">
-            {loading && <HLoading loading={loading} />}
-            {error && <MessageBox>{error}</MessageBox>}
-            <Box alignItems="center" justifyContent="center" marginBottom="100">
-              <Text
-                color="#000000"
-                fontSize="36px"
-                fontStyle="semiBold"
-                align="center"
+          <Box bgColor="#FFFFFF">
+            <Stack align="end" justifyContent="flex-end">
+              <IconButton
+                bg="none"
+                icon={
+                  <AiOutlineCloseCircle
+                    size="40px"
+                    fontWeight="10"
+                    color="black"
+                    onClick={props.onHide}
+                  />
+                }
+                aria-label="Close"
+              />
+            </Stack>
+            <Stack align="center" justifyContent="center">
+              {loading && <HLoading loading={loading} />}
+              {error && <MessageBox>{error}</MessageBox>}
+              <Box
+                alignItems="center"
                 justifyContent="center"
-                fontWeight="bold"
+                marginBottom="100"
               >
-                Wallet setup
-              </Text>
-              <Text
-                color="#6C6C6C"
-                fontSize="20px"
-                align="center"
+                <Text
+                  color="#000000"
+                  fontSize="36px"
+                  fontStyle="semiBold"
+                  align="center"
+                  justifyContent="center"
+                  fontWeight="bold"
+                >
+                  Wallet setup
+                </Text>
+                <Text
+                  color="#6C6C6C"
+                  fontSize="20px"
+                  align="center"
+                  justifyContent="center"
+                  fontStyle="regular"
+                >
+                  Import a existing wallet or create a new wallet
+                </Text>
+              </Box>
+              <Box
+                alignItems="center"
                 justifyContent="center"
-                fontStyle="regular"
+                marginBottom="100"
               >
-                Import a existing wallet or create a new wallet
-              </Text>
-            </Box>
-            <Box alignItems="center" justifyContent="center" marginBottom="100">
-              <Text
-                color="#403F49"
-                fontSize="20px"
-                fontStyle="semiBold"
-                align="center"
-                justifyContent="center"
-                type="Button"
-              >
-                Import using secret recovery phrase
-              </Text>
-              <Button
-                bgColor="#403F49"
-                color="#EEEEEE"
-                marginTop="3"
-                width="100%"
-                p="3"
-                marginBottom="176"
-                onClick={() => navigate("/pin-create")}
-              >
-                Create a new wallet
-              </Button>
-            </Box>
-          </Stack>
+                <Text
+                  color="#403F49"
+                  fontSize="20px"
+                  fontStyle="semiBold"
+                  align="center"
+                  justifyContent="center"
+                  type="Button"
+                >
+                  Import using secret recovery phrase
+                </Text>
+                <Button
+                  bgColor="#403F49"
+                  color="#EEEEEE"
+                  marginTop="3"
+                  width="100%"
+                  p="3"
+                  marginBottom="176"
+                  onClick={() => navigate("/pin-create")}
+                >
+                  Create a new wallet
+                </Button>
+              </Box>
+            </Stack>
+          </Box>
         </Modal.Body>
       </Modal>
     </div>

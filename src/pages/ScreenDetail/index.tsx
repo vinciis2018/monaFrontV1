@@ -310,7 +310,7 @@ export function ScreenDetail(props: any) {
   };
 
   return (
-    <Box pt={{ base: "3", lg: "20" }}>
+    <Box px={{ base: "3", lg: "20" }} pt={{ base: "3", lg: "5" }}>
       <CreateNewCampaign
         show={campaignModal}
         onHide={() => setCampaignModal(false)}
@@ -370,9 +370,9 @@ export function ScreenDetail(props: any) {
         </MessageBox>
       ) : (
         <Stack>
-          <Flex height="804px">
+          <Flex>
             <Image src={screen.image} width="50%"></Image>
-            <Stack p="20" align="left">
+            <Stack p="20" align="left" pt="0">
               <Text
                 fontSize="4xl"
                 fontWeight="bold"
@@ -545,7 +545,7 @@ export function ScreenDetail(props: any) {
             </Stack>
           </Flex>
 
-          <Stack p="20">
+          <Stack>
             <Text
               color="#403F49"
               fontSize="3xl"
@@ -566,7 +566,7 @@ export function ScreenDetail(props: any) {
                 ))}
               </SimpleGrid>
             </Stack>
-            <Stack align="left">
+            <Stack align="left" px={{ base: "2", lg: "20" }}>
               <Text
                 color="#403F49"
                 fontSize="4xl"
@@ -604,7 +604,7 @@ export function ScreenDetail(props: any) {
           <Box width="100%" height="551px" color="black.500" pb="10">
             <MyMap data={jsonData} geometry={jsonData.features[0].geometry} />
           </Box>
-          <Stack p="20">
+          <Stack px={{ base: "2", lg: "20" }}>
             <Stack>
               <Text
                 fontSize="4xl"
@@ -614,9 +614,13 @@ export function ScreenDetail(props: any) {
               >
                 Review
               </Text>
-              <Box width="25%" bgColor="#F0F4FC" borderRadius="16px">
+              <Box
+                width={{ base: "100%", lg: "25%" }}
+                bgColor="#F0F4FC"
+                borderRadius="16px"
+              >
                 <Flex>
-                  <Stack p="10" width="60%">
+                  <Stack p="10" width={{ base: "70%", lg: "60%" }}>
                     <Flex align="center">
                       <Text fontSize="4xl" color="#403F49" fontWeight="bold">
                         {screen.rating}/
@@ -656,7 +660,7 @@ export function ScreenDetail(props: any) {
                       />
                     </Flex>
                   </Stack>
-                  <Stack pt="5" width="30%">
+                  <Stack pt="5" width={{ base: "20%", lg: "30%" }}>
                     <Flex align="center">
                       <Text fontSize="sm" color="#403F49" pr="3">
                         5
@@ -780,7 +784,7 @@ export function ScreenDetail(props: any) {
               <Stack pt="10" pb="20">
                 {screen?.reviews.length > 0
                   ? screen.reviews.map((review: any, index: any) => (
-                      <Review review={review} key={index} />
+                      <Review review={review} key={index + 1} />
                     ))
                   : null}
               </Stack>

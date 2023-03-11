@@ -14,7 +14,7 @@ import { GrDown } from "react-icons/gr";
 
 export function ContactUs() {
   return (
-    <Center p="10">
+    <Center px={{ base: "2", lg: "20" }}>
       <Stack width="100%">
         <Box
           backgroundColor="#2BB3E0"

@@ -182,6 +182,7 @@ export const NavBar = () => {
                 fontSize={{ base: "sm", lg: "md" }}
                 fontWeight="semibold"
                 type="Button"
+                _hover={{ color: "teal.600" }}
                 onClick={() => navigate("/screen-owner")}
               >
                 My Screens
@@ -191,6 +192,8 @@ export const NavBar = () => {
                 fontSize={{ base: "sm", lg: "md" }}
                 pl="5"
                 pr="5"
+                type="Button"
+                _hover={{ color: "teal.600" }}
                 fontWeight="semibold"
                 onClick={() => navigate("/myCampaignList")}
               >
@@ -203,12 +206,13 @@ export const NavBar = () => {
                 height="40px"
                 width="40px"
                 borderColor="#403F49"
+                color="#403F49"
+                _hover={{ color: "teal.600", borderColor: "teal.600" }}
               >
                 <Stack mt="2" ml="2">
                   <TbWallet
                     size="20px"
                     fontWeight="1"
-                    color="#403F49"
                     onClick={() => navigate("/walletPage")}
                   />
                 </Stack>
@@ -220,9 +224,11 @@ export const NavBar = () => {
                 width="40px"
                 borderColor="#403F49"
                 align="center"
+                color="#403F49"
+                _hover={{ color: "teal.600", borderColor: "teal.600" }}
               >
                 <Stack mt="2" ml="2">
-                  <TbBell size="20px" fontWeight="1" color="#403F49" />
+                  <TbBell size="20px" fontWeight="1" />
                 </Stack>
               </Box>
               <Box
@@ -231,13 +237,11 @@ export const NavBar = () => {
                 height="40px"
                 width="40px"
                 borderColor="#403F49"
+                color="#403F49"
+                _hover={{ color: "teal.600", borderColor: "teal.600" }}
               >
                 <Stack mt="2" ml="2">
-                  <HiOutlineShoppingCart
-                    size="20px"
-                    fontWeight="1"
-                    color="#403F49"
-                  />
+                  <HiOutlineShoppingCart size="20px" fontWeight="1" />
                 </Stack>
               </Box>
               <Box
@@ -246,12 +250,13 @@ export const NavBar = () => {
                 height="40px"
                 width="40px"
                 borderColor="#403F49"
+                color="#403F49"
+                _hover={{ color: "teal.600", borderColor: "teal.600" }}
               >
                 <Stack mt="2" ml="2">
                   <TbUser
                     size="20px"
                     fontWeight="1"
-                    color="#403F49"
                     onClick={() => navigate("/userprofile")}
                   />
                 </Stack>

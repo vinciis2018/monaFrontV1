@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Box,
   Flex,
-  Center,
   Stack,
   Text,
   Button,
@@ -58,42 +57,39 @@ export function AllAds() {
   };
 
   return (
-    <Box
-      color="black.500"
-      align="center"
-      pt={{ base: "3", lg: "20" }}
-      // border="1px solid black"
-    >
-      <Center px="10">
+    <Box color="black.500" align="center" pt={{ base: "3", lg: "5" }}>
+      <Stack py="5" align="center" boxShadow="2xl" bgColor="#FBFBFB">
+        <InputGroup size="lg" width={{ base: "100%", lg: "40%" }}>
+          <InputLeftElement
+            p="3"
+            pointerEvents="none"
+            children={<IoSearchOutline color="#3E3D48" />}
+          />
+          <Input
+            placeholder="Search by brands"
+            size="lg"
+            borderRadius="25px"
+            borderColor="#3F3E49"
+            fontSize="lg"
+            py="2"
+          />
+        </InputGroup>
+      </Stack>
+      <Stack px={{ base: "2", lg: "20" }}>
         {loadingVideos ? (
           <HLoading loading={loadingVideos} />
         ) : errorVideos ? (
           <MessageBox variant="danger">{errorVideos}</MessageBox>
         ) : (
           <Stack>
-            <Stack py="5" align="center">
-              <InputGroup size="lg" width="40%">
-                <InputLeftElement
-                  p="3"
-                  pointerEvents="none"
-                  children={<IoSearchOutline color="#3E3D48" />}
-                />
-                <Input
-                  placeholder="Search by brands"
-                  size="lg"
-                  borderRadius="25px"
-                  borderColor="#3F3E49"
-                  fontSize="lg"
-                  py="2"
-                />
-              </InputGroup>
-            </Stack>
             <Text
               color="#403F49"
               mt="10"
               fontSize="4xl"
               fontWeight="bold"
               align="left"
+              pt={{ base: "2", lg: "5" }}
+              pb={{ base: "2", lg: "5" }}
             >
               Ads playing
             </Text>
@@ -123,7 +119,7 @@ export function AllAds() {
             </Flex>
           </Stack>
         )}
-      </Center>
+      </Stack>
       <Box zIndex="1" width="100%" height="550px" color="black.500" pb="10">
         {loadingAllPins ? (
           <HLoading loading={loadingAllPins} />

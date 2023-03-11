@@ -24,7 +24,7 @@ export function FooterPage() {
     <Box pt="10">
       <SimpleGrid
         columns={[1, null, 2]}
-        spacing="10"
+        spacing={{ base: "5", lg: "20" }}
         pt="5"
         pl={{ base: "2", lg: "20" }}
         pr={{ base: "2", lg: "20" }}
@@ -35,10 +35,8 @@ export function FooterPage() {
             <Image width={{ base: 70, lg: "100px" }} src={Name} />
           </Stack>
           <Box align="left" mt="10">
-            <Text fontWeight="semibold" color="#000000">
-              Registered Office Address:
-            </Text>{" "}
-            <Text fontSize="sm" color="#333333">
+            <Text fontSize="sm" color="#333333" noOfLines={[4, 2, 2]}>
+              <strong>Registered Office Address: </strong>
               Vinciis Creations Private Limited, D 65/319 C, Lahartara, B
               Shivdaspur, Varanasi, UP, 221002
             </Text>
@@ -52,7 +50,15 @@ export function FooterPage() {
               borderColor="#9A9A9A"
             >
               <Stack mt="2" ml="2">
-                <TbBrandFacebook color="#9A9A9A" size="20px" />
+                <TbBrandFacebook
+                  color="#9A9A9A"
+                  size="20px"
+                  onClick={() =>
+                    window.location.replace(
+                      `https://www.facebook.com/vinciisadtech`
+                    )
+                  }
+                />
               </Stack>
             </Box>
             <Box
@@ -64,7 +70,15 @@ export function FooterPage() {
               borderColor="#9A9A9A"
             >
               <Stack mt="2" ml="2">
-                <FaInstagram color="#9A9A9A" size="20px" />
+                <FaInstagram
+                  color="#9A9A9A"
+                  size="20px"
+                  onClick={() =>
+                    window.location.replace(
+                      `https://www.instagram.com/vinciis_itself`
+                    )
+                  }
+                />
               </Stack>
             </Box>
             <Box
@@ -78,7 +92,13 @@ export function FooterPage() {
               justifyContent="center"
             >
               <Stack mt="2" ml="2">
-                <FiTwitter color="#9A9A9A" size="20px" />
+                <FiTwitter
+                  color="#9A9A9A"
+                  size="20px"
+                  onClick={() =>
+                    window.location.replace(`https://twitter.com/vinciis_`)
+                  }
+                />
               </Stack>
             </Box>
             <Box
@@ -90,7 +110,13 @@ export function FooterPage() {
               borderColor="#9A9A9A"
             >
               <Stack mt="2" ml="2">
-                <TbBrandDiscord color="#9A9A9A" size="20px" />
+                <TbBrandDiscord
+                  color="#9A9A9A"
+                  size="20px"
+                  onClick={() =>
+                    window.location.replace(`https://discord.gg/rxNUvBh5`)
+                  }
+                />
               </Stack>
             </Box>
             <Box
@@ -102,7 +128,15 @@ export function FooterPage() {
               borderColor="#9A9A9A"
             >
               <Stack mt="2" ml="2">
-                <AiOutlineYoutube color="#9A9A9A" size="20px" />
+                <AiOutlineYoutube
+                  color="#9A9A9A"
+                  size="20px"
+                  onClick={() =>
+                    window.location.replace(
+                      `https://www.youtube.com/channel/UCn0ycOFFkT5T9w8fSVwsHOg/featured`
+                    )
+                  }
+                />
               </Stack>
             </Box>
           </Flex>
@@ -159,6 +193,18 @@ export function FooterPage() {
         fontSize="sm"
         align="left"
         pt="10"
+        pl={{ base: "2", lg: "20" }}
+        pr={{ base: "2", lg: "20" }}
+      >
+        Write to us <strong>ad@vinciis.in</strong> and/or Call{" "}
+        <strong>+917250283664</strong>
+      </Text>
+
+      <Text
+        color="#5C5C5C"
+        fontSize="sm"
+        align="left"
+        pt={{ base: "1", lg: "2" }}
         pb="10"
         pl={{ base: "2", lg: "20" }}
         pr={{ base: "2", lg: "20" }}

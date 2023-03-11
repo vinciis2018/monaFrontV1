@@ -61,38 +61,52 @@ export function AllScreens() {
   }, [dispatch, navigate, userInfo, pageNumber]);
 
   return (
-    <Box color="black.500" align="center" pt={{ base: "3", lg: "20" }}>
+    <Box color="black.500" align="center" pt={{ base: "3", lg: "5" }}>
       {loadingScreens ? (
         <HLoading loading={loadingScreens} />
       ) : errorScreens ? (
         <MessageBox variant="danger">{errorScreens}</MessageBox>
       ) : (
         <Stack>
-          <Stack>
-            <Stack py="5" align="center">
-              <InputGroup size="lg" width="40%">
-                <InputLeftElement
-                  p="3"
-                  pointerEvents="none"
-                  children={<IoSearchOutline color="#3E3D48" />}
-                />
-                <Input
-                  placeholder="Loaction"
-                  size="lg"
-                  borderRadius="25px"
-                  borderColor="#3F3E49"
-                  fontSize="lg"
-                  py="2"
-                />
-              </InputGroup>
-            </Stack>
-            <Stack fontSize="3xl" fontWeight="bold" direction="row" pt="">
+          <Stack py="5" align="center" boxShadow="2xl" bgColor="#FBFBFB">
+            <InputGroup size="lg" width={{ base: "80%", lg: "40%" }}>
+              <InputLeftElement
+                p="3"
+                pointerEvents="none"
+                children={<IoSearchOutline color="#3E3D48" />}
+              />
+              <Input
+                placeholder="Loaction"
+                size="lg"
+                borderRadius="25px"
+                borderColor="#3F3E49"
+                fontSize="lg"
+                py="2"
+              />
+            </InputGroup>
+          </Stack>
+          <Stack px={{ base: "3", lg: "20" }}>
+            <Stack
+              fontSize="3xl"
+              fontWeight="bold"
+              direction="row"
+              pt={{ base: "2", lg: "5" }}
+            >
               <Text color="#403F49">Popular screens in </Text>
               <Text color="#2BB3E0"> Delhi</Text>
             </Stack>
 
-            <Stack pt="5" direction="row" justifyContent="space-between">
-              <Stack direction="row" justifyContent="space-between">
+            <Stack
+              pt="5"
+              direction="row"
+              justifyContent="space-between"
+              align="center"
+            >
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                pb={{ base: "2", lg: "5" }}
+              >
                 <Tag
                   p="3"
                   size="lg"

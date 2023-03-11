@@ -71,7 +71,7 @@ export function MyMap(props: any) {
       >
         {listOfScreens?.map((singleData: any) => (
           <Marker
-            // key={singleData.properties.pin}
+            key={singleData.properties.screen}
             latitude={singleData?.geometry?.coordinates[0]}
             longitude={singleData?.geometry?.coordinates[1]}
           >
