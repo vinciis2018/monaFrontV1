@@ -96,30 +96,11 @@ export function HomePage() {
         ) : (
           <Stack>
             <Box width="100%" fontFamily="sans">
-              <Box
-                as="video"
-                src="https://bafybeid57yuz6xuqdniw744q62r2nmh4r3doz7i736ujh3xonjvulqkra4.ipfs.w3s.link/pexels-henry-5538832.mp4"
-                autoPlay
-                loop
-                muted
-                display="inline-block"
-                borderRadius="24px"
-                height={{ base: "100%", lg: "50%" }}
-              ></Box>
               <Stack
                 zIndex="1"
                 align="center"
-                width={{ base: "70%", lg: "50%" }}
+                width={{ base: "90%", lg: "65%" }}
               >
-                <Text
-                  mt={{ base: "-100", lg: "-700", md: "-300" }}
-                  pb={{ base: "10", lg: "20" }}
-                  fontSize={{ base: "lg", lg: "6xl", md: "5xl" }}
-                  fontWeight="extrabold"
-                  color="#FFFFFF"
-                >
-                  Enter the new age of advertising
-                </Text>
                 <InputGroup
                   size="lg"
                   width="100%"
@@ -127,17 +108,21 @@ export function HomePage() {
                 >
                   <Input
                     type="text"
-                    p={{ base: "2", lg: "5" }}
+                    p={{ base: "1", lg: "5" }}
                     heigth=""
                     bgColor="#FCFCFC"
                     borderRadius="80px"
                     fontSize="lg"
                     placeholder="Search by place, by location, by screen names"
                   />
-                  <InputRightElement width="4.5rem" pr="1" pt="2.5">
+                  <InputRightElement
+                    width="4.5rem"
+                    pr={{ base: "0", lg: "1" }}
+                    pt={{ base: "0", lg: "2.5" }}
+                  >
                     <IconButton
                       bg="none"
-                      icon={<IoSearchCircleSharp size="50px" color="#D7380E" />}
+                      icon={<IoSearchCircleSharp size="45px" color="#D7380E" />}
                       aria-label="Edit user details"
                     />
                   </InputRightElement>
