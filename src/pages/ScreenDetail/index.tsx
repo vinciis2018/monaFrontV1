@@ -29,7 +29,7 @@ import { GiRoundStar } from "react-icons/gi";
 import { ContactUs, Review } from "components/common";
 import { CreateNewCampaign } from "./CreateNewCampaign";
 import { UploadCampaign } from "./UploadCampaign";
-import { generateVideoFromImages } from "Actions/mediaActions";
+// import { generateVideoFromImages } from "Actions/mediaActions";
 import { UploadThumbnail } from "./UploadThumbnail";
 import { useIpfs } from "components/contexts";
 import { createReview } from "Actions/screenActions";
@@ -53,6 +53,9 @@ export function ScreenDetail(props: any) {
   const [videosListError, setVideosListError] = useState<any>([]);
   const [videoLoading, setVideoLoading] = useState<any>(true);
   const [campaignModal, setCampaignModal] = useState(false);
+  const [loadingVideo, setLoadingVideo] = useState(false);
+  const [errorVideo, setErrorVideo] = useState<any>("");
+
   const [uploadCampaignModal, setUploadCampaignModal] = useState(false);
   const [uploadThumbnailModal, setUploadThumbnailModal] = useState<any>(false);
   const [
@@ -83,8 +86,8 @@ export function ScreenDetail(props: any) {
   const userSignin = useSelector((state: any) => state.userSignin);
   const { userInfo } = userSignin;
 
-  const videoFromImages = useSelector((state: any) => state.videoFromImages);
-  const { loading: loadingVideo, error: errorVideo, video } = videoFromImages;
+  // const videoFromImages = useSelector((state: any) => state.videoFromImages);
+  // const { loading: loadingVideo, error: errorVideo, video } = videoFromImages;
 
   const screenReviewCreate = useSelector(
     (state: any) => state.screenReviewCreate
@@ -133,6 +136,38 @@ export function ScreenDetail(props: any) {
       );
       setUserScreenRating(0);
       setUserReview("");
+    }
+  };
+
+  const generateVideoFromImages = async (
+    images: any,
+    duration: any,
+    width: any,
+    height: any
+  ) => {
+    try {
+      setLoadingVideo(true);
+      const { data } = await Axios.post(
+        // `${process.env.REACT_APP_BLINDS_SERVER}/api/media/createVideoFromImages`,
+        `https://www.server.vinciis.in/i2v`,
+        { images, duration, width, height }
+      );
+      console.log("generateVideoFromImages called!", data);
+      setLoadingVideo(false);
+      createMedia({
+        title: campaignName,
+        media: `${data.Video_link}`,
+        thumbnail: `${images[0]}`,
+      });
+    } catch (error: any) {
+      // console.log("generateVideoFromImages called error!", error);
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      console.log("error : ", message);
+      setErrorVideo(message);
+      setLoadingVideo(false);
     }
   };
 
@@ -197,7 +232,11 @@ export function ScreenDetail(props: any) {
           },
         }
       );
-      //console.log("created media : ", JSON.stringify(data));
+      console.log("created media : ", JSON.stringify(data));
+      setCampaignName("");
+      setImages([]);
+      setFileUrl("");
+      setThumbnailCid("");
       navigate(
         `/carts/${data._id}/${screenId}/${data.title}/${
           data.thumbnail.split("/")[4]
@@ -216,19 +255,18 @@ export function ScreenDetail(props: any) {
     if (!userInfo) {
       navigate("/signin");
     }
+
     if (screenReviewCreateSuccess) {
       alert("review Added SuccessFull!");
     }
     getScreentDetail(screenId);
     dispatch(userMediasList(userInfo));
-    if (video) {
-      //console.log("video : 331311", video);
-    }
   }, [dispatch, navigate, userInfo, loading]);
 
   const createCampaignFromOldMediaAndThumbnail = () => {
     navigate(`/carts/${mediaId}/${screenId}/${campaignName}/${thumbnailCid}`);
   };
+
   // console.log("fileurl : ", fileUrl);
   // console.log("thumnail : ", thumbnailCid);
   // console.log("campaign Name : ", campaignName);
@@ -303,10 +341,14 @@ export function ScreenDetail(props: any) {
   //   );
   // }
   const sendImages = () => {
-    // console.log(images);
-    window.alert(`Sending ${images.length} images for creating video`);
-    //dispatch(generateVideoFromImages(images, duration, width, height));
-    dispatch(generateVideoFromImages(images, 10, 1280, 720));
+    if (images.length > 0) {
+      console.log("images list for video create  : ", images);
+      window.alert(`Sending ${images.length} images for creating video`);
+      generateVideoFromImages(images, 10, 1280, 720);
+    } else {
+      window.alert(`Please select image for video create`);
+      setUplaodCampaignThroughImageModalShow(true);
+    }
   };
 
   return (
@@ -344,7 +386,7 @@ export function ScreenDetail(props: any) {
         setThumbnailCid={(value: any) => setThumbnailCid(value)}
         videoUploadHandler={sendImages}
         medias={medias}
-        setImages={setImages}
+        setImages={(value: any) => setImages(value)}
       />
       {screenLoading ||
       videoLoading ||
@@ -352,7 +394,8 @@ export function ScreenDetail(props: any) {
       loading ||
       loadingMyMedia ||
       loadingCommnet ||
-      loadingUploadMedia ? (
+      loadingUploadMedia ||
+      loadingVideo ? (
         <HLoading
           loading={
             screenLoading ||
@@ -361,12 +404,13 @@ export function ScreenDetail(props: any) {
             loading ||
             loadingMyMedia ||
             loadingCommnet ||
-            loadingUploadMedia
+            loadingUploadMedia ||
+            loadingVideo
           }
         />
-      ) : errorComment || errorUploadMedia ? (
+      ) : errorComment || errorUploadMedia || errorVideo ? (
         <MessageBox variant="danger">
-          {errorComment || errorUploadMedia}
+          {errorComment || errorUploadMedia || errorVideo}
         </MessageBox>
       ) : (
         <Stack>
