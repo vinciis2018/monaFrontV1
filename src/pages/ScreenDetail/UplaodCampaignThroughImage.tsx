@@ -25,6 +25,7 @@ export function UplaodCampaignThroughImage(props: any) {
   const { addFile } = useIpfs();
   const [isUploading, setIsUploading] = useState(false);
   const [selectedImages, setSelectedImage] = useState<any>([]);
+  //const [selectedImages, setSelectedImage] = useState<any>([]);
 
   let hiddenInput: any = null;
   const startAnimation = () => controls.start("hover");
@@ -38,23 +39,25 @@ export function UplaodCampaignThroughImage(props: any) {
     addFile(dataBuffer).then(({ cid }) => {
       const strCid = cid.toString();
       // console.log("strcid : ", strCid)
-      setSelectedImage([...selectedImages, strCid]);
+      setSelectedImage([...selectedImages, `https://ipfs.io/ipfs/${strCid}`]);
       setIsUploading(false);
     });
     setIsUploading(false);
   }
   const removeImage = (index: any) => {
-    setSelectedImage(selectedImages.filter((cid: any, i: any) => i !== index));
+    const newImageList = selectedImages.filter(
+      (image: any, i: any) => i !== index
+    );
+    setSelectedImage([...newImageList]);
   };
-  const handleSelectImage = (cid: any) => {
-    setSelectedImage([...selectedImages, cid]);
+  const handleSelectImage = (imageUrl: any) => {
+    setSelectedImage([...selectedImages, imageUrl]);
   };
   // console.log("seleced Image : ", selectedImages);
   const handleNext = () => {
     props.onHide();
-    props.setImages(
-      selectedImages.map((cid: any) => `https://ipfs.io/ipfs/${cid}`)
-    );
+    console.log("seleced Image : ", selectedImages);
+    props.setImages([...selectedImages]);
     setSelectedImage([]);
     props.videoUploadHandler();
   };
@@ -140,7 +143,7 @@ export function UplaodCampaignThroughImage(props: any) {
                 Select Images : {selectedImages.length}
               </Text>
               <SimpleGrid columns={[1, null, 8]} gap={2}>
-                {selectedImages?.map((cid: any, index: any) => (
+                {selectedImages?.map((image: any, index: any) => (
                   <Tooltip
                     label="Click for remove"
                     fontSize="md"
@@ -151,7 +154,7 @@ export function UplaodCampaignThroughImage(props: any) {
                   >
                     <Stack borderRadius="lg" boxShadow="2xl">
                       <Image
-                        src={`https://ipfs.io/ipfs/${cid}`}
+                        src={image}
                         alt=""
                         width="100%"
                         height="100%"
@@ -161,6 +164,16 @@ export function UplaodCampaignThroughImage(props: any) {
                   </Tooltip>
                 ))}
               </SimpleGrid>
+              <Text
+                fontSize="sm"
+                fontWeight="light"
+                color="#FF0000"
+                align="left"
+                pt="5"
+                type="Button"
+              >
+                When image will not show please contact us
+              </Text>
               <Text
                 fontSize="lg"
                 fontWeight="light"
@@ -176,11 +189,11 @@ export function UplaodCampaignThroughImage(props: any) {
                   {props?.medias?.map((media: any) => (
                     <Stack key={media._id} borderRadius="lg">
                       <Image
-                        src={`https://ipfs.io/ipfs/${media.cid}`}
+                        src={media.thumbnail}
                         alt=""
                         width="100%"
                         height="100%"
-                        onClick={() => handleSelectImage(media.cid)}
+                        onClick={() => handleSelectImage(media.thumbnail)}
                       ></Image>
                     </Stack>
                   ))}

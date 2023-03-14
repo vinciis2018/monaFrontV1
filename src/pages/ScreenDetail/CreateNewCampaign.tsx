@@ -123,7 +123,9 @@ export function CreateNewCampaign(props: any) {
               <Text type="Button">Diwali divas campiagn</Text>
             </Stack>
             <Flex gap={4}>
-              <Button p="3">Create campaign through Images</Button>
+              <Button p="3" onClick={handleCreateCampaignThroughImages}>
+                Create campaign through Images
+              </Button>
               <Button p="3" onClick={handleCreateCampaignThroughVideo}>
                 Create campaign through Video
               </Button>

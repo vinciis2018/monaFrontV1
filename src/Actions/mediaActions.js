@@ -167,7 +167,7 @@ export const generateVideoFromImages =
     try {
       const { data } = await Axios.post(
         // `${process.env.REACT_APP_BLINDS_SERVER}/api/media/createVideoFromImages`,
-        `https://img2vdo.herokuapp.com/i2v`,
+        `https://www.server.vinciis.in/i2v`,
         { images, duration, width, height }
       );
       // console.log("generateVideoFromImages called!", data);
