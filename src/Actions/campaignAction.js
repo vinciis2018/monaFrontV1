@@ -12,6 +12,9 @@ import {
   CAMPAIGN_LIST_BY_SCREENID_FAIL,
   CAMPAIGN_LIST_BY_SCREENID_REQUEST,
   CAMPAIGN_LIST_BY_SCREENID_SUCCESS,
+  CAMPAIGN_DELETE_REQUEST,
+  CAMPAIGN_DELETE_FAIL,
+  CAMPAIGN_DELETE_SUCCESS,
 } from "Constants/campaignConstants.js";
 
 export const createCamapaign =
@@ -142,6 +145,41 @@ export const getCampaignListByScreenId = (screenId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CAMPAIGN_LIST_BY_SCREENID_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteCampaign = (campaignId) => async (dispatch, getState) => {
+  dispatch({
+    type: CAMPAIGN_DELETE_REQUEST,
+    payload: campaignId,
+  });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    console.log("user  ========> ", userInfo);
+    const { data } = await Axios.delete(
+      `${process.env.REACT_APP_BLINDS_SERVER}/api/campaign/${campaignId}`,
+      { user: userInfo },
+      {
+        headers: { Authorization: "Bearer " + userInfo.token },
+      }
+    );
+    console.log("deleted campaign : ", data);
+
+    dispatch({
+      type: CAMPAIGN_DELETE_SUCCESS,
+      payload: data,
+    });
+    // console.log({ data });
+  } catch (error) {
+    dispatch({
+      type: CAMPAIGN_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

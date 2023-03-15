@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Stack,
   Flex,
@@ -15,8 +15,14 @@ import {
 } from "@chakra-ui/react";
 import { convertIntoDateAndTime } from "utils/dateAndTime";
 import { Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteCampaign } from "Actions/campaignAction";
+import HLoading from "components/atoms/HLoading";
+import MessageBox from "components/atoms/MessageBox";
+import { CAMPAIGN_DELETE_RESET } from "Constants/campaignConstants";
 
 export function Actions(props: any) {
+  const dispatch = useDispatch<any>();
   const { screen, videosList } = props;
   const [checkedItems, setCheckedItems] = useState(
     new Array(videosList.length).fill(false)
@@ -32,9 +38,38 @@ export function Actions(props: any) {
     newArray[index] = !newArray[index];
     setCheckedItems([...newArray]);
   };
+  const campaignDelete = useSelector((state: any) => state.campaignDelete);
+  const {
+    loading: loadingCampaignDelete,
+    error: errorCampaignDelete,
+    success: deleteCampaignStatus,
+  } = campaignDelete;
+
+  if (deleteCampaignStatus) {
+    window.location.reload();
+  }
+  if (errorCampaignDelete) {
+    setTimeout(() => {
+      dispatch({
+        type: CAMPAIGN_DELETE_RESET,
+      });
+    }, 2000);
+  }
+
+  const handleDeteteCampaign = (campaignId: any) => {
+    console.log("handleDeteteCampaign called for id : ", campaignId);
+    dispatch(deleteCampaign(campaignId));
+  };
+  useEffect(() => {}, [dispatch]);
 
   return (
     <Box>
+      {loadingCampaignDelete ? (
+        <HLoading loading={loadingCampaignDelete} />
+      ) : null}
+      {errorCampaignDelete ? (
+        <MessageBox variant="danger">{errorCampaignDelete}</MessageBox>
+      ) : null}
       <Box>
         <Text color="#403F49" fontSize="lg" fontWeight="semibold" align="left">
           {screen.name}
@@ -97,10 +132,17 @@ export function Actions(props: any) {
                         bgColor="#FFFFFF"
                         color="#403F49"
                         fontSize="sm"
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          console.log(e.target.value);
+                          if (value === "delete") {
+                            handleDeteteCampaign(video._id);
+                          }
+                        }}
                       >
-                        <option value="option2">Pending</option>
-                        <option value="option3">Accept</option>
-                        <option value="option3">Delete</option>
+                        <option value="pending">Pending</option>
+                        <option value="accept">Accept</option>
+                        <option value="delete">Delete</option>
                       </Select>
                     </Td>
                   </Tr>

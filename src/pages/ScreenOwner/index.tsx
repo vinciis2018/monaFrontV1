@@ -15,11 +15,11 @@ import { getCampaignListByScreenId } from "Actions/campaignAction";
 
 export function ScreenOwner() {
   const navigate = useNavigate();
-  const [selectedScreen, setSelectedScreen] = useState<any>(null);
+  const [selectedScreen, setSelectedScreen] = useState<any>("");
   const [dashboard, setDashboard] = useState<any>(true);
   const [histoty, setHistory] = useState<any>(false);
   const [actions, setActions] = useState<any>(false);
-  const [screen, setScreen] = useState<any>(null);
+  const [screen, setScreen] = useState<any>({});
   const [loading, setLoading] = useState<any>(false);
   const [selectedScreenIndex, setSelectedScreenIndex] = useState<any>(0);
 
