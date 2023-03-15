@@ -11,6 +11,10 @@ import {
   CAMPAIGN_LIST_BY_SCREENID_FAIL,
   CAMPAIGN_LIST_BY_SCREENID_REQUEST,
   CAMPAIGN_LIST_BY_SCREENID_SUCCESS,
+  CAMPAIGN_DELETE_REQUEST,
+  CAMPAIGN_DELETE_SUCCESS,
+  CAMPAIGN_DELETE_FAIL,
+  CAMPAIGN_DELETE_RESET,
 } from "Constants/campaignConstants.js";
 
 export function createCampaignReducer(state = {}, action) {
@@ -67,6 +71,21 @@ export function campaignListByScreenIDReducer(
       return { loading: false, campaigns: action.payload };
     case CAMPAIGN_LIST_BY_SCREENID_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
+
+export function campaignDeleteReducer(state = {}, action) {
+  switch (action.type) {
+    case CAMPAIGN_DELETE_REQUEST:
+      return { loading: true };
+    case CAMPAIGN_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case CAMPAIGN_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case CAMPAIGN_DELETE_RESET:
+      return {};
     default:
       return state;
   }

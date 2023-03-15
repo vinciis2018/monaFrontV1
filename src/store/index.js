@@ -6,6 +6,7 @@ import {
   campaignListAllReducer,
   campaignDetailsReducer,
   campaignListByScreenIDReducer,
+  campaignDeleteReducer,
 } from "Reducers/campaignReducers";
 
 import {
@@ -103,6 +104,7 @@ const reducer = combineReducers({
   campaignListAll: campaignListAllReducer,
   campaignDetail: campaignDetailsReducer,
   campaignListByScreenId: campaignListByScreenIDReducer,
+  campaignDelete: campaignDeleteReducer,
 
   playlistCheck: playlistCheckReducer,
 

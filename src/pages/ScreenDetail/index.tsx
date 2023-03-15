@@ -108,7 +108,7 @@ export function ScreenDetail(props: any) {
     success,
     medias,
   } = myMedia;
-  // console.log("media  : ", medias);
+  // console.log("media  : ", JSON.stringify(medias));
 
   if (!screenLoading && screen) {
     screen.reviews.forEach((review: any) => {
@@ -153,10 +153,11 @@ export function ScreenDetail(props: any) {
         { images, duration, width, height }
       );
       console.log("generateVideoFromImages called!", data);
+      // console.log("images [0]", images[0]);
       setLoadingVideo(false);
       createMedia({
         title: campaignName,
-        media: `${data.Video_link}`,
+        media: `${data.Video_Link_1}`,
         thumbnail: `${images[0]}`,
       });
     } catch (error: any) {
@@ -352,7 +353,7 @@ export function ScreenDetail(props: any) {
   };
 
   return (
-    <Box px={{ base: "3", lg: "20" }} pt={{ base: "3", lg: "5" }}>
+    <Box pt={{ base: "3", lg: "5" }}>
       <CreateNewCampaign
         show={campaignModal}
         onHide={() => setCampaignModal(false)}
@@ -833,8 +834,8 @@ export function ScreenDetail(props: any) {
                   : null}
               </Stack>
             </Stack>
-            <ContactUs />
           </Stack>
+          <ContactUs />
         </Stack>
       )}
     </Box>
